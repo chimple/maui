@@ -1,33 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:flutter_redurx/flutter_redurx.dart';
-import 'package:maui/actions/add_progress.dart';
-import 'package:maui/app.dart';
-import 'package:maui/db/entity/card_progress.dart';
-import 'package:maui/db/entity/tile.dart';
-import 'package:maui/models/root_state.dart';
-import 'package:maui/quack/card_header.dart';
-import 'package:maui/quack/card_pager.dart';
-import 'package:maui/quack/collection_grid.dart';
+import 'package:maui/containers/comments_container.dart';
 import 'package:maui/db/entity/quack_card.dart';
-import 'package:maui/quack/comment_list.dart';
-import 'package:maui/quack/comment_text_field.dart';
+import 'package:maui/db/entity/tile.dart';
 import 'package:maui/quack/activity_drawing_grid.dart';
+import 'package:maui/quack/collection_grid.dart';
 import 'package:maui/quack/header_app_bar.dart';
 import 'package:maui/quack/knowledge_button.dart';
-import 'package:maui/repos/card_progress_repo.dart';
-import 'package:maui/repos/collection_repo.dart';
-import 'package:maui/repos/tile_repo.dart';
-import 'package:maui/state/app_state_container.dart';
 
 class CardDetail extends StatelessWidget {
   final QuackCard card;
   final String parentCardId;
   final bool showBackButton;
+  final List<QuackCard> childCards;
 //  final GlobalKey<CommentListState> commentListKey;
 
   CardDetail(
-      {key, @required this.card, this.parentCardId, this.showBackButton = true})
+      {key,
+      @required this.card,
+      this.parentCardId,
+      this.childCards,
+      this.showBackButton = true})
       : super(key: key);
 
   @override
@@ -51,17 +43,23 @@ class CardDetail extends StatelessWidget {
         style: Theme.of(context).textTheme.display1,
       ),
     )));
-    scrollViewWidgets.addAll([
-      SliverToBoxAdapter(
-        child: CollectionGrid(
-          cardId: card.id,
-          cardType: CardType.activity,
-        ),
-      ),
-    ]);
+    if (childCards != null) {
+      final activityCards = childCards
+          .where((c) => c.type == CardType.activity)
+          .toList(growable: false);
+      if (activityCards.length > 0) {
+        scrollViewWidgets.add(
+          SliverToBoxAdapter(
+            child: CollectionGrid(
+              cards: activityCards,
+            ),
+          ),
+        );
+      }
+    }
     if (showBackButton &&
         (card.type == CardType.concept || card.type == CardType.activity)) {
-      scrollViewWidgets.add(CommentList(
+      scrollViewWidgets.add(CommentsContainer(
         parentId: card.id,
         tileType: TileType.card,
       ));

@@ -1,21 +1,16 @@
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_redurx/flutter_redurx.dart';
-import 'package:maui/actions/post_tile.dart';
-import 'package:maui/actions/save_drawing.dart';
 import 'package:maui/db/entity/card_progress.dart';
-import 'package:maui/db/entity/tile.dart';
-import 'package:maui/db/entity/card_extra.dart';
 import 'package:maui/db/entity/quack_card.dart';
+import 'package:maui/db/entity/tile.dart';
 import 'package:maui/db/entity/user.dart';
-import 'package:maui/models/root_state.dart';
 import 'package:maui/repos/card_progress_repo.dart';
 import 'package:maui/repos/card_repo.dart';
-import 'package:tahiti/tahiti.dart';
-import 'package:maui/repos/card_extra_repo.dart';
 import 'package:maui/repos/tile_repo.dart';
 import 'package:maui/state/app_state_container.dart';
+import 'package:tahiti/tahiti.dart';
 
 class DrawingWrapper extends StatefulWidget {
   final String activityId;
@@ -82,13 +77,15 @@ class DrawingWrapperState extends State<DrawingWrapper> {
           extStorageDir: AppStateContainer.of(context).extStorageDir,
           saveCallback: ({Map<String, dynamic> jsonMap}) {
             tileId = jsonMap['id'];
-            Provider.dispatch<RootState>(context,
-                SaveDrawing(cardId: widget.activityId, jsonMap: jsonMap));
+//            Provider.dispatch<RootState>(context,
+//                SaveDrawing(cardId: widget.activityId, jsonMap: jsonMap));
+            //TODO: dispatch saveDrawing
           },
           backCallback: () {
             print('backCallback: $tileId');
-            if (tileId != null)
-              Provider.dispatch<RootState>(context, PostTile(tileId: tileId));
+//            if (tileId != null)
+//              Provider.dispatch<RootState>(context, PostTile(tileId: tileId));
+            //TODO: dispatch addTile
             Navigator.of(context).pop();
             print('backCallback: end');
           },
@@ -100,7 +97,8 @@ class DrawingWrapperState extends State<DrawingWrapper> {
   Future<bool> _onWillPop(BuildContext context) {
     final completer = Completer<bool>();
     completer.complete(true);
-    Provider.dispatch<RootState>(context, PostTile(tileId: _jsonMap['id']));
+//    Provider.dispatch<RootState>(context, PostTile(tileId: _jsonMap['id']));
+    //TODO: dispatch addTile
     return completer.future;
   }
 }

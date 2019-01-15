@@ -13,7 +13,14 @@ class Animations extends StatefulWidget {
 }
 
 class AnimationsState extends State<Animations> {
-  List<String> emotions = ["happy", "joy", "hello", "sad", "bored", "welcome with hello"];
+  List<String> emotions = [
+    "happy",
+    "joy",
+    "hello",
+    "sad",
+    "bored",
+    "welcome with hello"
+  ];
   String emotion, _animationName;
   int count;
   PageController _pageController;
@@ -35,12 +42,12 @@ class AnimationsState extends State<Animations> {
   }
 
   void _complete(bool mounted) {
-   if (mounted) {
+    if (mounted) {
       setState(() {
         paused = true;
         _animationName = null;
       });
-   }
+    }
   }
 
   @override
@@ -77,15 +84,15 @@ class AnimationsState extends State<Animations> {
                             width: double.maxFinite - size.height * 0.4,
                             //color: Colors.red,
                             child: new NimaActor(
-                              "assets/quack",
+                              "assets/quack.nima",
                               alignment: Alignment.center,
                               fit: BoxFit.scaleDown,
                               animation: '${emotions[count]}',
                               mixSeconds: 0.2,
                               paused: paused,
                               completed: (String animationName) {
-                                    _complete(mounted);
-                                  },
+                                _complete(mounted);
+                              },
                             ),
                           ),
                       onPageChanged: (index) {
@@ -154,7 +161,7 @@ class AnimationsState extends State<Animations> {
                                   builder: (BuildContext context) =>
                                       DrawingWrapper(
                                         activityId: 'lion_roar',
-                                        template: null,                                        
+                                        template: null,
                                       )),
                             );
                           },
@@ -177,7 +184,8 @@ class AnimationsState extends State<Animations> {
                           onPressed: () {
                             Navigator.of(context).push(
                               new MaterialPageRoute(
-                                  builder: (BuildContext context) => PostComments()),
+                                  builder: (BuildContext context) =>
+                                      PostComments()),
                             );
                           },
                           child: new Text(

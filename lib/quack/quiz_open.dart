@@ -1,24 +1,18 @@
-import 'dart:io';
-import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter_redurx/flutter_redurx.dart';
-import 'package:maui/actions/add_comment.dart';
-import 'package:maui/actions/post_tile.dart';
 import 'package:maui/db/entity/comment.dart';
 import 'package:maui/db/entity/quiz.dart';
-import 'package:maui/db/entity/tile.dart';
 import 'package:maui/loca.dart';
-import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/quiz_card_detail.dart';
-import 'package:maui/quack/quiz_stack.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:uuid/uuid.dart';
 
 class QuizOpen extends StatefulWidget {
   final Quiz quiz;
   final CanProceed canProceed;
+  final Function(Comment) onAdd;
 
-  const QuizOpen({Key key, this.quiz, this.canProceed}) : super(key: key);
+  const QuizOpen({Key key, this.quiz, this.canProceed, this.onAdd})
+      : super(key: key);
 
   @override
   QuizOpenState createState() {
@@ -105,18 +99,13 @@ class QuizOpenState extends State<QuizOpen> {
     setState(() {
       _isComposing = false;
     });
-    Provider.dispatch<RootState>(
-        context,
-        AddComment(
-            comment: Comment(
-                id: Uuid().v4(),
-                parentId: widget.quiz.id,
-                userId: AppStateContainer.of(context).state.loggedInUser.id,
-                timeStamp: DateTime.now(),
-                comment: text,
-                user: AppStateContainer.of(context).state.loggedInUser),
-            tileType: TileType.card,
-            addTile: true));
+    widget.onAdd(Comment(
+        id: Uuid().v4(),
+        parentId: widget.quiz.id,
+        userId: AppStateContainer.of(context).state.loggedInUser.id,
+        timeStamp: DateTime.now(),
+        comment: text,
+        user: AppStateContainer.of(context).state.loggedInUser));
     widget.canProceed();
   }
 }

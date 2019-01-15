@@ -1,25 +1,20 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_redurx/flutter_redurx.dart';
+import 'package:maui/components/drawing_wrapper.dart';
 import 'package:maui/db/entity/card_extra.dart';
-import 'package:maui/db/entity/comment.dart';
-import 'package:maui/models/root_state.dart';
+import 'package:maui/db/entity/tile.dart';
+import 'package:maui/loca.dart';
 import 'package:maui/quack/drawing_card.dart';
 import 'package:maui/quack/template_grid.dart';
-import 'package:maui/loca.dart';
-import 'package:maui/repos/card_extra_repo.dart';
-import 'package:maui/repos/tile_repo.dart';
-import 'package:maui/db/entity/tile.dart';
-import 'package:maui/components/drawing_wrapper.dart';
-import 'package:tahiti/paper.dart';
-import 'package:tahiti/activity_model.dart';
-import 'package:scoped_model/scoped_model.dart';
-import 'package:tuple/tuple.dart';
 
+//TODO: pass drawings and templates
 class ActivityDrawingGrid extends StatelessWidget {
   final String cardId;
+  final List drawings;
+  final List<CardExtra> templates;
 
-  const ActivityDrawingGrid({Key key, this.cardId}) : super(key: key);
+  const ActivityDrawingGrid(
+      {Key key, this.cardId, this.drawings, this.templates})
+      : super(key: key);
 
   void _onPressed(BuildContext context, List<CardExtra> templates) async {
     if ((templates?.length ?? 0) > 0) {
@@ -84,16 +79,9 @@ class ActivityDrawingGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Connect<RootState, Tuple2<List<Tile>, List<CardExtra>>>(
-      convert: (state) => Tuple2(state.drawings, state.templates),
-      where: (prev, next) => next != prev,
-      builder: (props) {
-        return SliverGrid.count(
-            crossAxisCount: 3,
-            childAspectRatio: 1.0,
-            children: _buildList(context, props?.item1 ?? [], props?.item2));
-      },
-      nullable: true,
-    );
+    return SliverGrid.count(
+        crossAxisCount: 3,
+        childAspectRatio: 1.0,
+        children: _buildList(context, drawings, templates));
   }
 }

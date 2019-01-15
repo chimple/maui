@@ -52,7 +52,7 @@ class _NimaState extends State<Nima> with TickerProviderStateMixin {
       _animation = '${_name}_$_emotion';
     }
     _prevScore = widget.score;
-    return NimaActor("assets/solo",
+    return NimaActor("assets/solo.nima",
         alignment: Alignment.center,
         fit: BoxFit.contain,
         paused: paused,

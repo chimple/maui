@@ -1,22 +1,20 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_redurx/flutter_redurx.dart';
-import 'package:maui/actions/add_comment.dart';
+import 'package:maui/containers/like_container.dart';
 import 'package:maui/db/entity/comment.dart';
 import 'package:maui/db/entity/tile.dart';
 import 'package:maui/loca.dart';
-import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/like_button.dart';
-import 'package:maui/repos/comment_repo.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:uuid/uuid.dart';
 
 class CommentTextField extends StatefulWidget {
   final String parentId;
   final TileType tileType;
+  final Function(Comment, TileType, bool) onAdd;
 
-  const CommentTextField({Key key, this.parentId, this.tileType})
+  const CommentTextField({Key key, this.parentId, this.tileType, this.onAdd})
       : super(key: key);
 
   @override
@@ -55,7 +53,7 @@ class CommentTextFieldState extends State<CommentTextField> {
         child: Row(children: <Widget>[
           Container(
               margin: new EdgeInsets.symmetric(horizontal: 4.0),
-              child: LikeButton(
+              child: LikeContainer(
                 parentId: widget.parentId,
                 tileType: widget.tileType,
               )),
@@ -99,18 +97,16 @@ class CommentTextFieldState extends State<CommentTextField> {
     setState(() {
       _isComposing = false;
     });
-    Provider.dispatch<RootState>(
-      context,
-      AddComment(
-          comment: Comment(
-              id: Uuid().v4(),
-              parentId: widget.parentId,
-              userId: AppStateContainer.of(context).state.loggedInUser.id,
-              timeStamp: DateTime.now(),
-              comment: text,
-              user: AppStateContainer.of(context).state.loggedInUser),
-          tileType: widget.tileType),
-    );
+    widget.onAdd(
+        Comment(
+            id: Uuid().v4(),
+            parentId: widget.parentId,
+            userId: AppStateContainer.of(context).state.loggedInUser.id,
+            timeStamp: DateTime.now(),
+            comment: text,
+            user: AppStateContainer.of(context).state.loggedInUser),
+        widget.tileType,
+        true);
     _focusNode.unfocus();
   }
 }
