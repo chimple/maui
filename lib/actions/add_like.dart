@@ -94,11 +94,10 @@ class AddLike implements AsyncAction<RootState> {
         print('Stack trace:\n $s');
       }
     }
-    final frontMap = await FetchInitialData.fetchFrontMap(state);
 
     return (RootState state) {
       return RootState(
-          frontMap: frontMap,
+          frontMap: state.frontMap,
           user: state.user,
           collectionMap: state.collectionMap,
           cardMap: state.cardMap,

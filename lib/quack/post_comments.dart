@@ -1,10 +1,8 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_redurx/flutter_redurx.dart';
-import 'package:maui/actions/post_tile.dart';
 import 'package:maui/db/entity/tile.dart';
-import 'package:maui/models/root_state.dart';
-import 'package:maui/screens/tab_home.dart';
+import 'package:maui/loca.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:uuid/uuid.dart';
 
@@ -29,7 +27,8 @@ class PostCommentsState extends State<PostComments> {
         updatedAt: DateTime.now(),
         type: TileType.message);
 
-    Provider.dispatch<RootState>(context, PostTile(tile: tile));
+//    Provider.dispatch<RootState>(context, PostTile(tile: tile));
+    //TODO: dispatch AddTile
     _textController.clear();
     Navigator.pop(context);
   }
@@ -58,7 +57,7 @@ class PostCommentsState extends State<PostComments> {
                   _textController.text.trim().isEmpty ? {} : post(context),
               textColor: _textColor,
               child: new Text(
-                " Post ",
+                Loca.of(context).post,
                 style: TextStyle(fontSize: 26.0, fontWeight: FontWeight.w800),
               ),
             ),
@@ -115,7 +114,7 @@ class PostCommentsState extends State<PostComments> {
                             fillColor: Colors.grey[110],
                             filled: true,
                             border: InputBorder.none,
-                            hintText: 'Write Something '),
+                            hintText: Loca.of(context).writeSomething),
                         autofocus: true,
                         maxLength: null,
                         maxLines: 7,

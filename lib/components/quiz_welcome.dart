@@ -35,13 +35,13 @@ class QuizWelcomeState extends State<QuizWelcome> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Padding(
-          padding: new  EdgeInsets.only(right: size.width * 0.1),
+          padding: new EdgeInsets.only(right: size.width * 0.1),
           child: Container(
             height: media.size.height * 0.69,
             width: size.width * 0.9,
             child: AspectRatio(
                 aspectRatio: 2.0,
-                child: new NimaActor("assets/quack",
+                child: new NimaActor("assets/quack.nima",
                     alignment: Alignment.center,
                     paused: paused,
                     fit: BoxFit.scaleDown,

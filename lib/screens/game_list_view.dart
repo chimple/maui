@@ -31,6 +31,7 @@ List<Tuple2<String, String>> gameNames = [
   Tuple2('spin_wheel', 'Spin The Wheel'),
   Tuple2('dice', 'Dice'),
   Tuple2('find_size_game', 'Find Size Game'),
+  Tuple2('basic_addition', 'basic_Addition'),
 ];
 
 //            GameButton( 'abacus', 'Abacus', notifs: _notifs),
@@ -79,7 +80,7 @@ class GameListViewState extends State<GameListView> {
     final gap = 16.0 * min(media.size.width, media.size.height) / 400.0;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Games'),
+        title: Text(Loca.of(context).games),
       ),
       body: Container(
         color: Color(0xFFFFFFFF),

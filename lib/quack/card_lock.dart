@@ -1,21 +1,16 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_redurx/flutter_redurx.dart';
-import 'package:maui/actions/add_progress.dart';
-import 'package:maui/actions/fetch_card_detail.dart';
+import 'package:maui/containers/card_detail_container.dart';
 import 'package:maui/db/entity/quack_card.dart';
-import 'package:maui/models/root_state.dart';
-import 'package:maui/quack/card_detail.dart';
-import 'package:maui/quack/collection_progress_indicator.dart';
+import 'package:maui/loca.dart';
 import 'package:maui/state/app_state_container.dart';
-import '../actions/update_points.dart';
 import 'package:nima/nima_actor.dart';
 
 class CardLock extends StatefulWidget {
   final QuackCard card;
   final String parentCardId;
-  CardLock({Key key, this.card, this.parentCardId}) : super(key: key);
+  final double progress;
+  CardLock({Key key, this.card, this.parentCardId, this.progress})
+      : super(key: key);
 
   @override
   State createState() {
@@ -29,15 +24,15 @@ class CardLockState extends State<CardLock> {
 
   void _goToCardDetail(BuildContext context) {
     Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (BuildContext context) => CardDetail(
+        builder: (BuildContext context) => CardDetailContainer(
               card: widget.card,
               parentCardId: widget.parentCardId,
             )));
-    Provider.dispatch<RootState>(context, FetchCardDetail(widget.card.id));
-    Provider.dispatch<RootState>(
-        context,
-        AddProgress(
-            cardId: widget.card.id, parentCardId: widget.card.id, index: 0));
+//    Provider.dispatch<RootState>(context, FetchCardDetail(widget.card.id));
+//    Provider.dispatch<RootState>(
+//        context,
+//        AddProgress(
+//            cardId: widget.card.id, parentCardId: widget.card.id, index: 0));
   }
 
   void onCompleteNima() {
@@ -61,49 +56,43 @@ class CardLockState extends State<CardLock> {
         },
         barrierDismissible: false);
 
-    Provider.dispatch<RootState>(context, UpdatePoints(points: -5));
+//    Provider.dispatch<RootState>(context, UpdatePoints(points: -5));
+    //TODO: dispatch UpdatePoints
   }
 
   @override
   Widget build(BuildContext context) {
     initialPoints = AppStateContainer.of(context).state.loggedInUser.points;
-    return Connect<RootState, double>(
-      convert: (state) => state.activityMap[widget.card.id]?.progress,
-      where: (prev, next) => next != prev,
-      builder: (progress) {
-        return progress == null
-            ? InkWell(
-                onTap: () => initialPoints < 5
-                    ? showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return DialogContent(
-                              onPressed: onPressed,
-                              initialPoints: initialPoints,
-                              onCompleteNima: onCompleteNima,
-                              shouldDisplayNima: true);
-                        },
-                        barrierDismissible: false)
-                    : showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return DialogContent(
-                              onPressed: onPressed,
-                              initialPoints: initialPoints,
-                              shouldDisplayNima: false);
-                        }),
-                child: AspectRatio(
-                  aspectRatio: 1.0,
-                  child: Container(
-                    constraints: BoxConstraints.expand(),
-                    color: Color(0x88888888),
-                  ),
-                ),
-              )
-            : Container();
-      },
-      nullable: true,
-    );
+    return widget.progress == null
+        ? InkWell(
+            onTap: () => initialPoints < 5
+                ? showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return DialogContent(
+                          onPressed: onPressed,
+                          initialPoints: initialPoints,
+                          onCompleteNima: onCompleteNima,
+                          shouldDisplayNima: true);
+                    },
+                    barrierDismissible: false)
+                : showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return DialogContent(
+                          onPressed: onPressed,
+                          initialPoints: initialPoints,
+                          shouldDisplayNima: false);
+                    }),
+            child: AspectRatio(
+              aspectRatio: 1.0,
+              child: Container(
+                constraints: BoxConstraints.expand(),
+                color: Color(0x88888888),
+              ),
+            ),
+          )
+        : Container();
   }
 }
 
@@ -172,7 +161,7 @@ class DialogContentState extends State<DialogContent> {
                     ),
                     child: Center(
                       child: new Text(
-                        'Your Points- ${widget.initialPoints}',
+                        '${Loca.of(context).yourPoints} ${widget.initialPoints}',
                         style: TextStyle(
                             color: Colors.white,
                             fontStyle: FontStyle.normal,
@@ -189,7 +178,7 @@ class DialogContentState extends State<DialogContent> {
                       child: Center(
                         child: AspectRatio(
                           aspectRatio: 1,
-                          child: NimaActor("assets/quack",
+                          child: NimaActor("assets/quack.nima",
                               alignment: Alignment.center,
                               paused: paused,
                               fit: BoxFit.scaleDown,
@@ -211,7 +200,7 @@ class DialogContentState extends State<DialogContent> {
                             Expanded(
                               child: Center(
                                   child: new Text(
-                                "Cost is - 5",
+                                Loca.of(context).costIs,
                                 style: TextStyle(
                                     color: Colors.blue,
                                     fontStyle: FontStyle.normal,
@@ -234,7 +223,7 @@ class DialogContentState extends State<DialogContent> {
                                       onPressed: widget.onPressed,
                                       child: Center(
                                         child: Text(
-                                          "Buy",
+                                          Loca.of(context).buy,
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontStyle: FontStyle.normal,

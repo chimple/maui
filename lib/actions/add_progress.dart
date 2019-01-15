@@ -8,6 +8,7 @@ import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/user_activity.dart';
 import 'package:maui/repos/card_progress_repo.dart';
 import 'package:maui/repos/collection_repo.dart';
+import 'package:maui/repos/log_repo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AddProgress implements AsyncAction<RootState> {
@@ -31,20 +32,21 @@ class AddProgress implements AsyncAction<RootState> {
         await cardProgressRepo.getProgressStatusByCollectionAndTypeAndUserId(
             parentCardId, CardType.knowledge, state.user.id);
 
-    print('index: $index $parentCardId');
     final userActivity = state.activityMap[parentCardId] ?? UserActivity();
+    var frontMap = state.frontMap;
     if ((userActivity.done ?? -1) < index) {
-      print('userActivity: ${state.activityMap}');
       userActivity.done = index;
       userActivity.total = userActivity.total ??
           await collectionRepo
               .getKnowledgeAndQuizCardCountInCollection(parentCardId);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       state.activityMap[parentCardId] = userActivity;
-      print('userActivity: $userActivity');
       prefs.setString('userActivity', json.encode(state.activityMap));
+      if (userActivity.done >= userActivity.total) {
+        frontMap = await FetchInitialData.fetchFrontMap(state);
+      }
+      writeLog('progress,$parentCardId,$cardId,$index,${userActivity.total}');
     }
-    final frontMap = await FetchInitialData.fetchFrontMap(state);
 
     return (RootState state) => RootState(
         frontMap: frontMap,

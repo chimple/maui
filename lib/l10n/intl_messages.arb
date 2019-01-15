@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2018-08-14T16:24:32.859263",
+  "@@last_modified": "2018-11-30T15:29:54.966583",
   "title": "Maui",
   "@title": {
     "type": "text",
@@ -10,13 +10,38 @@
     "type": "text",
     "placeholders": {}
   },
+  "gallery": "Gallery",
+  "@gallery": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "collection": "Collection",
+  "@collection": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "progress": "Progress",
+  "@progress": {
+    "type": "text",
+    "placeholders": {}
+  },
   "game": "Game",
   "@game": {
     "type": "text",
     "placeholders": {}
   },
+  "home": "Home",
+  "@home": {
+    "type": "text",
+    "placeholders": {}
+  },
   "category": "Category",
   "@category": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "profile": "Profile",
+  "@profile": {
     "type": "text",
     "placeholders": {}
   },
@@ -762,6 +787,136 @@
   },
   "writeYourName": "Write your name...",
   "@writeYourName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "addAComment": "Add a comment",
+  "@addAComment": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "draw": "Draw",
+  "@draw": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "post": "Post",
+  "@post": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pleaseWait": "Please wait...",
+  "@pleaseWait": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "signIn": "Sign In",
+  "@signIn": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "loading": "Loading...",
+  "@loading": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "seeAll": "See All",
+  "@seeAll": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "chooseATemplate": "Choose a template",
+  "@chooseATemplate": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "yourPoints": "Your Points -",
+  "@yourPoints": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "costIs": "Cost is - 5",
+  "@costIs": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "buy": "Buy",
+  "@buy": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "next": "Next",
+  "@next": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "check": "Check",
+  "@check": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "topics": "Topics",
+  "@topics": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "writeSomething": "Write Something",
+  "@writeSomething": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "stories": "Stories",
+  "@stories": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "answerThis": "Answer this",
+  "@answerThis": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hoodie": "Hoodie",
+  "@hoodie": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "send": "Send",
+  "@send": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "options": "Options",
+  "@options": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "edit": "Edit",
+  "@edit": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "delete": "Delete",
+  "@delete": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "games": "Games",
+  "@games": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "comment": "Comment",
+  "@comment": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "story": "Story",
+  "@story": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "topic": "Topic",
+  "@topic": {
     "type": "text",
     "placeholders": {}
   }

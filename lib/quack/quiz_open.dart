@@ -1,23 +1,18 @@
-import 'dart:io';
-import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter_redurx/flutter_redurx.dart';
-import 'package:maui/actions/add_comment.dart';
-import 'package:maui/actions/post_tile.dart';
 import 'package:maui/db/entity/comment.dart';
 import 'package:maui/db/entity/quiz.dart';
-import 'package:maui/db/entity/tile.dart';
-import 'package:maui/models/root_state.dart';
+import 'package:maui/loca.dart';
 import 'package:maui/quack/quiz_card_detail.dart';
-import 'package:maui/quack/quiz_stack.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:uuid/uuid.dart';
 
 class QuizOpen extends StatefulWidget {
   final Quiz quiz;
   final CanProceed canProceed;
+  final Function(Comment) onAdd;
 
-  const QuizOpen({Key key, this.quiz, this.canProceed}) : super(key: key);
+  const QuizOpen({Key key, this.quiz, this.canProceed, this.onAdd})
+      : super(key: key);
 
   @override
   QuizOpenState createState() {
@@ -38,11 +33,26 @@ class QuizOpenState extends State<QuizOpen> {
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
-      Wrap(
-        spacing: 8.0,
-        runSpacing: 4.0,
-        children:
-            widget.quiz.choices.map((q) => Text(q)).toList(growable: false),
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Wrap(
+          spacing: 8.0,
+          runSpacing: 4.0,
+          children: widget.quiz.choices
+              .map((q) => Container(
+                  decoration: new BoxDecoration(
+                    color: Colors.deepOrange,
+                    borderRadius: new BorderRadius.circular(16.0),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      q,
+                      style: TextStyle(fontSize: 24.0, color: Colors.white),
+                    ),
+                  )))
+              .toList(growable: false),
+        ),
       ),
       Flexible(
         child: TextField(
@@ -50,6 +60,7 @@ class QuizOpenState extends State<QuizOpen> {
           keyboardType: TextInputType.multiline,
           autofocus: true,
           maxLines: 5,
+          style: TextStyle(fontSize: 24.0, color: Colors.black),
           onChanged: (String text) {
             setState(() {
               _isComposing = text.trim().isNotEmpty;
@@ -59,7 +70,7 @@ class QuizOpenState extends State<QuizOpen> {
               fillColor: Colors.grey[110],
               filled: true,
               border: InputBorder.none,
-              hintText: 'Write Something '),
+              hintText: Loca.of(context).writeSomething),
           onSubmitted: _handleSubmitted,
         ),
       ),
@@ -75,7 +86,7 @@ class QuizOpenState extends State<QuizOpen> {
               ? () => _handleSubmitted(_textController.text)
               : null,
           child: Text(
-            'Post',
+            Loca.of(context).post,
             style: TextStyle(color: Colors.white),
           ),
         ),
@@ -88,18 +99,13 @@ class QuizOpenState extends State<QuizOpen> {
     setState(() {
       _isComposing = false;
     });
-    Provider.dispatch<RootState>(
-        context,
-        AddComment(
-            comment: Comment(
-                id: Uuid().v4(),
-                parentId: widget.quiz.id,
-                userId: AppStateContainer.of(context).state.loggedInUser.id,
-                timeStamp: DateTime.now(),
-                comment: text,
-                user: AppStateContainer.of(context).state.loggedInUser),
-            tileType: TileType.card,
-            addTile: true));
+    widget.onAdd(Comment(
+        id: Uuid().v4(),
+        parentId: widget.quiz.id,
+        userId: AppStateContainer.of(context).state.loggedInUser.id,
+        timeStamp: DateTime.now(),
+        comment: text,
+        user: AppStateContainer.of(context).state.loggedInUser));
     widget.canProceed();
   }
 }

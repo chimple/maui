@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maui/loca.dart';
 import 'dart:async';
 
 class StaggerAnimation extends StatelessWidget {
@@ -82,7 +83,7 @@ class StaggerAnimation extends StatelessWidget {
                     ),
                     child: buttonSqueezeanimation.value > 75.0
                         ? new Text(
-                            "Sign In",
+                            Loca.of(context).signIn,
                             style: new TextStyle(
                               color: Colors.amber,
                               fontSize: 36.0,

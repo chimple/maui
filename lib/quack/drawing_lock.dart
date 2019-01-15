@@ -1,17 +1,8 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_redurx/flutter_redurx.dart';
-import 'package:maui/actions/add_progress.dart';
-import 'package:maui/actions/fetch_card_detail.dart';
 import 'package:maui/components/drawing_wrapper.dart';
-import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/db/entity/tile.dart';
-import 'package:maui/models/root_state.dart';
-import 'package:maui/quack/card_detail.dart';
-import 'package:maui/quack/collection_progress_indicator.dart';
+import 'package:maui/loca.dart';
 import 'package:maui/state/app_state_container.dart';
-import '../actions/update_points.dart';
 import 'package:nima/nima_actor.dart';
 
 class DrawingLock extends StatefulWidget {
@@ -56,7 +47,8 @@ class DrawingLockState extends State<DrawingLock> {
               shouldDisplayNima: true);
         },
         barrierDismissible: false);
-    Provider.dispatch<RootState>(context, UpdatePoints(points: -5));
+//    Provider.dispatch<RootState>(context, UpdatePoints(points: -5));
+    //TODO: dispatch updatePoints
   }
 
   @override
@@ -162,7 +154,7 @@ class DialogContentState extends State<DialogContent> {
                   width: size.width * 0.7,
                   child: Center(
                     child: new Text(
-                      'Your Points-${widget.initialPoints}',
+                      '${Loca.of(context).yourPoints} ${widget.initialPoints}',
                       style: TextStyle(
                           color: Colors.white,
                           fontStyle: FontStyle.normal,
@@ -178,7 +170,7 @@ class DialogContentState extends State<DialogContent> {
                         child: Center(
                           child: AspectRatio(
                             aspectRatio: 0.5,
-                            child: new NimaActor("assets/quack",
+                            child: new NimaActor("assets/quack.nima",
                                 alignment: Alignment.center,
                                 paused: paused,
                                 fit: BoxFit.scaleDown,
@@ -201,7 +193,7 @@ class DialogContentState extends State<DialogContent> {
                             children: <Widget>[
                               Center(
                                   child: new Text(
-                                "Cost is - 3",
+                                Loca.of(context).costIs,
                                 style: TextStyle(
                                     color: Colors.blue,
                                     fontStyle: FontStyle.normal,
@@ -218,7 +210,7 @@ class DialogContentState extends State<DialogContent> {
                                     onPressed: widget.onPressed,
                                     child: Center(
                                       child: Text(
-                                        "Buy",
+                                        Loca.of(context).buy,
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontStyle: FontStyle.normal,

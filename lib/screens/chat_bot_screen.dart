@@ -12,6 +12,7 @@ import 'package:maui/db/entity/lesson.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/lesson_unit_repo.dart';
 import 'package:maui/repos/lesson_repo.dart';
+import 'package:maui/loca.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:tuple/tuple.dart';
 import 'package:maui/components/unit_button.dart';
@@ -118,7 +119,7 @@ class ChatBotScreenState extends State<ChatBotScreen> {
 
     return new Scaffold(
         appBar: new AppBar(
-          title: new Text('Hoodie'),
+          title: new Text(Loca.of(context).hoodie),
         ),
         body: new Column(children: widgets));
   }

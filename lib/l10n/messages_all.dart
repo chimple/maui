@@ -15,8 +15,11 @@ import 'messages_sw.dart' as messages_sw;
 
 typedef Future<dynamic> LibraryLoader();
 Map<String, LibraryLoader> _deferredLibraries = {
+// ignore: unnecessary_new
   'en': () => new Future.value(null),
+// ignore: unnecessary_new
   'messages': () => new Future.value(null),
+// ignore: unnecessary_new
   'sw': () => new Future.value(null),
 };
 
@@ -40,12 +43,16 @@ Future<bool> initializeMessages(String localeName) async {
     (locale) => _deferredLibraries[locale] != null,
     onFailure: (_) => null);
   if (availableLocale == null) {
+    // ignore: unnecessary_new
     return new Future.value(false);
   }
   var lib = _deferredLibraries[availableLocale];
+  // ignore: unnecessary_new
   await (lib == null ? new Future.value(false) : lib());
+  // ignore: unnecessary_new
   initializeInternalMessageLookup(() => new CompositeMessageLookup());
   messageLookup.addLocale(availableLocale, _findGeneratedMessagesFor);
+  // ignore: unnecessary_new
   return new Future.value(true);
 }
 

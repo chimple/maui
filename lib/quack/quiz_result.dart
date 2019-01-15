@@ -1,13 +1,10 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_redurx/flutter_redurx.dart';
-import 'package:maui/actions/update_points.dart';
 import 'package:maui/db/entity/quack_card.dart';
-import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/quiz_card_detail.dart';
 import 'package:maui/quack/quiz_selection.dart';
-import 'package:maui/state/app_state_container.dart';
+import 'package:maui/repos/log_repo.dart';
 import 'package:nima/nima_actor.dart';
 
 class QuizResult extends StatefulWidget {
@@ -56,9 +53,11 @@ class QuizResultState extends State<QuizResult> {
       score += max(0, correct);
       total += answer;
     });
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      Provider.dispatch<RootState>(context, UpdatePoints(points: score));
-    });
+    writeLog('topic_score,$score,$total');
+//    WidgetsBinding.instance.addPostFrameCallback((_) async {
+//      Provider.dispatch<RootState>(context, UpdatePoints(points: score));
+//    });
+    //TODO: dispatch UpdatePoints
   }
 
   @override
@@ -93,6 +92,20 @@ class QuizResultState extends State<QuizResult> {
                     // fit: StackFit.expand,
 
                     children: <Widget>[
+                      Align(
+                        alignment: AlignmentDirectional.topStart,
+                        child: new Container(
+                          // alignment: new FractionalOffset(0.0, 1.0),
+                          child: FloatingActionButton(
+                            heroTag: "Go to home",
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            tooltip: 'Go to home',
+                            child: Image.asset('assets/home_icon.png'),
+                          ),
+                        ),
+                      ),
                       Transform.scale(
                         alignment: Alignment.center,
                         scale: .85,
@@ -100,7 +113,7 @@ class QuizResultState extends State<QuizResult> {
                           padding: new EdgeInsets.only(
                               right: media.size.width * 0.08),
                           child: new NimaActor(
-                            "assets/quack",
+                            "assets/quack.nima",
                             alignment: Alignment.center,
                             paused: paused,
                             fit: BoxFit.scaleDown,
@@ -110,30 +123,32 @@ class QuizResultState extends State<QuizResult> {
                           ),
                         ),
                       ),
-                      Align(
-                        alignment: AlignmentDirectional.bottomCenter,
-                        child: Container(
-                          height: 100.0,
+                      total == 0
+                          ? Container()
+                          : Align(
+                              alignment: AlignmentDirectional.bottomCenter,
+                              child: Container(
+                                height: 100.0,
 
-                          width: 200.0,
+                                width: 200.0,
 
-                          // padding: EdgeInsets.only(bottom: 30.0),
+                                // padding: EdgeInsets.only(bottom: 30.0),
 
-                          decoration: ShapeDecoration(
-                              color: Colors.orangeAccent,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.horizontal(
-                                    left: Radius.circular(40.0),
-                                    right: Radius.circular(40.0)),
-                              )),
-                          child: Center(
-                              child: Text(
-                            '$score / $total',
-                            style:
-                                TextStyle(fontSize: 40.0, color: Colors.white),
-                          )),
-                        ),
-                      )
+                                decoration: ShapeDecoration(
+                                    color: Colors.orangeAccent,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.horizontal(
+                                          left: Radius.circular(40.0),
+                                          right: Radius.circular(40.0)),
+                                    )),
+                                child: Center(
+                                    child: Text(
+                                  '$score / $total',
+                                  style: TextStyle(
+                                      fontSize: 40.0, color: Colors.white),
+                                )),
+                              ),
+                            )
                     ],
                   ),
                 ),
