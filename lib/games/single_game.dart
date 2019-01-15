@@ -212,6 +212,7 @@ class SingleGame extends StatefulWidget {
       Color(0xFF282828),
       Color(0xFFFE6677)
     ],
+    'domino_math': [Color(0xFF42AD56), Color(0xFFffdc48), Color(0xFF4AC8DD)],
     'quiz_pager': [Color(0xFF1DC8CC), Color(0xFF282828), Color(0xFFFE6677)],
     'basic_addition': [Color(0xFF1DC8CC), Color(0xFF282828), Color(0xFFFE6677)]
   };
