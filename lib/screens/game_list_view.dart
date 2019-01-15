@@ -10,6 +10,7 @@ import 'package:tuple/tuple.dart';
 
 List<Tuple2<String, String>> gameNames = [
   Tuple2('reflex', 'Reflex'),
+  Tuple2('counting', 'Counting'),
   Tuple2('order_it', 'Order It'),
   Tuple2('memory', 'Memory'),
   Tuple2('drawing', 'drawing'),

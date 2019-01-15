@@ -3,6 +3,7 @@ import 'dart:math';
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:maui/components/show_help.dart';
+import 'package:maui/games/counting.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -161,6 +162,7 @@ class SingleGame extends StatefulWidget {
 
   static final Map<String, List<Color>> gameColors = {
     'reflex': [Color(0xFF48AECC), Color(0xFFffb300), Color(0xFFD154BF)],
+    'counting': [Color(0xFF48AECC), Color(0xFFffb300), Color(0xFFD154BF)],
     'abacus': [Color(0xFFAD85F9), Color(0xFFFFB300), Color(0xFF43D162)],
     'bingo': [Color(0xFF52C5CE), Color(0xFFFAFAFA), Color(0xFFE25A9B)],
     'calculate_numbers': [
@@ -888,6 +890,18 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                 widget.gameConfig.otherIteration,
             isRotated: widget.isRotated,
             gameConfig: widget.gameConfig);
+        break;
+        case 'counting':
+        playTime = 15000;
+        maxIterations = 1;
+        return new Counting(
+            key: new GlobalObjectKey(keyName),
+            onScore: _onScore,
+            onProgress: _onProgress,
+            onEnd: () => _onEnd(context),
+            iteration: widget.gameConfig.myIteration +
+                widget.gameConfig.otherIteration,
+            isRotated: widget.isRotated);
         break;
       case 'quiz_pager':
         playTime = 15000;
