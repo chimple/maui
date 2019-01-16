@@ -30,9 +30,6 @@ class Counting extends StatefulWidget {
   CountingState createState() => CountingState();
 }
 
-enum Status { Active, Visible, Disappear, Draggable, Dragtarget, First }
-enum ShakeCell { Right, InActive, Dance, CurveRow }
-
 class CountingState extends State<Counting> {
   int rndVal = Random().nextInt(9 - 0);
   List<String> _letters = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];

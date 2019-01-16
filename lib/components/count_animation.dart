@@ -126,8 +126,8 @@ class CountAnimationState extends State<CountAnimation>
     setState(() {
       tapped = true;
     });
-    if (countOutETA != null) {
-      countOutETA.cancel();
+    if (countOutEta != null) {
+      countOutEta.cancel();
     }
     if (_countWidgetStatus == CountWidgetStatus.becomingInvisible) {
       countOutAnimationController.stop(canceled: true);
@@ -143,7 +143,7 @@ class CountAnimationState extends State<CountAnimation>
     });
     holdTimer.cancel();
 
-    countOutETA = new Timer(oneSecond, () {
+    countOutEta = new Timer(oneSecond, () {
       countOutAnimationController.forward(from: 0.0);
       _countWidgetStatus = CountWidgetStatus.becomingInvisible;
     });
