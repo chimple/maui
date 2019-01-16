@@ -2,13 +2,16 @@ import 'dart:convert';
 import 'dart:math';
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:maui/components/show_help.dart';
+import 'package:maui/games/counting.dart';
+import 'package:maui/games/basic_addition.dart';
+import 'package:maui/games/find_size_game.dart';
 import 'package:maui/games/basic_addition.dart';
 import 'package:maui/games/basic_counting.dart';
 import 'package:maui/games/recognize_number.dart';
-
+import 'package:maui/games/matching.dart';
 import 'package:uuid/uuid.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:maui/state/button_state_container.dart';
@@ -166,6 +169,7 @@ class SingleGame extends StatefulWidget {
 
   static final Map<String, List<Color>> gameColors = {
     'reflex': [Color(0xFF48AECC), Color(0xFFffb300), Color(0xFFD154BF)],
+    'counting': [Color(0xFF48AECC), Color(0xFFffb300), Color(0xFFD154BF)],
     'abacus': [Color(0xFFAD85F9), Color(0xFFFFB300), Color(0xFF43D162)],
     'bingo': [Color(0xFF52C5CE), Color(0xFFFAFAFA), Color(0xFFE25A9B)],
     'calculate_numbers': [
@@ -214,6 +218,7 @@ class SingleGame extends StatefulWidget {
       Color(0xFF282828),
       Color(0xFFFE6677)
     ],
+    'find_size_game': [Color(0xFFFF7D8F), Color(0xFFDAECF7), Color(0xFFFFCB57)],
     'domino_math': [Color(0xFF42AD56), Color(0xFFffdc48), Color(0xFF4AC8DD)],
     'quiz_pager': [Color(0xFF1DC8CC), Color(0xFF282828), Color(0xFFFE6677)],
     'basic_addition': [Color(0xFF1DC8CC), Color(0xFF282828), Color(0xFFFE6677)],
@@ -223,6 +228,7 @@ class SingleGame extends StatefulWidget {
       Color(0xFF282828),
       Color(0xFFFE6677)
     ]
+    'matching': [Color(0xFFDD4785), Color(0xFF9b671b), Color(0xFFf99b67)],
   };
 
   SingleGame(this.gameName,
@@ -902,6 +908,18 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             isRotated: widget.isRotated,
             gameConfig: widget.gameConfig);
         break;
+        case 'counting':
+        playTime = 15000;
+        maxIterations = 1;
+        return new Counting(
+            key: new GlobalObjectKey(keyName),
+            onScore: _onScore,
+            onProgress: _onProgress,
+            onEnd: () => _onEnd(context),
+            iteration: widget.gameConfig.myIteration +
+                widget.gameConfig.otherIteration,
+            isRotated: widget.isRotated);
+        break;
       case 'quiz_pager':
         playTime = 15000;
         maxIterations = 1;
@@ -1172,6 +1190,19 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             isRotated: widget.isRotated,
             gameCategoryId: widget.gameConfig.gameCategoryId);
         break;
+      case 'find_size_game':
+        playTime = 15000;
+        maxIterations = 1;
+        return new FindSizeGame(
+            key: new GlobalObjectKey(keyName),
+            onScore: _onScore,
+            onProgress: _onProgress,
+            onEnd: () => _onEnd(context),
+            iteration: widget.gameConfig.myIteration +
+                widget.gameConfig.otherIteration,
+            isRotated: widget.isRotated,
+            gameConfig: widget.gameConfig);
+        break;
       case 'tap_wrong':
         playTime = 15000;
         maxIterations = 4;
@@ -1284,6 +1315,8 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         break;
       case 'counting':
         return new BasicCounting(
+      case 'matching':
+        return new Matching(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
             onProgress: _onProgress,
