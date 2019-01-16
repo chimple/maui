@@ -227,7 +227,7 @@ class SingleGame extends StatefulWidget {
       Color(0xFF1DC8CC),
       Color(0xFF282828),
       Color(0xFFFE6677)
-    ]
+    ],
     'matching': [Color(0xFFDD4785), Color(0xFF9b671b), Color(0xFFf99b67)],
   };
 
@@ -908,7 +908,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             isRotated: widget.isRotated,
             gameConfig: widget.gameConfig);
         break;
-        case 'counting':
+      case 'counting':
         playTime = 15000;
         maxIterations = 1;
         return new Counting(
@@ -1315,8 +1315,6 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         break;
       case 'counting':
         return new BasicCounting(
-      case 'matching':
-        return new Matching(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
             onProgress: _onProgress,
@@ -1326,6 +1324,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             isRotated: widget.isRotated,
             gameConfig: widget.gameConfig);
         break;
+
       case 'recognize_number':
         return new RecognizeNumber(
             key: new GlobalObjectKey(keyName),
@@ -1335,6 +1334,17 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             iteration: widget.gameConfig.myIteration +
                 widget.gameConfig.otherIteration,
             isRotated: widget.isRotated,
+            gameConfig: widget.gameConfig);
+        break;
+
+      case 'matching':
+        return new Matching(
+            key: new GlobalObjectKey(keyName),
+            onScore: _onScore,
+            onProgress: _onProgress,
+            onEnd: () => _onEnd(context),
+            iteration: widget.gameConfig.myIteration +
+                widget.gameConfig.otherIteration,
             gameConfig: widget.gameConfig);
         break;
     }
