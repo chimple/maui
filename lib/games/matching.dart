@@ -49,11 +49,11 @@ class _MatchingState extends State<Matching> {
   }
 
   _initData() async {
-    // final _allLetters =
-    //     await fetchPairData(widget.gameConfig.gameCategoryId, 8);
-    // print('all data :$_allLetters');
-    // _data.clear();
-    // _data.addAll(_allLetters);
+    final _allLetters =
+        await fetchPairData(widget.gameConfig.gameCategoryId, 8);
+    print('all data ::$_allLetters');
+    _data.clear();
+    _data.addAll(_allLetters);
     _questionData.addAll(_data.keys);
     _answerData.addAll(_data.values);
     _question.addAll(_data.keys);
@@ -372,7 +372,7 @@ class DrawLine extends CustomPainter {
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
-    return true;
+    return false;
   }
 }
 
@@ -403,12 +403,9 @@ class _RenderObject extends RenderProxyBox {
   final double height;
   @override
   void paint(PaintingContext context, Offset offset) {
-    // print('it fine worlking');
     if (child != null) {
       final o = -child.globalToLocal(Offset(0.0, height));
-      // if (o != null) of.addAll([o]);
       dottedCircleOffset.add(o + Offset(12.0, 12.0));
-      // print('offset:: ${of.length}');
       context.paintChild(child, offset);
     }
   }
