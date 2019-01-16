@@ -31,6 +31,7 @@ List<Tuple2<String, String>> gameNames = [
   Tuple2('spin_wheel', 'Spin The Wheel'),
   Tuple2('dice', 'Dice'),
   Tuple2('basic_addition', 'Basic Addition'),
+  Tuple2('matching', 'Matching Game'),
 ];
 
 //            GameButton( 'abacus', 'Abacus', notifs: _notifs),

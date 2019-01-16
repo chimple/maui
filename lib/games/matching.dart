@@ -49,11 +49,11 @@ class _MatchingState extends State<Matching> {
   }
 
   _initData() async {
-    final _allLetters =
-        await fetchPairData(widget.gameConfig.gameCategoryId, 8);
-    print('all data :$_allLetters');
-    _data.clear();
-    _data.addAll(_allLetters);
+    // final _allLetters =
+    //     await fetchPairData(widget.gameConfig.gameCategoryId, 8);
+    // print('all data :$_allLetters');
+    // _data.clear();
+    // _data.addAll(_allLetters);
     _questionData.addAll(_data.keys);
     _answerData.addAll(_data.values);
     _question.addAll(_data.keys);
@@ -130,8 +130,10 @@ class _MatchingState extends State<Matching> {
     }
     if (_joinedLinedOffset.length == _data.length) {
       print('game end');
-      widget.onEnd();
-      flag = 0;
+      new Future.delayed(Duration(seconds: 1), () {
+        widget.onEnd();
+        flag = 0;
+      });
     }
   }
 
