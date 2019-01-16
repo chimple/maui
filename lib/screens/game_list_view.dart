@@ -30,10 +30,11 @@ List<Tuple2<String, String>> gameNames = [
   Tuple2('wordgrid', 'Word Grid'),
   Tuple2('spin_wheel', 'Spin The Wheel'),
   Tuple2('dice', 'Dice'),
-  Tuple2('find_size_game', 'Find Size Game'),
-  Tuple2('basic_addition', 'basic_Addition'),
   Tuple2('domino_math', 'Domino'),
   Tuple2('basic_addition', 'Basic Addition'),
+  Tuple2('counting', 'Basic Counting'),
+  Tuple2('recognize_number', 'Recognize Number')
+  Tuple2('find_size_game', 'Find Size Game'),
   Tuple2('matching', 'Matching Game'),
 ];
 

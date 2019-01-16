@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:maui/components/show_help.dart';
 import 'package:maui/games/find_size_game.dart';
 import 'package:maui/games/basic_addition.dart';
+import 'package:maui/games/basic_counting.dart';
+import 'package:maui/games/recognize_number.dart';
 import 'package:maui/games/matching.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter/services.dart';
@@ -217,6 +219,12 @@ class SingleGame extends StatefulWidget {
     'domino_math': [Color(0xFF42AD56), Color(0xFFffdc48), Color(0xFF4AC8DD)],
     'quiz_pager': [Color(0xFF1DC8CC), Color(0xFF282828), Color(0xFFFE6677)],
     'basic_addition': [Color(0xFF1DC8CC), Color(0xFF282828), Color(0xFFFE6677)],
+    'basic_counting': [Color(0xFF1DC8CC), Color(0xFF282828), Color(0xFFFE6677)],
+    'recognize_number': [
+      Color(0xFF1DC8CC),
+      Color(0xFF282828),
+      Color(0xFFFE6677)
+    ]
     'matching': [Color(0xFFDD4785), Color(0xFF9b671b), Color(0xFFf99b67)],
   };
 
@@ -1285,6 +1293,13 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             isRotated: widget.isRotated,
             gameConfig: widget.gameConfig);
         break;
+      case 'domino_math':
+        return new Domino(
+          key: new GlobalObjectKey(keyName),
+        );
+        break;
+      case 'counting':
+        return new BasicCounting(
       case 'matching':
         return new Matching(
             key: new GlobalObjectKey(keyName),
@@ -1293,11 +1308,19 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             onEnd: () => _onEnd(context),
             iteration: widget.gameConfig.myIteration +
                 widget.gameConfig.otherIteration,
+            isRotated: widget.isRotated,
             gameConfig: widget.gameConfig);
-      case 'domino_math':
-        return new Domino(
-          key: new GlobalObjectKey(keyName),
-        );
+        break;
+      case 'recognize_number':
+        return new RecognizeNumber(
+            key: new GlobalObjectKey(keyName),
+            onScore: _onScore,
+            onProgress: _onProgress,
+            onEnd: () => _onEnd(context),
+            iteration: widget.gameConfig.myIteration +
+                widget.gameConfig.otherIteration,
+            isRotated: widget.isRotated,
+            gameConfig: widget.gameConfig);
         break;
     }
     return null;
