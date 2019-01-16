@@ -56,6 +56,7 @@ class CountingState extends State<Counting> {
     super.initState();
     initfn();
   }
+
   initfn() {
     setState(() => _isLoading = true);
     String ansData = (rndVal + 1).toString();
@@ -157,7 +158,11 @@ class CountingState extends State<Counting> {
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
                         child: CountAnimation(
-                            index, rndVal, selectedIndex, countVal),
+                            key: new ValueKey<int>(index),
+                            index: index,
+                            rndVal: rndVal,
+                            selectedIndex: selectedIndex,
+                            countVal: countVal),
                       );
                     })),
           ),

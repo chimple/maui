@@ -8,14 +8,16 @@ class CountAnimation extends StatefulWidget {
   int rndVal;
   var selectedIndex;
   int countVal;
-  CountAnimation(this.index, this.rndVal, this.selectedIndex, this.countVal);
+  CountAnimation(
+      {key, this.index, this.rndVal, this.selectedIndex, this.countVal})
+      : super(key: key);
   @override
   CountAnimationState createState() {
     return new CountAnimationState();
   }
 }
 
-enum CountWidgetStatus { HIDDEN, BECOMING_VISIBLE, VISIBLE, BECOMING_INVISIBLE }
+enum CountWidgetStatus { hidden, becomingVisible, visible, becomingInvisible }
 
 class CountAnimationState extends State<CountAnimation>
     with TickerProviderStateMixin {
@@ -24,7 +26,7 @@ class CountAnimationState extends State<CountAnimation>
   int counting = 0;
   bool tapped = false;
   double _sparklesAngle = 0.0;
-  CountWidgetStatus _countWidgetStatus = CountWidgetStatus.HIDDEN;
+  CountWidgetStatus _countWidgetStatus = CountWidgetStatus.hidden;
   final duration = new Duration(milliseconds: 400);
   final oneSecond = new Duration(seconds: 1);
   Random random;
@@ -54,7 +56,7 @@ class CountAnimationState extends State<CountAnimation>
     });
     countOutAnimationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        _countWidgetStatus = CountWidgetStatus.HIDDEN;
+        _countWidgetStatus = CountWidgetStatus.hidden;
       }
     });
 
@@ -79,9 +81,9 @@ class CountAnimationState extends State<CountAnimation>
   }
 
   dispose() {
-    super.dispose();
     countInAnimationController.dispose();
     countOutAnimationController.dispose();
+    super.dispose();
   }
 
   void increment(Timer t) {
@@ -127,11 +129,11 @@ class CountAnimationState extends State<CountAnimation>
     if (countOutETA != null) {
       countOutETA.cancel();
     }
-    if (_countWidgetStatus == CountWidgetStatus.BECOMING_INVISIBLE) {
+    if (_countWidgetStatus == CountWidgetStatus.becomingInvisible) {
       countOutAnimationController.stop(canceled: true);
-      _countWidgetStatus = CountWidgetStatus.VISIBLE;
-    } else if (_countWidgetStatus == CountWidgetStatus.HIDDEN) {
-      _countWidgetStatus = CountWidgetStatus.BECOMING_VISIBLE;
+      _countWidgetStatus = CountWidgetStatus.visible;
+    } else if (_countWidgetStatus == CountWidgetStatus.hidden) {
+      _countWidgetStatus = CountWidgetStatus.becomingVisible;
       countInAnimationController.forward(from: 20.0);
     }
     increment(null);
@@ -143,7 +145,7 @@ class CountAnimationState extends State<CountAnimation>
 
     countOutETA = new Timer(oneSecond, () {
       countOutAnimationController.forward(from: 0.0);
-      _countWidgetStatus = CountWidgetStatus.BECOMING_INVISIBLE;
+      _countWidgetStatus = CountWidgetStatus.becomingInvisible;
     });
     holdTimer.cancel();
   }
@@ -153,16 +155,16 @@ class CountAnimationState extends State<CountAnimation>
     var countOpacity = 0.0;
     var extraSize = 0.0;
     switch (_countWidgetStatus) {
-      case CountWidgetStatus.HIDDEN:
+      case CountWidgetStatus.hidden:
         break;
-      case CountWidgetStatus.BECOMING_VISIBLE:
-      case CountWidgetStatus.VISIBLE:
+      case CountWidgetStatus.becomingVisible:
+      case CountWidgetStatus.visible:
         countPosition =
             countInAnimationController.value * media.size.height * .1;
         countOpacity = countInAnimationController.value;
         extraSize = countSizeAnimationController.value * 5;
         break;
-      case CountWidgetStatus.BECOMING_INVISIBLE:
+      case CountWidgetStatus.becomingInvisible:
         countPosition = countOutPositionAnimation.value;
         countOpacity = 1.0 - countOutAnimationController.value;
     }
@@ -222,8 +224,8 @@ class CountAnimationState extends State<CountAnimation>
 
   Widget getImageButton(int index) {
     var extraSize = 0.0;
-    if (_countWidgetStatus == CountWidgetStatus.VISIBLE ||
-        _countWidgetStatus == CountWidgetStatus.BECOMING_VISIBLE) {
+    if (_countWidgetStatus == CountWidgetStatus.visible ||
+        _countWidgetStatus == CountWidgetStatus.becomingVisible) {
       extraSize = countSizeAnimationController.value * 20;
     }
     return Container(
