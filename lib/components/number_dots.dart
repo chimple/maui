@@ -11,9 +11,7 @@ class NumberDots extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int rowSize = 1;
-    int checkingNumber = this
-        .number; // this.number storing in one variable later we can change that variable ..
-    //this.number can't be change no more beacous its final.
+    int checkingNumber = this.number;
 
     if (checkingNumber > 9) {
       checkingNumber = 0;

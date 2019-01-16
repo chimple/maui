@@ -30,8 +30,7 @@ List<Tuple2<String, String>> gameNames = [
   Tuple2('wordgrid', 'Word Grid'),
   Tuple2('spin_wheel', 'Spin The Wheel'),
   Tuple2('dice', 'Dice'),
-  Tuple2('basic_addition', 'basic_Addition'),
-  Tuple2('matching', 'Matching_Game'),
+  Tuple2('basic_addition', 'Basic Addition'),
 ];
 
 //            GameButton( 'abacus', 'Abacus', notifs: _notifs),

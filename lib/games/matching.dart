@@ -1,7 +1,9 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:maui/components/unit_button.dart';
 import 'package:maui/games/single_game.dart';
+import 'package:maui/repos/game_data.dart';
 import 'package:maui/state/app_state.dart';
 import 'package:maui/state/app_state_container.dart';
 
@@ -34,20 +36,24 @@ class _MatchingState extends State<Matching> {
       _answerData = [],
       _question = [],
       _answer = [];
+
   Offset _startOffset, _updateOffset, _offset;
-  int _index1, _index2;
+  int _index1, _index2, flag = 0;
   bool _isUnderCircle = false;
   List<int> _joinedLineStatus = [];
+  bool _isLoading = false;
   @override
   void initState() {
-    _initData();
     super.initState();
+    _initData();
   }
 
   _initData() async {
-    // final _allLetters =
-    //     await fetchPairData(widget.gameConfig.gameCategoryId, 8);
-    // print('all data :$_allLetters');
+    final _allLetters =
+        await fetchPairData(widget.gameConfig.gameCategoryId, 8);
+    print('all data :$_allLetters');
+    _data.clear();
+    _data.addAll(_allLetters);
     _questionData.addAll(_data.keys);
     _answerData.addAll(_data.values);
     _question.addAll(_data.keys);
@@ -55,16 +61,35 @@ class _MatchingState extends State<Matching> {
     _question.shuffle();
     _answer.shuffle();
     for (int i = 0; i < _data.length * 2; i++) _joinedLineStatus.add(0);
+    setState(() {
+      _isLoading = true;
+    });
   }
 
-  void _countOffsetOfCircle(Offset o) {
-    _dottedCircleOffset.add(o + Offset(12.5, 12.5));
+  // void _countOffsetOfCircle(Offset o) {
+  //   _dottedCircleOffset.add(o + Offset(12.5, 12.5));
+  // }
+
+  @override
+  didUpdateWidget(Matching oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    print('adsadsadsad ');
+    if (_joinedLineStatus.length >= 3) {
+      print('re build');
+    }
   }
 
   void _onStart(Offset start) {
+    if (dottedCircleOffset.isNotEmpty && flag == 0) {
+      _dottedCircleOffset.addAll(dottedCircleOffset
+          .sublist(dottedCircleOffset.length - _data.length * 2));
+      print(
+          'final list $_dottedCircleOffset length ${_dottedCircleOffset.length}');
+      flag = 1;
+    }
     print('offset on start:: $start');
     for (int i = 0; i < _dottedCircleOffset.length; i++) {
-      if ((start - (_dottedCircleOffset[i])).distance < 35 &&
+      if ((start - (_dottedCircleOffset[i])).distance < 40 &&
           _joinedLineStatus[i] != 1) {
         _index1 = i;
         print('index at stared:$i');
@@ -79,14 +104,6 @@ class _MatchingState extends State<Matching> {
     }
   }
 
-  void _joinLine(int i) {
-    _offset = _dottedCircleOffset[i];
-    setState(() {
-      _isUnderCircle = true;
-      _startOffset = _offset;
-    });
-  }
-
   void _onUpdate(Offset offset) {
     setState(() {
       _updateOffset = offset;
@@ -95,24 +112,38 @@ class _MatchingState extends State<Matching> {
 
   void _onEnd(ScaleEndDetails end) {
     if (_updateOffset != null && _startOffset != null) {
-      print('offset at end:: $_updateOffset');
+      print('offset at end:: $_updateOffset ${_dottedCircleOffset.length}');
       for (int i = 0; i < _dottedCircleOffset.length; i++) {
-        if ((_updateOffset - _dottedCircleOffset[i]).distance < 35 &&
+        if ((_updateOffset - _dottedCircleOffset[i]).distance < 40 &&
             _joinedLineStatus[i] != 1) {
           print('index at end: $i');
           _index2 = i;
-          _connectDottes();
+          _connectDots();
         } else {}
       }
+
+      setState(() {
+        _startOffset = null;
+        _updateOffset = null;
+        _offset = null;
+      });
     }
+    if (_joinedLinedOffset.length == _data.length) {
+      print('game end');
+      widget.onEnd();
+      flag = 0;
+    }
+  }
+
+  void _joinLine(int i) {
+    _offset = _dottedCircleOffset[i];
     setState(() {
-      _startOffset = null;
-      _updateOffset = null;
-      _offset = null;
+      _isUnderCircle = true;
+      _startOffset = _offset;
     });
   }
 
-  void _connectDottes() {
+  void _connectDots() {
     if (_index1 < _question.length &&
         _index2 < _dottedCircleOffset.length &&
         _index2 >= _question.length) {
@@ -145,6 +176,7 @@ class _MatchingState extends State<Matching> {
     return UnitButton(
       text: text,
       key: Key('$index'),
+      onPress: null,
     );
   }
 
@@ -152,10 +184,14 @@ class _MatchingState extends State<Matching> {
       AlignmentDirectional alignment) {
     return Stack(alignment: alignment, children: <Widget>[
       DottedCircle(
-        keys: GlobalKey(debugLabel: index.toString()),
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.yellow, borderRadius: BorderRadius.circular(12.5)),
+          height: 25,
+          width: 25,
+        ),
+        key: GlobalKey(debugLabel: index.toString()),
         height: MediaQuery.of(context).size.height - constraint.maxHeight,
-        offsetOfCicle: _countOffsetOfCircle,
-        constraint: constraint,
       ),
       Padding(
         padding: index < _question.length
@@ -168,6 +204,15 @@ class _MatchingState extends State<Matching> {
 
   @override
   Widget build(BuildContext context) {
+    var maxChars = (_question != null
+        ? _question.fold(
+            1, (prev, element) => element.length > prev ? element.length : prev)
+        : 1);
+
+    maxChars = (_answer != null
+        ? _answer.fold(maxChars,
+            (prev, element) => element.length > prev ? element.length : prev)
+        : 1);
     int index = 0;
     return LayoutBuilder(builder: (context, constraints) {
       final hPadding = pow(constraints.maxWidth / 150.0, 2);
@@ -181,96 +226,113 @@ class _MatchingState extends State<Matching> {
 
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
-      UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
+      UnitButton.saveButtonSize(context, maxChars, maxWidth, maxHeight);
       AppState state = AppStateContainer.of(context).state;
-      print('constraint Box:: $constraints');
-      return Container(
-        decoration: BoxDecoration(
-            color: Color(0xffA52A2A),
-            borderRadius: BorderRadius.only(
-                topRight: Radius.circular(30), topLeft: Radius.circular(30))),
-        child: CustomPaint(
-          foregroundPainter: DrawLine(
-              dottedOffset: _joinedLinedOffset,
-              startOffset: _startOffset,
-              endOffset: _updateOffset),
-          child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onScaleStart: (ScaleStartDetails str) {
-                Offset start = (context.findRenderObject() as RenderBox)
-                    .globalToLocal(str.focalPoint);
-                _onStart(start);
-              },
-              onScaleUpdate: (ScaleUpdateDetails det) {
-                Offset update = (context.findRenderObject() as RenderBox)
-                    .globalToLocal(det.focalPoint);
-                if (_isUnderCircle) _onUpdate(update);
-              },
-              onScaleEnd: _onEnd,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: _question.map((s) {
-                      return _build(constraints, index++, s,
-                          AlignmentDirectional.centerEnd);
-                    }).toList(growable: false),
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: _answer.map((a) {
-                      return _build(constraints, index++, a,
-                          AlignmentDirectional.centerStart);
-                    }).toList(growable: false),
-                  ),
-                ],
-              )),
-        ),
-      );
+      // print('constraint Box:: $constraints');
+      if (!_isLoading) {
+        return Center(
+          child: SizedBox(
+            height: 40,
+            width: 40,
+            child: CircularProgressIndicator(),
+          ),
+        );
+      } else {
+        return Container(
+          decoration: BoxDecoration(
+              color: Color(0xffA52A2A),
+              borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(30), topLeft: Radius.circular(30))),
+          child: CustomPaint(
+            foregroundPainter: DrawLine(
+                dottedOffset: _joinedLinedOffset,
+                startOffset: _startOffset,
+                endOffset: _updateOffset),
+            child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onScaleStart: (ScaleStartDetails str) {
+                  Offset start = (context.findRenderObject() as RenderBox)
+                      .globalToLocal(str.focalPoint);
+                  _onStart(start);
+                },
+                onScaleUpdate: (ScaleUpdateDetails det) {
+                  Offset update = (context.findRenderObject() as RenderBox)
+                      .globalToLocal(det.focalPoint);
+                  if (_isUnderCircle) _onUpdate(update);
+                },
+                onScaleEnd: _onEnd,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: _question
+                          .map((s) => Padding(
+                              padding: EdgeInsets.all(0),
+                              child: _build(constraints, index++, s,
+                                  AlignmentDirectional.centerEnd)))
+                          .toList(growable: false),
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: _answer
+                          .map((a) => Padding(
+                              padding: EdgeInsets.all(0),
+                              child: _build(constraints, index++, a,
+                                  AlignmentDirectional.centerStart)))
+                          .toList(growable: false),
+                    ),
+                  ],
+                )),
+          ),
+        );
+      }
     });
   }
 }
 
-class DottedCircle extends StatefulWidget {
-  final Function offsetOfCicle;
-  final BoxConstraints constraint;
-  final double height;
-  final GlobalKey keys;
-  DottedCircle({this.keys, this.offsetOfCicle, this.constraint, this.height});
-  @override
-  DottedCircleState createState() {
-    return new DottedCircleState();
-  }
-}
+// class DottedCircle extends StatefulWidget {
+//   final Function offsetOfCicle;
+//   final BoxConstraints constraint;
+//   final double height;
+//   final GlobalKey keys;
+//   DottedCircle({this.keys, this.offsetOfCicle, this.constraint, this.height});
+//   @override
+//   DottedCircleState createState() {
+//     return new DottedCircleState();
+//   }
+// }
 
-class DottedCircleState extends State<DottedCircle> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback(_afterLayout);
-  }
+// class DottedCircleState extends State<DottedCircle> {
+//   @override
+//   void initState() {
+//     // final overlay = Overlay.of(context).initState();
+//     super.initState();
+//     WidgetsBinding.instance.addPostFrameCallback(_afterLayout);
+//   }
 
-  void _afterLayout(_) {
-    final RenderBox renderBoxRed =
-        widget.keys.currentContext.findRenderObject();
-    final offset = -renderBoxRed.globalToLocal(Offset(0.0, widget.height));
-    widget.offsetOfCicle(offset);
-    print("POSITIONED of dotted Cirlce: $offset, ${widget.height}");
-  }
+//   void _afterLayout(_) {
+//     final RenderBox renderBoxRed =
+//         widget.keys.currentContext.findRenderObject();
+//     final offset = -renderBoxRed.globalToLocal(Offset(0.0, widget.height));
+//     widget.offsetOfCicle(offset);
+//     // print("POSITIONED of dotted Cirlce: $offset, ${widget.height}");
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          color: Colors.grey, borderRadius: BorderRadius.circular(12.5)),
-      height: 25,
-      width: 25,
-      key: widget.keys,
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return DottedOffset(
+//       child: Container(
+//         decoration: BoxDecoration(
+//             color: Colors.grey, borderRadius: BorderRadius.circular(12.5)),
+//         height: 25,
+//         width: 25,
+//         key: widget.keys,
+//       ),
+//     );
+//   }
+// }
 
 class DrawLine extends CustomPainter {
   final Offset startOffset;
@@ -284,9 +346,9 @@ class DrawLine extends CustomPainter {
   }
   Paint _paint = Paint()
     ..color = Colors.yellow
-    ..strokeWidth = 6.0
+    ..strokeWidth = 5.0
     ..strokeCap = StrokeCap.round
-    ..maskFilter = MaskFilter.blur(BlurStyle.solid, 4.0);
+    ..maskFilter = MaskFilter.blur(BlurStyle.solid, 3.0);
   Paint _pain1 = new Paint()
     ..color = Colors.white
     ..strokeWidth = 8.0
@@ -309,5 +371,43 @@ class DrawLine extends CustomPainter {
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
     return true;
+  }
+}
+
+class DottedCircle extends SingleChildRenderObjectWidget {
+  DottedCircle({
+    Key key,
+    this.child,
+    this.height,
+  }) : super(
+          key: key,
+          child: child,
+        );
+  final Widget child;
+  final double height;
+  @override
+  RenderObject createRenderObject(BuildContext context) {
+    return _RenderObject(height: height);
+  }
+}
+
+List<Offset> dottedCircleOffset = [];
+
+class _RenderObject extends RenderProxyBox {
+  _RenderObject({
+    RenderBox child,
+    this.height,
+  }) : super(child);
+  final double height;
+  @override
+  void paint(PaintingContext context, Offset offset) {
+    // print('it fine worlking');
+    if (child != null) {
+      final o = -child.globalToLocal(Offset(0.0, height));
+      // if (o != null) of.addAll([o]);
+      dottedCircleOffset.add(o + Offset(12.0, 12.0));
+      // print('offset:: ${of.length}');
+      context.paintChild(child, offset);
+    }
   }
 }
