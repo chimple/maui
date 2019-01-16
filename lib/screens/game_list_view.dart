@@ -34,6 +34,8 @@ List<Tuple2<String, String>> gameNames = [
   Tuple2('basic_addition', 'Basic Addition'),
   Tuple2('counting', 'Basic Counting'),
   Tuple2('recognize_number', 'Recognize Number')
+  Tuple2('find_size_game', 'Find Size Game'),
+  Tuple2('matching', 'Matching Game'),
 ];
 
 //            GameButton( 'abacus', 'Abacus', notifs: _notifs),
