@@ -2,11 +2,11 @@ import 'dart:convert';
 import 'dart:math';
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:maui/components/show_help.dart';
 import 'package:maui/games/basic_addition.dart';
-
+import 'package:maui/games/matching.dart';
 import 'package:uuid/uuid.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:maui/state/button_state_container.dart';
@@ -214,7 +214,8 @@ class SingleGame extends StatefulWidget {
     ],
     'domino_math': [Color(0xFF42AD56), Color(0xFFffdc48), Color(0xFF4AC8DD)],
     'quiz_pager': [Color(0xFF1DC8CC), Color(0xFF282828), Color(0xFFFE6677)],
-    'basic_addition': [Color(0xFF1DC8CC), Color(0xFF282828), Color(0xFFFE6677)]
+    'basic_addition': [Color(0xFF1DC8CC), Color(0xFF282828), Color(0xFFFE6677)],
+    'matching': [Color(0xFFDD4785), Color(0xFF9b671b), Color(0xFFf99b67)],
   };
 
   SingleGame(this.gameName,
@@ -1269,10 +1270,19 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             isRotated: widget.isRotated,
             gameConfig: widget.gameConfig);
         break;
-        case 'domino_math':
-        return new Domino(
+      case 'matching':
+        return new Matching(
             key: new GlobalObjectKey(keyName),
-            );
+            onScore: _onScore,
+            onProgress: _onProgress,
+            onEnd: () => _onEnd(context),
+            iteration: widget.gameConfig.myIteration +
+                widget.gameConfig.otherIteration,
+            gameConfig: widget.gameConfig);
+      case 'domino_math':
+        return new Domino(
+          key: new GlobalObjectKey(keyName),
+        );
         break;
     }
     return null;
