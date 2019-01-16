@@ -46,16 +46,16 @@ class _FindSizeGameState extends State<FindSizeGame>
 
   initState() {
     super.initState();
-    initfn();
+    initFn();
   }
 
-  initfn() {
+  initFn() {
     setState(() => _isLoading = true);
     // data = await fetchWordData(
     //   widget.gameConfig.gameCategoryId, _maxSize, _otherSize);
     int temp = 0;
     while (temp < _images.length) {
-      if (temp < _images.length) _isDone.add(false);
+      _isDone.add(false);
       _dropData.add(null);
       temp++;
     }
@@ -234,9 +234,7 @@ class MyButton extends StatefulWidget {
   MyButton(
       {Key key,
       this.index,
-      this.text,
       this.dropBoxBg,
-      this.flag,
       this.onAccepted,
       this.code,
       this.isRotated,
@@ -246,10 +244,8 @@ class MyButton extends StatefulWidget {
       : super(key: key);
   final index;
   final String dropBoxBg;
-  final int flag;
   final int code;
   final bool isRotated;
-  final String text;
   final String img;
   final DragTargetAccept onAccepted;
   final bool isDone;
@@ -329,13 +325,14 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
               (!ButtonStateContainer.of(context).isButtonBeingUsed) ? 1 : 0,
           data: '${widget.index}' + '_' + '${widget.code}',
           child: new UnitButton(
-            key: new Key('A${widget.index}'),
+            key: new Key('${widget.index}'),
             text: '',
             showHelp: false,
             unitMode: UnitMode.image,
             bgImage: widget.img,
           ),
           feedback: UnitButton(
+            key: new Key('F' + '${widget.index}'),
             text: '',
             bgImage: widget.img,
             unitMode: UnitMode.image,
