@@ -17,6 +17,7 @@ import 'package:maui/games/abacus.dart';
 import 'package:maui/games/bingo.dart';
 import 'package:maui/games/calculate_numbers.dart';
 import 'package:maui/games/casino.dart';
+import 'package:maui/games/domino_math.dart';
 import 'package:maui/games/circleword.dart';
 import 'package:maui/games/connectdots.dart';
 import 'package:maui/games/crossword.dart';
@@ -211,6 +212,7 @@ class SingleGame extends StatefulWidget {
       Color(0xFF282828),
       Color(0xFFFE6677)
     ],
+    'domino_math': [Color(0xFF42AD56), Color(0xFFffdc48), Color(0xFF4AC8DD)],
     'quiz_pager': [Color(0xFF1DC8CC), Color(0xFF282828), Color(0xFFFE6677)],
     'basic_addition': [Color(0xFF1DC8CC), Color(0xFF282828), Color(0xFFFE6677)],
     'matching': [Color(0xFFDD4785), Color(0xFF9b671b), Color(0xFFf99b67)],
@@ -1277,6 +1279,10 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             iteration: widget.gameConfig.myIteration +
                 widget.gameConfig.otherIteration,
             gameConfig: widget.gameConfig);
+      case 'domino_math':
+        return new Domino(
+          key: new GlobalObjectKey(keyName),
+        );
         break;
     }
     return null;
