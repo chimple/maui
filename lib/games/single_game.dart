@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:maui/components/show_help.dart';
+import 'package:maui/games/find_size_game.dart';
 import 'package:maui/games/basic_addition.dart';
 import 'package:maui/games/matching.dart';
 import 'package:uuid/uuid.dart';
@@ -212,6 +213,7 @@ class SingleGame extends StatefulWidget {
       Color(0xFF282828),
       Color(0xFFFE6677)
     ],
+    'find_size_game': [Color(0xFFFF7D8F), Color(0xFFDAECF7), Color(0xFFFFCB57)],
     'domino_math': [Color(0xFF42AD56), Color(0xFFffdc48), Color(0xFF4AC8DD)],
     'quiz_pager': [Color(0xFF1DC8CC), Color(0xFF282828), Color(0xFFFE6677)],
     'basic_addition': [Color(0xFF1DC8CC), Color(0xFF282828), Color(0xFFFE6677)],
@@ -1164,6 +1166,19 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                 widget.gameConfig.otherIteration,
             isRotated: widget.isRotated,
             gameCategoryId: widget.gameConfig.gameCategoryId);
+        break;
+      case 'find_size_game':
+        playTime = 15000;
+        maxIterations = 1;
+        return new FindSizeGame(
+            key: new GlobalObjectKey(keyName),
+            onScore: _onScore,
+            onProgress: _onProgress,
+            onEnd: () => _onEnd(context),
+            iteration: widget.gameConfig.myIteration +
+                widget.gameConfig.otherIteration,
+            isRotated: widget.isRotated,
+            gameConfig: widget.gameConfig);
         break;
       case 'tap_wrong':
         playTime = 15000;
