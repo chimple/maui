@@ -30,7 +30,7 @@ class CountAnimationState extends State<CountAnimation>
   final duration = new Duration(milliseconds: 400);
   final oneSecond = new Duration(seconds: 1);
   Random random;
-  Timer holdTimer, countOutETA;
+  Timer holdTimer, countOutEta;
   AnimationController countInAnimationController,
       countOutAnimationController,
       countSizeAnimationController,
