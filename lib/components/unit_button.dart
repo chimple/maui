@@ -196,7 +196,8 @@ class _UnitButtonState extends State<UnitButton> {
               fit: BoxFit.cover,
             );
     }
-    return int.tryParse(widget.text) == null || int.tryParse(widget.text) == 0
+    int textNumber = int.tryParse(widget.text);
+    return textNumber == null || textNumber == 0
         ? Center(
             child: Text(widget.text,
                 style: new TextStyle(
@@ -212,7 +213,7 @@ class _UnitButtonState extends State<UnitButton> {
                         : Theme.of(context).primaryColor,
                     fontSize: 25)),
             NumberDots(
-              number: int.tryParse(widget.text),
+              number: textNumber,
             )
           ]);
   }
