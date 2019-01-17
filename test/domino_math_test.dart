@@ -18,18 +18,5 @@ void main() {
      expect(find.byKey(inputKey), findsOneWidget);
   });
 
-  testWidgets('Shows the toggle button', (WidgetTester tester) async {
-    bool called = false;
-
-    await tester.pumpWidget(new MaterialApp(
-      home: new Material(
-        child: new Domino(),
-      ),
-    ));
-    expect(called, isFalse);
-
-    await tester.tap(find.byType(IconButton));
-
-    expect(called, isTrue);
-  });
+  
 }
