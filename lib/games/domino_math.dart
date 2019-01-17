@@ -69,8 +69,8 @@ class _DominoState extends State<Domino> {
         return Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            // DominoQuestion(_num1),
-            DominoAddition(_num1, _num2, _sum),
+            DominoQuestion(_num1),
+            // DominoAddition(_num1, _num2, _sum),
             new Expanded(
               flex: 1,
               child: new Material(
@@ -113,22 +113,28 @@ class _DominoQuestionState extends State<DominoQuestion> {
               fontSize: 100.0,
               fontWeight: FontWeight.bold),
         ),
-        DragTarget(
-          // onWillAccept: (data) {
-          //   return true;
-          // },
-          onAccept: (int number) {
-            if (number == widget.question) {
-              _matched = true;
-            }
-          },
-          builder: (context, List<dynamic> accepted, List<dynamic> rejected) {
-            return _matched
-                ? UnitButton(
-                    text: "${widget.question}",
-                  )
-                : UnitButton(text: "");
-          },
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            DragTarget(
+              // onWillAccept: (data) {
+              //   return true;
+              // },
+              onAccept: (int number) {
+                if (number == widget.question) {
+                  _matched = true;
+                }
+              },
+              builder:
+                  (context, List<dynamic> accepted, List<dynamic> rejected) {
+                return _matched
+                    ? UnitButton(
+                        text: "${widget.question}",
+                      )
+                    : UnitButton(text: "");
+              },
+            ),
+          ],
         ),
       ],
     );
