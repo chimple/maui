@@ -220,6 +220,15 @@ class _MatchingState extends State<Matching> {
             (prev, element) => element.length > prev ? element.length : prev)
         : 1);
     int index = 0;
+    if (!_isLoading) {
+      return Center(
+        child: SizedBox(
+          height: 40,
+          width: 40,
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
     return LayoutBuilder(builder: (context, constraints) {
       final hPadding = pow(constraints.maxWidth / 150.0, 2);
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
@@ -232,70 +241,62 @@ class _MatchingState extends State<Matching> {
       _buttonPadding = buttonPadding;
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
-      if (_isLoading)
-        UnitButton.saveButtonSize(context, maxChars, maxWidth, maxHeight);
+
+      UnitButton.saveButtonSize(context, maxChars, maxWidth, maxHeight);
       AppState state = AppStateContainer.of(context).state;
+
       // print('constraint Box:: $constraints');
-      if (!_isLoading) {
-        return Center(
-          child: SizedBox(
-            height: 40,
-            width: 40,
-            child: CircularProgressIndicator(),
-          ),
-        );
-      } else {
-        return Container(
-          key: widget.key,
-          decoration: BoxDecoration(
-              color: Color(0xffA52A2A),
-              borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(30), topLeft: Radius.circular(30))),
-          child: CustomPaint(
-            foregroundPainter: DrawLine(
-                dottedOffset: _joinedLinedOffset,
-                startOffset: _startOffset,
-                endOffset: _updateOffset),
-            child: GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onScaleStart: (ScaleStartDetails str) {
-                  Offset start = (context.findRenderObject() as RenderBox)
-                      .globalToLocal(str.focalPoint);
-                  _onStart(start);
-                },
-                onScaleUpdate: (ScaleUpdateDetails det) {
-                  Offset update = (context.findRenderObject() as RenderBox)
-                      .globalToLocal(det.focalPoint);
-                  if (_isUnderCircle) _onUpdate(update);
-                },
-                onScaleEnd: _onEnd,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: _question
-                          .map((s) => Padding(
-                              padding: EdgeInsets.all(0),
-                              child: _build(constraints, index++, s,
-                                  AlignmentDirectional.centerEnd)))
-                          .toList(growable: false),
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: _answer
-                          .map((a) => Padding(
-                              padding: EdgeInsets.all(0),
-                              child: _build(constraints, index++, a,
-                                  AlignmentDirectional.centerStart)))
-                          .toList(growable: false),
-                    ),
-                  ],
-                )),
-          ),
-        );
-      }
+
+      return Container(
+        key: widget.key,
+        decoration: BoxDecoration(
+            color: Color(0xffA52A2A),
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(30), topLeft: Radius.circular(30))),
+        child: CustomPaint(
+          foregroundPainter: DrawLine(
+              dottedOffset: _joinedLinedOffset,
+              startOffset: _startOffset,
+              endOffset: _updateOffset),
+          child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onScaleStart: (ScaleStartDetails str) {
+                Offset start = (context.findRenderObject() as RenderBox)
+                    .globalToLocal(str.focalPoint);
+                _onStart(start);
+              },
+              onScaleUpdate: (ScaleUpdateDetails det) {
+                Offset update = (context.findRenderObject() as RenderBox)
+                    .globalToLocal(det.focalPoint);
+                if (_isUnderCircle) _onUpdate(update);
+              },
+              onScaleEnd: _onEnd,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: _question
+                        .map((s) => Padding(
+                            padding: EdgeInsets.all(0),
+                            child: _build(constraints, index++, s,
+                                AlignmentDirectional.centerEnd)))
+                        .toList(growable: false),
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: _answer
+                        .map((a) => Padding(
+                            padding: EdgeInsets.all(0),
+                            child: _build(constraints, index++, a,
+                                AlignmentDirectional.centerStart)))
+                        .toList(growable: false),
+                  ),
+                ],
+              )),
+        ),
+      );
     });
   }
 }
