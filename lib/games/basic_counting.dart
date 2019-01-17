@@ -71,7 +71,7 @@ class BasicCountingState extends State<BasicCounting> {
       _answer.add(e);
     });
      newAnswer = _answer.sublist(0,2);
-    print("this is al ieierjierl $_all");
+    print("this is al ieierjierl $_question");
     print("this is a answer $_answer");
     print("this is a new answer $newAnswer");
     _statuses = _question.map((e) => Status.active).toList(growable: false);
@@ -173,7 +173,7 @@ class BasicCountingState extends State<BasicCounting> {
                     child: new ResponsiveGridView(
                       rows: 1,
                       cols: 2,
-                      children: newAnswer
+                      children: _question
                           .map((e) => Padding(
                               padding: EdgeInsets.all(buttonPadding),
                               child: Column(
@@ -183,7 +183,7 @@ class BasicCountingState extends State<BasicCounting> {
                                     width: 200.0,
                                     height: 200.0,
                                     child: Image.asset(
-                                      "assets/finger_count/$e.png",
+                                      "assets/finger_count/apple.png",
                                       fit: BoxFit.fill,
                                     ),
                                   ),
