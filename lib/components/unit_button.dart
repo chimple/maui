@@ -36,6 +36,7 @@ class UnitButton extends StatefulWidget {
       this.highlighted = false,
       this.primary = true,
       this.forceUnitMode = false,
+      this.dotFlag = true,
       this.bgImage,
       this.maxHeight,
       this.maxWidth,
@@ -216,6 +217,7 @@ class _UnitButtonState extends State<UnitButton> {
             );
     }
     int textNumber = int.tryParse(widget.text);
+    return textNumber == null || textNumber == 0 || widget.dotFlag == false
         ? Center(
             child: Text(widget.text,
                 style: new TextStyle(

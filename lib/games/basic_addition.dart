@@ -331,74 +331,9 @@ class MyQuestionButton extends StatefulWidget {
   _MyQuestionButtonState createState() => new _MyQuestionButtonState();
 }
 
-class _MyQuestionButtonState extends State<MyQuestionButton>
-    with TickerProviderStateMixin {
-  AnimationController controller, controller1, rectController;
-  Animation<double> animation, animation1;
-  Animation<RelativeRect> rectAnimation;
-  String dragText;
-  String noEmptyString;
-  bool isDragging = false;
-  initState() {
-    super.initState();
-
-    // disptext = widget.text == null ? '' : widget.text;
-    if (widget.text != '') {
-      dragText = widget.text;
-    }
-
-    rectController = controller = new AnimationController(
-        duration: new Duration(milliseconds: 100), vsync: this);
-    controller = new AnimationController(
-        duration: new Duration(milliseconds: 100), vsync: this);
-    controller1 = new AnimationController(
-        duration: new Duration(milliseconds: 40), vsync: this);
-    animation =
-        new CurvedAnimation(parent: controller, curve: Curves.decelerate)
-          ..addStatusListener((state) {});
-    controller.forward();
-    animation1 = new Tween(begin: -3.0, end: 3.0).animate(controller1);
-    rectAnimation = new Tween(
-      begin: RelativeRect.fromLTRB(10.0, 0.0, 0.0, 0.0),
-      end: RelativeRect.fromLTRB(40.0, 400.0, 40.0, 400.0),
-    ).animate(rectController);
-    _myAnim();
-  }
-
-  void _myAnim() {
-    animation1.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        controller1.reverse();
-      } else if (status == AnimationStatus.dismissed) {
-        controller1.forward();
-      }
-    });
-    controller1.forward();
-  }
-
-  @override
-  void dispose() {
-    controller1.dispose();
-    controller.dispose();
-    rectController.dispose();
-    super.dispose();
-  }
-
-  @override
-  void didUpdateWidget(MyQuestionButton oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.text != widget.text) {
-      controller.forward();
-    }
-  }
-
+class _MyQuestionButtonState extends State<MyQuestionButton> {
   @override
   Widget build(BuildContext context) {
-    var buttonConfig;
-    if (ButtonStateContainer.of(context) != null) {
-      buttonConfig = ButtonStateContainer.of(context).buttonConfig;
-    }
-
     if (ButtonStateContainer.of(context) != null) {
       return new UnitButton(
         text: widget.text,
@@ -531,9 +466,11 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                       ) {
                         return widget.text == null
                             ? UnitButton(
+                                dotFlag: false,
                                 text: '',
                               )
                             : UnitButton(
+                                dotFlag: false,
                                 text: widget.text,
                               );
                       },
@@ -583,6 +520,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
           child: new ScaleTransition(
             scale: animation,
             child: new UnitButton(
+              dotFlag: false,
               key: new Key('A${widget.keys}'),
               text: widget.text,
               showHelp: false,
