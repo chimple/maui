@@ -189,17 +189,17 @@ class _MatchingState extends State<Matching> {
       DottedCircle(
         child: Container(
           decoration: BoxDecoration(
-              color: Colors.yellow, borderRadius: BorderRadius.circular(12.5)),
-          height: 25,
-          width: 25,
+              color: Colors.yellow, borderRadius: BorderRadius.circular(11)),
+          height: 22,
+          width: 22,
         ),
         key: GlobalKey(debugLabel: index.toString()),
         height: MediaQuery.of(context).size.height - constraint.maxHeight,
       ),
       Padding(
         padding: index < _question.length
-            ? EdgeInsets.only(right: 6.5)
-            : EdgeInsets.only(left: 6.5),
+            ? EdgeInsets.only(right: 5)
+            : EdgeInsets.only(left: 5),
         child: Padding(
           padding: EdgeInsets.all(_buttonPadding),
           child: _buildButton(s, index++),
@@ -367,13 +367,17 @@ class DrawLine extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     if (startOffset != null && endOffset != null) {
-      canvas.drawLine(startOffset, endOffset, _pain1);
+      canvas.drawLine(startOffset + Offset(3, 0.0), endOffset, _pain1);
     }
 
     if (dottedOffset != null) {
       for (int i = 0; i < dottedOffset.length; i++)
-        canvas.drawLine(dottedOffset.keys.elementAt(i),
-            dottedOffset.values.elementAt(i), _paint);
+        canvas.drawLine(
+            Offset(dottedOffset.keys.elementAt(i).dx + 3,
+                dottedOffset.keys.elementAt(i).dy),
+            Offset(dottedOffset.values.elementAt(i).dx - 3,
+                dottedOffset.values.elementAt(i).dy),
+            _paint);
     }
   }
 
@@ -412,7 +416,7 @@ class _RenderObject extends RenderProxyBox {
   void paint(PaintingContext context, Offset offset) {
     if (child != null) {
       final o = -child.globalToLocal(Offset(0.0, height));
-      dottedCircleOffset.add(o + Offset(13.0, 14.0));
+      dottedCircleOffset.add(o + Offset(11.0, 11.0));
       context.paintChild(child, offset);
     }
   }
