@@ -176,7 +176,7 @@ class _MatchingState extends State<Matching> {
 
   Widget _buildButton(String text, int index) {
     return UnitButton(
-      disabled: _joinedLineStatus[index] == 0 ? false : true,
+      // disabled: _joinedLineStatus[index] == 0 ? false : true,
       text: text,
       key: Key('$index'),
       onPress: null,
