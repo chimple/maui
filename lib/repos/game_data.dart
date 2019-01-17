@@ -870,3 +870,48 @@ Future<List<int>> fetchDominoMathData() async {
   }
   return null;
 }
+
+
+Future<List<Tuple2<String, String>>> fetchSequenceNumberData() async {
+  var random = new Random();
+  var startNum = random.nextInt(max(0, 3));
+  switch (startNum) {
+    case 0:
+      return [
+        Tuple2('1', '1'),
+        Tuple2('?', '2'),
+        Tuple2('3', '3'),
+        Tuple2('?', '4'),
+        Tuple2('5', '5'),
+      ];
+      break;
+    case 1:
+      return [
+        Tuple2('?', '4'),
+        Tuple2('5', '5'),
+        Tuple2('6', '6'),
+        Tuple2('?', '7'),
+        Tuple2('8', '8'),
+      ];
+      break;
+    case 2:
+      return [
+        Tuple2('12', '12'),
+        Tuple2('13', '13'),
+        Tuple2('?', '14'),
+        Tuple2('?', '15'),
+        Tuple2('16', '16'),
+      ];
+      break;
+    case 3:
+      return [
+        Tuple2('43', '43'),
+        Tuple2('44', '44'),
+        Tuple2('?', '45'),
+        Tuple2('?', '46'),
+        Tuple2('47', '47'),
+      ];
+      break;
+  }
+  return null;
+}
