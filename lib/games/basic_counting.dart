@@ -183,7 +183,7 @@ class BasicCountingState extends State<BasicCounting> {
                                     width: 200.0,
                                     height: 200.0,
                                     child: Image.asset(
-                                      "assets/finger_count/apple.png",
+                                      "assets/finger_count/$e.png",
                                       fit: BoxFit.fill,
                                     ),
                                   ),
