@@ -198,8 +198,8 @@ class _MatchingState extends State<Matching> {
       ),
       Padding(
         padding: index < _question.length
-            ? EdgeInsets.only(right: 12.5)
-            : EdgeInsets.only(left: 12.5),
+            ? EdgeInsets.only(right: 6.5)
+            : EdgeInsets.only(left: 6.5),
         child: Padding(
           padding: EdgeInsets.all(_buttonPadding),
           child: _buildButton(s, index++),
@@ -412,7 +412,7 @@ class _RenderObject extends RenderProxyBox {
   void paint(PaintingContext context, Offset offset) {
     if (child != null) {
       final o = -child.globalToLocal(Offset(0.0, height));
-      dottedCircleOffset.add(o + Offset(12.0, 12.0));
+      dottedCircleOffset.add(o + Offset(13.0, 14.0));
       context.paintChild(child, offset);
     }
   }
