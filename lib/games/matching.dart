@@ -367,7 +367,7 @@ class DrawLine extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     if (startOffset != null && endOffset != null) {
-      canvas.drawLine(startOffset + Offset(3, 0.0), endOffset, _pain1);
+      canvas.drawLine(startOffset, endOffset, _pain1);
     }
 
     if (dottedOffset != null) {
