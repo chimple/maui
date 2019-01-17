@@ -231,9 +231,9 @@ class SingleGame extends StatefulWidget {
     ],
     'matching': [Color(0xFFDD4785), Color(0xFF9b671b), Color(0xFFf99b67)],
     'sequence_the_number': [
-      Color(0xFF1DC8CC),
-      Color(0xFF282828),
-      Color(0xFFFE6677)
+      Color(0xFF4B0082),
+      Color(0xFF4B0082),
+      Color(0xFF4B0082)
     ]
   };
 

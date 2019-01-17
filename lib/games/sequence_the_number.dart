@@ -30,13 +30,13 @@ class SequenceTheNumber extends StatefulWidget {
 }
 
 class _SequenceTheNumberState extends State<SequenceTheNumber> {
-  List<String> dragBoxData, _holdDataOfDragBox;
-  List<String> dragTargetData;
+  List<String> _dragBoxData, _holdDataOfDragBox;
+  List<String> _dragTargetData;
   List<Tuple2<String, String>> _data;
   bool _isLoading = true;
   int _size;
   String _holdDragText;
-  int indexOfDragText;
+  int _indexOfDragText;
   @override
   void initState() {
     super.initState();
@@ -46,17 +46,17 @@ class _SequenceTheNumberState extends State<SequenceTheNumber> {
   void _sequenceTheNumber() async {
     setState(() => _isLoading = true);
     _data = await fetchSequenceNumberData();
-    dragBoxData = _data.map((f) {
+    _dragBoxData = _data.map((f) {
       return f.item2;
     }).toList(growable: false);
     _holdDataOfDragBox = _data.map((f) {
       return f.item2;
     }).toList(growable: false);
-    dragTargetData = _data.map((f) {
+    _dragTargetData = _data.map((f) {
       return f.item1;
     }).toList(growable: false);
-    _size = dragBoxData.length;
-    dragBoxData.shuffle();
+    _size = _dragBoxData.length;
+    _dragBoxData.shuffle();
     setState(() => _isLoading = false);
   }
 
@@ -67,7 +67,7 @@ class _SequenceTheNumberState extends State<SequenceTheNumber> {
       onDrag: () {
         setState(() {});
         _holdDragText = text;
-        indexOfDragText = _holdDataOfDragBox.indexOf(text);
+        _indexOfDragText = _holdDataOfDragBox.indexOf(text);
       },
     );
   }
@@ -78,8 +78,8 @@ class _SequenceTheNumberState extends State<SequenceTheNumber> {
       text: text,
       onAccepted: (data) {
         setState(() {});
-        if (dragTargetData[index] == '?' && index == indexOfDragText) {
-          dragTargetData[index] = _holdDragText;
+        if (_dragTargetData[index] == '?' && index == _indexOfDragText) {
+          _dragTargetData[index] = _holdDragText;
         }
       },
     );
@@ -109,6 +109,7 @@ class _SequenceTheNumberState extends State<SequenceTheNumber> {
       UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
 
       return Container(
+        color: Colors.indigo[900],
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -119,24 +120,29 @@ class _SequenceTheNumberState extends State<SequenceTheNumber> {
                   child: Text(
                     'Sequence the number',
                     style: TextStyle(
-                        fontSize: 50.0,
-                        color: Colors.black,
+                        fontSize: 30.0,
+                        color: Colors.white,
                         fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
             ),
             Expanded(
-              flex: 1,
+              flex: 2,
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.yellow[300],
+                  shape: BoxShape.rectangle,
+                  color: Colors.indigo[900],
+                  //   borderRadius: BorderRadius.only(
+                  //       topLeft: Radius.circular(25.0),
+                  //       topRight: Radius.circular(25.0)),
+                  // ),
                 ),
                 child: new ResponsiveGridView(
                   maxAspectRatio: 1.0,
                   rows: 1,
-                  cols: dragTargetData.length,
-                  children: dragTargetData
+                  cols: _dragTargetData.length,
+                  children: _dragTargetData
                       .map((e) => Padding(
                           padding: EdgeInsets.all(buttonPadding),
                           child: dropTarget(j++, e)))
@@ -145,18 +151,20 @@ class _SequenceTheNumberState extends State<SequenceTheNumber> {
               ),
             ),
             Expanded(
-              flex: 1,
+              flex: 2,
               child: Container(
                 decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
-                  color: Colors.indigo[900],
-                  backgroundBlendMode: BlendMode.modulate,
+                  color: Colors.indigo[700],
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(25.0),
+                      topRight: Radius.circular(25.0)),
                 ),
                 child: new ResponsiveGridView(
                   maxAspectRatio: 1.0,
                   rows: 1,
-                  cols: dragBoxData.length,
-                  children: dragBoxData
+                  cols: _dragBoxData.length,
+                  children: _dragBoxData
                       .map((e) => Padding(
                           padding: EdgeInsets.all(buttonPadding),
                           child: dragBox(k++, e)))
@@ -201,18 +209,29 @@ class MyButtonState extends State<MyButton> {
   Widget build(BuildContext context) {
     final buttonConfig = ButtonStateContainer.of(context).buttonConfig;
     if (widget.index < 100) {
-      return DragTarget(
-        onAccept: (String data) => widget.onAccepted(data),
-        builder: (
-          BuildContext context,
-          List<dynamic> accepted,
-          List<dynamic> rejected,
-        ) {
-          return new UnitButton(
-            dotFlag: false,
-            text: widget.text,
-          );
-        },
+      return Container(
+        decoration: new BoxDecoration(
+          borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
+        ),
+        child: DragTarget(
+          onAccept: (String data) => widget.onAccepted(data),
+          builder: (
+            BuildContext context,
+            List<dynamic> accepted,
+            List<dynamic> rejected,
+          ) {
+            return widget.text == '?'
+                ? UnitButton(
+                    text: '',
+                  highlighted: true,
+                  )
+                : UnitButton(
+                    dotFlag: false,
+                    fontSize: buttonConfig.fontSize * 0.5,
+                    text: widget.text,
+                  );
+          },
+        ),
       );
     } else if (widget.index >= 100) {
       return Draggable(
@@ -247,6 +266,7 @@ class MyButtonState extends State<MyButton> {
                 : 0,
         data: widget.text,
         child: UnitButton(
+          fontSize: buttonConfig.fontSize * 0.5,
           dotFlag: false,
           text: widget.text,
         ),
@@ -254,7 +274,7 @@ class MyButtonState extends State<MyButton> {
           dotFlag: false,
           maxHeight: buttonConfig.height,
           maxWidth: buttonConfig.width,
-          fontSize: buttonConfig.fontSize,
+          fontSize: buttonConfig.fontSize * 0.5,
           text: widget.text,
         ),
       );
