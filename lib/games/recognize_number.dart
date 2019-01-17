@@ -2,10 +2,12 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:maui/components/flip_animator.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/components/unit_button.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/game_data.dart';
+import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/button_state_container.dart';
 
 class RecognizeNumber extends StatefulWidget {
@@ -42,7 +44,6 @@ class RecognizeNumberState extends State<RecognizeNumber>
 
   List<Status> _statuses = [];
   static int _maxSize = 2;
-  // List<String> _all = ["8", "9", "3", "4", "5"];
   List<String> _answer = ["8"];
   List<String> _question = ["8", "3"];
 
@@ -71,6 +72,10 @@ class RecognizeNumberState extends State<RecognizeNumber>
               print("success");
               _statuses[index] = Status.visible;
             }
+          }
+          if(code == Code.answer){
+            print("hello i am coming");
+              AppStateContainer.of(context).playWord(text.toLowerCase());
           }
           print(" staus is.......::$_statuses");
 
@@ -177,31 +182,60 @@ class MyButton extends StatefulWidget {
 }
 
 class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
+ AnimationController controller;
+ 
   @override
   void didUpdateWidget(MyButton oldWidget) {
     print({"oldwidget data ": oldWidget.text});
   }
+@override
+ void initState() { 
+  super.initState();
+ controller = AnimationController(
+        duration: Duration(milliseconds: 500), vsync:this);
+        controller.addStatusListener((state) {
+            // print("$state:${animation.value}");
+            if (state == AnimationStatus.dismissed) {
+              print('dismissed');
+              if (widget.text != null) {
+                // setState(() => _displayText = widget.text);
+                controller.forward();
+              }
+            }
+            controller.reverse();
+          });
 
+}
   @override
   void dispose() {
     super.dispose();
   }
 
+  
+
   @override
   Widget build(BuildContext context) {
 // print({"this is 123 kiran data": widget.Rtile});
     print({"this is 123 kiran column": widget.text});
-    return widget.code == Code.answer
-        ? UnitButton(
-            text: widget.text,
-            primary: true,
-            onPress: widget.onPress,
-            unitMode: UnitMode.audio,
-          )
-        : UnitButton(
-            text: widget.text,
-            onPress: widget.onPress,
-            unitMode: UnitMode.text,
-          );
+    return FlipAnimator(
+          front: widget.code == Code.answer
+          ? UnitButton(
+              text: widget.text,
+              primary: true,
+              onPress: widget.onPress,
+              unitMode: UnitMode.audio,
+            )
+          : UnitButton(
+              text: widget.text,
+              onPress: widget.onPress,
+              unitMode: UnitMode.text,
+            ),
+            back: UnitButton(
+              text: widget.text,
+              onPress:widget.onPress,
+              unitMode: UnitMode.text,
+            ),
+            controller: controller,
+    );
   }
 }

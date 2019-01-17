@@ -824,3 +824,49 @@ Future<List<int>> fetchDominoMathData() async {
   }
   return null;
 }
+
+
+Future<Tuple3<List<String>, List<String>, List<String>>> fetchBasicCountingData(
+  int categoryId,
+) async {
+  var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
+  if (gameCategory.conceptId != null) {
+    var category = await new ConceptRepo().getConcept(gameCategory.conceptId);
+    var rand = new Random();
+    var firstNum = rand.nextInt(max(1, 4));
+    var secondNum = rand.nextInt(max(1, 4));
+    var ans = firstNum + secondNum;
+    List<String> questionList = new List<String>();
+    questionList.add(firstNum.toString());
+    questionList.add(secondNum.toString());
+    String ansList = ans.toString();
+    var addingAns = ansList.split('');
+
+    List<String> other = new List<String>();
+    List<String> ansData = new List<String>();
+    addingAns.forEach((e) {
+      ansData.add(e);
+      other.add(e);
+    });
+    var checkingCount = 0;
+    for (int i = 0; i < 10; i++) {
+      for (int j = 0; j < ansData.length; j++) {
+        if (i.toString() == ansData[j]) {
+          checkingCount = checkingCount + 1;
+        }
+      }
+      if (checkingCount == 0) {
+        other.add(i.toString());
+      } else {
+        checkingCount = 0;
+      }
+
+      if (other.length == 8) {
+        break;
+      }
+    }
+
+    return new Tuple3(questionList, ansData, other);
+  }
+  return null;
+}

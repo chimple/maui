@@ -7,6 +7,8 @@ import 'package:maui/components/unit_button.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:maui/state/button_state_container.dart';
+import 'package:tuple/tuple.dart';
+import 'package:maui/repos/game_data.dart';
 
 class BasicCounting extends StatefulWidget {
   Function onScore;
@@ -36,42 +38,78 @@ enum Status { active, visible }
 
 enum Code { question, answer }
 
-class BasicCountingState extends State<BasicCounting>
-    with SingleTickerProviderStateMixin {
+class BasicCountingState extends State<BasicCounting> {
   int _size = 2;
-
+  Tuple3<List<String>, List<String>, List<String>> basicData;
   List<Status> _statuses = [];
   static int _maxSize = 2;
-  List<String> _all = ["manu", "kiran", "3", "4", "5"];
-  List<String> _answer = ["8"];
-  List<String> _question = ["8", "3"];
+  bool _isLoading = true;
+  // List<String> _all = ["manu", "kiran", "3", "4", "5"];
+  List _all = [];
+  List _answer = [];
+  List _question = [];
+  List newAnswer = [];
 
   @override
   void initState() {
     super.initState();
     print("this are my game basic");
-    _statuses = _all.map((e) => Status.active).toList(growable: false);
+    _initBoard();
+  }
+
+  void _initBoard() async {
+    setState(() => _isLoading = true);
+   
+    basicData = await fetchBasicCountingData(widget.gameConfig.gameCategoryId);
+    basicData.item1.forEach((e) {
+      _question.add(e);
+    });
+    basicData.item2.forEach((e) {
+      _all.add(e);
+    });
+    basicData.item3.forEach((e) {
+      _answer.add(e);
+    });
+     newAnswer = _answer.sublist(0,2);
+    print("this is al ieierjierl $_all");
+    print("this is a answer $_answer");
+    print("this is a new answer $newAnswer");
+    _statuses = _question.map((e) => Status.active).toList(growable: false);
+    setState(() => _isLoading = false);
+  }
+
+  @override
+  void didUpdateWidget(BasicCounting oldWidget) {
+    if (widget.iteration != oldWidget.iteration) {
+      _initBoard();
+    }
   }
 
   Widget _buildItem(int index, String text, Status status, maxChars,
-      double maxWidth, double maxHeight, code) {
-    print("clicking button calling again and again we have fix");
+      double maxWidth, double maxHeight) {
+    print(
+        "clicking button calling again and again we have fix...... $index........ $text.......");
     return new MyButton(
         key: new ValueKey<int>(index),
+        index: index,
         text: text,
-        code: code,
-
-        //question unit mode
+        
         status: status,
         onPress: () {
-          if (code == Code.question) {
+         
             print("this is text $text");
             print("this is answer ${_answer[0]}");
-            if (_answer[0] == text) {
+            if (_all[0] == text) {
               print("success");
               _statuses[index] = Status.visible;
-            }
-          }
+              setState(() {
+                _all = [];
+                _answer = [];
+                _question = [];
+                _statuses = [];
+                // widget.onEnd();
+              });
+                      }
           print(" staus is.......::$_statuses");
 
           print("this is my new index of text $text");
@@ -135,7 +173,7 @@ class BasicCountingState extends State<BasicCounting>
                     child: new ResponsiveGridView(
                       rows: 1,
                       cols: 2,
-                      children: _all
+                      children: newAnswer
                           .map((e) => Padding(
                               padding: EdgeInsets.all(buttonPadding),
                               child: Column(
@@ -145,7 +183,7 @@ class BasicCountingState extends State<BasicCounting>
                                     width: 200.0,
                                     height: 200.0,
                                     child: Image.asset(
-                                      "assets/$e.png",
+                                      "assets/finger_count/$e.png",
                                       fit: BoxFit.fill,
                                     ),
                                   ),
@@ -154,19 +192,26 @@ class BasicCountingState extends State<BasicCounting>
                           .toList(growable: false),
                     ))),
             new Expanded(
-                child: Padding(
-                    padding: EdgeInsets.symmetric(
-                        vertical: vPadding, horizontal: hPadding),
-                    child: new ResponsiveGridView(
-                      rows: 1,
-                      cols: 2,
-                      children: _question
-                          .map((e) => Padding(
-                              padding: EdgeInsets.all(buttonPadding),
-                              child: _buildItem(k, e, _statuses[k++], maxChars,
-                                  maxWidth, maxHeight, Code.question)))
-                          .toList(growable: false),
-                    ))),
+                child: Container(
+              decoration: new BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: new BorderRadius.only(
+                      topLeft: const Radius.circular(40.0),
+                      topRight: const Radius.circular(40.0))),
+              child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      vertical: vPadding, horizontal: hPadding),
+                  child: new ResponsiveGridView(
+                    rows: 1,
+                    cols: 2,
+                    children: newAnswer
+                        .map((e) => Padding(
+                            padding: EdgeInsets.all(buttonPadding),
+                            child: _buildItem(k, e, _statuses[k++], maxChars,
+                                maxWidth, maxHeight)))
+                        .toList(growable: false),
+                  )),
+            )),
           ],
         ),
       );
@@ -177,15 +222,15 @@ class BasicCountingState extends State<BasicCounting>
 class MyButton extends StatefulWidget {
   MyButton(
       {Key key,
+      this.index,
       this.text,
       this.onPress,
       this.status,
       this.maxChars,
       this.maxWidth,
-      this.maxHeight,
-      this.code})
+      this.maxHeight})
       : super(key: key);
-
+  final int index;
   final String text;
   final VoidCallback onPress;
   final Status status;
@@ -193,13 +238,20 @@ class MyButton extends StatefulWidget {
   final int maxChars;
   final double maxWidth;
   final double maxHeight;
-  final Code code;
+
 
   @override
   _MyButtonState createState() => new _MyButtonState();
 }
 
-class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
+class _MyButtonState extends State<MyButton> {
+
+  @override
+  void initState() {
+    super.initState();
+    print("my button is......");
+  
+  }
   @override
   void didUpdateWidget(MyButton oldWidget) {
     print({"oldwidget data ": oldWidget.text});
@@ -213,20 +265,16 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
 // print({"this is 123 kiran data": widget.Rtile});
+    print("heello datta is not comming here lets check");
+     final buttonConfig = ButtonStateContainer.of(context).buttonConfig;
     if (ButtonStateContainer.of(context) != null) {
-      UnitButton.saveButtonSize(
-          context, widget.maxChars, widget.maxWidth, widget.maxHeight);
-
-      final buttonConfig = ButtonStateContainer.of(context).buttonConfig;
+      return UnitButton(
+        text: widget.text,
+        onPress: widget.onPress,
+        unitMode: UnitMode.text,
+      );
+    } else {
+      return Container();
     }
-    print({"this is 123 kiran column": widget.text});
-
-    return ButtonStateContainer.of(context) != null
-        ? UnitButton(
-            text: widget.text,
-            onPress: widget.onPress,
-            unitMode: UnitMode.text,
-          )
-        : Container();
   }
 }
