@@ -26,7 +26,7 @@ class UnitButton extends StatefulWidget {
   final double maxHeight;
   final double fontSize;
   final bool forceUnitMode;
-
+  final bool dotFlag;
   UnitButton(
       {Key key,
       @required this.text,
@@ -72,6 +72,8 @@ class UnitButton extends StatefulWidget {
         width: buttonWidth,
         height: buttonHeight,
         radius: buttonRadius);
+    print(
+        "widget testing comming here throwing null here.......${container.updateButtonConfig}");
   }
 }
 
@@ -128,18 +130,20 @@ class _UnitButtonState extends State<UnitButton> {
     double widthOfButton = affectwidth - 10;
     double heightOfButton = affectHeight - 5;
     return Stack(children: [
-      Container(
-        margin: EdgeInsets.only(top: 8.0, left: 5.0, right: 5.0),
-        constraints: BoxConstraints.tightFor(
-            height: widget.maxHeight ?? heightOfButton,
-            width: widget.maxWidth ?? widthOfButton),
-        // color: Colors.white,
-        decoration: new BoxDecoration(
-            shape: BoxShape.rectangle,
-            color: Colors.black,
-            borderRadius:
-                BorderRadius.all(Radius.circular(buttonConfig?.radius ?? 8.0))),
-      ),
+      widget.text == ''
+          ? Container()
+          : Container(
+              margin: EdgeInsets.only(top: 8.0, left: 5.0, right: 5.0),
+              constraints: BoxConstraints.tightFor(
+                  height: widget.maxHeight ?? heightOfButton,
+                  width: widget.maxWidth ?? widthOfButton),
+              // color: Colors.white,
+              decoration: new BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  color: Colors.black,
+                  borderRadius: BorderRadius.all(
+                      Radius.circular(buttonConfig?.radius ?? 8.0))),
+            ),
       Container(
           constraints: BoxConstraints.tightFor(
               height: widget.maxHeight ?? buttonConfig.height,
@@ -154,33 +158,48 @@ class _UnitButtonState extends State<UnitButton> {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
                     Radius.circular(buttonConfig?.radius ?? 8.0))),
-            elevation: 5.0,
-            child: FlatButton(
-                color: widget.highlighted
-                    ? Theme.of(context).primaryColor
-                    : Colors.transparent,
-                splashColor: Theme.of(context).accentColor,
-                highlightColor: Theme.of(context).accentColor,
-                disabledColor: Color(0xFFDDDDDD),
-                onPressed: widget.disabled
-                    ? null
-                    : () {
-                        AppStateContainer.of(context)
-                            .play(widget.text.toLowerCase());
-                        widget.onPress();
-                      },
-                padding: EdgeInsets.all(0.0),
-                shape: new RoundedRectangleBorder(
-                    side: new BorderSide(
-                        color: widget.disabled
-                            ? Color(0xFFDDDDDD)
-                            : widget.primary
-                                ? Theme.of(context).primaryColor
-                                : Colors.white,
-                        width: 4.0),
-                    borderRadius: BorderRadius.all(
-                        Radius.circular(buttonConfig?.radius ?? 8.0))),
-                child: _buildUnit(widget.fontSize ?? buttonConfig.fontSize)),
+            elevation: widget.text == '' ? 0.0 : 5.0,
+            child: Container(
+              constraints: BoxConstraints.tightFor(
+                  height: widget.maxHeight ?? buttonConfig.height,
+                  width: widget.maxWidth ?? buttonConfig.width),
+              decoration: new BoxDecoration(
+                  image: widget.bgImage != null
+                      ? new DecorationImage(
+                          image: new AssetImage(widget.bgImage),
+                          fit: BoxFit.contain)
+                      : null),
+              child: FlatButton(
+                  color: widget.highlighted
+                      ? Theme.of(context).primaryColor
+                      : Colors.transparent,
+                  splashColor: Theme.of(context).accentColor,
+                  highlightColor: Theme.of(context).accentColor,
+                  disabledColor: Color(0xFFDDDDDD),
+                  onPressed: widget.disabled || widget.text == ''
+                      ? null
+                      : () {
+                          AppStateContainer.of(context)
+                              .play(widget.text.toLowerCase());
+                          widget.onPress();
+                        },
+                  padding: EdgeInsets.all(0.0),
+                  shape: new RoundedRectangleBorder(
+                      side: widget.text != ''
+                          ? new BorderSide(
+                              color: widget.disabled
+                                  ? Color(0xFFDDDDDD)
+                                  : widget.primary
+                                      ? Theme.of(context).primaryColor
+                                      : Colors.white,
+                              width: 4.0)
+                          : BorderSide.none,
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(buttonConfig?.radius ?? 8.0))),
+                  child: Center(
+                      child: _buildUnit(
+                          widget.fontSize ?? buttonConfig.fontSize))),
+            ),
           )),
     ]);
   }
@@ -197,7 +216,6 @@ class _UnitButtonState extends State<UnitButton> {
             );
     }
     int textNumber = int.tryParse(widget.text);
-    return textNumber == null || textNumber == 0
         ? Center(
             child: Text(widget.text,
                 style: new TextStyle(
@@ -211,10 +229,8 @@ class _UnitButtonState extends State<UnitButton> {
                     color: widget.highlighted || !widget.primary
                         ? Colors.white
                         : Theme.of(context).primaryColor,
-                    fontSize: 25)),
-            NumberDots(
-              number: textNumber,
-            )
+                    fontSize: fontSize / 2)),
+            NumberDots(number: textNumber, fontSize: fontSize)
           ]);
   }
 
