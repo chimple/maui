@@ -15,6 +15,7 @@ void main() {
       ),
     ));
   //  await tester.tap(find.byType(RaisedButton).last);
+     expect(find.byKey(inputKey), findsOneWidget);
   });
 
   testWidgets('Shows the toggle button', (WidgetTester tester) async {
