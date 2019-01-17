@@ -840,3 +840,33 @@ Future<Tuple2<String, List<String>>> fetchDrawingData(int categoryId) async {
   }
   return null;
 }
+
+Future<List<int>> fetchDominoMathData() async {
+  var rand = new Random();
+  var startNum = rand.nextInt(max(0, 8));
+
+  switch (startNum) {
+    case 0:
+      return [8, 1, 2, 8];
+      break;
+    case 1:
+      return [3, 1, 2, 3];
+      break;
+    case 2:
+      return [2, 1, 3, 2];
+      break;
+    case 3:
+      return [4, 6, 2, 4];
+      break;
+    case 4:
+      return [5, 6, 2, 5];
+      break;
+    case 5:
+      return [6, 1, 7, 6];
+      break;
+    case 6:
+      return [7, 1, 2, 7];
+      break;
+  }
+  return null;
+}
