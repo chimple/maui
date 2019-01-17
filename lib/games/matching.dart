@@ -83,8 +83,8 @@ class _MatchingState extends State<Matching> {
     if (dottedCircleOffset.isNotEmpty && flag == 0) {
       _dottedCircleOffset.addAll(dottedCircleOffset
           .sublist(dottedCircleOffset.length - _data.length * 2));
-      // print(
-      //     'final list $_dottedCircleOffset length ${_dottedCircleOffset.length}');
+      print(
+          'offsets for dotted cirlce:: $_dottedCircleOffset,length ${_dottedCircleOffset.length}');
       flag = 1;
     }
     // print('offset on start:: $start');
@@ -232,7 +232,8 @@ class _MatchingState extends State<Matching> {
       _buttonPadding = buttonPadding;
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
-      UnitButton.saveButtonSize(context, maxChars, maxWidth, maxHeight);
+      if (_isLoading)
+        UnitButton.saveButtonSize(context, maxChars, maxWidth, maxHeight);
       AppState state = AppStateContainer.of(context).state;
       // print('constraint Box:: $constraints');
       if (!_isLoading) {
