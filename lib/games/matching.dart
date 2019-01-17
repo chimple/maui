@@ -42,6 +42,7 @@ class _MatchingState extends State<Matching> {
   bool _isUnderCircle = false;
   List<int> _joinedLineStatus = [];
   bool _isLoading = false;
+  double _buttonPadding;
   @override
   void initState() {
     super.initState();
@@ -199,7 +200,10 @@ class _MatchingState extends State<Matching> {
         padding: index < _question.length
             ? EdgeInsets.only(right: 12.5)
             : EdgeInsets.only(left: 12.5),
-        child: _buildButton(s, index++),
+        child: Padding(
+          padding: EdgeInsets.all(_buttonPadding),
+          child: _buildButton(s, index++),
+        ),
       ),
     ]);
   }
@@ -225,7 +229,7 @@ class _MatchingState extends State<Matching> {
       double maxHeight = (constraints.maxHeight - vPadding * 2) / 8;
 
       final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
-
+      _buttonPadding = buttonPadding;
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
       UnitButton.saveButtonSize(context, maxChars, maxWidth, maxHeight);
