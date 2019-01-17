@@ -73,31 +73,30 @@ class _MatchingState extends State<Matching> {
   @override
   didUpdateWidget(Matching oldWidget) {
     super.didUpdateWidget(oldWidget);
-    print('adsadsadsad ');
-    if (_joinedLineStatus.length >= 3) {
-      print('re build');
-    }
+    // if (_joinedLineStatus.length >= 3) {
+    //   print('re build');
+    // }
   }
 
   void _onStart(Offset start) {
     if (dottedCircleOffset.isNotEmpty && flag == 0) {
       _dottedCircleOffset.addAll(dottedCircleOffset
           .sublist(dottedCircleOffset.length - _data.length * 2));
-      print(
-          'final list $_dottedCircleOffset length ${_dottedCircleOffset.length}');
+      // print(
+      //     'final list $_dottedCircleOffset length ${_dottedCircleOffset.length}');
       flag = 1;
     }
-    print('offset on start:: $start');
+    // print('offset on start:: $start');
     for (int i = 0; i < _dottedCircleOffset.length; i++) {
       if ((start - (_dottedCircleOffset[i])).distance < 40 &&
           _joinedLineStatus[i] != 1) {
         _index1 = i;
-        print('index at stared:$i');
+        // print('index at stared:$i');
         if (i < _question.length) {
-          print(
-              'drag from left side:${_questionData.indexOf(_question[_index1])}');
+          // print(
+          //     'drag from left side:${_questionData.indexOf(_question[_index1])}');
         } else {
-          print('drag from right side:');
+          // print('drag from right side:');
         }
         _joinLine(i);
       }
@@ -112,11 +111,11 @@ class _MatchingState extends State<Matching> {
 
   void _onEnd(ScaleEndDetails end) {
     if (_updateOffset != null && _startOffset != null) {
-      print('offset at end:: $_updateOffset ${_dottedCircleOffset.length}');
+      // print('offset at end:: $_updateOffset ${_dottedCircleOffset.length}');
       for (int i = 0; i < _dottedCircleOffset.length; i++) {
         if ((_updateOffset - _dottedCircleOffset[i]).distance < 40 &&
             _joinedLineStatus[i] != 1) {
-          print('index at end: $i');
+          // print('index at end: $i');
           _index2 = i;
           _connectDots();
         } else {}
@@ -129,7 +128,7 @@ class _MatchingState extends State<Matching> {
       });
     }
     if (_joinedLinedOffset.length == _data.length) {
-      print('game end');
+      // print('game end');
       new Future.delayed(Duration(seconds: 1), () {
         widget.onEnd();
         flag = 0;
@@ -149,7 +148,7 @@ class _MatchingState extends State<Matching> {
     if (_index1 < _question.length &&
         _index2 < _dottedCircleOffset.length &&
         _index2 >= _question.length) {
-      print('true from left side');
+      // print('true from left side');
       if (_questionData.indexOf(_question[_index1]) ==
           _answerData.indexOf(_answer[_index2 - _answer.length])) {
         print('${_answerData.indexOf(_answer[_index2 - _answer.length])}');
@@ -161,7 +160,7 @@ class _MatchingState extends State<Matching> {
         });
       }
     } else if (_index1 >= _question.length && _index2 < _question.length) {
-      print('true from right side');
+      // print('true from right side');
       if (_questionData.indexOf(_question[_index2]) ==
           _answerData.indexOf(_answer[_index1 - _answer.length])) {
         setState(() {
@@ -176,6 +175,7 @@ class _MatchingState extends State<Matching> {
 
   Widget _buildButton(String text, int index) {
     return UnitButton(
+      disabled: _joinedLineStatus[index] == 0 ? false : true,
       text: text,
       key: Key('$index'),
       onPress: null,
@@ -241,6 +241,7 @@ class _MatchingState extends State<Matching> {
         );
       } else {
         return Container(
+          key: widget.key,
           decoration: BoxDecoration(
               color: Color(0xffA52A2A),
               borderRadius: BorderRadius.only(
