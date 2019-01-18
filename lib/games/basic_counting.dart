@@ -185,8 +185,8 @@ class BasicCountingState extends State<BasicCounting> {
                                 children: <Widget>[
                                   Container(
                                     color: Colors.blueGrey,
-                                    width: 200.0,
-                                    height: 200.0,
+                                    width: media.size.width *0.4,
+                                    height: media.size.height *0.3,
                                     child: Image.asset(
                                       "assets/finger_count/$e.png",
                                       fit: BoxFit.fill,
@@ -272,6 +272,7 @@ class _MyButtonState extends State<MyButton> {
     final buttonConfig = ButtonStateContainer.of(context).buttonConfig;
     if (ButtonStateContainer.of(context) != null) {
       return UnitButton(
+        dotFlag:true,
         text: widget.text,
         onPress: widget.onPress,
         unitMode: UnitMode.text,
