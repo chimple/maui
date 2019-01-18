@@ -11,6 +11,7 @@ import 'package:maui/games/basic_addition.dart';
 import 'package:maui/games/basic_counting.dart';
 import 'package:maui/games/recognize_number.dart';
 import 'package:maui/games/matching.dart';
+import 'package:maui/games/sequence_the_number.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -229,6 +230,11 @@ class SingleGame extends StatefulWidget {
       Color(0xFFFE6677)
     ],
     'matching': [Color(0xFFDD4785), Color(0xFF9b671b), Color(0xFFf99b67)],
+    'sequence_the_number': [
+      Color(0xFF4B0082),
+      Color(0xFF4B0082),
+      Color(0xFF4B0082)
+    ]
   };
 
   SingleGame(this.gameName,
@@ -1168,6 +1174,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         break;
 
       case 'basic_addition':
+        maxIterations = 5;
         return new BasicAddition(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
@@ -1325,7 +1332,13 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             isRotated: widget.isRotated,
             gameConfig: widget.gameConfig);
         break;
-
+      case 'sequence_the_number':
+        return new SequenceTheNumber(
+            key: new GlobalObjectKey(keyName),
+            onScore: _onScore,
+            onProgress: _onProgress,
+            gameConfig: widget.gameConfig);
+        break;
       case 'recognize_number':
         maxIterations = 5;
         return new RecognizeNumber(
