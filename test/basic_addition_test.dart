@@ -18,13 +18,14 @@ void main() {
     ));
 //    await tester.pump();
     expect(find.byKey(testKey), findsOneWidget);
-
+    await tester.pump(Duration(seconds: 5));
 //     await tester.fling(find.byType(FlatButton).first, Offset(100.0, 40.0), 8.0);
-
     final Offset firstLocation = tester.getCenter(find.byType(MyButton).first);
     await tester.tap(find.byType(MyButton).first);
-    expect(find.byType(MyButton).first, findsOneWidget);
     await tester.pump(Duration(seconds: 5));
+    // await tester.tap(find.byType(MyButton).first);
+    // expect(find.byType(MyButton).first, findsOneWidget);
+    // await tester.pumpAndSettle(Duration(seconds: 5));
     await tester.fling(find.byType(MyButton).last, firstLocation, 8.0);
     await tester.pump(Duration(seconds: 5));
   });
