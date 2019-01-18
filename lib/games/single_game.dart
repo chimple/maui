@@ -1199,7 +1199,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         break;
       case 'find_size_game':
         playTime = 15000;
-        maxIterations = 1;
+        maxIterations = 2;
         return new FindSizeGame(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
@@ -1329,7 +1329,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         );
         break;
       case 'sequence_the_number':
-       maxIterations = 5;
+        maxIterations = 5;
         return new SequenceTheNumber(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
