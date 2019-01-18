@@ -656,9 +656,11 @@ Future<Tuple2<List<String>, List<String>>> fetchConsecutiveData(
 Future<Tuple3<List<String>, List<String>, List<String>>> fetchBasicAdditionData(
   int categoryId,
 ) async {
-  var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
-  if (gameCategory.conceptId != null) {
-    var category = await new ConceptRepo().getConcept(gameCategory.conceptId);
+  var rand = new Random();
+  var startnum = rand.nextInt(max(1, 9));
+  if (startnum != null) {
+    print("here its not comming jus check it");
+
     var rand = new Random();
     var firstNum = rand.nextInt(max(1, 9));
     var secondNum = rand.nextInt(max(1, 9));

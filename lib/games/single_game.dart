@@ -1168,6 +1168,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         break;
 
       case 'basic_addition':
+        maxIterations = 5;
         return new BasicAddition(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
