@@ -35,8 +35,11 @@ class _SequenceTheNumberState extends State<SequenceTheNumber> {
   List<Tuple2<String, String>> _data;
   bool _isLoading = true;
   int _size;
+  var keys = 0;
   String _holdDragText;
   int _indexOfDragText;
+  int _progress = 0;
+  int _space = 0;
   @override
   void initState() {
     super.initState();
@@ -45,6 +48,8 @@ class _SequenceTheNumberState extends State<SequenceTheNumber> {
 
   void _sequenceTheNumber() async {
     setState(() => _isLoading = true);
+    _progress = 0;
+    _space = 0;
     _data = await fetchSequenceNumberData();
     _dragBoxData = _data.map((f) {
       return f.item2;
@@ -55,15 +60,27 @@ class _SequenceTheNumberState extends State<SequenceTheNumber> {
     _dragTargetData = _data.map((f) {
       return f.item1;
     }).toList(growable: false);
+    for (int j = 0; j < _dragTargetData.length; j++) {
+      if (_dragTargetData[j].contains('?')) _space++;
+    }
     _size = _dragBoxData.length;
     _dragBoxData.shuffle();
     setState(() => _isLoading = false);
+  }
+
+  @override
+  void didUpdateWidget(SequenceTheNumber oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.iteration != oldWidget.iteration) {
+      _sequenceTheNumber();
+    }
   }
 
   Widget dragBox(int index, String text) {
     return new MyButton(
       index: index,
       text: text,
+      keys: keys++,
       onDrag: () {
         setState(() {});
         _holdDragText = text;
@@ -75,11 +92,22 @@ class _SequenceTheNumberState extends State<SequenceTheNumber> {
   Widget dropTarget(int index, String text) {
     return new MyButton(
       index: index,
+      keys: keys++,
       text: text,
       onAccepted: (data) {
         setState(() {});
         if (_dragTargetData[index] == '?' && index == _indexOfDragText) {
           _dragTargetData[index] = _holdDragText;
+          _progress++;
+          widget.onProgress(_progress / _space);
+        }
+        if (_progress == _space) {
+          widget.onScore(4);
+          new Future.delayed(const Duration(seconds: 1), () {
+            widget.onEnd();
+            _isLoading = true;
+            _sequenceTheNumber();
+          });
         }
       },
     );
@@ -87,6 +115,7 @@ class _SequenceTheNumberState extends State<SequenceTheNumber> {
 
   @override
   Widget build(BuildContext context) {
+    keys = 0;
     if (_isLoading) {
       return Center(
         child: new SizedBox(
@@ -96,6 +125,7 @@ class _SequenceTheNumberState extends State<SequenceTheNumber> {
         ),
       );
     }
+
     return new LayoutBuilder(builder: (context, constraints) {
       final hPadding = pow(constraints.maxWidth / 150.0, 2);
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
@@ -133,10 +163,6 @@ class _SequenceTheNumberState extends State<SequenceTheNumber> {
                 decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
                   color: Colors.indigo[900],
-                  //   borderRadius: BorderRadius.only(
-                  //       topLeft: Radius.circular(25.0),
-                  //       topRight: Radius.circular(25.0)),
-                  // ),
                 ),
                 child: new ResponsiveGridView(
                   maxAspectRatio: 1.0,
@@ -182,16 +208,18 @@ class _SequenceTheNumberState extends State<SequenceTheNumber> {
 class MyButton extends StatefulWidget {
   final String text;
   final int index;
+  int keys;
   final int length;
   final DragTargetAccept onAccepted;
   final VoidCallback onDrag;
   final DraggableCanceledCallback draggableCanceledCallback;
 
-  const MyButton(
+  MyButton(
       {Key key,
       this.text,
       this.index,
       this.onAccepted,
+      this.keys,
       this.length,
       this.onDrag,
       this.draggableCanceledCallback})
@@ -207,6 +235,8 @@ class MyButtonState extends State<MyButton> {
   bool isDragging = false;
   @override
   Widget build(BuildContext context) {
+    widget.keys++;
+
     final buttonConfig = ButtonStateContainer.of(context).buttonConfig;
     if (widget.index < 100) {
       return Container(
@@ -223,9 +253,10 @@ class MyButtonState extends State<MyButton> {
             return widget.text == '?'
                 ? UnitButton(
                     text: '',
-                  highlighted: true,
+                    highlighted: true,
                   )
                 : UnitButton(
+                    key: new Key('A${widget.keys}'),
                     dotFlag: false,
                     fontSize: buttonConfig.fontSize * 0.5,
                     text: widget.text,
@@ -266,6 +297,7 @@ class MyButtonState extends State<MyButton> {
                 : 0,
         data: widget.text,
         child: UnitButton(
+          key: new Key('A${widget.keys}'),
           fontSize: buttonConfig.fontSize * 0.5,
           dotFlag: false,
           text: widget.text,

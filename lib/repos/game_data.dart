@@ -874,7 +874,7 @@ Future<List<int>> fetchDominoMathData() async {
 
 Future<List<Tuple2<String, String>>> fetchSequenceNumberData() async {
   var random = new Random();
-  var startNum = random.nextInt(max(0, 3));
+  var startNum = random.nextInt(max(0, 4));
   switch (startNum) {
     case 0:
       return [
