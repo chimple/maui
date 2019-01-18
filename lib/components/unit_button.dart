@@ -36,7 +36,7 @@ class UnitButton extends StatefulWidget {
       this.highlighted = false,
       this.primary = true,
       this.forceUnitMode = false,
-      this.dotFlag = true,
+      this.dotFlag = false,
       this.bgImage,
       this.maxHeight,
       this.maxWidth,

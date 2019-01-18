@@ -30,7 +30,7 @@ class NumberDots extends StatelessWidget {
             child: new Icon(
               Icons.lens,
               color: Colors.black,
-              size: fontSize * 0.15,
+              size: fontSize * 0.12,
             ),
           );
         }).toList(growable: false);
