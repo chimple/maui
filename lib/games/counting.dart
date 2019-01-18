@@ -5,8 +5,10 @@ import 'package:maui/components/Shaker.dart';
 import 'package:maui/components/count_animation.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/components/unit_button.dart';
+import 'package:maui/repos/game_data.dart';
 
 import 'package:maui/state/button_state_container.dart';
+import 'package:tuple/tuple.dart';
 
 class Counting extends StatefulWidget {
   Function onScore;
@@ -31,7 +33,9 @@ class Counting extends StatefulWidget {
 }
 
 class CountingState extends State<Counting> {
-  int rndVal = Random().nextInt(9 - 0);
+  List<int> questionData = [];
+  List<int> ansData = [];
+  Tuple2<List<int>, List<int>> countingData;
   List<String> _letters = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
   int value;
   int countVal = 0;
@@ -45,27 +49,32 @@ class CountingState extends State<Counting> {
   int dindex, dcode;
   List<bool> _isDropped = new List();
   List randomData = new List();
-  List datavalues = new List();
+
   List anschecking = new List();
   var checkdata;
-  List droptargetValues = new List();
+  List dropTargetValues = new List();
+  int count = 0;
   initState() {
     super.initState();
     initfn();
   }
 
-  initfn() {
+  initfn() async {
     setState(() => _isLoading = true);
-    String ansData = (rndVal + 1).toString();
-    datavalues = ansData.split('');
-    datavalues.forEach((e) {
+    ansData = [];
+    anschecking = [];
+    print("hello controll is comming here");
+    countingData = await fetchCountingData(widget.gameCategoryId);
+    ansData = countingData.item2;
+    var dataValues = ansData[0].toString().split('');
+    dataValues.forEach((e) {
       anschecking.add(e);
     });
-    checkdata = datavalues;
+    checkdata = dataValues;
     int temp = 0;
-    while (temp < datavalues.length) {
-      if (temp < datavalues.length) _isDropped.add(false);
-      droptargetValues.add(null);
+    while (temp < dataValues.length) {
+      if (temp < dataValues.length) _isDropped.add(false);
+      dropTargetValues.add(null);
       temp++;
     }
 
@@ -77,7 +86,15 @@ class CountingState extends State<Counting> {
     setState(() => _isLoading = false);
   }
 
-  Widget _buildItem(int index, String text, datavalu) {
+  void didUpdateWidget(Counting oldWidget) {
+    print(oldWidget.iteration);
+    print(widget.iteration);
+    if (widget.iteration != oldWidget.iteration) {
+      initfn();
+    }
+  }
+
+  Widget _buildItem(int index, String text, datavalue) {
     return new MyButton(
       key: new ValueKey<int>(index),
       index: index,
@@ -95,20 +112,26 @@ class CountingState extends State<Counting> {
         dindex = int.parse(dragdata.substring(0, 3));
         dcode = int.parse(dragdata.substring(4, 7));
 
-        if (code == dcode && valueText == datavalu) {
-          int findex = dindex - 100;
-          if (valueText == datavalu) {
-            //right
+        if (code == dcode && valueText == datavalue) {
+          setState(() {
+            selectedIndex.clear();
+            widget.onScore(1);
+            _isDropped[index] = true;
+            count = count + 1;
+            dropTargetValues[index] = valueText;
 
-            setState(() {
-              _isDropped[index] = true;
-              droptargetValues[index] = _letters[findex];
-            });
-          } else if (_isDropped[index] == false) {
-            // wrong
-          } else if (_isDropped[index] == true) {
-            // do nothing;
-          }
+            if (count == _isDropped.length) {
+              new Future.delayed(new Duration(milliseconds: 600), () {
+                setState(() {
+                  count = 0;
+                  anschecking = [];
+                  _isDropped = [];
+                  dropTargetValues = [];
+                  widget.onEnd();
+                });
+              });
+            }
+          });
         }
       },
     );
@@ -116,16 +139,16 @@ class CountingState extends State<Counting> {
 
   @override
   Widget build(BuildContext context) {
-    randomData = [rndVal.toString()];
-    for (int i = 0; i < rndVal + 1; i++) {
-      selectedIndex.add(0);
-    }
     if (_isLoading) {
       return new SizedBox(
         width: 20.0,
         height: 20.0,
         child: new CircularProgressIndicator(),
       );
+    }
+    randomData = [ansData];
+    for (int i = 0; i < ansData[0]; i++) {
+      selectedIndex.add(0);
     }
 
     return new LayoutBuilder(builder: (context, constraints) {
@@ -149,7 +172,7 @@ class CountingState extends State<Counting> {
           child: Center(
             child: Container(
                 child: GridView.builder(
-                    itemCount: rndVal + 1,
+                    itemCount: ansData[0],
                     gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 5),
                     itemBuilder: (BuildContext context, int index) {
@@ -157,7 +180,7 @@ class CountingState extends State<Counting> {
                         child: CountAnimation(
                             key: new ValueKey<int>(index),
                             index: index,
-                            rndVal: rndVal,
+                            rndVal: 10,
                             selectedIndex: selectedIndex,
                             countVal: countVal),
                       );
@@ -180,8 +203,8 @@ class CountingState extends State<Counting> {
                         EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
                     child: ResponsiveGridView(
                         rows: 1,
-                        cols: 4,
-                        children: droptargetValues
+                        cols: dropTargetValues.length,
+                        children: dropTargetValues
                             .map((e) => Padding(
                                 padding: EdgeInsets.all(4.0),
                                 child: _buildItem(inc, e, anschecking[inc++])))
