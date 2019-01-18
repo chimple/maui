@@ -1174,6 +1174,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         break;
 
       case 'basic_addition':
+        maxIterations = 5;
         return new BasicAddition(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
@@ -1319,14 +1320,8 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
           key: new GlobalObjectKey(keyName),
         );
         break;
-      case 'sequence_the_number':
-        return new SequenceTheNumber(
-            key: new GlobalObjectKey(keyName),
-            onScore: _onScore,
-            onProgress: _onProgress,
-            gameConfig: widget.gameConfig);
-        break;
-      case 'counting':
+      case 'basic_counting':
+        maxIterations = 5;
         return new BasicCounting(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
@@ -1337,8 +1332,15 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             isRotated: widget.isRotated,
             gameConfig: widget.gameConfig);
         break;
-
+      case 'sequence_the_number':
+        return new SequenceTheNumber(
+            key: new GlobalObjectKey(keyName),
+            onScore: _onScore,
+            onProgress: _onProgress,
+            gameConfig: widget.gameConfig);
+        break;
       case 'recognize_number':
+        maxIterations = 5;
         return new RecognizeNumber(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
