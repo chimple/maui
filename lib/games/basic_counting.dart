@@ -126,10 +126,10 @@ class BasicCountingState extends State<BasicCounting> {
     print("this is after random $_question");
 
     return new LayoutBuilder(builder: (context, constraints) {
-  if (_isLoading) {
-      return new SizedBox(
-          width: 20.0, height: 20.0, child: new CircularProgressIndicator());
-    }
+      if (_isLoading) {
+        return new SizedBox(
+            width: 20.0, height: 20.0, child: new CircularProgressIndicator());
+      }
 
       final hPadding = pow(constraints.maxWidth / 150.0, 2);
       final vPadding = pow(constraints.maxHeight / 150.0, 2);

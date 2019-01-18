@@ -825,7 +825,6 @@ Future<List<int>> fetchDominoMathData() async {
   return null;
 }
 
-
 Future<Tuple3<List<String>, List<String>, List<String>>> fetchBasicCountingData(
   int categoryId,
 ) async {
@@ -833,10 +832,11 @@ Future<Tuple3<List<String>, List<String>, List<String>>> fetchBasicCountingData(
   if (gameCategory.conceptId != null) {
     var category = await new ConceptRepo().getConcept(gameCategory.conceptId);
     var rand = new Random();
-    int min= 1;int max = 5;
+    int min = 1;
+    int max = 5;
     // int r = min+ rand.nextInt(max-min);
-    var firstNum = min+ rand.nextInt(max-min);
-    var secondNum = min+ rand.nextInt(max-min);
+    var firstNum = min + rand.nextInt(max - min);
+    var secondNum = min + rand.nextInt(max - min);
     var ans = firstNum + secondNum;
     List<String> questionList = new List<String>();
     questionList.add(firstNum.toString());
@@ -880,23 +880,19 @@ Future<Tuple2<List<String>, List<String>>> fetchRecognizeNumberData(
   if (gameCategory.conceptId != null) {
     var category = await new ConceptRepo().getConcept(gameCategory.conceptId);
     var rand = new Random();
-    var firstNum=rand.nextInt(9);
-      List<String> questionList = new List<String>();
-      questionList.add(firstNum.toString());
-      var secNum= rand.nextInt(9);
-      List<String> ansData = new List<String>();
-      if(secNum.toString() == firstNum.toString()){
-        var newNum = secNum + 1;
-        ansData.add(newNum.toString());
-      }else{
-        ansData.add(secNum.toString());
-      }
-      
-       List<String> other = []..addAll(ansData)..addAll(questionList);
-   
+    var firstNum = rand.nextInt(9);
+    List<String> questionList = new List<String>();
+    questionList.add(firstNum.toString());
+    var secNum = rand.nextInt(9);
+    List<String> ansData = new List<String>();
+    if (secNum.toString() == firstNum.toString()) {
+      var newNum = secNum + 1;
+      ansData.add(newNum.toString());
+    } else {
+      ansData.add(secNum.toString());
+    }
 
-
-
+    List<String> other = []..addAll(ansData)..addAll(questionList);
 
     return new Tuple2(questionList, other);
   }

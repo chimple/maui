@@ -48,7 +48,7 @@ class RecognizeNumberState extends State<RecognizeNumber>
   List<String> _answer = [];
   List<String> _question = [];
   bool _isLoading = true;
- Tuple2<List<String>, List<String>> recognizeData;
+  Tuple2<List<String>, List<String>> recognizeData;
 
   @override
   void initState() {
@@ -57,28 +57,28 @@ class RecognizeNumberState extends State<RecognizeNumber>
     _initBoard();
     _statuses = _question.map((e) => Status.active).toList(growable: false);
   }
- void _initBoard() async{
-    setState(() {
-       _isLoading = true;
-        });
-    recognizeData = await fetchRecognizeNumberData(widget.gameConfig.gameCategoryId);
-    recognizeData.item1.forEach((e){
-      _question.add(e);
 
+  void _initBoard() async {
+    setState(() {
+      _isLoading = true;
     });
-    recognizeData.item2.forEach((e){
+    recognizeData =
+        await fetchRecognizeNumberData(widget.gameConfig.gameCategoryId);
+    recognizeData.item1.forEach((e) {
+      _question.add(e);
+    });
+    recognizeData.item2.forEach((e) {
       _answer.add(e);
     });
-     _statuses = _question.map((e) => Status.active).toList(growable: false);
-        _statuses = _answer.map((e) => Status.active).toList(growable: false);
+    _statuses = _question.map((e) => Status.active).toList(growable: false);
+    _statuses = _answer.map((e) => Status.active).toList(growable: false);
 
     print("this is al ieierjierl $_question");
     print("this is a answer $_answer");
     setState(() => _isLoading = false);
+  }
 
- }
-
-   @override
+  @override
   void didUpdateWidget(RecognizeNumber oldWidget) {
     if (widget.iteration != oldWidget.iteration) {
       _answer = [];
@@ -103,22 +103,20 @@ class RecognizeNumberState extends State<RecognizeNumber>
             print("this is text $text");
             print("this is answer ${_answer[0]}");
             if (_question[0] == text) {
-             
               _statuses[index] = Status.visible;
               setState(() {
-                 print("success");
-              widget.onEnd();
-              _answer = [];
-              _question = [];
-              _statuses = [];
-           AppStateContainer.of(context).playWord(_question[index]);
-
-            });
+                print("success");
+                widget.onEnd();
+                _answer = [];
+                _question = [];
+                _statuses = [];
+                AppStateContainer.of(context).playWord(_question[index]);
+              });
             }
           }
-          if(code == Code.question){
+          if (code == Code.question) {
             print("hello i am coming");
-              AppStateContainer.of(context).playWord(text.toLowerCase());
+            AppStateContainer.of(context).playWord(text.toLowerCase());
           }
           print(" staus is.......::$_statuses");
 
@@ -137,10 +135,10 @@ class RecognizeNumberState extends State<RecognizeNumber>
 
     return new LayoutBuilder(builder: (context, constraints) {
       if (_isLoading) {
-      return new SizedBox(
-          width: 20.0, height: 20.0, child: new CircularProgressIndicator());
-    }
-      
+        return new SizedBox(
+            width: 20.0, height: 20.0, child: new CircularProgressIndicator());
+      }
+
       final hPadding = pow(constraints.maxWidth / 150.0, 2);
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
       final maxChars = (_question != null
@@ -230,43 +228,42 @@ class MyButton extends StatefulWidget {
 }
 
 class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
- AnimationController controller;
- 
+  AnimationController controller;
+
   @override
   void didUpdateWidget(MyButton oldWidget) {
     print({"oldwidget data ": oldWidget.text});
   }
-@override
- void initState() { 
-  super.initState();
- controller = AnimationController(
-        duration: Duration(milliseconds: 500), vsync:this);
-        controller.addStatusListener((state) {
-            // print("$state:${animation.value}");
-            if (state == AnimationStatus.dismissed) {
-              print('dismissed');
-              if (widget.text != null) {
-                // setState(() => _displayText = widget.text);
-                controller.forward();
-              }
-            }
-            controller.reverse();
-          });
 
-}
+  @override
+  void initState() {
+    super.initState();
+    controller =
+        AnimationController(duration: Duration(milliseconds: 500), vsync: this);
+    controller.addStatusListener((state) {
+      // print("$state:${animation.value}");
+      if (state == AnimationStatus.dismissed) {
+        print('dismissed');
+        if (widget.text != null) {
+          // setState(() => _displayText = widget.text);
+          controller.forward();
+        }
+      }
+      controller.reverse();
+    });
+  }
+
   @override
   void dispose() {
     super.dispose();
   }
-
-  
 
   @override
   Widget build(BuildContext context) {
 // print({"this is 123 kiran data": widget.Rtile});
     print({"this is 123 kiran column": widget.text});
     if (ButtonStateContainer.of(context) != null) {
-    return  widget.code == Code.question
+      return widget.code == Code.question
           ? UnitButton(
               text: widget.text,
               primary: true,
@@ -277,6 +274,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
               text: widget.text,
               onPress: widget.onPress,
               unitMode: UnitMode.text,
-            );  }
-}
+            );
+    }
+  }
 }
