@@ -271,6 +271,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
               unitMode: UnitMode.audio,
             )
           : UnitButton(
+              dotFlag: true,
               text: widget.text,
               onPress: widget.onPress,
               unitMode: UnitMode.text,
