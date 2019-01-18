@@ -30,10 +30,6 @@ class BasicAddition extends StatefulWidget {
 }
 
 class _BasicAdditionState extends State<BasicAddition> {
-  List<String> questionList = [];
-  List<String> ans = [];
-  List<String> choiceList = [];
-
   List addNumber;
   int code;
   bool _isLoading = true;
@@ -46,6 +42,9 @@ class _BasicAdditionState extends State<BasicAddition> {
   Tuple3<List<String>, List<String>, List<String>> basicAdditionData;
   List dropTargetValues = new List();
   int count = 0;
+  List<String> questionList;
+  List<String> ans;
+  List<String> choiceList;
   initState() {
     super.initState();
     initfn();
@@ -53,11 +52,13 @@ class _BasicAdditionState extends State<BasicAddition> {
 
   initfn() async {
     setState(() => _isLoading = true);
+
     dataValues = [];
     _isDropped = [];
     questionList = [];
     ans = [];
     choiceList = [];
+    print("what is comming here ....${widget.gameCategoryId}");
     basicAdditionData = await fetchBasicAdditionData(widget.gameCategoryId);
 
     print("hello tuple1 is...${basicAdditionData.item1}");
@@ -164,6 +165,8 @@ class _BasicAdditionState extends State<BasicAddition> {
 
   @override
   Widget build(BuildContext context) {
+    print("widget testing contol comming here or not");
+
     if (_isLoading) {
       return new SizedBox(
         width: 20.0,
@@ -171,7 +174,7 @@ class _BasicAdditionState extends State<BasicAddition> {
         child: new CircularProgressIndicator(),
       );
     }
-
+    print("after load it  should widget testing contol comming here or not");
     return new LayoutBuilder(builder: (context, constraints) {
       final hPadding = pow(constraints.maxWidth / 150.0, 2);
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
@@ -179,7 +182,7 @@ class _BasicAdditionState extends State<BasicAddition> {
       maxWidth = (constraints.maxWidth - hPadding * 2) / 4;
       maxHeight = (constraints.maxHeight - vPadding * 2) / 4;
 
-      final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
+      final buttonPadding = sqrt(min(maxWidth, maxHeight) / 6);
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
       //  final buttonConfig = ;
@@ -202,14 +205,14 @@ class _BasicAdditionState extends State<BasicAddition> {
                   height: constraints.maxHeight / 2,
                   child: Padding(
                       padding: EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 10.0),
+                          vertical: 10, horizontal: hPadding),
                       child: new ResponsiveGridView(
                         rows: 1,
                         cols: questionList.length,
                         children: questionList
                             .map(
                               (e) => new Padding(
-                                    padding: EdgeInsets.all(4.0),
+                                    padding: EdgeInsets.all(buttonPadding),
                                     child: buildQuestion(
                                       j++,
                                       e,
@@ -232,36 +235,34 @@ class _BasicAdditionState extends State<BasicAddition> {
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      new Expanded(
-                        flex: 1,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 10.0, horizontal: 10.0),
-                          child: ResponsiveGridView(
-                              rows: 1,
-                              cols: 4,
-                              children: dropTargetValues
-                                  .map(
-                                    (e) => Padding(
-                                          padding: EdgeInsets.all(4.0),
-                                          child: _buildItem(inc, e, ans[inc++]),
-                                        ),
-                                  )
-                                  .toList(growable: false)),
-                        ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 5.0, horizontal: hPadding),
+                        child: ResponsiveGridView(
+                            rows: 1,
+                            cols: 4,
+                            children: dropTargetValues
+                                .map(
+                                  (e) => Padding(
+                                        padding: EdgeInsets.all(buttonPadding),
+                                        child: _buildItem(inc, e, ans[inc++]),
+                                      ),
+                                )
+                                .toList(growable: false)),
                       ),
                       Expanded(
-                        flex: 2,
+                        // flex: 2,
                         child: Padding(
                           padding: EdgeInsets.symmetric(
-                              vertical: 10.0, horizontal: 10.0),
+                              vertical: 10, horizontal: hPadding),
                           child: new ResponsiveGridView(
                               rows: 2,
                               cols: 4,
                               children: choiceList
                                   .map(
                                     (e) => Padding(
-                                          padding: EdgeInsets.all(4.0),
+                                          padding:
+                                              EdgeInsets.all(buttonPadding),
                                           child: _buildItem(k++, e, ''),
                                         ),
                                   )
@@ -276,6 +277,7 @@ class _BasicAdditionState extends State<BasicAddition> {
   }
 
   Widget buildQuestion(int index, e, double d) {
+    print("question Button running");
     if (e == "+" || e == "-") {
       return new Text(
         "$e",
@@ -336,10 +338,10 @@ class _MyQuestionButtonState extends State<MyQuestionButton> {
   Widget build(BuildContext context) {
     if (ButtonStateContainer.of(context) != null) {
       return new UnitButton(
-        text: widget.text,
-        onPress: () => widget.onPress(),
-        showHelp: false,
-      );
+          text: widget.text,
+          onPress: () => widget.onPress(),
+          showHelp: false,
+          dotFlag: true);
     } else {
       return Container();
     }
@@ -466,11 +468,9 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                       ) {
                         return widget.text == null
                             ? UnitButton(
-                                dotFlag: false,
                                 text: '',
                               )
                             : UnitButton(
-                                dotFlag: false,
                                 text: widget.text,
                               );
                       },
@@ -520,7 +520,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
           child: new ScaleTransition(
             scale: animation,
             child: new UnitButton(
-              dotFlag: false,
               key: new Key('A${widget.keys}'),
               text: widget.text,
               showHelp: false,
@@ -561,7 +560,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                     child: Text(widget.text,
                         style: new TextStyle(
                             color: Theme.of(context).primaryColor,
-                            fontSize: buttonConfig.fontSize / 2)),
+                            fontSize: buttonConfig.fontSize)),
                   ),
                 )),
           ]),
