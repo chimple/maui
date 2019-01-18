@@ -656,9 +656,11 @@ Future<Tuple2<List<String>, List<String>>> fetchConsecutiveData(
 Future<Tuple3<List<String>, List<String>, List<String>>> fetchBasicAdditionData(
   int categoryId,
 ) async {
-  var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
-  if (gameCategory.conceptId != null) {
-    var category = await new ConceptRepo().getConcept(gameCategory.conceptId);
+  var rand = new Random();
+  var startnum = rand.nextInt(max(1, 9));
+  if (startnum != null) {
+    print("here its not comming jus check it");
+
     var rand = new Random();
     var firstNum = rand.nextInt(max(1, 9));
     var secondNum = rand.nextInt(max(1, 9));
@@ -695,6 +697,20 @@ Future<Tuple3<List<String>, List<String>, List<String>>> fetchBasicAdditionData(
     }
 
     return new Tuple3(questionList, ansData, other);
+  }
+  return null;
+}
+
+Future<Tuple2<List<int>, List<int>>> fetchCountingData(
+  int categoryId,
+) async {
+  var rndData = Random().nextInt(8 - 0) + 1;
+  if (rndData != null) {
+    List<int> questionData;
+    List<int> ansData;
+    questionData = [rndData];
+    ansData = [rndData];
+    return new Tuple2(questionData, ansData);
   }
   return null;
 }
@@ -871,10 +887,83 @@ Future<List<int>> fetchDominoMathData() async {
   return null;
 }
 
+Future<Tuple3<List<String>, List<String>, List<String>>> fetchBasicCountingData(
+  int categoryId,
+) async {
+  var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
+  if (gameCategory.conceptId != null) {
+    var category = await new ConceptRepo().getConcept(gameCategory.conceptId);
+    var rand = new Random();
+    int min = 1;
+    int max = 5;
+    // int r = min+ rand.nextInt(max-min);
+    var firstNum = min + rand.nextInt(max - min);
+    var secondNum = min + rand.nextInt(max - min);
+    var ans = firstNum + secondNum;
+    List<String> questionList = new List<String>();
+    questionList.add(firstNum.toString());
+    questionList.add(secondNum.toString());
+    String ansList = ans.toString();
+    var addingAns = ansList.split('');
+
+    List<String> other = new List<String>();
+    List<String> ansData = new List<String>();
+    addingAns.forEach((e) {
+      ansData.add(e);
+      other.add(e);
+    });
+    var checkingCount = 0;
+    for (int i = 1; i < 10; i++) {
+      for (int j = 1; j < ansData.length; j++) {
+        if (i.toString() == ansData[j]) {
+          checkingCount = checkingCount + 1;
+        }
+      }
+      if (checkingCount == 0) {
+        other.add(i.toString());
+      } else {
+        checkingCount = 0;
+      }
+
+      if (other.length == 8) {
+        break;
+      }
+    }
+
+    return new Tuple3(questionList, ansData, other);
+  }
+  return null;
+}
+
+Future<Tuple2<List<String>, List<String>>> fetchRecognizeNumberData(
+  int categoryId,
+) async {
+  var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
+  if (gameCategory.conceptId != null) {
+    var category = await new ConceptRepo().getConcept(gameCategory.conceptId);
+    var rand = new Random();
+    var firstNum = rand.nextInt(9);
+    List<String> questionList = new List<String>();
+    questionList.add(firstNum.toString());
+    var secNum = rand.nextInt(9);
+    List<String> ansData = new List<String>();
+    if (secNum.toString() == firstNum.toString()) {
+      var newNum = secNum + 1;
+      ansData.add(newNum.toString());
+    } else {
+      ansData.add(secNum.toString());
+    }
+
+    List<String> other = []..addAll(ansData)..addAll(questionList);
+
+    return new Tuple2(questionList, other);
+  }
+  return null;
+}
 
 Future<List<Tuple2<String, String>>> fetchSequenceNumberData() async {
   var random = new Random();
-  var startNum = random.nextInt(max(0, 3));
+  var startNum = random.nextInt(max(0, 4));
   switch (startNum) {
     case 0:
       return [
@@ -914,4 +1003,18 @@ Future<List<Tuple2<String, String>>> fetchSequenceNumberData() async {
       break;
   }
   return null;
+}
+
+Future<Tuple2<Tuple2<String, List<String>>, List<String>>>
+    findSizeGameData() async {
+  var rand = new Random();
+
+  switch (rand.nextInt(2)) {
+    case (0):
+      return Tuple2(
+          Tuple2('square', ['apple', 'broom', 'cat']), ['apple', 'broom']);
+      break;
+  }
+
+  return Tuple2(Tuple2('square', ['tea', 'yard', 'apple']), ['tea', 'yard']);
 }

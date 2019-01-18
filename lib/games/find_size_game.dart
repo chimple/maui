@@ -2,10 +2,11 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:maui/components/responsive_grid_view.dart';
-import 'package:maui/components/shaker.dart';
 import 'package:maui/components/unit_button.dart';
 import 'package:maui/games/single_game.dart';
+import 'package:maui/repos/game_data.dart';
 import 'package:maui/state/button_state_container.dart';
+import 'package:tuple/tuple.dart';
 
 class FindSizeGame extends StatefulWidget {
   Function onScore;
@@ -30,29 +31,31 @@ class FindSizeGame extends StatefulWidget {
 
 class _FindSizeGameState extends State<FindSizeGame>
     with TickerProviderStateMixin {
-  String dropBoxBg = "assets/box.jpg";
+  String dropBoxBg;
   List<String> _dropData = new List();
-  List<String> _images = [
-    "assets/apple.png",
-    "assets/Colors.png",
-    "assets/Boy.png"
-  ];
-
+  List<String> _images;
+  List<String> _rightAnswers;
+  Tuple2<Tuple2<String, List<String>>, List<String>> data;
   int code;
   bool _isLoading = true;
 
   List<bool> _isDone = new List();
-  var data, flag1, correct, keys;
+  var flag1, correct = 0, keys;
 
   initState() {
     super.initState();
     initFn();
   }
 
-  initFn() {
+  initFn() async {
     setState(() => _isLoading = true);
-    // data = await fetchWordData(
-    //   widget.gameConfig.gameCategoryId, _maxSize, _otherSize);
+    _images = [];
+    _rightAnswers = [];
+    data = await findSizeGameData();
+    print('came manu $data');
+    dropBoxBg = data.item1.item1;
+    data.item1.item2.forEach((f) => _images.add(f));
+    data.item2.forEach((f) => _rightAnswers.add(f));
     int temp = 0;
     while (temp < _images.length) {
       _isDone.add(false);
@@ -91,6 +94,8 @@ class _FindSizeGameState extends State<FindSizeGame>
           print('gg $findex ${_isDone[findex]} $index');
           if (index == findex) {
             //right
+            correct++;
+            if (correct == 3) widget.onEnd();
             setState(() {
               _isDone[findex] = true;
               _dropData[index] = _images[index];
@@ -130,7 +135,8 @@ class _FindSizeGameState extends State<FindSizeGame>
       final buttonPadding = sqrt(min(maxWidth, maxHeight) / 3);
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
-      UnitButton.saveButtonSize(context, 1, maxWidth - 30, maxHeight - 30);
+      if (ButtonStateContainer.of(context) != null)
+        UnitButton.saveButtonSize(context, 1, maxWidth - 30, maxHeight - 30);
 
       int j = 0;
       int inc = 0;
@@ -257,91 +263,93 @@ class MyButton extends StatefulWidget {
 class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    final buttonConfig = ButtonStateContainer.of(context).buttonConfig;
-
-    if (widget.index < 100 && buttonConfig != null) {
-      return new Container(
-        decoration: new BoxDecoration(
-          borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
-        ),
-        child: new DragTarget(
-          onAccept: (String data) => widget.onAccepted(data),
-          builder: (
-            BuildContext context,
-            List<dynamic> accepted,
-            List<dynamic> rejected,
-          ) {
-            return new Stack(
-              alignment: AlignmentDirectional.center,
-              children: <Widget>[
-                Material(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(7.0),
-                  ),
-                  child: Image.asset(
-                    widget.dropBoxBg,
-                    width: buttonConfig.width + 30,
-                    height: buttonConfig.height + 30,
-                  ),
-                ),
-                widget.img == null
-                    ? Container(
-                        width: buttonConfig.width,
-                        height: buttonConfig.height,
-                      )
-                    : new UnitButton(
-                        key: new Key('A${widget.index}'),
-                        text: '',
-                        showHelp: false,
-                        unitMode: UnitMode.image,
-                        bgImage: widget.img,
-                      ),
-              ],
-            );
-          },
-        ),
-      );
-    } else if (widget.index >= 100 &&
-        widget.img != null &&
-        buttonConfig != null) {
-      if (widget.isDone)
-        return Container(
-            height: buttonConfig.height,
-            width: buttonConfig.width,
-            color: Colors.transparent);
-      return Padding(
-        padding: EdgeInsets.all(10.0),
-        child: new Draggable(
-          onDragStarted: () {
-            if (ButtonStateContainer.of(context).startUsingButton()) {
-              widget.onDrag();
-            }
-          },
-          onDragCompleted: () =>
-              ButtonStateContainer.of(context).endUsingButton(),
-          onDraggableCanceled: (_, __) =>
-              ButtonStateContainer.of(context).endUsingButton(),
-          maxSimultaneousDrags:
-              (!ButtonStateContainer.of(context).isButtonBeingUsed) ? 1 : 0,
-          data: '${widget.index}' + '_' + '${widget.code}',
-          child: new UnitButton(
-            key: new Key('${widget.index}'),
-            text: '',
-            showHelp: false,
-            unitMode: UnitMode.image,
-            bgImage: widget.img,
+    var buttonConfig;
+    if (ButtonStateContainer.of(context) != null)
+      buttonConfig = ButtonStateContainer.of(context).buttonConfig;
+    if (ButtonStateContainer.of(context) != null) {
+      if (widget.index < 100) {
+        return new Container(
+          decoration: new BoxDecoration(
+            borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
           ),
-          feedback: UnitButton(
-            key: new Key('F' + '${widget.index}'),
-            text: '',
-            bgImage: widget.img,
-            unitMode: UnitMode.image,
-            maxHeight: buttonConfig.height,
-            maxWidth: buttonConfig.width,
-            fontSize: buttonConfig.fontSize,
+          child: new DragTarget(
+            onAccept: (String data) => widget.onAccepted(data),
+            builder: (
+              BuildContext context,
+              List<dynamic> accepted,
+              List<dynamic> rejected,
+            ) {
+              return new Stack(
+                alignment: AlignmentDirectional.center,
+                children: <Widget>[
+                  Material(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(7.0),
+                    ),
+                    child: Image.asset(
+                      'assets/box.jpg',
+                      width: buttonConfig.width + 30,
+                      height: buttonConfig.height + 30,
+                    ),
+                  ),
+                  widget.img == null
+                      ? Container(
+                          width: buttonConfig.width,
+                          height: buttonConfig.height,
+                        )
+                      : new UnitButton(
+                          key: new Key('A${widget.index}'),
+                          text: widget.img,
+                          showHelp: false,
+                          unitMode: UnitMode.image,
+                          primary: false,
+                        ),
+                ],
+              );
+            },
           ),
-        ),
-      );
+        );
+      } else if (widget.index >= 100 && widget.img != null) {
+        if (widget.isDone)
+          return Container(
+              height: buttonConfig.height,
+              width: buttonConfig.width,
+              color: Colors.transparent);
+        return Padding(
+          padding: EdgeInsets.all(10.0),
+          child: new Draggable(
+            onDragStarted: () {
+              if (ButtonStateContainer.of(context).startUsingButton()) {
+                widget.onDrag();
+              }
+            },
+            onDragCompleted: () =>
+                ButtonStateContainer.of(context).endUsingButton(),
+            onDraggableCanceled: (_, __) =>
+                ButtonStateContainer.of(context).endUsingButton(),
+            maxSimultaneousDrags:
+                (!ButtonStateContainer.of(context).isButtonBeingUsed) ? 1 : 0,
+            data: '${widget.index}' + '_' + '${widget.code}',
+            child: new UnitButton(
+              key: new Key('${widget.index}'),
+              text: widget.img,
+              showHelp: false,
+              unitMode: UnitMode.image,
+              // bgImage: widget.img,
+              primary: false,
+            ),
+            feedback: UnitButton(
+              key: new Key('F' + '${widget.index}'),
+              text: widget.img,
+              maxHeight: buttonConfig.height,
+              maxWidth: buttonConfig.width,
+              fontSize: buttonConfig.fontSize,
+              unitMode: UnitMode.image,
+              primary: false,
+            ),
+          ),
+        );
+      }
     } else
       return Container();
   }

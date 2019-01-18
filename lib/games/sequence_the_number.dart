@@ -30,13 +30,16 @@ class SequenceTheNumber extends StatefulWidget {
 }
 
 class _SequenceTheNumberState extends State<SequenceTheNumber> {
-  List<String> dragBoxData, _holdDataOfDragBox;
-  List<String> dragTargetData;
+  List<String> _dragBoxData, _holdDataOfDragBox;
+  List<String> _dragTargetData;
   List<Tuple2<String, String>> _data;
   bool _isLoading = true;
   int _size;
+  var keys = 0;
   String _holdDragText;
-  int indexOfDragText;
+  int _indexOfDragText;
+  int _progress = 0;
+  int _space = 0;
   @override
   void initState() {
     super.initState();
@@ -45,29 +48,43 @@ class _SequenceTheNumberState extends State<SequenceTheNumber> {
 
   void _sequenceTheNumber() async {
     setState(() => _isLoading = true);
+    _progress = 0;
+    _space = 0;
     _data = await fetchSequenceNumberData();
-    dragBoxData = _data.map((f) {
+    _dragBoxData = _data.map((f) {
       return f.item2;
     }).toList(growable: false);
     _holdDataOfDragBox = _data.map((f) {
       return f.item2;
     }).toList(growable: false);
-    dragTargetData = _data.map((f) {
+    _dragTargetData = _data.map((f) {
       return f.item1;
     }).toList(growable: false);
-    _size = dragBoxData.length;
-    dragBoxData.shuffle();
+    for (int j = 0; j < _dragTargetData.length; j++) {
+      if (_dragTargetData[j].contains('?')) _space++;
+    }
+    _size = _dragBoxData.length;
+    _dragBoxData.shuffle();
     setState(() => _isLoading = false);
+  }
+
+  @override
+  void didUpdateWidget(SequenceTheNumber oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.iteration != oldWidget.iteration) {
+      _sequenceTheNumber();
+    }
   }
 
   Widget dragBox(int index, String text) {
     return new MyButton(
       index: index,
       text: text,
+      keys: keys++,
       onDrag: () {
         setState(() {});
         _holdDragText = text;
-        indexOfDragText = _holdDataOfDragBox.indexOf(text);
+        _indexOfDragText = _holdDataOfDragBox.indexOf(text);
       },
     );
   }
@@ -75,11 +92,22 @@ class _SequenceTheNumberState extends State<SequenceTheNumber> {
   Widget dropTarget(int index, String text) {
     return new MyButton(
       index: index,
+      keys: keys++,
       text: text,
       onAccepted: (data) {
         setState(() {});
-        if (dragTargetData[index] == '?' && index == indexOfDragText) {
-          dragTargetData[index] = _holdDragText;
+        if (_dragTargetData[index] == '?' && index == _indexOfDragText) {
+          _dragTargetData[index] = _holdDragText;
+          _progress++;
+          widget.onProgress(_progress / _space);
+        }
+        if (_progress == _space) {
+          widget.onScore(4);
+          new Future.delayed(const Duration(seconds: 1), () {
+            widget.onEnd();
+            _isLoading = true;
+            _sequenceTheNumber();
+          });
         }
       },
     );
@@ -87,6 +115,7 @@ class _SequenceTheNumberState extends State<SequenceTheNumber> {
 
   @override
   Widget build(BuildContext context) {
+    keys = 0;
     if (_isLoading) {
       return Center(
         child: new SizedBox(
@@ -96,6 +125,7 @@ class _SequenceTheNumberState extends State<SequenceTheNumber> {
         ),
       );
     }
+
     return new LayoutBuilder(builder: (context, constraints) {
       final hPadding = pow(constraints.maxWidth / 150.0, 2);
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
@@ -106,9 +136,11 @@ class _SequenceTheNumberState extends State<SequenceTheNumber> {
       final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
-      UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
-
+      if (ButtonStateContainer.of(context) != null) {
+        UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
+      }
       return Container(
+        color: Colors.indigo[900],
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -119,24 +151,25 @@ class _SequenceTheNumberState extends State<SequenceTheNumber> {
                   child: Text(
                     'Sequence the number',
                     style: TextStyle(
-                        fontSize: 50.0,
-                        color: Colors.black,
+                        fontSize: 30.0,
+                        color: Colors.white,
                         fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
             ),
             Expanded(
-              flex: 1,
+              flex: 2,
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.yellow[300],
+                  shape: BoxShape.rectangle,
+                  color: Colors.indigo[900],
                 ),
                 child: new ResponsiveGridView(
                   maxAspectRatio: 1.0,
                   rows: 1,
-                  cols: dragTargetData.length,
-                  children: dragTargetData
+                  cols: _dragTargetData.length,
+                  children: _dragTargetData
                       .map((e) => Padding(
                           padding: EdgeInsets.all(buttonPadding),
                           child: dropTarget(j++, e)))
@@ -145,18 +178,20 @@ class _SequenceTheNumberState extends State<SequenceTheNumber> {
               ),
             ),
             Expanded(
-              flex: 1,
+              flex: 2,
               child: Container(
                 decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
-                  color: Colors.indigo[900],
-                  backgroundBlendMode: BlendMode.modulate,
+                  color: Colors.indigo[700],
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(25.0),
+                      topRight: Radius.circular(25.0)),
                 ),
                 child: new ResponsiveGridView(
                   maxAspectRatio: 1.0,
                   rows: 1,
-                  cols: dragBoxData.length,
-                  children: dragBoxData
+                  cols: _dragBoxData.length,
+                  children: _dragBoxData
                       .map((e) => Padding(
                           padding: EdgeInsets.all(buttonPadding),
                           child: dragBox(k++, e)))
@@ -174,16 +209,18 @@ class _SequenceTheNumberState extends State<SequenceTheNumber> {
 class MyButton extends StatefulWidget {
   final String text;
   final int index;
+  int keys;
   final int length;
   final DragTargetAccept onAccepted;
   final VoidCallback onDrag;
   final DraggableCanceledCallback draggableCanceledCallback;
 
-  const MyButton(
+  MyButton(
       {Key key,
       this.text,
       this.index,
       this.onAccepted,
+      this.keys,
       this.length,
       this.onDrag,
       this.draggableCanceledCallback})
@@ -197,67 +234,90 @@ class MyButton extends StatefulWidget {
 
 class MyButtonState extends State<MyButton> {
   bool isDragging = false;
+
   @override
   Widget build(BuildContext context) {
-    final buttonConfig = ButtonStateContainer.of(context).buttonConfig;
-    if (widget.index < 100) {
-      return DragTarget(
-        onAccept: (String data) => widget.onAccepted(data),
-        builder: (
-          BuildContext context,
-          List<dynamic> accepted,
-          List<dynamic> rejected,
-        ) {
-          return new UnitButton(
+    widget.keys++;
+    var buttonConfig;
+    if (ButtonStateContainer.of(context) != null) {
+      buttonConfig = ButtonStateContainer.of(context).buttonConfig;
+    }
+
+    if (ButtonStateContainer.of(context) != null) {
+      if (widget.index < 100) {
+        return Container(
+          decoration: new BoxDecoration(
+            borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
+          ),
+          child: DragTarget(
+            onAccept: (String data) => widget.onAccepted(data),
+            builder: (
+              BuildContext context,
+              List<dynamic> accepted,
+              List<dynamic> rejected,
+            ) {
+              return widget.text == '?'
+                  ? UnitButton(
+                      text: '',
+                      highlighted: true,
+                    )
+                  : UnitButton(
+                      key: new Key('A${widget.keys}'),
+                      dotFlag: false,
+                      fontSize: buttonConfig.fontSize * 0.5,
+                      text: widget.text,
+                    );
+            },
+          ),
+        );
+      } else if (widget.index >= 100) {
+        return Draggable(
+          onDragStarted: () {
+            if (ButtonStateContainer.of(context).startUsingButton()) {
+              setState(() {
+                isDragging = true;
+              });
+
+              widget.onDrag();
+            }
+          },
+          onDragCompleted: () {
+            if (isDragging) {
+              setState(() {
+                isDragging = false;
+              });
+              ButtonStateContainer.of(context).endUsingButton();
+            }
+          },
+          onDraggableCanceled: (Velocity v, Offset o) {
+            if (isDragging) {
+              setState(() {
+                isDragging = false;
+              });
+              ButtonStateContainer.of(context).endUsingButton();
+            }
+          },
+          maxSimultaneousDrags: (isDragging ||
+                  !ButtonStateContainer.of(context).isButtonBeingUsed)
+              ? 1
+              : 0,
+          data: widget.text,
+          child: UnitButton(
+            key: new Key('A${widget.keys}'),
+            fontSize: buttonConfig.fontSize * 0.5,
             dotFlag: false,
             text: widget.text,
-          );
-        },
-      );
-    } else if (widget.index >= 100) {
-      return Draggable(
-        onDragStarted: () {
-          if (ButtonStateContainer.of(context).startUsingButton()) {
-            setState(() {
-              isDragging = true;
-            });
-
-            widget.onDrag();
-          }
-        },
-        onDragCompleted: () {
-          if (isDragging) {
-            setState(() {
-              isDragging = false;
-            });
-            ButtonStateContainer.of(context).endUsingButton();
-          }
-        },
-        onDraggableCanceled: (Velocity v, Offset o) {
-          if (isDragging) {
-            setState(() {
-              isDragging = false;
-            });
-            ButtonStateContainer.of(context).endUsingButton();
-          }
-        },
-        maxSimultaneousDrags:
-            (isDragging || !ButtonStateContainer.of(context).isButtonBeingUsed)
-                ? 1
-                : 0,
-        data: widget.text,
-        child: UnitButton(
-          dotFlag: false,
-          text: widget.text,
-        ),
-        feedback: UnitButton(
-          dotFlag: false,
-          maxHeight: buttonConfig.height,
-          maxWidth: buttonConfig.width,
-          fontSize: buttonConfig.fontSize,
-          text: widget.text,
-        ),
-      );
-    }
+          ),
+          feedback: UnitButton(
+            dotFlag: false,
+            maxHeight: buttonConfig.height,
+            maxWidth: buttonConfig.width,
+            fontSize: buttonConfig.fontSize * 0.5,
+            text: widget.text,
+          ),
+        );
+      }
+    } else
+      return Container();
   }
 }

@@ -231,9 +231,9 @@ class SingleGame extends StatefulWidget {
     ],
     'matching': [Color(0xFFDD4785), Color(0xFF9b671b), Color(0xFFf99b67)],
     'sequence_the_number': [
-      Color(0xFF1DC8CC),
-      Color(0xFF282828),
-      Color(0xFFFE6677)
+      Color(0xFF4B0082),
+      Color(0xFF4B0082),
+      Color(0xFF4B0082)
     ]
   };
 
@@ -916,7 +916,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         break;
       case 'counting':
         playTime = 15000;
-        maxIterations = 1;
+        maxIterations = 5;
         return new Counting(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
@@ -1174,6 +1174,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         break;
 
       case 'basic_addition':
+        maxIterations = 5;
         return new BasicAddition(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
@@ -1198,7 +1199,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         break;
       case 'find_size_game':
         playTime = 15000;
-        maxIterations = 1;
+        maxIterations = 2;
         return new FindSizeGame(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
@@ -1315,18 +1316,31 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             gameConfig: widget.gameConfig);
         break;
       case 'domino_math':
+        maxIterations = 5;
         return new Domino(
           key: new GlobalObjectKey(keyName),
+          onProgress: _onProgress,
+          onScore: _onScore,
+          isRotated: widget.isRotated,
+          onEnd: () => _onEnd(context),
+          iteration:
+              widget.gameConfig.myIteration + widget.gameConfig.otherIteration,
+          gameConfig: widget.gameConfig,
         );
         break;
       case 'sequence_the_number':
+        maxIterations = 5;
         return new SequenceTheNumber(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
             onProgress: _onProgress,
+            onEnd: () => _onEnd(context),
+            iteration: widget.gameConfig.myIteration +
+                widget.gameConfig.otherIteration,
             gameConfig: widget.gameConfig);
         break;
-      case 'counting':
+      case 'basic_counting':
+        maxIterations = 5;
         return new BasicCounting(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
@@ -1337,8 +1351,8 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             isRotated: widget.isRotated,
             gameConfig: widget.gameConfig);
         break;
-
       case 'recognize_number':
+        maxIterations = 5;
         return new RecognizeNumber(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
