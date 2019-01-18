@@ -653,6 +653,54 @@ Future<Tuple2<List<String>, List<String>>> fetchConsecutiveData(
   return null;
 }
 
+Future<Tuple3<List<String>, List<String>, List<String>>> fetchBasicAdditionData(
+  int categoryId,
+) async {
+  var rand = new Random();
+  var startnum = rand.nextInt(max(1, 9));
+  if (startnum != null) {
+    print("here its not comming jus check it");
+
+    var rand = new Random();
+    var firstNum = rand.nextInt(max(1, 9));
+    var secondNum = rand.nextInt(max(1, 9));
+    var ans = firstNum + secondNum;
+    List<String> questionList = new List<String>();
+    questionList.add(firstNum.toString());
+    questionList.add("+");
+    questionList.add(secondNum.toString());
+    String ansList = ans.toString();
+    var addingAns = ansList.split('');
+
+    List<String> other = new List<String>();
+    List<String> ansData = new List<String>();
+    addingAns.forEach((e) {
+      ansData.add(e);
+      other.add(e);
+    });
+    var checkingCount = 0;
+    for (int i = 0; i < 10; i++) {
+      for (int j = 0; j < ansData.length; j++) {
+        if (i.toString() == ansData[j]) {
+          checkingCount = checkingCount + 1;
+        }
+      }
+      if (checkingCount == 0) {
+        other.add(i.toString());
+      } else {
+        checkingCount = 0;
+      }
+
+      if (other.length == 8) {
+        break;
+      }
+    }
+
+    return new Tuple3(questionList, ansData, other);
+  }
+  return null;
+}
+
 Future<Tuple2<List<String>, String>> fetchFirstWordData(int categoryId) async {
   var rand = new Random();
   var startNum = rand.nextInt(max(0, 3));
@@ -895,6 +943,50 @@ Future<Tuple2<List<String>, List<String>>> fetchRecognizeNumberData(
     List<String> other = []..addAll(ansData)..addAll(questionList);
 
     return new Tuple2(questionList, other);
+  }
+  return null;
+}
+
+Future<List<Tuple2<String, String>>> fetchSequenceNumberData() async {
+  var random = new Random();
+  var startNum = random.nextInt(max(0, 4));
+  switch (startNum) {
+    case 0:
+      return [
+        Tuple2('1', '1'),
+        Tuple2('?', '2'),
+        Tuple2('3', '3'),
+        Tuple2('?', '4'),
+        Tuple2('5', '5'),
+      ];
+      break;
+    case 1:
+      return [
+        Tuple2('?', '4'),
+        Tuple2('5', '5'),
+        Tuple2('6', '6'),
+        Tuple2('?', '7'),
+        Tuple2('8', '8'),
+      ];
+      break;
+    case 2:
+      return [
+        Tuple2('12', '12'),
+        Tuple2('13', '13'),
+        Tuple2('?', '14'),
+        Tuple2('?', '15'),
+        Tuple2('16', '16'),
+      ];
+      break;
+    case 3:
+      return [
+        Tuple2('43', '43'),
+        Tuple2('44', '44'),
+        Tuple2('?', '45'),
+        Tuple2('?', '46'),
+        Tuple2('47', '47'),
+      ];
+      break;
   }
   return null;
 }
