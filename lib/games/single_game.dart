@@ -1309,8 +1309,16 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             gameConfig: widget.gameConfig);
         break;
       case 'domino_math':
+        maxIterations = 5;
         return new Domino(
           key: new GlobalObjectKey(keyName),
+          onProgress: _onProgress,
+          onScore: _onScore,
+          isRotated: widget.isRotated,
+          onEnd: () => _onEnd(context),
+          iteration:
+              widget.gameConfig.myIteration + widget.gameConfig.otherIteration,
+          gameConfig: widget.gameConfig,
         );
         break;
       case 'counting':
