@@ -990,3 +990,17 @@ Future<List<Tuple2<String, String>>> fetchSequenceNumberData() async {
   }
   return null;
 }
+
+Future<Tuple2<Tuple2<String, List<String>>, List<String>>>
+    findSizeGameData() async {
+  var rand = new Random();
+
+  switch (rand.nextInt(2)) {
+    case (0):
+      return Tuple2(
+          Tuple2('square', ['apple', 'broom', 'cat']), ['apple', 'broom']);
+      break;
+  }
+
+  return Tuple2(Tuple2('square', ['tea', 'yard', 'apple']), ['tea', 'yard']);
+}
