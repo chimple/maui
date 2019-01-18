@@ -179,7 +179,7 @@ class _BasicAdditionState extends State<BasicAddition> {
       maxWidth = (constraints.maxWidth - hPadding * 2) / 4;
       maxHeight = (constraints.maxHeight - vPadding * 2) / 4;
 
-      final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
+      final buttonPadding = sqrt(min(maxWidth, maxHeight) / 6);
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
       //  final buttonConfig = ;
@@ -202,14 +202,14 @@ class _BasicAdditionState extends State<BasicAddition> {
                   height: constraints.maxHeight / 2,
                   child: Padding(
                       padding: EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 10.0),
+                          vertical: vPadding, horizontal: hPadding),
                       child: new ResponsiveGridView(
                         rows: 1,
                         cols: questionList.length,
                         children: questionList
                             .map(
                               (e) => new Padding(
-                                    padding: EdgeInsets.all(4.0),
+                                    padding: EdgeInsets.all(buttonPadding),
                                     child: buildQuestion(
                                       j++,
                                       e,
@@ -236,14 +236,15 @@ class _BasicAdditionState extends State<BasicAddition> {
                         flex: 1,
                         child: Padding(
                           padding: EdgeInsets.symmetric(
-                              vertical: 10.0, horizontal: 10.0),
+                              vertical: vPadding, horizontal: hPadding),
                           child: ResponsiveGridView(
                               rows: 1,
                               cols: 4,
                               children: dropTargetValues
                                   .map(
                                     (e) => Padding(
-                                          padding: EdgeInsets.all(4.0),
+                                          padding:
+                                              EdgeInsets.all(buttonPadding),
                                           child: _buildItem(inc, e, ans[inc++]),
                                         ),
                                   )
@@ -254,14 +255,15 @@ class _BasicAdditionState extends State<BasicAddition> {
                         flex: 2,
                         child: Padding(
                           padding: EdgeInsets.symmetric(
-                              vertical: 10.0, horizontal: 10.0),
+                              vertical: vPadding, horizontal: hPadding),
                           child: new ResponsiveGridView(
                               rows: 2,
                               cols: 4,
                               children: choiceList
                                   .map(
                                     (e) => Padding(
-                                          padding: EdgeInsets.all(4.0),
+                                          padding:
+                                              EdgeInsets.all(buttonPadding),
                                           child: _buildItem(k++, e, ''),
                                         ),
                                   )
@@ -336,10 +338,10 @@ class _MyQuestionButtonState extends State<MyQuestionButton> {
   Widget build(BuildContext context) {
     if (ButtonStateContainer.of(context) != null) {
       return new UnitButton(
-        text: widget.text,
-        onPress: () => widget.onPress(),
-        showHelp: false,
-      );
+          text: widget.text,
+          onPress: () => widget.onPress(),
+          showHelp: false,
+          dotFlag: true);
     } else {
       return Container();
     }
@@ -466,11 +468,9 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                       ) {
                         return widget.text == null
                             ? UnitButton(
-                                dotFlag: false,
                                 text: '',
                               )
                             : UnitButton(
-                                dotFlag: false,
                                 text: widget.text,
                               );
                       },
@@ -520,7 +520,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
           child: new ScaleTransition(
             scale: animation,
             child: new UnitButton(
-              dotFlag: false,
               key: new Key('A${widget.keys}'),
               text: widget.text,
               showHelp: false,
@@ -561,7 +560,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                     child: Text(widget.text,
                         style: new TextStyle(
                             color: Theme.of(context).primaryColor,
-                            fontSize: buttonConfig.fontSize / 2)),
+                            fontSize: buttonConfig.fontSize)),
                   ),
                 )),
           ]),
