@@ -1365,6 +1365,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         break;
 
       case 'matching':
+        maxIterations = 1;
         return new Matching(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
