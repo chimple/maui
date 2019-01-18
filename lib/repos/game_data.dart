@@ -833,8 +833,10 @@ Future<Tuple3<List<String>, List<String>, List<String>>> fetchBasicCountingData(
   if (gameCategory.conceptId != null) {
     var category = await new ConceptRepo().getConcept(gameCategory.conceptId);
     var rand = new Random();
-    var firstNum = rand.nextInt(max(1, 4));
-    var secondNum = rand.nextInt(max(1, 4));
+    int min= 1;int max = 5;
+    // int r = min+ rand.nextInt(max-min);
+    var firstNum = min+ rand.nextInt(max-min);
+    var secondNum = min+ rand.nextInt(max-min);
     var ans = firstNum + secondNum;
     List<String> questionList = new List<String>();
     questionList.add(firstNum.toString());
@@ -849,8 +851,8 @@ Future<Tuple3<List<String>, List<String>, List<String>>> fetchBasicCountingData(
       other.add(e);
     });
     var checkingCount = 0;
-    for (int i = 0; i < 10; i++) {
-      for (int j = 0; j < ansData.length; j++) {
+    for (int i = 1; i < 10; i++) {
+      for (int j = 1; j < ansData.length; j++) {
         if (i.toString() == ansData[j]) {
           checkingCount = checkingCount + 1;
         }
@@ -867,6 +869,36 @@ Future<Tuple3<List<String>, List<String>, List<String>>> fetchBasicCountingData(
     }
 
     return new Tuple3(questionList, ansData, other);
+  }
+  return null;
+}
+
+Future<Tuple2<List<String>, List<String>>> fetchrRecognizeNumberData(
+  int categoryId,
+) async {
+  var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
+  if (gameCategory.conceptId != null) {
+    var category = await new ConceptRepo().getConcept(gameCategory.conceptId);
+    var rand = new Random();
+    var firstNum=rand.nextInt(9);
+      List<String> questionList = new List<String>();
+      questionList.add(firstNum.toString());
+      var secNum= rand.nextInt(9);
+      List<String> ansData = new List<String>();
+      if(secNum.toString() == firstNum.toString()){
+        var newNum = secNum + 1;
+        ansData.add(newNum.toString());
+      }else{
+        ansData.add(secNum.toString());
+      }
+      
+       List<String> other = []..addAll(ansData)..addAll(questionList);
+   
+
+
+
+
+    return new Tuple2(questionList, other);
   }
   return null;
 }

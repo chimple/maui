@@ -9,6 +9,7 @@ import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/button_state_container.dart';
+import 'package:tuple/tuple.dart';
 
 class RecognizeNumber extends StatefulWidget {
   Function onScore;
@@ -44,14 +45,47 @@ class RecognizeNumberState extends State<RecognizeNumber>
 
   List<Status> _statuses = [];
   static int _maxSize = 2;
-  List<String> _answer = ["8"];
-  List<String> _question = ["8", "3"];
+  List<String> _answer = [];
+  List<String> _question = [];
+  bool _isLoading = true;
+ Tuple2<List<String>, List<String>> recognizeData;
 
   @override
   void initState() {
     super.initState();
     print("this are my game basic");
+    _initBoard();
     _statuses = _question.map((e) => Status.active).toList(growable: false);
+  }
+ void _initBoard() async{
+    setState(() {
+       _isLoading = true;
+        });
+    recognizeData = await fetchrRecognizeNumberData(widget.gameConfig.gameCategoryId);
+    recognizeData.item1.forEach((e){
+      _question.add(e);
+
+    });
+    recognizeData.item2.forEach((e){
+      _answer.add(e);
+    });
+     _statuses = _question.map((e) => Status.active).toList(growable: false);
+        _statuses = _answer.map((e) => Status.active).toList(growable: false);
+
+    print("this is al ieierjierl $_question");
+    print("this is a answer $_answer");
+    setState(() => _isLoading = false);
+
+ }
+
+   @override
+  void didUpdateWidget(RecognizeNumber oldWidget) {
+    if (widget.iteration != oldWidget.iteration) {
+      _answer = [];
+      _question = [];
+      _statuses = [];
+      _initBoard();
+    }
   }
 
   Widget _buildItem(int index, String text, Status status, maxChars,
@@ -65,15 +99,24 @@ class RecognizeNumberState extends State<RecognizeNumber>
         //question unit mode
         status: status,
         onPress: () {
-          if (code == Code.question) {
+          if (code == Code.answer) {
             print("this is text $text");
             print("this is answer ${_answer[0]}");
-            if (_answer[0] == text) {
-              print("success");
+            if (_question[0] == text) {
+             
               _statuses[index] = Status.visible;
+              setState(() {
+                 print("success");
+              widget.onEnd();
+              _answer = [];
+              _question = [];
+              _statuses = [];
+           AppStateContainer.of(context).playWord(_question[index]);
+
+            });
             }
           }
-          if(code == Code.answer){
+          if(code == Code.question){
             print("hello i am coming");
               AppStateContainer.of(context).playWord(text.toLowerCase());
           }
@@ -93,6 +136,11 @@ class RecognizeNumberState extends State<RecognizeNumber>
     print("this is after random $_question");
 
     return new LayoutBuilder(builder: (context, constraints) {
+      if (_isLoading) {
+      return new SizedBox(
+          width: 20.0, height: 20.0, child: new CircularProgressIndicator());
+    }
+      
       final hPadding = pow(constraints.maxWidth / 150.0, 2);
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
       final maxChars = (_question != null
@@ -124,11 +172,11 @@ class RecognizeNumberState extends State<RecognizeNumber>
                   child: new ResponsiveGridView(
                     rows: 1,
                     cols: 1,
-                    children: _answer
+                    children: _question
                         .map((e) => Padding(
                             padding: EdgeInsets.all(buttonPadding),
                             child: _buildItem(j, e, _statuses[j++], maxChars,
-                                maxWidth, maxHeight, Code.answer)))
+                                maxWidth, maxHeight, Code.question)))
                         .toList(growable: false),
                   )),
             )),
@@ -141,11 +189,11 @@ class RecognizeNumberState extends State<RecognizeNumber>
                   child: new ResponsiveGridView(
                     rows: 1,
                     cols: 2,
-                    children: _question
+                    children: _answer
                         .map((e) => Padding(
                             padding: EdgeInsets.all(buttonPadding),
                             child: _buildItem(k, e, _statuses[k++], maxChars,
-                                maxWidth, maxHeight, Code.question)))
+                                maxWidth, maxHeight, Code.answer)))
                         .toList(growable: false),
                   )),
             )),
@@ -217,8 +265,8 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
 // print({"this is 123 kiran data": widget.Rtile});
     print({"this is 123 kiran column": widget.text});
-    return FlipAnimator(
-          front: widget.code == Code.answer
+    if (ButtonStateContainer.of(context) != null) {
+    return  widget.code == Code.question
           ? UnitButton(
               text: widget.text,
               primary: true,
@@ -229,13 +277,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
               text: widget.text,
               onPress: widget.onPress,
               unitMode: UnitMode.text,
-            ),
-            back: UnitButton(
-              text: widget.text,
-              onPress:widget.onPress,
-              unitMode: UnitMode.text,
-            ),
-            controller: controller,
-    );
-  }
+            );  }
+}
 }

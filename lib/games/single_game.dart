@@ -1314,6 +1314,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         );
         break;
       case 'Counting_Basic':
+      maxIterations = 5;
         return new BasicCounting(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
@@ -1326,6 +1327,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         break;
 
       case 'recognize_number':
+      maxIterations = 5;
         return new RecognizeNumber(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,

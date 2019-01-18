@@ -59,7 +59,7 @@ class BasicCountingState extends State<BasicCounting> {
 
   void _initBoard() async {
     setState(() => _isLoading = true);
-   
+
     basicData = await fetchBasicCountingData(widget.gameConfig.gameCategoryId);
     basicData.item1.forEach((e) {
       _question.add(e);
@@ -70,7 +70,7 @@ class BasicCountingState extends State<BasicCounting> {
     basicData.item3.forEach((e) {
       _answer.add(e);
     });
-     newAnswer = _answer.sublist(0,2);
+    newAnswer = _answer.sublist(0, 2);
     print("this is al ieierjierl $_question");
     print("this is a answer $_answer");
     print("this is a new answer $newAnswer");
@@ -81,6 +81,10 @@ class BasicCountingState extends State<BasicCounting> {
   @override
   void didUpdateWidget(BasicCounting oldWidget) {
     if (widget.iteration != oldWidget.iteration) {
+      _all = [];
+      _answer = [];
+      _question = [];
+      _statuses = [];
       _initBoard();
     }
   }
@@ -93,23 +97,19 @@ class BasicCountingState extends State<BasicCounting> {
         key: new ValueKey<int>(index),
         index: index,
         text: text,
-        
         status: status,
         onPress: () {
-         
-            print("this is text $text");
-            print("this is answer ${_answer[0]}");
-            if (_all[0] == text) {
-              print("success");
-              _statuses[index] = Status.visible;
-              setState(() {
-                _all = [];
-                _answer = [];
-                _question = [];
-                _statuses = [];
-                // widget.onEnd();
-              });
-                      }
+          if (_all[0] == text) {
+            print("success");
+            _statuses[index] = Status.visible;
+            setState(() {
+              widget.onEnd();
+              _all = [];
+              _answer = [];
+              _question = [];
+              _statuses = [];
+            });
+          }
           print(" staus is.......::$_statuses");
 
           print("this is my new index of text $text");
@@ -126,6 +126,11 @@ class BasicCountingState extends State<BasicCounting> {
     print("this is after random $_question");
 
     return new LayoutBuilder(builder: (context, constraints) {
+  if (_isLoading) {
+      return new SizedBox(
+          width: 20.0, height: 20.0, child: new CircularProgressIndicator());
+    }
+
       final hPadding = pow(constraints.maxWidth / 150.0, 2);
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
       final maxChars = (_question != null
@@ -239,19 +244,17 @@ class MyButton extends StatefulWidget {
   final double maxWidth;
   final double maxHeight;
 
-
   @override
   _MyButtonState createState() => new _MyButtonState();
 }
 
 class _MyButtonState extends State<MyButton> {
-
   @override
   void initState() {
     super.initState();
     print("my button is......");
-  
   }
+
   @override
   void didUpdateWidget(MyButton oldWidget) {
     print({"oldwidget data ": oldWidget.text});
@@ -266,7 +269,7 @@ class _MyButtonState extends State<MyButton> {
   Widget build(BuildContext context) {
 // print({"this is 123 kiran data": widget.Rtile});
     print("heello datta is not comming here lets check");
-     final buttonConfig = ButtonStateContainer.of(context).buttonConfig;
+    final buttonConfig = ButtonStateContainer.of(context).buttonConfig;
     if (ButtonStateContainer.of(context) != null) {
       return UnitButton(
         text: widget.text,
