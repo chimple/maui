@@ -61,7 +61,7 @@ class RecognizeNumberState extends State<RecognizeNumber>
     setState(() {
        _isLoading = true;
         });
-    recognizeData = await fetchrRecognizeNumberData(widget.gameConfig.gameCategoryId);
+    recognizeData = await fetchRecognizeNumberData(widget.gameConfig.gameCategoryId);
     recognizeData.item1.forEach((e){
       _question.add(e);
 

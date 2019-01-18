@@ -873,7 +873,7 @@ Future<Tuple3<List<String>, List<String>, List<String>>> fetchBasicCountingData(
   return null;
 }
 
-Future<Tuple2<List<String>, List<String>>> fetchrRecognizeNumberData(
+Future<Tuple2<List<String>, List<String>>> fetchRecognizeNumberData(
   int categoryId,
 ) async {
   var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);

@@ -222,7 +222,7 @@ class SingleGame extends StatefulWidget {
     'domino_math': [Color(0xFF42AD56), Color(0xFFffdc48), Color(0xFF4AC8DD)],
     'quiz_pager': [Color(0xFF1DC8CC), Color(0xFF282828), Color(0xFFFE6677)],
     'basic_addition': [Color(0xFF1DC8CC), Color(0xFF282828), Color(0xFFFE6677)],
-    'counting_basic': [Color(0xFF1DC8CC), Color(0xFF282828), Color(0xFFFE6677)],
+    'basic_counting': [Color(0xFF1DC8CC), Color(0xFF282828), Color(0xFFFE6677)],
     'recognize_number': [
       Color(0xFF1DC8CC),
       Color(0xFF282828),
@@ -1313,7 +1313,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
           key: new GlobalObjectKey(keyName),
         );
         break;
-      case 'counting_basic':
+      case 'basic_counting':
       maxIterations = 5;
         return new BasicCounting(
             key: new GlobalObjectKey(keyName),
