@@ -31,16 +31,16 @@ class FindSizeGame extends StatefulWidget {
 
 class _FindSizeGameState extends State<FindSizeGame>
     with TickerProviderStateMixin {
-  String dropBoxBg ;
+  String dropBoxBg;
   List<String> _dropData = new List();
-  List<String> _images ;
+  List<String> _images;
   List<String> _rightAnswers;
   Tuple2<Tuple2<String, List<String>>, List<String>> data;
   int code;
   bool _isLoading = true;
 
   List<bool> _isDone = new List();
-  var flag1, correct=0, keys;
+  var flag1, correct = 0, keys;
 
   initState() {
     super.initState();
@@ -49,13 +49,13 @@ class _FindSizeGameState extends State<FindSizeGame>
 
   initFn() async {
     setState(() => _isLoading = true);
-    _images=[];
-    _rightAnswers=[];
+    _images = [];
+    _rightAnswers = [];
     data = await findSizeGameData();
     print('came manu $data');
-   dropBoxBg= data.item1.item1;
-   data.item1.item2.forEach((f)=>_images.add(f));
-   data.item2.forEach((f)=>_rightAnswers.add(f));
+    dropBoxBg = data.item1.item1;
+    data.item1.item2.forEach((f) => _images.add(f));
+    data.item2.forEach((f) => _rightAnswers.add(f));
     int temp = 0;
     while (temp < _images.length) {
       _isDone.add(false);
@@ -95,8 +95,7 @@ class _FindSizeGameState extends State<FindSizeGame>
           if (index == findex) {
             //right
             correct++;
-            if(correct==3)
-            widget.onEnd();
+            if (correct == 3) widget.onEnd();
             setState(() {
               _isDone[findex] = true;
               _dropData[index] = _images[index];

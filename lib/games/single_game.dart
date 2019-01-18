@@ -1321,7 +1321,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         );
         break;
       case 'sequence_the_number':
-       maxIterations = 5;
+        maxIterations = 5;
         return new SequenceTheNumber(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
