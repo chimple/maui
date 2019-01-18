@@ -42,6 +42,7 @@ class _MatchingState extends State<Matching> {
   bool _isUnderCircle = false;
   List<int> _joinedLineStatus = [];
   bool _isLoading = false;
+  double _buttonPadding;
   @override
   void initState() {
     super.initState();
@@ -73,10 +74,9 @@ class _MatchingState extends State<Matching> {
   @override
   didUpdateWidget(Matching oldWidget) {
     super.didUpdateWidget(oldWidget);
-    print('adsadsadsad ');
-    if (_joinedLineStatus.length >= 3) {
-      print('re build');
-    }
+    // if (_joinedLineStatus.length >= 3) {
+    //   print('re build');
+    // }
   }
 
   void _onStart(Offset start) {
@@ -84,20 +84,20 @@ class _MatchingState extends State<Matching> {
       _dottedCircleOffset.addAll(dottedCircleOffset
           .sublist(dottedCircleOffset.length - _data.length * 2));
       print(
-          'final list $_dottedCircleOffset length ${_dottedCircleOffset.length}');
+          'offsets for dotted cirlce:: $_dottedCircleOffset,length ${_dottedCircleOffset.length}');
       flag = 1;
     }
-    print('offset on start:: $start');
+    // print('offset on start:: $start');
     for (int i = 0; i < _dottedCircleOffset.length; i++) {
       if ((start - (_dottedCircleOffset[i])).distance < 40 &&
           _joinedLineStatus[i] != 1) {
         _index1 = i;
-        print('index at stared:$i');
+        // print('index at stared:$i');
         if (i < _question.length) {
-          print(
-              'drag from left side:${_questionData.indexOf(_question[_index1])}');
+          // print(
+          //     'drag from left side:${_questionData.indexOf(_question[_index1])}');
         } else {
-          print('drag from right side:');
+          // print('drag from right side:');
         }
         _joinLine(i);
       }
@@ -112,11 +112,11 @@ class _MatchingState extends State<Matching> {
 
   void _onEnd(ScaleEndDetails end) {
     if (_updateOffset != null && _startOffset != null) {
-      print('offset at end:: $_updateOffset ${_dottedCircleOffset.length}');
+      // print('offset at end:: $_updateOffset ${_dottedCircleOffset.length}');
       for (int i = 0; i < _dottedCircleOffset.length; i++) {
         if ((_updateOffset - _dottedCircleOffset[i]).distance < 40 &&
             _joinedLineStatus[i] != 1) {
-          print('index at end: $i');
+          // print('index at end: $i');
           _index2 = i;
           _connectDots();
         } else {}
@@ -129,7 +129,7 @@ class _MatchingState extends State<Matching> {
       });
     }
     if (_joinedLinedOffset.length == _data.length) {
-      print('game end');
+      // print('game end');
       new Future.delayed(Duration(seconds: 1), () {
         widget.onEnd();
         flag = 0;
@@ -149,7 +149,7 @@ class _MatchingState extends State<Matching> {
     if (_index1 < _question.length &&
         _index2 < _dottedCircleOffset.length &&
         _index2 >= _question.length) {
-      print('true from left side');
+      // print('true from left side');
       if (_questionData.indexOf(_question[_index1]) ==
           _answerData.indexOf(_answer[_index2 - _answer.length])) {
         print('${_answerData.indexOf(_answer[_index2 - _answer.length])}');
@@ -161,7 +161,7 @@ class _MatchingState extends State<Matching> {
         });
       }
     } else if (_index1 >= _question.length && _index2 < _question.length) {
-      print('true from right side');
+      // print('true from right side');
       if (_questionData.indexOf(_question[_index2]) ==
           _answerData.indexOf(_answer[_index1 - _answer.length])) {
         setState(() {
@@ -176,6 +176,7 @@ class _MatchingState extends State<Matching> {
 
   Widget _buildButton(String text, int index) {
     return UnitButton(
+      // disabled: _joinedLineStatus[index] == 0 ? false : true,
       text: text,
       key: Key('$index'),
       onPress: null,
@@ -188,18 +189,21 @@ class _MatchingState extends State<Matching> {
       DottedCircle(
         child: Container(
           decoration: BoxDecoration(
-              color: Colors.yellow, borderRadius: BorderRadius.circular(12.5)),
-          height: 25,
-          width: 25,
+              color: Colors.yellow, borderRadius: BorderRadius.circular(11)),
+          height: 22,
+          width: 22,
         ),
         key: GlobalKey(debugLabel: index.toString()),
         height: MediaQuery.of(context).size.height - constraint.maxHeight,
       ),
       Padding(
         padding: index < _question.length
-            ? EdgeInsets.only(right: 12.5)
-            : EdgeInsets.only(left: 12.5),
-        child: _buildButton(s, index++),
+            ? EdgeInsets.only(right: 5)
+            : EdgeInsets.only(left: 5),
+        child: Padding(
+          padding: EdgeInsets.all(_buttonPadding),
+          child: _buildButton(s, index++),
+        ),
       ),
     ]);
   }
@@ -216,6 +220,15 @@ class _MatchingState extends State<Matching> {
             (prev, element) => element.length > prev ? element.length : prev)
         : 1);
     int index = 0;
+    if (!_isLoading) {
+      return Center(
+        child: SizedBox(
+          height: 40,
+          width: 40,
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
     return LayoutBuilder(builder: (context, constraints) {
       final hPadding = pow(constraints.maxWidth / 150.0, 2);
       final vPadding = pow(constraints.maxHeight / 150.0, 2);
@@ -225,71 +238,65 @@ class _MatchingState extends State<Matching> {
       double maxHeight = (constraints.maxHeight - vPadding * 2) / 8;
 
       final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
-
+      _buttonPadding = buttonPadding;
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
+
       UnitButton.saveButtonSize(context, maxChars, maxWidth, maxHeight);
       AppState state = AppStateContainer.of(context).state;
+
       // print('constraint Box:: $constraints');
-      if (!_isLoading) {
-        return Center(
-          child: SizedBox(
-            height: 40,
-            width: 40,
-            child: CircularProgressIndicator(),
-          ),
-        );
-      } else {
-        return Container(
-          decoration: BoxDecoration(
-              color: Color(0xffA52A2A),
-              borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(30), topLeft: Radius.circular(30))),
-          child: CustomPaint(
-            foregroundPainter: DrawLine(
-                dottedOffset: _joinedLinedOffset,
-                startOffset: _startOffset,
-                endOffset: _updateOffset),
-            child: GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onScaleStart: (ScaleStartDetails str) {
-                  Offset start = (context.findRenderObject() as RenderBox)
-                      .globalToLocal(str.focalPoint);
-                  _onStart(start);
-                },
-                onScaleUpdate: (ScaleUpdateDetails det) {
-                  Offset update = (context.findRenderObject() as RenderBox)
-                      .globalToLocal(det.focalPoint);
-                  if (_isUnderCircle) _onUpdate(update);
-                },
-                onScaleEnd: _onEnd,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: _question
-                          .map((s) => Padding(
-                              padding: EdgeInsets.all(0),
-                              child: _build(constraints, index++, s,
-                                  AlignmentDirectional.centerEnd)))
-                          .toList(growable: false),
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: _answer
-                          .map((a) => Padding(
-                              padding: EdgeInsets.all(0),
-                              child: _build(constraints, index++, a,
-                                  AlignmentDirectional.centerStart)))
-                          .toList(growable: false),
-                    ),
-                  ],
-                )),
-          ),
-        );
-      }
+
+      return Container(
+        key: widget.key,
+        decoration: BoxDecoration(
+            color: Color(0xffA52A2A),
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(30), topLeft: Radius.circular(30))),
+        child: CustomPaint(
+          foregroundPainter: DrawLine(
+              dottedOffset: _joinedLinedOffset,
+              startOffset: _startOffset,
+              endOffset: _updateOffset),
+          child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onScaleStart: (ScaleStartDetails str) {
+                Offset start = (context.findRenderObject() as RenderBox)
+                    .globalToLocal(str.focalPoint);
+                _onStart(start);
+              },
+              onScaleUpdate: (ScaleUpdateDetails det) {
+                Offset update = (context.findRenderObject() as RenderBox)
+                    .globalToLocal(det.focalPoint);
+                if (_isUnderCircle) _onUpdate(update);
+              },
+              onScaleEnd: _onEnd,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: _question
+                        .map((s) => Padding(
+                            padding: EdgeInsets.all(0),
+                            child: _build(constraints, index++, s,
+                                AlignmentDirectional.centerEnd)))
+                        .toList(growable: false),
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: _answer
+                        .map((a) => Padding(
+                            padding: EdgeInsets.all(0),
+                            child: _build(constraints, index++, a,
+                                AlignmentDirectional.centerStart)))
+                        .toList(growable: false),
+                  ),
+                ],
+              )),
+        ),
+      );
     });
   }
 }
@@ -365,8 +372,12 @@ class DrawLine extends CustomPainter {
 
     if (dottedOffset != null) {
       for (int i = 0; i < dottedOffset.length; i++)
-        canvas.drawLine(dottedOffset.keys.elementAt(i),
-            dottedOffset.values.elementAt(i), _paint);
+        canvas.drawLine(
+            Offset(dottedOffset.keys.elementAt(i).dx + 3,
+                dottedOffset.keys.elementAt(i).dy),
+            Offset(dottedOffset.values.elementAt(i).dx - 3,
+                dottedOffset.values.elementAt(i).dy),
+            _paint);
     }
   }
 
@@ -405,7 +416,7 @@ class _RenderObject extends RenderProxyBox {
   void paint(PaintingContext context, Offset offset) {
     if (child != null) {
       final o = -child.globalToLocal(Offset(0.0, height));
-      dottedCircleOffset.add(o + Offset(12.0, 12.0));
+      dottedCircleOffset.add(o + Offset(11.0, 11.0));
       context.paintChild(child, offset);
     }
   }

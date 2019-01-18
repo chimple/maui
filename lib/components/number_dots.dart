@@ -2,17 +2,13 @@ import 'package:flutter/material.dart';
 
 class NumberDots extends StatelessWidget {
   final int number;
-
-  NumberDots({
-    Key key,
-    this.number,
-  }) : super(key: key);
+  final double fontSize;
+  NumberDots({Key key, this.number, this.fontSize}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     int rowSize = 1;
     int checkingNumber = this.number;
-
     if (checkingNumber > 9) {
       checkingNumber = 0;
     }
@@ -34,7 +30,7 @@ class NumberDots extends StatelessWidget {
             child: new Icon(
               Icons.lens,
               color: Colors.black,
-              size: 13.0,
+              size: fontSize * 0.12,
             ),
           );
         }).toList(growable: false);

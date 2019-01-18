@@ -11,6 +11,7 @@ import 'package:maui/games/basic_addition.dart';
 import 'package:maui/games/basic_counting.dart';
 import 'package:maui/games/recognize_number.dart';
 import 'package:maui/games/matching.dart';
+import 'package:maui/games/sequence_the_number.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -227,8 +228,13 @@ class SingleGame extends StatefulWidget {
       Color(0xFF1DC8CC),
       Color(0xFF282828),
       Color(0xFFFE6677)
-    ]
+    ],
     'matching': [Color(0xFFDD4785), Color(0xFF9b671b), Color(0xFFf99b67)],
+    'sequence_the_number': [
+      Color(0xFF4B0082),
+      Color(0xFF4B0082),
+      Color(0xFF4B0082)
+    ]
   };
 
   SingleGame(this.gameName,
@@ -908,7 +914,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             isRotated: widget.isRotated,
             gameConfig: widget.gameConfig);
         break;
-        case 'counting':
+      case 'counting':
         playTime = 15000;
         maxIterations = 1;
         return new Counting(
@@ -1313,10 +1319,15 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
           key: new GlobalObjectKey(keyName),
         );
         break;
+      case 'sequence_the_number':
+        return new SequenceTheNumber(
+            key: new GlobalObjectKey(keyName),
+            onScore: _onScore,
+            onProgress: _onProgress,
+            gameConfig: widget.gameConfig);
+        break;
       case 'counting':
         return new BasicCounting(
-      case 'matching':
-        return new Matching(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
             onProgress: _onProgress,
@@ -1326,6 +1337,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             isRotated: widget.isRotated,
             gameConfig: widget.gameConfig);
         break;
+
       case 'recognize_number':
         return new RecognizeNumber(
             key: new GlobalObjectKey(keyName),
@@ -1335,6 +1347,17 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             iteration: widget.gameConfig.myIteration +
                 widget.gameConfig.otherIteration,
             isRotated: widget.isRotated,
+            gameConfig: widget.gameConfig);
+        break;
+
+      case 'matching':
+        return new Matching(
+            key: new GlobalObjectKey(keyName),
+            onScore: _onScore,
+            onProgress: _onProgress,
+            onEnd: () => _onEnd(context),
+            iteration: widget.gameConfig.myIteration +
+                widget.gameConfig.otherIteration,
             gameConfig: widget.gameConfig);
         break;
     }
