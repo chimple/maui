@@ -253,11 +253,39 @@ class DominoAnswer extends StatefulWidget {
 }
 
 class _DominoAnswerState extends State<DominoAnswer> {
+  bool _isDragging = false;
   @override
   Widget build(BuildContext context) {
     final buttonConfig = ButtonStateContainer.of(context).buttonConfig;
 
     return Draggable(
+      onDragStarted: () {
+        if (ButtonStateContainer.of(context).startUsingButton()) {
+          setState(() {
+            _isDragging = true;
+          });
+        }
+      },
+      onDragCompleted: () {
+        if (_isDragging) {
+          setState(() {
+            _isDragging = false;
+          });
+          ButtonStateContainer.of(context).endUsingButton();
+        }
+      },
+      onDraggableCanceled: (Velocity v, Offset o) {
+        if (_isDragging) {
+          setState(() {
+            _isDragging = false;
+          });
+          ButtonStateContainer.of(context).endUsingButton();
+        }
+      },
+      maxSimultaneousDrags:
+          (_isDragging || !ButtonStateContainer.of(context).isButtonBeingUsed)
+              ? 1
+              : 0,
       childWhenDragging: UnitButton(text: ""),
       data: widget.data,
       // child: new UnitButton(
