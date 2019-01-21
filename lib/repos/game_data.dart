@@ -701,6 +701,20 @@ Future<Tuple3<List<String>, List<String>, List<String>>> fetchBasicAdditionData(
   return null;
 }
 
+Future<Tuple2<List<int>, List<int>>> fetchCountingData(
+  int categoryId,
+) async {
+  var rndData = Random().nextInt(8 - 0) + 1;
+  if (rndData != null) {
+    List<int> questionData;
+    List<int> ansData;
+    questionData = [rndData];
+    ansData = [rndData];
+    return new Tuple2(questionData, ansData);
+  }
+  return null;
+}
+
 Future<Tuple2<List<String>, String>> fetchFirstWordData(int categoryId) async {
   var rand = new Random();
   var startNum = rand.nextInt(max(0, 3));
@@ -989,4 +1003,18 @@ Future<List<Tuple2<String, String>>> fetchSequenceNumberData() async {
       break;
   }
   return null;
+}
+
+Future<Tuple2<Tuple2<String, List<String>>, List<String>>>
+    findSizeGameData() async {
+  var rand = new Random();
+
+  switch (rand.nextInt(2)) {
+    case (0):
+      return Tuple2(
+          Tuple2('square', ['apple', 'broom', 'cat']), ['apple', 'broom']);
+      break;
+  }
+
+  return Tuple2(Tuple2('square', ['tea', 'yard', 'apple']), ['tea', 'yard']);
 }
