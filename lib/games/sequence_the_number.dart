@@ -136,8 +136,9 @@ class _SequenceTheNumberState extends State<SequenceTheNumber> {
       final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
-      UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
-
+      if (ButtonStateContainer.of(context) != null) {
+        UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
+      }
       return Container(
         color: Colors.indigo[900],
         child: Column(
@@ -233,83 +234,90 @@ class MyButton extends StatefulWidget {
 
 class MyButtonState extends State<MyButton> {
   bool isDragging = false;
+
   @override
   Widget build(BuildContext context) {
     widget.keys++;
-
-    final buttonConfig = ButtonStateContainer.of(context).buttonConfig;
-    if (widget.index < 100) {
-      return Container(
-        decoration: new BoxDecoration(
-          borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
-        ),
-        child: DragTarget(
-          onAccept: (String data) => widget.onAccepted(data),
-          builder: (
-            BuildContext context,
-            List<dynamic> accepted,
-            List<dynamic> rejected,
-          ) {
-            return widget.text == '?'
-                ? UnitButton(
-                    text: '',
-                    highlighted: true,
-                  )
-                : UnitButton(
-                    key: new Key('A${widget.keys}'),
-                    dotFlag: false,
-                    fontSize: buttonConfig.fontSize * 0.5,
-                    text: widget.text,
-                  );
-          },
-        ),
-      );
-    } else if (widget.index >= 100) {
-      return Draggable(
-        onDragStarted: () {
-          if (ButtonStateContainer.of(context).startUsingButton()) {
-            setState(() {
-              isDragging = true;
-            });
-
-            widget.onDrag();
-          }
-        },
-        onDragCompleted: () {
-          if (isDragging) {
-            setState(() {
-              isDragging = false;
-            });
-            ButtonStateContainer.of(context).endUsingButton();
-          }
-        },
-        onDraggableCanceled: (Velocity v, Offset o) {
-          if (isDragging) {
-            setState(() {
-              isDragging = false;
-            });
-            ButtonStateContainer.of(context).endUsingButton();
-          }
-        },
-        maxSimultaneousDrags:
-            (isDragging || !ButtonStateContainer.of(context).isButtonBeingUsed)
-                ? 1
-                : 0,
-        data: widget.text,
-        child: UnitButton(
-          key: new Key('A${widget.keys}'),
-          fontSize: buttonConfig.fontSize * 0.5,
-          dotFlag: false,
-          text: widget.text,
-        ),
-        feedback: UnitButton(
-          dotFlag: false,
-          maxHeight: buttonConfig.height,
-          maxWidth: buttonConfig.width,
-          fontSize: buttonConfig.fontSize * 0.5,
-          text: widget.text,
-        ),
-      );
+    var buttonConfig;
+    if (ButtonStateContainer.of(context) != null) {
+      buttonConfig = ButtonStateContainer.of(context).buttonConfig;
     }
+
+    if (ButtonStateContainer.of(context) != null) {
+      if (widget.index < 100) {
+        return Container(
+          decoration: new BoxDecoration(
+            borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
+          ),
+          child: DragTarget(
+            onAccept: (String data) => widget.onAccepted(data),
+            builder: (
+              BuildContext context,
+              List<dynamic> accepted,
+              List<dynamic> rejected,
+            ) {
+              return widget.text == '?'
+                  ? UnitButton(
+                      text: '',
+                      highlighted: true,
+                    )
+                  : UnitButton(
+                      key: new Key('A${widget.keys}'),
+                      dotFlag: false,
+                      fontSize: buttonConfig.fontSize * 0.5,
+                      text: widget.text,
+                    );
+            },
+          ),
+        );
+      } else if (widget.index >= 100) {
+        return Draggable(
+          onDragStarted: () {
+            if (ButtonStateContainer.of(context).startUsingButton()) {
+              setState(() {
+                isDragging = true;
+              });
+
+              widget.onDrag();
+            }
+          },
+          onDragCompleted: () {
+            if (isDragging) {
+              setState(() {
+                isDragging = false;
+              });
+              ButtonStateContainer.of(context).endUsingButton();
+            }
+          },
+          onDraggableCanceled: (Velocity v, Offset o) {
+            if (isDragging) {
+              setState(() {
+                isDragging = false;
+              });
+              ButtonStateContainer.of(context).endUsingButton();
+            }
+          },
+          maxSimultaneousDrags: (isDragging ||
+                  !ButtonStateContainer.of(context).isButtonBeingUsed)
+              ? 1
+              : 0,
+          data: widget.text,
+          child: UnitButton(
+            key: new Key('A${widget.keys}'),
+            fontSize: buttonConfig.fontSize * 0.5,
+            dotFlag: false,
+            text: widget.text,
+          ),
+          feedback: UnitButton(
+            dotFlag: false,
+            maxHeight: buttonConfig.height,
+            maxWidth: buttonConfig.width,
+            fontSize: buttonConfig.fontSize * 0.5,
+            text: widget.text,
+          ),
+        );
+      }
+    } else
+      return Container();
   }
 }
