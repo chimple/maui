@@ -916,7 +916,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         break;
       case 'counting':
         playTime = 15000;
-        maxIterations = 1;
+        maxIterations = 5;
         return new Counting(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
@@ -1199,7 +1199,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         break;
       case 'find_size_game':
         playTime = 15000;
-        maxIterations = 1;
+        maxIterations = 2;
         return new FindSizeGame(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
@@ -1316,12 +1316,20 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             gameConfig: widget.gameConfig);
         break;
       case 'domino_math':
+        maxIterations = 5;
         return new Domino(
           key: new GlobalObjectKey(keyName),
+          onProgress: _onProgress,
+          onScore: _onScore,
+          isRotated: widget.isRotated,
+          onEnd: () => _onEnd(context),
+          iteration:
+              widget.gameConfig.myIteration + widget.gameConfig.otherIteration,
+          gameConfig: widget.gameConfig,
         );
         break;
       case 'sequence_the_number':
-       maxIterations = 5;
+        maxIterations = 5;
         return new SequenceTheNumber(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
