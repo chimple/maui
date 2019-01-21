@@ -63,7 +63,6 @@ class CountingState extends State<Counting> {
     setState(() => _isLoading = true);
     ansData = [];
     anschecking = [];
-    print("hello controll is comming here");
     countingData = await fetchCountingData(widget.gameCategoryId);
     ansData = countingData.item2;
     var dataValues = ansData[0].toString().split('');
@@ -161,7 +160,9 @@ class CountingState extends State<Counting> {
       final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
-      UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
+      if (ButtonStateContainer.of(context) != null) {
+        UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
+      }
       int inc = 0;
       int k = 100;
       return Column(children: <Widget>[
@@ -309,56 +310,67 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final buttonConfig = ButtonStateContainer.of(context).buttonConfig;
-    if (widget.index < 100) {
-      return new ScaleTransition(
-        scale: animation,
-        child: new Shake(
-            animation: widget.flag == 1 ? animation1 : animation,
-            child: new ScaleTransition(
-                scale: animation,
-                child: new Container(
-                  decoration: new BoxDecoration(
-                    borderRadius:
-                        new BorderRadius.all(new Radius.circular(8.0)),
-                  ),
-                  child: new DragTarget(
-                    onAccept: (String data) => widget.onAccepted(data),
-                    builder: (
-                      BuildContext context,
-                      List<dynamic> accepted,
-                      List<dynamic> rejected,
-                    ) {
-                      return widget.text == null
-                          ? UnitButton(
-                              text: '',
-                            )
-                          : UnitButton(
-                              text: widget.text,
-                            );
-                    },
-                  ),
-                ))),
-      );
-    } else if (widget.index >= 100) {
-      return new Draggable(
-        onDragStarted: widget.onDrag,
-        data:
-            '${widget.index}' + '_' + '${widget.code}' + '_' + '${widget.text}',
-        child: new ScaleTransition(
-            scale: animation,
-            child: new UnitButton(
-              key: new Key('A${widget.keys}'),
-              text: widget.text,
-              showHelp: false,
-            )),
-        feedback: UnitButton(
-          text: widget.text,
-          maxHeight: buttonConfig.height,
-          maxWidth: buttonConfig.width,
-          fontSize: buttonConfig.fontSize,
-        ),
-      );
+    var buttonConfig;
+    if (ButtonStateContainer.of(context) != null) {
+      buttonConfig = ButtonStateContainer.of(context).buttonConfig;
+    }
+    if (ButtonStateContainer.of(context) != null) {
+      if (widget.index < 100) {
+        return new ScaleTransition(
+          scale: animation,
+          child: new Shake(
+              animation: widget.flag == 1 ? animation1 : animation,
+              child: new ScaleTransition(
+                  scale: animation,
+                  child: new Container(
+                    decoration: new BoxDecoration(
+                      borderRadius:
+                          new BorderRadius.all(new Radius.circular(8.0)),
+                    ),
+                    child: new DragTarget(
+                      onAccept: (String data) => widget.onAccepted(data),
+                      builder: (
+                        BuildContext context,
+                        List<dynamic> accepted,
+                        List<dynamic> rejected,
+                      ) {
+                        return widget.text == null
+                            ? UnitButton(
+                                text: '',
+                              )
+                            : UnitButton(
+                                dotFlag: true,
+                                text: widget.text,
+                              );
+                      },
+                    ),
+                  ))),
+        );
+      } else if (widget.index >= 100) {
+        return new Draggable(
+          onDragStarted: widget.onDrag,
+          data: '${widget.index}' +
+              '_' +
+              '${widget.code}' +
+              '_' +
+              '${widget.text}',
+          child: new ScaleTransition(
+              scale: animation,
+              child: new UnitButton(
+                key: new Key('A${widget.keys}'),
+                text: widget.text,
+                showHelp: false,
+              )),
+          feedback: UnitButton(
+            text: widget.text,
+            maxHeight: buttonConfig.height,
+            maxWidth: buttonConfig.width,
+            fontSize: buttonConfig.fontSize,
+          ),
+        );
+      }
+    } else {
+      return Container();
     }
   }
 }

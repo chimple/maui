@@ -231,11 +231,12 @@ class CountAnimationState extends State<CountAnimation>
     return Container(
       width: 70.0 - extraSize,
       height: 70.0 - extraSize,
-      child: Image(
+      child: widget.index != null ?
+      Image(
         image: widget.selectedIndex[widget.index] == 0
             ? AssetImage("assets/orange.png")
             : AssetImage("assets/orange2.png"),
-      ),
+      ): Container(),
     );
   }
 
