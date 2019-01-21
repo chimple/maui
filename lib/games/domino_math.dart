@@ -104,7 +104,7 @@ class _DominoState extends State<Domino> {
                     children: _shuffledData
                         .map((e) => Padding(
                             padding: EdgeInsets.all(buttonPadding),
-                            child: DominoAnswer("$e", Colors.blueAccent, e)))
+                            child: DominoAnswer("$e", e)))
                         .toList(growable: false)),
               ),
             ),
@@ -240,11 +240,10 @@ class _DominoAdditionState extends State<DominoAddition> {
 
 class DominoAnswer extends StatefulWidget {
   final String label;
-  final Color boxColor;
   final int data;
+  
   DominoAnswer(
     this.label,
-    this.boxColor,
     this.data,
   );
 
