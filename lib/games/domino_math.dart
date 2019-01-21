@@ -88,6 +88,7 @@ class _DominoState extends State<Domino> {
         maxWidth -= buttonPadding * 2;
         maxHeight -= buttonPadding * 2;
         UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
+
         return Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -154,7 +155,7 @@ class _DominoQuestionState extends State<DominoQuestion> {
                 if (number == widget.question) {
                   _matched = true;
 
-                  new Future.delayed(const Duration(seconds: 1), () {
+                  new Future.delayed(const Duration(milliseconds: 50), () {
                     widget.onEnd();
                     setState(() {
                       _matched = false;
@@ -184,7 +185,17 @@ class DominoAddition extends StatefulWidget {
   final int num1;
   final int num2;
   final int sum;
-  DominoAddition(this.num1, this.num2, this.sum);
+  final Function onScore;
+  final Function onProgress;
+  final Function onEnd;
+  DominoAddition(
+    this.num1,
+    this.num2,
+    this.sum,
+    this.onEnd,
+    this.onScore,
+    this.onProgress,
+  );
 
   @override
   _DominoAdditionState createState() => new _DominoAdditionState();
@@ -220,6 +231,14 @@ class _DominoAdditionState extends State<DominoAddition> {
               onAccept: (int number) {
                 if (number == widget.num2) {
                   _matched = true;
+                  new Future.delayed(const Duration(milliseconds: 50), () {
+                    widget.onEnd();
+                    setState(() {
+                      _matched = false;
+                      widget.onScore(4);
+                      widget.onProgress(1.0);
+                    });
+                  });
                 }
               },
               builder:
@@ -241,7 +260,7 @@ class _DominoAdditionState extends State<DominoAddition> {
 class DominoAnswer extends StatefulWidget {
   final String label;
   final int data;
-  
+
   DominoAnswer(
     this.label,
     this.data,
