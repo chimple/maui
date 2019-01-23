@@ -15,6 +15,7 @@ List<Tuple2<String, String>> gameNames = [
   Tuple2('drawing', 'drawing'),
   Tuple2('fill_in_the_blanks', 'Fill In The Blanks'),
   Tuple2('calculate_numbers', 'Calculate'),
+  Tuple2('match_the_shapes', 'MatchTheShapes'),
   Tuple2('casino', 'Casino'),
   Tuple2('match_the_following', 'Match'),
   Tuple2('bingo', 'Bingo'),

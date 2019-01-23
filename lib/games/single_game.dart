@@ -55,6 +55,7 @@ import 'package:maui/repos/game_category_repo.dart';
 import 'package:maui/repos/user_repo.dart';
 import 'package:maui/components/gameaudio.dart';
 import 'package:maui/db/entity/lesson.dart';
+import 'package:maui/games/match_the_shapes.dart';
 
 import '../components/progress_bar.dart';
 
@@ -212,7 +213,8 @@ class SingleGame extends StatefulWidget {
       Color(0xFFFE6677)
     ],
     'quiz_pager': [Color(0xFF1DC8CC), Color(0xFF282828), Color(0xFFFE6677)],
-    'basic_addition': [Color(0xFF1DC8CC), Color(0xFF282828), Color(0xFFFE6677)]
+    'basic_addition': [Color(0xFF1DC8CC), Color(0xFF282828), Color(0xFFFE6677)],
+    'match_the_shapes': [Color(0xFF56EDE6), Color(0xFFD32F2F), Color(0xFF379EDD)],
   };
 
   SingleGame(this.gameName,
@@ -1067,6 +1069,11 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
             isRotated: widget.isRotated,
             gameConfig: widget.gameConfig);
         break;
+        case 'match_the_shapes':
+return new MatchTheShapes(
+key: new GlobalObjectKey(keyName),
+);
+break;
       case 'calculate_numbers':
         playTime = 25000;
         maxIterations = 10;
