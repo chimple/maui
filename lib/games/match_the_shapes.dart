@@ -10,12 +10,14 @@ class MatchTheShapes extends StatefulWidget {
 }
 
 class _MatchTheShapesState extends State<MatchTheShapes> {
-  Offset position;
+  Offset _position;
   Map<String, String> data = {'1': '1', '2': '2', '3': '3'};
   List<String> _leftletters = [];
   List<String> _rightletters = [];
   List<Offset> posi = [];
   List<Offset> posiR = [];
+  bool loading = true;
+  int leftIndex;
 
   positionUpdateCallback(String text, Offset updatedPos, bool isLeft) {
     if (isLeft)
@@ -36,9 +38,6 @@ class _MatchTheShapesState extends State<MatchTheShapes> {
     });
   }
 
-  bool loading = true;
-  int leftIndex;
-
   @override
   void initState() {
     super.initState();
@@ -46,10 +45,10 @@ class _MatchTheShapesState extends State<MatchTheShapes> {
 
   @override
   void didChangeDependencies() {
+    super.didChangeDependencies();
     final size = MediaQuery.of(context).size;
     initboard(size.height, size.width);
     setState(() {});
-    super.didChangeDependencies();
   }
 
   initboard(sHeight, sWidth) async {
@@ -59,10 +58,10 @@ class _MatchTheShapesState extends State<MatchTheShapes> {
     var rnd = new Random();
 
     for (int i = 0; i < data.length; i++) {
-      posi.add(new Offset(
-          rnd.nextDouble() * screenWidth, (rnd.nextDouble() * screenHeight )+150.0));
-      posiR.add(new Offset(
-          rnd.nextDouble() * screenWidth, (rnd.nextDouble() * screenHeight)+ 150.0));
+      posi.add(new Offset(rnd.nextDouble() * screenWidth,
+          (rnd.nextDouble() * screenHeight) + 150.0));
+      posiR.add(new Offset(rnd.nextDouble() * screenWidth,
+          (rnd.nextDouble() * screenHeight) + 150.0));
     }
     _leftletters.addAll(data.keys);
     _rightletters.addAll(data.values);
@@ -113,43 +112,44 @@ class _MatchTheShapesState extends State<MatchTheShapes> {
                 ? element.toString().length
                 : prev)
         : 1);
-    return new LayoutBuilder(builder: (context, constraints) {
-      final hPadding = pow(constraints.maxWidth / 75.0, 2);
-      final vPadding = pow(constraints.maxHeight / 75.0, 2);
+    return new LayoutBuilder(
+      builder: (context, constraints) {
+        final hPadding = pow(constraints.maxWidth / 75.0, 2);
+        final vPadding = pow(constraints.maxHeight / 75.0, 2);
 
-      double maxWidth =
-          (constraints.maxWidth - hPadding) / (_leftletters.length);
-      double maxHeight =
-          (constraints.maxHeight - vPadding) / (_leftletters.length);
+        double maxWidth =
+            (constraints.maxWidth - hPadding) / (_leftletters.length);
+        double maxHeight =
+            (constraints.maxHeight - vPadding) / (_leftletters.length);
 
-      final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
+        final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
 
-      maxWidth -= buttonPadding * 2;
-      maxHeight -= buttonPadding * 2;
-      print('myconstraints $constraints');
-      double screenHeight = MediaQuery.of(context).size.height - 150.0;
-      double screenWidth = MediaQuery.of(context).size.width - 150.0;
-      print('This is max width $maxWidth , <> $maxHeight');
-      return Stack(
-        children: <Widget>[
-          _leftbuild(screenHeight, screenWidth),
-          _rightbuild(screenHeight, screenWidth),
-        ],
-      );
-    });
+        maxWidth -= buttonPadding * 2;
+        maxHeight -= buttonPadding * 2;
+        print('myconstraints $constraints');
+        double screenHeight = MediaQuery.of(context).size.height - 150.0;
+        double screenWidth = MediaQuery.of(context).size.width - 150.0;
+        print('This is max width $maxWidth , <> $maxHeight');
+        return Stack(
+          children: <Widget>[
+            _leftbuild(screenHeight, screenWidth),
+            _rightbuild(screenHeight, screenWidth),
+          ],
+        );
+      },
+    );
   }
 }
 
 class MyButton extends StatefulWidget {
   String text;
   int index;
-  Offset position;
-
+  Offset _position;
   Function positionUpdateCallback;
   Function removeMatchButtons;
-  static int countClasses = 0;
   bool isLeft;
-  MyButton(this.text, this.index, this.position, this.positionUpdateCallback,
+
+  MyButton(this.text, this.index, this._position, this.positionUpdateCallback,
       this.removeMatchButtons, this.isLeft);
   _MyButtonState createState() => _MyButtonState();
 }
@@ -172,8 +172,8 @@ class _MyButtonState extends State<MyButton> {
     return new Stack(
       children: <Widget>[
         Positioned(
-          top: widget.position.dy - 142.0,
-          left: widget.position.dx,
+          top: widget._position.dy - 142.0,
+          left: widget._position.dx,
           child: Stack(
             children: <Widget>[
               new Draggable(
