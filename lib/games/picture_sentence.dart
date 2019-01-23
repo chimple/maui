@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:maui/components/parents_access.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/repos/game_data.dart';
 import 'package:maui/components/responsive_grid_view.dart';
@@ -153,9 +154,9 @@ class PictureSentenceState extends State<PictureSentence> {
 
     print('height is $_height');
     print('width is $_width');
-    print('blankSpaceWidth/ 23  ${blankSpaceWidth/ 23}');
+    print('blankSpaceWidth/ 23  ${blankSpaceWidth / 23}');
 
-    print("$sentence   (length = ${sentence.length-6})");
+    print("$sentence   (length = ${sentence.length - 6})");
     print("Split >>>>>>>$eachWord");
 
     int listElement1 = eachWord.indexOf("1_");
@@ -261,14 +262,17 @@ class PictureSentenceState extends State<PictureSentence> {
                 tooltip: 'check the picture',
                 onPressed: () {
                   showDialog(
-                      context: context,
-                      child: new FractionallySizedBox(
-                          heightFactor: 0.5,
-                          widthFactor: 0.8,
-                          child: new PictureCard(
-                            text: "widget.text",
-                            image: "assets/dict/${ans[1].toLowerCase()}.png",
-                          )));
+                    context: context,
+                    child: new FractionallySizedBox(
+                      heightFactor: 0.5,
+                      widthFactor: 0.8,
+                      // child: new PictureCard(
+                      //   text: "widget.text",
+                      //   image: "assets/dict/${ans[1].toLowerCase()}.png",
+                      // ),
+                      child: ChildLock(),
+                    ),
+                  );
                 },
               ),
             ),
@@ -304,7 +308,7 @@ class PictureSentenceState extends State<PictureSentence> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           new Row(
-            children: <Widget>[text1, blankSpace1, text2, blankSpace2, text3],
+            children: <Widget>[ blankSpace2],
           ),
         ],
       );
@@ -317,7 +321,7 @@ class PictureSentenceState extends State<PictureSentence> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           new Row(
-            children: <Widget>[text1, blankSpace1, text2, blankSpace2],
+            children: <Widget>[ blankSpace2],
           ),
           new Row(
             children: <Widget>[text3],
@@ -329,9 +333,9 @@ class PictureSentenceState extends State<PictureSentence> {
       return new Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          new Row(
-            children: <Widget>[text1, blankSpace1],
-          ),
+          // new Row(
+          //   children: <Widget>[text1, blankSpace1],
+          // ),
           new Row(
             children: <Widget>[text2, blankSpace2, text3],
           )
@@ -343,11 +347,11 @@ class PictureSentenceState extends State<PictureSentence> {
       return new Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
+          // new Row(
+          //   children: <Widget>[text1, blankSpace1],
+          // ),
           new Row(
-            children: <Widget>[text1, blankSpace1],
-          ),
-          new Row(
-            children: <Widget>[text2, blankSpace2, text3],
+            children: <Widget>[ blankSpace2],
           )
         ],
       );
@@ -364,11 +368,11 @@ class PictureSentenceState extends State<PictureSentence> {
       return new Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
+          // new Row(
+          //   children: <Widget>[text1, blankSpace1, text2],
+          // ),
           new Row(
-            children: <Widget>[text1, blankSpace1, text2],
-          ),
-          new Row(
-            children: <Widget>[blankSpace2, text3],
+            children: <Widget>[blankSpace2],
           )
         ],
       );
