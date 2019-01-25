@@ -3,11 +3,16 @@ import 'dart:core';
 import 'dart:math';
 
 Future<String> getParentsAccessData(
-    String word1, String word2, String word3) async {
+    String num1, String num2, String num3) async {
+  String word1, word2, word3;
+  word1 = await convertToWords(num1);
+  word2 = await convertToWords(num2);
+  word3 = await convertToWords(num3);
   var random = new Random();
   var randomCase = random.nextInt(max(0, 3));
-  if (!word1.contains(" ") && !word2.contains(" ")) {
-    randomCase = 1;
+
+  if (int.parse(num1) > 10 && randomCase == 1) {
+    randomCase = 0;
   }
 
   switch (randomCase) {

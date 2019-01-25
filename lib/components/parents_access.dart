@@ -27,7 +27,7 @@ class _ChildLockState extends State<ChildLock> {
     '8',
     '9'
   ];
-  String _getWord1, _getWord2, _getWord3;
+
   @override
   void initState() {
     super.initState();
@@ -40,11 +40,8 @@ class _ChildLockState extends State<ChildLock> {
     _number1 = _choices[3] + _choices[5];
     _number2 = _choices[1] + _choices[7];
     _number3 = _choices[2] + _choices[4];
-    _getWord1 = await convertToWords(_number1);
-    _getWord2 = await convertToWords(_number2);
-    _getWord3 = await convertToWords(_number3);
 
-    _getdata = await getParentsAccessData(_getWord1, _getWord2, _getWord3);
+    _getdata = await getParentsAccessData(_number1, _number2, _number3);
     _question = _getdata;
 
     if (_question.contains('plus')) {
@@ -59,21 +56,25 @@ class _ChildLockState extends State<ChildLock> {
     setState(() => _isLoading = false);
   }
 
-  Widget _optionButton(String ans) {
-    return FloatingActionButton(
-      child: Text(
-        "$ans",
-        style: TextStyle(
-          fontSize: 25.0,
+  Widget _optionButton(String ans, double height, double width) {
+    return SizedBox(
+      height: height * 0.1,
+      width: width * 0.1,
+      child: FloatingActionButton(
+        child: Text(
+          "$ans",
+          style: TextStyle(
+            fontSize: height * 0.06,
+          ),
         ),
+        onPressed: () {
+          setState(() {
+            if (_answer.length < 3) {
+              _answer = _answer + ans;
+            }
+          });
+        },
       ),
-      onPressed: () {
-        setState(() {
-          if (_answer.length < 3) {
-            _answer = _answer + ans;
-          }
-        });
-      },
     );
   }
 
@@ -97,18 +98,15 @@ class _ChildLockState extends State<ChildLock> {
             ),
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Container(
-                  child: const Text(
-                    "For Parents",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30.0,
-                    ),
+              Container(
+                child: Text(
+                  "For Parents",
+                  style: TextStyle(
+                    fontSize: _height * 0.05,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
@@ -116,14 +114,17 @@ class _ChildLockState extends State<ChildLock> {
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Divider(
                   color: Colors.blueGrey,
-                  // height: 0.0,
+                  height: 0.0,
                 ),
               ),
-              Text(
-                "$_question",
-                style: TextStyle(
-                  fontSize: 25.0,
-                  color: Colors.red[700],
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Text(
+                  "$_question",
+                  style: TextStyle(
+                    fontSize: _height * 0.05,
+                    color: Colors.yellow[800],
+                  ),
                 ),
               ),
               Container(
@@ -131,7 +132,7 @@ class _ChildLockState extends State<ChildLock> {
                   "$_answer",
                   style: new TextStyle(
                     color: Colors.black87,
-                    fontSize: _height * 0.09,
+                    fontSize: _height * 0.07,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -148,7 +149,7 @@ class _ChildLockState extends State<ChildLock> {
                 children: _choices
                     .map((a) => Padding(
                           padding: EdgeInsets.all(8.0),
-                          child: _optionButton(a),
+                          child: _optionButton(a, _height, _width),
                         ))
                     .toList(growable: false),
               ),
@@ -163,17 +164,17 @@ class _ChildLockState extends State<ChildLock> {
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 20.0,
+                        fontSize: _height * 0.04,
                       ),
                     ),
                     shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(5.0),
+                      borderRadius: new BorderRadius.circular(10.0),
                     ),
-                    color: Colors.red[700],
+                    color: Colors.yellow[800],
                     onPressed: () {
                       if (_answer == _rightAnswer.toString()) {
                         setState(() {
-                          _answer = 'R';
+                          _answer = 'Right';
                         });
                       } else {
                         setState(() {
