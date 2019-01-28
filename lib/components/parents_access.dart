@@ -178,7 +178,8 @@ class _ChildLockState extends State<ChildLock> {
                         });
                       } else {
                         setState(() {
-                          _answer = 'WRONG';
+                          _answer='';
+                         _initializeData();
                         });
                       }
                     },
