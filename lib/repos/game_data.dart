@@ -876,10 +876,7 @@ Future<List<int>> fetchDominoMathData() async {
 Future<Tuple3<List<String>, List<String>, List<String>>> fetchBasicCountingData(
   int categoryId,
 ) async {
-  var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
-  if (gameCategory.conceptId != null) {
-    var category = await new ConceptRepo().getConcept(gameCategory.conceptId);
-    var rand = new Random();
+  var rand = new Random();
     int min = 1;
     int max = 5;
     // int r = min+ rand.nextInt(max-min);
@@ -914,7 +911,6 @@ Future<Tuple3<List<String>, List<String>, List<String>>> fetchBasicCountingData(
       if (other.length == 8) {
         break;
       }
-    }
 
     return new Tuple3(questionList, ansData, other);
   }

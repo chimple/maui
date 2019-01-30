@@ -10,6 +10,10 @@ import 'package:maui/repos/game_data.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/button_state_container.dart';
 import 'package:tuple/tuple.dart';
+import 'package:flutter/services.dart';
+import 'package:meta/meta.dart';
+import 'package:speech_recognition/speech_recognition.dart';
+import 'package:simple_permissions/simple_permissions.dart';
 
 class RecognizeNumber extends StatefulWidget {
   Function onScore;
@@ -48,7 +52,12 @@ class RecognizeNumberState extends State<RecognizeNumber>
   List<String> _answer = [];
   List<String> _question = [];
   bool _isLoading = true;
+  bool _isListening = false;
+  String result = '';
+  String newResult;
+  bool _speechRecognitionAvailable = false;
   Tuple2<List<String>, List<String>> recognizeData;
+  SpeechRecognition _speech;
 
   @override
   void initState() {
@@ -62,6 +71,17 @@ class RecognizeNumberState extends State<RecognizeNumber>
     setState(() {
       _isLoading = true;
     });
+    SimplePermissions.requestPermission(Permission.RecordAudio);
+
+    print('_SpeechRecognitionState.initialize... ');
+    _speech = new SpeechRecognition();
+    _speech.setSpeechRecognitionAvailableHandler(onSpeechRecognitionAvailable);
+    _speech.setSpeechCurrentLocaleHandler(onSpeechCurrentLocaleSelected);
+    _speech.setSpeechRecognitionResultHandler(onSpeechRecognitionResult);
+    _speech.setSpeechRecognitionOnErrorHandler(onSpeechRecognitionError);
+    _speech
+        .initialize()
+        .then((res) => setState(() => _speechRecognitionAvailable = res));
     recognizeData =
         await fetchRecognizeNumberData(widget.gameConfig.gameCategoryId);
     recognizeData.item1.forEach((e) {
@@ -75,6 +95,7 @@ class RecognizeNumberState extends State<RecognizeNumber>
 
     print("this is al ieierjierl $_question");
     print("this is a answer $_answer");
+
     setState(() => _isLoading = false);
   }
 
@@ -99,24 +120,65 @@ class RecognizeNumberState extends State<RecognizeNumber>
         //question unit mode
         status: status,
         onPress: () {
-          if (code == Code.answer) {
-            print("this is text $text");
-            print("this is answer ${_answer[0]}");
-            if (_question[0] == text) {
-              _statuses[index] = Status.visible;
-              setState(() {
-                print("success");
-                widget.onEnd();
-                _answer = [];
-                _question = [];
-                _statuses = [];
-                AppStateContainer.of(context).playWord(_question[index]);
-              });
-            }
-          }
-          if (code == Code.question) {
-            print("hello i am coming");
-            AppStateContainer.of(context).playWord(text.toLowerCase());
+          print("this is my result $result");
+          // if (text == result) {
+          //   _statuses[index] = Status.visible;
+          //   setState(() {
+          //     print("success");
+          //     widget.onEnd();
+          //     _answer = [];
+          //     _question = [];
+          //     _statuses = [];
+          //     result = "";
+          //   });
+          // }
+          // if (code == Code.answer) {
+          //   print("this is text $text");
+          //   print("this is answer $result");
+          //   // if ( text == result.toString()) {
+          //   //   _statuses[index] = Status.visible;
+          //   //   setState(() {
+          //   //     print("success");
+          //   //     widget.onEnd();
+          // _answer = [];
+          // _question = [];
+          // _statuses = [];
+          // result = "";
+          //   //     //  Future.delayed(new Duration(seconds: 50), () {
+          //   //     //    setState(() {
+          //   //     //      stopListening();
+          //   //     //    });
+          //   //     //  });
+
+          //   //     // AppStateContainer.of(context).playWord(_question[index]);
+          //   //   });
+          //   // }
+          // }
+          if (_speechRecognitionAvailable && !_isListening) {
+            print("hello i am coming $result");
+
+            setState(() {
+              newResult = result;
+
+              print("this is the case with $_question[0]");
+              // stopListening();
+
+              print("hey this mee$newResult");
+              if (code == Code.question) {
+                print("this is my new text $text");
+
+                // widget.onEnd();
+                // _answer = [];
+                // _question = [];
+                // _statuses = [];
+                // result = "";
+                if (newResult == text) {
+                  print("on end yes $newResult");
+                }
+              }
+            });
+
+            // AppStateContainer.of(context).playWord(text.toLowerCase());
           }
           print(" staus is.......::$_statuses");
 
@@ -132,6 +194,7 @@ class RecognizeNumberState extends State<RecognizeNumber>
     MediaQueryData media = MediaQuery.of(context);
     print(media);
     print("this is after random $_question");
+    print("this is my result and data $result");
 
     return new LayoutBuilder(builder: (context, constraints) {
       if (_isLoading) {
@@ -167,16 +230,23 @@ class RecognizeNumberState extends State<RecognizeNumber>
               child: Padding(
                   padding: EdgeInsets.symmetric(
                       vertical: vPadding, horizontal: hPadding),
-                  child: new ResponsiveGridView(
-                    rows: 1,
-                    cols: 1,
-                    children: _question
-                        .map((e) => Padding(
-                            padding: EdgeInsets.all(buttonPadding),
-                            child: _buildItem(j, e, _statuses[j++], maxChars,
-                                maxWidth, maxHeight, Code.question)))
-                        .toList(growable: false),
-                  )),
+                  child: new RaisedButton(
+                    onPressed: _speechRecognitionAvailable && !_isListening
+                        ? () => startListening()
+                        : _isListening ? () => stopListening() : null,
+                    child: Text("$_question"),
+                  )
+                  //  new ResponsiveGridView(
+                  //   rows: 1,
+                  //   cols: 1,
+                  //   children: _question
+                  //       .map((e) => Padding(
+                  //           padding: EdgeInsets.all(buttonPadding),
+                  //           child: _buildItem(j, e, _statuses[j++], maxChars,
+                  //               maxWidth, maxHeight, Code.question)))
+                  //       .toList(growable: false),
+                  // )
+                  ),
             )),
             new Expanded(
                 child: Container(
@@ -195,10 +265,53 @@ class RecognizeNumberState extends State<RecognizeNumber>
                         .toList(growable: false),
                   )),
             )),
+            Container(
+              width: 300.0,
+              height: 100.00,
+              child: Center(
+                  child: new Text(
+                result,
+                style: new TextStyle(fontSize: 30.0),
+              )),
+              color: Colors.red,
+            ),
           ],
         ),
       );
     });
+  }
+
+  void startListening() => _speech.listen('en', 'US').then((resultSpeech) {
+        print(
+            '_SpeechRecognitionAppState.start => hey i am here result $resultSpeech');
+        result = "";
+        setState(() => _isListening = true);
+      });
+
+  void stopListening() => _speech.stop().then((resultSpeech) {
+        print("this is cool");
+        setState(() => _isListening = !resultSpeech);
+      });
+  void onSpeechRecognitionAvailable(bool result) =>
+      setState(() => _speechRecognitionAvailable = result);
+
+  void onSpeechCurrentLocaleSelected(Map<String, String> currentLocale) {
+    String lang = currentLocale['lang'];
+    String country = currentLocale['country'];
+    print(
+        '_SpeechRecognitionAppState.onSpeechCurrentLocaleSelected lang $lang and country $country');
+    setState(() => 'en' == lang && 'US' == country);
+  }
+
+  void onSpeechRecognitionResult(String text) {
+    print('_SpeechRecognitionAppState.onSpeechRecognitionResult -> $text}');
+    setState(() => result = result + " " + text);
+    print("this is my result and data $result");
+  }
+
+  void onSpeechRecognitionError(bool res) {
+    print('_SpeechRecognitionAppState.onSpeechRecognitionError -> $res}');
+    setState(() => _isListening = false);
   }
 }
 

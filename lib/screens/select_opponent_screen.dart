@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
+import 'package:maui/components/game_level.dart';
 import 'package:maui/components/videoplayer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
@@ -176,7 +177,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
                     ),
                     delegate: new SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
-                        return convertToFriend(context, _localUsers[index],
+                        convertToFriend(context, _localUsers[index],
                             onTap: startGame);
                       },
                       childCount: _localUsers.length,
@@ -238,19 +239,47 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
   startGame(BuildContext context, User user) {
     final loggedInUser = AppStateContainer.of(context).state.loggedInUser;
     Random random = Random();
-    Navigator.of(context).push(MaterialPageRoute<Null>(
-        builder: (BuildContext context) => GameCategoryListScreen(
-              game: widget.gameName,
-              gameMode: GameMode.iterations,
-              gameDisplay: user.id == loggedInUser.id
-                  ? GameDisplay.single
-                  : user.deviceId == _deviceId
-                      ? random.nextBool()
-                          ? GameDisplay.localTurnByTurn
-                          : GameDisplay.myHeadToHead
-                      : GameDisplay.networkTurnByTurn,
-              otherUser: user,
-            )));
+
+    return showDialog(
+        context: context,
+        child: GameLevel(
+          gameName: widget.gameName,
+          levelList: [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
+          ],
+        )
+        // Navigator.of(context).push(MaterialPageRoute<Null>(
+        //     builder: (BuildContext context) => GameCategoryListScreen(
+        //           game: widget.gameName,
+        //           gameMode: GameMode.iterations,
+        //           gameDisplay: user.id == loggedInUser.id
+        //               ? GameDisplay.single
+        //               : user.deviceId == _deviceId
+        //                   ? random.nextBool()
+        //                       ? GameDisplay.localTurnByTurn
+        //                       : GameDisplay.myHeadToHead
+        //                   : GameDisplay.networkTurnByTurn,
+        //           otherUser: user,
+        //         ))
+
+        );
   }
 
   goToMyTurn(BuildContext context, User user) {

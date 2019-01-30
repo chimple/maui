@@ -16,7 +16,7 @@ class BasicCounting extends StatefulWidget {
   Function onEnd;
   Function onTurn;
   int iteration;
-  GameConfig gameConfig;
+  int gameCategoryId;
   bool isRotated;
 
   BasicCounting(
@@ -26,7 +26,7 @@ class BasicCounting extends StatefulWidget {
       this.onEnd,
       this.iteration,
       this.onTurn,
-      this.gameConfig,
+      this.gameCategoryId,
       this.isRotated = false})
       : super(key: key);
 
@@ -59,8 +59,7 @@ class BasicCountingState extends State<BasicCounting> {
 
   void _initBoard() async {
     setState(() => _isLoading = true);
-
-    basicData = await fetchBasicCountingData(widget.gameConfig.gameCategoryId);
+    basicData = await fetchBasicCountingData(widget.gameCategoryId);
     basicData.item1.forEach((e) {
       _question.add(e);
     });
@@ -81,16 +80,11 @@ class BasicCountingState extends State<BasicCounting> {
   @override
   void didUpdateWidget(BasicCounting oldWidget) {
     if (widget.iteration != oldWidget.iteration) {
-      _all = [];
-      _answer = [];
-      _question = [];
-      _statuses = [];
       _initBoard();
     }
   }
 
-  Widget _buildItem(int index, String text, Status status, maxChars,
-      double maxWidth, double maxHeight) {
+  Widget _buildItem(int index, String text, Status status) {
     print(
         "clicking button calling again and again we have fix...... $index........ $text.......");
     return new MyButton(
@@ -148,10 +142,7 @@ class BasicCountingState extends State<BasicCounting> {
       maxHeight -= buttonPadding * 2;
 
       if (ButtonStateContainer.of(context) != null) {
-        UnitButton.saveButtonSize(context, maxChars, maxWidth, maxHeight);
-
-        final buttonConfig = ButtonStateContainer.of(context).buttonConfig;
-      }
+        UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);      }
       print("this is my new $_all");
       var k = 0;
       return Container(
@@ -185,8 +176,8 @@ class BasicCountingState extends State<BasicCounting> {
                                 children: <Widget>[
                                   Container(
                                     color: Colors.blueGrey,
-                                    width: media.size.width *0.4,
-                                    height: media.size.height *0.3,
+                                    width: media.size.width * 0.4,
+                                    height: media.size.height * 0.3,
                                     child: Image.asset(
                                       "assets/finger_count/$e.png",
                                       fit: BoxFit.fill,
@@ -212,8 +203,7 @@ class BasicCountingState extends State<BasicCounting> {
                     children: newAnswer
                         .map((e) => Padding(
                             padding: EdgeInsets.all(buttonPadding),
-                            child: _buildItem(k, e, _statuses[k++], maxChars,
-                                maxWidth, maxHeight)))
+                            child: _buildItem(k, e, _statuses[k++])))
                         .toList(growable: false),
                   )),
             )),
@@ -249,6 +239,7 @@ class MyButton extends StatefulWidget {
 }
 
 class _MyButtonState extends State<MyButton> {
+  var buttonConfig;
   @override
   void initState() {
     super.initState();
@@ -257,7 +248,11 @@ class _MyButtonState extends State<MyButton> {
 
   @override
   void didUpdateWidget(MyButton oldWidget) {
-    print({"oldwidget data ": oldWidget.text});
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.text != widget.text) {
+      print({"oldwidget data ": oldWidget.text});
+    }
+    
   }
 
   @override
@@ -269,13 +264,21 @@ class _MyButtonState extends State<MyButton> {
   Widget build(BuildContext context) {
 // print({"this is 123 kiran data": widget.Rtile});
     print("heello datta is not comming here lets check");
-    final buttonConfig = ButtonStateContainer.of(context).buttonConfig;
+    
     if (ButtonStateContainer.of(context) != null) {
-      return UnitButton(
-        dotFlag:true,
-        text: widget.text,
-        onPress: widget.onPress,
-        unitMode: UnitMode.text,
+      buttonConfig = ButtonStateContainer.of(context).buttonConfig;
+    }
+    
+    if (ButtonStateContainer.of(context) != null) {
+      return Container(
+        // height: buttonConfig.height,
+        // width: buttonConfig.width,
+        child: UnitButton(
+          dotFlag: true,
+          text: widget.text,
+          onPress: widget.onPress,
+          unitMode: UnitMode.text,
+        ),
       );
     } else {
       return Container();

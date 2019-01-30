@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:maui/app.dart';
-import 'package:maui/components/quiz_button.dart';
-import 'package:maui/components/unit_button.dart';
+// import 'package:maui/games/basic_addition.dart';
 import 'package:maui/games/basic_counting.dart';
 
 void main() {
   testWidgets('basic running of basic_counting', (WidgetTester tester) async {
-    Key inputKey = new UniqueKey();
+    var inputKey =  UniqueKey();
 
     // Build our app and trigger a frame.
     await tester.pumpWidget(new MaterialApp(
@@ -19,7 +17,8 @@ void main() {
     ));
 
     expect(find.byKey(inputKey),findsOneWidget);
-    // await tester.tap(find.byWidget(MyButton(),skipOffstage: true));
-    await tester.pumpAndSettle(new Duration(milliseconds: 2000));
+    await tester.pump(Duration(seconds: 5));
+    await tester.tap(find.byType(MyButton).first);
+    await tester.pump(Duration(seconds: 5));    
   });
 }

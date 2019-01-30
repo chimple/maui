@@ -44,6 +44,8 @@ dependencies:
     path: ../tahiti
   flores:
     path: ../flores
+  speech_recognition:
+    path: ../speech_recognition
 dev_dependencies:
   flutter_test:
     sdk: flutter
