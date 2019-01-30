@@ -74,7 +74,29 @@ class ProfileViewState extends State<ProfileView>
         UserCollection(
           userId: AppStateContainer.of(context).state.loggedInUser.id,
         ),
-        UserProgress(),
+        Container(
+          color: Colors.blueAccent,
+          child: Column(children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              // crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text("Games",
+                    style: TextStyle(color: Colors.white, fontSize: 15)),
+                // Text(""),
+                Text("Levels",
+                    style: TextStyle(color: Colors.white, fontSize: 15)),
+                Text("Coins",
+                    style: TextStyle(color: Colors.white, fontSize: 15)),
+                Text("Star",
+                    style: TextStyle(color: Colors.white, fontSize: 15))
+              ],
+            ),
+            Expanded(
+                child:
+                    Container(color: Colors.blueAccent, child: UserProgress()))
+          ]),
+        ),
       ]),
     );
   }
