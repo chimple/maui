@@ -8,6 +8,7 @@ class CountAnimation extends StatefulWidget {
   int rndVal;
   var selectedIndex;
   int countVal;
+
   CountAnimation(
       {key, this.index, this.rndVal, this.selectedIndex, this.countVal})
       : super(key: key);
@@ -160,7 +161,7 @@ class CountAnimationState extends State<CountAnimation>
       case CountWidgetStatus.becomingVisible:
       case CountWidgetStatus.visible:
         countPosition =
-            countInAnimationController.value * media.size.height * .1;
+            countInAnimationController.value * media.size.height * .07;
         countOpacity = countInAnimationController.value;
         extraSize = countSizeAnimationController.value * 5;
         break;
@@ -187,8 +188,8 @@ class CountAnimationState extends State<CountAnimation>
                   width: 15.0,
                   height: 15.0,
                 ))),
-        left: (sparkleRadius * cos(currentAngle)) + 8,
-        top: (sparkleRadius * sin(currentAngle)) + 8,
+        left: (sparkleRadius * cos(currentAngle)) + media.size.width*.02,
+        top: (sparkleRadius * sin(currentAngle)) + media.size.height*.02,
       );
       stackChildren.add(sparklesWidget);
       // print("count position   $countPosition");
@@ -197,8 +198,8 @@ class CountAnimationState extends State<CountAnimation>
     stackChildren.add(new Opacity(
         opacity: countOpacity,
         child: new Container(
-            height: 30.0 + extraSize,
-            width: 30.0 + extraSize,
+            height: media.size.height * .06 + extraSize,
+            width: media.size.width * .06 + extraSize,
             decoration: new ShapeDecoration(
               shape: new CircleBorder(side: BorderSide.none),
               color: Colors.pink,
@@ -209,7 +210,7 @@ class CountAnimationState extends State<CountAnimation>
               style: new TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: 15.0),
+                  fontSize: media.size.height*.02),
             )))));
 
     var widget1 = new Positioned(
@@ -222,21 +223,22 @@ class CountAnimationState extends State<CountAnimation>
     return widget1;
   }
 
-  Widget getImageButton(int index) {
+  Widget getImageButton(int index, MediaQueryData media) {
     var extraSize = 0.0;
     if (_countWidgetStatus == CountWidgetStatus.visible ||
         _countWidgetStatus == CountWidgetStatus.becomingVisible) {
       extraSize = countSizeAnimationController.value * 20;
     }
     return Container(
-      width: 70.0 - extraSize,
-      height: 70.0 - extraSize,
-      child: widget.index != null ?
-      Image(
-        image: widget.selectedIndex[widget.index] == 0
-            ? AssetImage("assets/orange.png")
-            : AssetImage("assets/orange2.png"),
-      ): Container(),
+      height: media.size.height * .1 - extraSize,
+      width: media.size.width * .1 - extraSize,
+      child: widget.index != null
+          ? Image(
+              image: widget.selectedIndex[widget.index] == 0
+                  ? AssetImage("assets/orange.png")
+                  : AssetImage("assets/orange2.png"),
+            )
+          : Container(),
     );
   }
 
@@ -255,7 +257,7 @@ class CountAnimationState extends State<CountAnimation>
           overflow: Overflow.visible,
           children: <Widget>[
             tapped ? getCountButton(widget.index, media) : Container(),
-            getImageButton(widget.index),
+            getImageButton(widget.index, media),
           ],
         ),
       ),

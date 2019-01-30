@@ -38,6 +38,7 @@ dependencies:
   flutter_redux: ^0.5.2
   redux_logging: ^0.3.0
   redux_thunk: ^0.2.1
+  flare_flutter: ^1.2.0
   flutter_localizations:
     sdk: flutter
   tahiti:
@@ -90,6 +91,7 @@ flutter:
     - assets/action/
     - assets/dot/
     - assets/finger_count/
+    - assets/coin.flr
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

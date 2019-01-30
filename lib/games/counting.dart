@@ -42,17 +42,17 @@ class CountingState extends State<Counting> {
   var selectedIndex = [];
   Animation<double> animationtweenans;
   AnimationController controllert1;
-
   int code;
   bool _isLoading = true;
   String img, dragdata;
   int dindex, dcode;
   List<bool> _isDropped = new List();
   List randomData = new List();
-
   List anschecking = new List();
   var checkdata;
   List dropTargetValues = new List();
+  List countList = new List();
+  int flexVal = 2;
   int count = 0;
   initState() {
     super.initState();
@@ -83,6 +83,15 @@ class CountingState extends State<Counting> {
       code = rng.nextInt(499) + rng.nextInt(500);
     }
     setState(() => _isLoading = false);
+    setState(
+      () {
+        if (ansData[0] > 10) {
+          flexVal = 2;
+        } else {
+          flexVal = 1;
+        }
+      },
+    );
   }
 
   void didUpdateWidget(Counting oldWidget) {
@@ -112,27 +121,82 @@ class CountingState extends State<Counting> {
         dcode = int.parse(dragdata.substring(4, 7));
 
         if (code == dcode && valueText == datavalue) {
-          setState(() {
-            selectedIndex.clear();
-            widget.onScore(1);
-            _isDropped[index] = true;
-            count = count + 1;
-            dropTargetValues[index] = valueText;
+          setState(
+            () {
+              widget.onScore(30);
+              _isDropped[index] = true;
+              count = count + 1;
+              dropTargetValues[index] = valueText;
 
-            if (count == _isDropped.length) {
-              new Future.delayed(new Duration(milliseconds: 600), () {
-                setState(() {
-                  count = 0;
-                  anschecking = [];
-                  _isDropped = [];
-                  dropTargetValues = [];
-                  widget.onEnd();
-                });
-              });
-            }
-          });
+              if (count == _isDropped.length) {
+                new Future.delayed(
+                  new Duration(milliseconds: 600),
+                  () {
+                    setState(
+                      () {
+                        count = 0;
+                        anschecking = [];
+                        _isDropped = [];
+                        dropTargetValues = [];
+                        selectedIndex.clear();
+                        widget.onEnd();
+                      },
+                    );
+                  },
+                );
+              }
+            },
+          );
         }
       },
+    );
+  }
+
+  Widget _countAnimation() {
+    MediaQueryData media = MediaQuery.of(context);
+    int rowSize = 1;
+    int index = 0;
+    int checkingNumber = ansData[0];
+    for (int i = 0; i < ansData[0]; i++) {
+      countList.add(i);
+    }
+
+    List dotLists = new List(checkingNumber);
+    if (dotLists.length > 10) {
+      rowSize = 4;
+    } else if (dotLists.length > 5) {
+      rowSize = 2;
+    } else {
+      rowSize = 1;
+    }
+
+    List<Widget> rows = new List<Widget>();
+    for (var i = 0; i < rowSize + 1; ++i) {
+      List<Widget> cells = dotLists.skip(i * 5).take(5).map(
+        (e) {
+          return Container(
+            height: media.size.height * .1,
+            width: media.size.width * .1,
+            child: CountAnimation(
+                key: new ValueKey(index),
+                index: index++,
+                rndVal: ansData[0],
+                selectedIndex: selectedIndex,
+                countVal: countVal),
+          );
+        },
+      ).toList(growable: false);
+      rows.add(
+        Row(
+          children: cells,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+        ),
+      );
+    }
+
+    return Column(
+      children: rows,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     );
   }
 
@@ -150,87 +214,90 @@ class CountingState extends State<Counting> {
       selectedIndex.add(0);
     }
 
-    return new LayoutBuilder(builder: (context, constraints) {
-      final hPadding = pow(constraints.maxWidth / 150.0, 2);
-      final vPadding = pow(constraints.maxHeight / 150.0, 2);
-      double maxWidth = 0.0, maxHeight = 0.0;
-      maxWidth = (constraints.maxWidth - hPadding * 2) / 5;
-      maxHeight = (constraints.maxHeight - vPadding * 2) / 5;
+    return new LayoutBuilder(
+      builder: (context, constraints) {
+        final hPadding = pow(constraints.maxWidth / 150.0, 2);
+        final vPadding = pow(constraints.maxHeight / 150.0, 2);
+        double maxWidth = 0.0, maxHeight = 0.0;
+        maxWidth = (constraints.maxWidth - hPadding * 2) / 5;
+        maxHeight = (constraints.maxHeight - vPadding * 2) / 5;
 
-      final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
-      maxWidth -= buttonPadding * 2;
-      maxHeight -= buttonPadding * 2;
-      if (ButtonStateContainer.of(context) != null) {
-        UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
-      }
-      int inc = 0;
-      int k = 100;
-      return Column(children: <Widget>[
-        Text("Count the fruit and drag the Numbers in the blocks",
-            style: TextStyle(color: Colors.black, fontSize: 20.0)),
-        Expanded(
-          flex: 1,
-          child: Center(
-            child: Container(
-                child: GridView.builder(
-                    itemCount: ansData[0],
-                    gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 5),
-                    itemBuilder: (BuildContext context, int index) {
-                      return GestureDetector(
-                        child: CountAnimation(
-                            key: new ValueKey<int>(index),
-                            index: index,
-                            rndVal: 10,
-                            selectedIndex: selectedIndex,
-                            countVal: countVal),
-                      );
-                    })),
-          ),
-        ),
-        Expanded(
-          flex: 2,
-          child: Container(
-            decoration: new BoxDecoration(
-                color: Colors.black38,
-                borderRadius: new BorderRadius.only(
-                    topLeft: const Radius.circular(40.0),
-                    topRight: const Radius.circular(40.0))),
-            child: Column(children: [
-              new Expanded(
-                  flex: 1,
+        final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
+        maxWidth -= buttonPadding * 2;
+        maxHeight -= buttonPadding * 2;
+        if (ButtonStateContainer.of(context) != null) {
+          UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
+        }
+        int inc = 0;
+        int k = 100;
+
+        return Column(
+          children: <Widget>[
+            Text("Count the fruit and drag the Numbers in the blocks",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 22.0,
+                    fontWeight: FontWeight.w700)),
+            Expanded(
+              flex: flexVal,
+              child: Center(
+                child: Container(
                   child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-                    child: ResponsiveGridView(
-                        rows: 1,
-                        cols: dropTargetValues.length,
-                        children: dropTargetValues
-                            .map((e) => Padding(
-                                padding: EdgeInsets.all(4.0),
-                                child: _buildItem(inc, e, anschecking[inc++])))
-                            .toList(growable: false)),
-                  )),
-              Expanded(
-                flex: 2,
-                child: Padding(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-                  child: new ResponsiveGridView(
-                      rows: 2,
-                      cols: 5,
-                      children: _letters
-                          .map((e) => Padding(
-                              padding: EdgeInsets.all(4.0),
-                              child: _buildItem(k++, e, '')))
-                          .toList(growable: false)),
+                    padding: EdgeInsets.all(4.0),
+                    child: _countAnimation(),
+                  ),
                 ),
               ),
-            ]),
-          ),
-        ),
-      ]);
-    });
+            ),
+            Expanded(
+              flex: 2,
+              child: Container(
+                decoration: new BoxDecoration(
+                    color: Colors.black38,
+                    borderRadius: new BorderRadius.only(
+                        topLeft: const Radius.circular(40.0),
+                        topRight: const Radius.circular(40.0))),
+                child: Column(
+                  children: [
+                    new Expanded(
+                      flex: 1,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 5.0, horizontal: 5.0),
+                        child: ResponsiveGridView(
+                            rows: 1,
+                            cols: dropTargetValues.length,
+                            children: dropTargetValues
+                                .map((e) => Padding(
+                                    padding: EdgeInsets.all(2.0),
+                                    child:
+                                        _buildItem(inc, e, anschecking[inc++])))
+                                .toList(growable: false)),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 5.0, horizontal: 5.0),
+                        child: new ResponsiveGridView(
+                            rows: 2,
+                            cols: 5,
+                            children: _letters
+                                .map((e) => Padding(
+                                    padding: EdgeInsets.all(4.0),
+                                    child: _buildItem(k++, e, '')))
+                                .toList(growable: false)),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
 
@@ -283,13 +350,15 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   }
 
   void _myAnim() {
-    animation1.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        controller1.reverse();
-      } else if (status == AnimationStatus.dismissed) {
-        controller1.forward();
-      }
-    });
+    animation1.addStatusListener(
+      (status) {
+        if (status == AnimationStatus.completed) {
+          controller1.reverse();
+        } else if (status == AnimationStatus.dismissed) {
+          controller1.forward();
+        }
+      },
+    );
     controller1.forward();
   }
 
@@ -319,32 +388,33 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         return new ScaleTransition(
           scale: animation,
           child: new Shake(
-              animation: widget.flag == 1 ? animation1 : animation,
-              child: new ScaleTransition(
-                  scale: animation,
-                  child: new Container(
-                    decoration: new BoxDecoration(
-                      borderRadius:
-                          new BorderRadius.all(new Radius.circular(8.0)),
-                    ),
-                    child: new DragTarget(
-                      onAccept: (String data) => widget.onAccepted(data),
-                      builder: (
-                        BuildContext context,
-                        List<dynamic> accepted,
-                        List<dynamic> rejected,
-                      ) {
-                        return widget.text == null
-                            ? UnitButton(
-                                text: '',
-                              )
-                            : UnitButton(
-                                dotFlag: true,
-                                text: widget.text,
-                              );
-                      },
-                    ),
-                  ))),
+            animation: widget.flag == 1 ? animation1 : animation,
+            child: new ScaleTransition(
+              scale: animation,
+              child: new Container(
+                decoration: new BoxDecoration(
+                  borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
+                ),
+                child: new DragTarget(
+                  onAccept: (String data) => widget.onAccepted(data),
+                  builder: (
+                    BuildContext context,
+                    List<dynamic> accepted,
+                    List<dynamic> rejected,
+                  ) {
+                    return widget.text == null
+                        ? UnitButton(
+                            text: '',
+                          )
+                        : UnitButton(
+                            dotFlag: true,
+                            text: widget.text,
+                          );
+                  },
+                ),
+              ),
+            ),
+          ),
         );
       } else if (widget.index >= 100) {
         return new Draggable(
@@ -355,13 +425,16 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
               '_' +
               '${widget.text}',
           child: new ScaleTransition(
-              scale: animation,
-              child: new UnitButton(
-                key: new Key('A${widget.keys}'),
-                text: widget.text,
-                showHelp: false,
-              )),
+            scale: animation,
+            child: new UnitButton(
+              dotFlag: true,
+              key: new Key('A${widget.keys}'),
+              text: widget.text,
+              showHelp: false,
+            ),
+          ),
           feedback: UnitButton(
+            dotFlag: true,
             text: widget.text,
             maxHeight: buttonConfig.height,
             maxWidth: buttonConfig.width,

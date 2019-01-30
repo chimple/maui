@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:maui/components/move_animation.dart';
 import 'package:maui/components/nima.dart';
 import 'package:maui/components/user_item.dart';
 import 'package:maui/games/single_game.dart';
@@ -11,6 +12,7 @@ import 'package:maui/repos/log_repo.dart';
 import 'package:maui/loca.dart';
 import 'package:maui/repos/user_repo.dart';
 import 'package:maui/state/app_state_container.dart';
+import 'package:flare_flutter/flare_actor.dart';
 
 class ScoreScreen extends StatefulWidget {
   final String gameName;
@@ -44,6 +46,8 @@ class _ScoreScreenState extends State<ScoreScreen>
   List<Animation<double>> _animations = new List<Animation<double>>();
 
   Animation<double> _buttonAnimation, _characterAnimation, sparklesAnimation;
+  AnimationController _animationController;
+  double animationDuration = 0.0;
 
   String gameName;
   GameDisplay gameDisplay;
@@ -60,6 +64,13 @@ class _ScoreScreenState extends State<ScoreScreen>
   var keys = 0;
   var _cumulativeIncrement = 0;
   bool _pageExited = false;
+  int inc = 0;
+  int inc2 = 100;
+  int starCount = 5;
+  List<int> starValues = [];
+  List<int> starValues2 = [];
+  int coinCount = 100;
+  bool moveAnime = false;
 
   @override
   void initState() {
@@ -75,6 +86,12 @@ class _ScoreScreenState extends State<ScoreScreen>
         new CurvedAnimation(parent: buttoncontroller, curve: Curves.easeOut);
     _characterAnimation =
         new CurvedAnimation(parent: controller, curve: Curves.bounceOut);
+
+    final int totalDuration = 4000;
+    _animationController = AnimationController(
+        vsync: this, duration: new Duration(milliseconds: totalDuration));
+    animationDuration = totalDuration / (100 * (totalDuration / starCount));
+    _animationController.forward();
     // _buttonAnimation = new Tween(begin: 0.0, end: 0.0).animate(
     //     new CurvedAnimation(
     //         parent: controller,
@@ -119,6 +136,11 @@ class _ScoreScreenState extends State<ScoreScreen>
         flag = true;
       }
     }
+    for (int i = 1; i <= starCount; i++) {
+      starValues..add(0);
+    }
+    print("mkkkkkkkkk staCount $starCount");
+    print("mkkkkkkkkk star vaallllll $starValues");
 
     new Future.delayed(Duration(milliseconds: 50), () {
       buttoncontroller.forward();
@@ -156,6 +178,32 @@ class _ScoreScreenState extends State<ScoreScreen>
     var completer = Completer<bool>();
     completer.complete(false);
     return completer.future;
+  }
+
+  _buildCoinItem(int inc, int e) {
+    return MoveContainer(
+        coinCount: coinCount,
+        index: inc,
+        animationController: _animationController,
+        duration: animationDuration);
+  }
+
+  buildFlareAnimation() {
+    new Future.delayed(Duration(milliseconds: 2000), () {
+      setState(() {
+        moveAnime = true;
+        coinCount = coinCount+starCount;
+      });
+    });
+    Size media = MediaQuery.of(context).size;
+    return Container(
+      height: media.height * .1,
+      width: media.width * .1,
+      child: FlareActor(
+        "assets/coin.flr",
+        animation: "coin",
+      ),
+    );
   }
 
   @override
@@ -291,6 +339,52 @@ class _ScoreScreenState extends State<ScoreScreen>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                     Column(
+                      children: <Widget>[
+                        Container(
+                          height: 80.0,
+                          width: 80.0,
+                          decoration: new BoxDecoration(
+                              color: Colors.black26,
+                              borderRadius: new BorderRadius.all(
+                                const Radius.circular(50.0),
+                              )),
+                        ),
+                        Container(
+                          height: 30.0,
+                          width: 100.0,
+                          color: Colors.grey,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Container(
+                                height: 30.0,
+                                width: 30.0,
+                                // color: Colors.green,
+                                child: FlareActor(
+                                  "assets/coin.flr",
+                                ),
+                              ),
+                              Text("$coinCount"),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                    Container(
+                      height: 80.0,
+                      width: 80.0,
+                      decoration: new BoxDecoration(
+                          color: Colors.black26,
+                          borderRadius: new BorderRadius.all(
+                            const Radius.circular(50.0),
+                          )),
+                    ),
+                  ],
+                ),
                 new ScaleTransition(
                   scale: _characterAnimation,
                   child: new Container(
@@ -484,65 +578,95 @@ class _ScoreScreenState extends State<ScoreScreen>
                 //     mainAxisAlignment: MainAxisAlignment.center,
                 //     children: <Widget>[
                 //       new Row(
-                //           mainAxisAlignment:
-                //               gameDisplay == GameDisplay.myHeadToHead ||
+                //         mainAxisAlignment: gameDisplay ==
+                //                     GameDisplay.myHeadToHead ||
+                //                 gameDisplay == GameDisplay.networkTurnByTurn ||
+                //                 gameDisplay == GameDisplay.localTurnByTurn
+                //             ? MainAxisAlignment.spaceEvenly
+                //             : MainAxisAlignment.center,
+                //         crossAxisAlignment: CrossAxisAlignment.center,
+                //         children: <Widget>[
+                //           new Row(
+                //               mainAxisAlignment: gameDisplay ==
+                //                           GameDisplay.myHeadToHead ||
                 //                       gameDisplay ==
                 //                           GameDisplay.networkTurnByTurn ||
                 //                       gameDisplay == GameDisplay.localTurnByTurn
-                //                   ? MainAxisAlignment.spaceEvenly
+                //                   ? MainAxisAlignment.center
                 //                   : MainAxisAlignment.center,
-                //           crossAxisAlignment: CrossAxisAlignment.center,
-                //           children: <Widget>[
-                //             new Row(
-                //                 mainAxisAlignment:
-                //                     gameDisplay == GameDisplay.myHeadToHead ||
-                //                             gameDisplay ==
-                //                                 GameDisplay.networkTurnByTurn ||
-                //                             gameDisplay ==
-                //                                 GameDisplay.localTurnByTurn
-                //                         ? MainAxisAlignment.center
-                //                         : MainAxisAlignment.center,
-                //                 crossAxisAlignment: CrossAxisAlignment.start,
-                //                 children: tablestars1),
-                //             new Padding(
-                //               padding: new EdgeInsets.all(10.0),
-                //             ),
-                //             gameDisplay == GameDisplay.myHeadToHead ||
-                //                     gameDisplay ==
-                //                         GameDisplay.networkTurnByTurn ||
-                //                     gameDisplay == GameDisplay.localTurnByTurn
-                //                 ? new Row(
-                //                     mainAxisAlignment: MainAxisAlignment.end,
-                //                     crossAxisAlignment: CrossAxisAlignment.end,
-                //                     children: tablestars2)
-                //                 : new Row(),
-                //           ]),
-
+                //               crossAxisAlignment: CrossAxisAlignment.start,
+                //               children: tablestars1),
+                //           new Padding(
+                //             padding: new EdgeInsets.all(10.0),
+                //           ),
+                //           gameDisplay == GameDisplay.myHeadToHead ||
+                //                   gameDisplay ==
+                //                       GameDisplay.networkTurnByTurn ||
+                //                   gameDisplay == GameDisplay.localTurnByTurn
+                //               ? new Row(
+                //                   mainAxisAlignment: MainAxisAlignment.end,
+                //                   crossAxisAlignment: CrossAxisAlignment.end,
+                //                   children: tablestars2)
+                //               : new Row(),
+                //         ],
+                //       ),
                 //     ],
                 //   ),
                 // ),
 
-                new Container(
-                    height: ht * .2,
-                    decoration: new BoxDecoration(
-                      color: Colors.transparent,
-                      borderRadius:
-                          const BorderRadius.all(const Radius.circular(5.0)),
-                      image: new DecorationImage(
-                        image: myScore > otherScore
-                            ? new AssetImage(
-                                "assets/background_gif/Win_loop.gif")
-                            : new AssetImage("other.png"),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    child: new Padding(
-                        padding: new EdgeInsets.only(right: 20.0),
-                        child: new Stack(
-                          alignment: FractionalOffset.center,
-                          overflow: Overflow.visible,
-                          children: <Widget>[getScoreButton()],
-                        ))),
+                // new Container(
+                //     height: ht * .2,
+                //     decoration: new BoxDecoration(
+                //       color: Colors.transparent,
+                //       borderRadius:
+                //           const BorderRadius.all(const Radius.circular(5.0)),
+                //       image: new DecorationImage(
+                //         image: myScore > otherScore
+                //             ? new AssetImage(
+                //                 "assets/background_gif/Win_loop.gif")
+                //             : new AssetImage("other.png"),
+                //         fit: BoxFit.cover,
+                //       ),
+                //     ),
+                //     child: new Padding(
+                //         padding: new EdgeInsets.only(right: 20.0),
+                //         child: new Stack(
+                //           alignment: FractionalOffset.center,
+                //           overflow: Overflow.visible,
+                //           children: <Widget>[getScoreButton()],
+                //         ))),
+
+                // instead of gif showing coin animation using flare
+                Stack(
+                  children: <Widget>[
+                    !moveAnime
+                        ? Container(
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: starValues
+                                    .map((e) => Padding(
+                                        padding: EdgeInsets.all(1.0),
+                                        child: buildFlareAnimation()))
+                                    .toList(growable: false)),
+                          )
+                        : Container(),
+                    moveAnime
+                        ? Container(
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: starValues
+                                    .map((e) => Padding(
+                                        padding: EdgeInsets.all(1.0),
+                                        child: _buildCoinItem(
+                                          inc++,
+                                          e,
+                                        )))
+                                    .toList(growable: false)),
+                          )
+                        : Container()
+                    // Center(child: MoveContainer(coinCount: coinCount))
+                  ],
+                ),
 
                 // Icons which redirect to home, refresh and fast-forward
                 new Container(
@@ -643,7 +767,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    // Size media = MediaQuery.of(context).size;
     double ht = widget.height;
     double wd = widget.width;
     widget.keys++;
