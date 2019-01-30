@@ -22,7 +22,7 @@ class _GameLevelState extends State<GameLevel>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 2000),
+      duration: const Duration(milliseconds: 1500),
     )..addListener(() {
         setState(() {});
       });
@@ -32,7 +32,7 @@ class _GameLevelState extends State<GameLevel>
       CurvedAnimation(
         parent: _controller,
         curve: Interval(
-          0.6,
+          0.5,
           1.0,
           curve: Curves.bounceOut,
         ),
@@ -71,7 +71,7 @@ class _GameLevelState extends State<GameLevel>
             child: Container(
               // color: Colors.white,
               height: size.height > size.width
-                  ? size.height * 0.45
+                  ? size.height * 0.37
                   : size.height * 0.70,
               width: size.width * 0.1,
               // alignment: Alignment(0.0, 0.0),
@@ -91,8 +91,8 @@ class _GameLevelState extends State<GameLevel>
                           padding: EdgeInsets.only(top: 40),
                         ),
                         Container(
-                          height: media.size.height * 0.12,
-                          width: media.size.width * 0.2,
+                          height: media.size.height * 0.15,
+                          width: media.size.width * 0.23,
                           decoration: new BoxDecoration(
                               color: Colors.red,
                               borderRadius: new BorderRadius.all(

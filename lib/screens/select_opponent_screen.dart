@@ -177,7 +177,7 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
                     ),
                     delegate: new SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
-                        convertToFriend(context, _localUsers[index],
+                        return convertToFriend(context, _localUsers[index],
                             onTap: startGame);
                       },
                       childCount: _localUsers.length,
@@ -239,47 +239,26 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
   startGame(BuildContext context, User user) {
     final loggedInUser = AppStateContainer.of(context).state.loggedInUser;
     Random random = Random();
-
-    return showDialog(
-        context: context,
-        child: GameLevel(
-          gameName: widget.gameName,
-          levelList: [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9"
-          ],
-        )
-        // Navigator.of(context).push(MaterialPageRoute<Null>(
-        //     builder: (BuildContext context) => GameCategoryListScreen(
-        //           game: widget.gameName,
-        //           gameMode: GameMode.iterations,
-        //           gameDisplay: user.id == loggedInUser.id
-        //               ? GameDisplay.single
-        //               : user.deviceId == _deviceId
-        //                   ? random.nextBool()
-        //                       ? GameDisplay.localTurnByTurn
-        //                       : GameDisplay.myHeadToHead
-        //                   : GameDisplay.networkTurnByTurn,
-        //           otherUser: user,
-        //         ))
-
-        );
+    Navigator.of(context).push(MaterialPageRoute<Null>(
+        builder: (BuildContext context) => GameCategoryListScreen(
+              game: widget.gameName,
+              gameMode: GameMode.iterations,
+              gameDisplay: user.id == loggedInUser.id
+                  ? GameDisplay.single
+                  : user.deviceId == _deviceId
+                      ? random.nextBool()
+                          ? GameDisplay.localTurnByTurn
+                          : GameDisplay.myHeadToHead
+                      : GameDisplay.networkTurnByTurn,
+              otherUser: user,
+            ))
+            );
+    // showDialog(context: context, builder: (BuildContext context) {
+    //   return GameLevel(
+    //     gameName: widget.gameName,
+    //     levelList: ["1","2","3","4","5","6","7","8","9","10","12","13"],
+    //   );
+    // });
   }
 
   goToMyTurn(BuildContext context, User user) {

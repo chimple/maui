@@ -230,11 +230,30 @@ class RecognizeNumberState extends State<RecognizeNumber>
               child: Padding(
                   padding: EdgeInsets.symmetric(
                       vertical: vPadding, horizontal: hPadding),
-                  child: new RaisedButton(
-                    onPressed: _speechRecognitionAvailable && !_isListening
-                        ? () => startListening()
-                        : _isListening ? () => stopListening() : null,
-                    child: Text("$_question"),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(
+                        width: 200.0,
+                        height: 200.0,
+                        child: new RaisedButton(
+                          onPressed:
+                              _speechRecognitionAvailable && !_isListening
+                                  ? () => startListening()
+                                  : null,
+                          child: Text("$_question"),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 200.0,
+                        height: 200.0,
+                        child: new RaisedButton(
+                          onPressed:
+                              _isListening ? () => stopListening() : null,
+                          child: Text("Close"),
+                        ),
+                      ),
+                    ],
                   )
                   //  new ResponsiveGridView(
                   //   rows: 1,
