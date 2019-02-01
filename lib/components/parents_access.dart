@@ -27,7 +27,7 @@ class _ChildLockState extends State<ChildLock> {
     '8',
     '9'
   ];
-
+  final List<String> _digits = ['1', '2'];
   @override
   void initState() {
     super.initState();
@@ -37,21 +37,17 @@ class _ChildLockState extends State<ChildLock> {
   void _initializeData() async {
     _choices.shuffle();
 
-    _number1 = _choices[3] + _choices[5];
-    _number2 = _choices[1] + _choices[7];
-    _number3 = _choices[2] + _choices[4];
+    _digits.shuffle();
+    _number1 = _digits[1] + _choices[1];
+    _number2 = _digits[0] + _choices[3];
 
-    _getdata = await getParentsAccessData(_number1, _number2, _number3);
+    _getdata = await getParentsAccessData(_number1, _number2);
     _question = _getdata;
 
     if (_question.contains('plus')) {
-      if ('plus'.allMatches(_question).length == 2) {
-        _rightAnswer =
-            int.parse(_number1) + int.parse(_number2) + int.parse(_number3);
-      } else
-        _rightAnswer = int.parse(_number1) + int.parse(_number2);
+      _rightAnswer = int.parse(_number1) + int.parse(_number2);
     } else
-      _rightAnswer = int.parse(_number1) * int.parse(_number2);
+      _rightAnswer = int.parse(_number1) - int.parse(_number2);
 
     setState(() => _isLoading = false);
   }
@@ -178,8 +174,8 @@ class _ChildLockState extends State<ChildLock> {
                         });
                       } else {
                         setState(() {
-                          _answer='';
-                         _initializeData();
+                          _answer = '';
+                          _initializeData();
                         });
                       }
                     },

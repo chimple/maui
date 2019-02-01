@@ -2,16 +2,15 @@ import 'dart:async';
 import 'dart:core';
 import 'dart:math';
 
-Future<String> getParentsAccessData(
-    String num1, String num2, String num3) async {
-  String word1, word2, word3;
+Future<String> getParentsAccessData(String num1, String num2) async {
+  String word1, word2;
   word1 = await convertToWords(num1);
   word2 = await convertToWords(num2);
-  word3 = await convertToWords(num3);
-  var random = new Random();
-  var randomCase = random.nextInt(max(0, 3));
 
-  if (int.parse(num1) > 10 && randomCase == 1) {
+  var random = new Random();
+  var randomCase = random.nextInt(max(0, 2));
+
+  if (int.parse(num1) < int.parse(num2) && randomCase == 1) {
     randomCase = 0;
   }
 
@@ -20,10 +19,7 @@ Future<String> getParentsAccessData(
       return "'$word1' plus '$word2'";
       break;
     case 1:
-      return "'$word1' into '$word2'";
-      break;
-    case 2:
-      return "'$word1' plus '$word2' plus '$word3'";
+      return "'$word1' minus '$word2'";
       break;
   }
   return null;
