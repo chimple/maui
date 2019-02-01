@@ -222,15 +222,50 @@ class Loca {
   String get games => Intl.message('Games', name: 'games');
   String get comment => Intl.message('Comment', name: 'comment');
   String get story => Intl.message('Story', name: 'story');
-  String get discuss => Intl.message('Discuss', name: 'story');
+  String get discuss => Intl.message('Discuss', name: 'discuss');
   String get topic => Intl.message('Topic', name: 'topic');
+  String get zero => Intl.message('Zero', name: 'zero');
+  String get one => Intl.message('One', name: 'one');
+  String get two => Intl.message('Two', name: 'two');
+  String get three => Intl.message('Three', name: 'three');
+  String get four => Intl.message('Four', name: 'four');
+  String get five => Intl.message('Five', name: 'five');
+  String get six => Intl.message('Six', name: 'six');
+  String get seven => Intl.message('Seven', name: 'seven');
+  String get eight => Intl.message('Eight', name: 'eight');
+  String get nine => Intl.message('Nine', name: 'nine');
+  String get ten => Intl.message('Ten', name: 'ten');
+  String get eleven => Intl.message('Eleven', name: 'eleven');
+  String get twelve => Intl.message('Twelve', name: 'twelve');
+  String get thirteen => Intl.message('Thirteen', name: 'thirteen');
+  String get fourteen => Intl.message('Fourteen', name: 'fourteen');
+  String get fifteen => Intl.message('Fifteen', name: 'fifteen');
+  String get sixteen => Intl.message('Sixteen', name: 'sixteen');
+  String get seventeen => Intl.message('Seventeen', name: 'seventeen');
+  String get eighteen => Intl.message('Eighteen', name: 'eighteen');
+  String get nineteen => Intl.message('Nineteen', name: 'nineteen');
+  String get twenty => Intl.message('Twenty', name: 'twenty');
+  String get twentyOne => Intl.message('Twenty One', name: 'twentyOne');
+  String get twentyTwo => Intl.message('Twenty Two', name: 'twentyTwo');
+  String get twentyThree => Intl.message('Twenty Three', name: 'twentyThree');
+  String get twentyFour => Intl.message('Twenty Four', name: 'twentyFour');
+  String get twentyFive => Intl.message('Twenty Five', name: 'twentyFive');
+  String get twentySix => Intl.message('Twenty Six', name: 'twentySix');
+  String get twentySeven => Intl.message('Twenty Seven', name: 'twentySeven');
+  String get twentyEight => Intl.message('Twenty Eight', name: 'twentyEight');
+  String get twentyNine => Intl.message('Twenty Nine', name: 'twentyNine');
+  String get plus => Intl.message('Plus', name: 'plus');
+  String get minus => Intl.message('Minus', name: 'minus');
+  String get forParents => Intl.message('for Parents', name: 'forParents');
+  String get submit => Intl.message('Submit', name: 'submit');
 }
 
 class LocaDelegate extends LocalizationsDelegate<Loca> {
   const LocaDelegate();
 
   @override
-  bool isSupported(Locale locale) => ['en', 'sw'].contains(locale.languageCode);
+  bool isSupported(Locale locale) =>
+      ['en', 'sw', 'hi'].contains(locale.languageCode);
 
   @override
   Future<Loca> load(Locale locale) => Loca.load(locale);

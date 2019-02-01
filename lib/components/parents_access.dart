@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:maui/repos/parents_access_repo.dart';
+import 'dart:core';
+import 'dart:math';
+import 'package:maui/loca.dart';
 
 class ChildLock extends StatefulWidget {
   @override
@@ -7,14 +9,13 @@ class ChildLock extends StatefulWidget {
 }
 
 class _ChildLockState extends State<ChildLock> {
-  String _getdata;
   String _answer = "";
   int _rightAnswer;
   String _question;
   bool _isLoading = true;
   double _height;
   double _width;
-  String _number1, _number2, _number3;
+  String _number1, _number2;
   final List<String> _choices = [
     '0',
     '1',
@@ -34,44 +35,14 @@ class _ChildLockState extends State<ChildLock> {
     _initializeData();
   }
 
-  void _initializeData() async {
+  void _initializeData() {
     _choices.shuffle();
 
     _digits.shuffle();
     _number1 = _digits[1] + _choices[1];
     _number2 = _digits[0] + _choices[3];
 
-    _getdata = await getParentsAccessData(_number1, _number2);
-    _question = _getdata;
-
-    if (_question.contains('plus')) {
-      _rightAnswer = int.parse(_number1) + int.parse(_number2);
-    } else
-      _rightAnswer = int.parse(_number1) - int.parse(_number2);
-
     setState(() => _isLoading = false);
-  }
-
-  Widget _optionButton(String ans, double height, double width) {
-    return SizedBox(
-      height: height * 0.1,
-      width: width * 0.1,
-      child: FloatingActionButton(
-        child: Text(
-          "$ans",
-          style: TextStyle(
-            fontSize: height * 0.06,
-          ),
-        ),
-        onPressed: () {
-          setState(() {
-            if (_answer.length < 3) {
-              _answer = _answer + ans;
-            }
-          });
-        },
-      ),
-    );
   }
 
   @override
@@ -99,7 +70,7 @@ class _ChildLockState extends State<ChildLock> {
             children: <Widget>[
               Container(
                 child: Text(
-                  "For Parents",
+                  Loca.of(context).forParents,
                   style: TextStyle(
                     fontSize: _height * 0.05,
                     fontWeight: FontWeight.bold,
@@ -116,7 +87,7 @@ class _ChildLockState extends State<ChildLock> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Text(
-                  "$_question",
+                  getParentsAccessData(context, _number1, _number2),
                   style: TextStyle(
                     fontSize: _height * 0.05,
                     color: Colors.yellow[800],
@@ -156,7 +127,7 @@ class _ChildLockState extends State<ChildLock> {
                   height: _height * 0.1,
                   child: RaisedButton(
                     child: Text(
-                      "SUBMIT",
+                      Loca.of(context).submit,
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -187,5 +158,144 @@ class _ChildLockState extends State<ChildLock> {
         );
       },
     );
+  }
+
+  Widget _optionButton(String ans, double height, double width) {
+    return SizedBox(
+      height: height * 0.1,
+      width: width * 0.1,
+      child: FloatingActionButton(
+        child: Text(
+          "$ans",
+          style: TextStyle(
+            fontSize: height * 0.06,
+          ),
+        ),
+        onPressed: () {
+          setState(() {
+            if (_answer.length < 3) {
+              _answer = _answer + ans;
+            }
+          });
+        },
+      ),
+    );
+  }
+
+  String getParentsAccessData(BuildContext context, String num1, String num2) {
+    String word1, word2;
+    String operand1, operand2, operator1, operator2;
+    word1 = convertToWords(num1);
+    word2 = convertToWords(num2);
+    operand1 = Loca.of(context).intl(word1);
+    operand2 = Loca.of(context).intl(word2);
+    operator1 = Loca.of(context).plus;
+    operator2 = Loca.of(context).minus;
+    var random = new Random();
+    var randomCase = random.nextInt(max(0, 2));
+
+    if (int.parse(num1) < int.parse(num2) && randomCase == 1) {
+      randomCase = 0;
+    }
+    if (randomCase == 0) {
+      _rightAnswer = int.parse(num1) + int.parse(num2);
+    } else
+      _rightAnswer = int.parse(num1) - int.parse(num2);
+
+    switch (randomCase) {
+      case 0:
+        return "'$operand1' $operator1 '$operand2'";
+        break;
+      case 1:
+        return "'$operand1' $operator2 '$operand2'";
+        break;
+    }
+    return null;
+  }
+
+// function to convert number into words upto 3 digits
+  String convertToWords(String digit) {
+    int len = digit.length;
+    int x = 0;
+    String word = '';
+
+    List<String> singleDigit = [
+      "Zero",
+      "One",
+      "Two",
+      "Three",
+      "Four",
+      "Five",
+      "Six",
+      "Seven",
+      "Eight",
+      "Nine"
+    ];
+    List<String> twoDigits = [
+      "",
+      "ten",
+      "eleven",
+      "twelve",
+      "thirteen",
+      "fourteen",
+      "fifteen",
+      "sixteen",
+      "seventeen",
+      "eighteen",
+      "nineteen"
+    ];
+    List<String> tensMultiple = [
+      "",
+      "",
+      "twenty",
+      "thirty",
+      "forty",
+      "fifty",
+      "sixty",
+      "seventy",
+      "eighty",
+      "ninety"
+    ];
+    List<String> tensPower = ["hundred", "thousand"];
+
+    if (len == 1) {
+      return singleDigit[int.parse(digit[0])];
+    }
+
+    if (len == 0) {
+      return null;
+    }
+    if (len > 4) {
+      return null;
+    }
+    while (x <= digit.length) {
+      if (len >= 3) {
+        if (int.parse(digit[x]) != 0) {
+          word =
+              singleDigit[int.parse(digit[x])] + " " + tensPower[len - 3] + " ";
+        }
+        --len;
+      } else {
+        if (int.parse(digit[x]) == 1) {
+          int sum = int.parse(digit[x]) + int.parse(digit[x + 1]);
+          return twoDigits[sum];
+        } else if (int.parse(digit[x]) == 2 && int.parse(digit[x + 1]) == 0) {
+          return "twenty";
+        } else {
+          int i = int.parse(digit[x]);
+          if (i > 0) {
+            word = tensMultiple[i];
+          } else
+            print("");
+          ++x;
+          if (int.parse(digit[x]) != 0) {
+            word = word + singleDigit[int.parse(digit[x])];
+          }
+          return word;
+        }
+      }
+      ++x;
+    }
+    return null;
   }
 }

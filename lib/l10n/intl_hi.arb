@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2019-02-01T17:29:07.393420",
+  "@@last_modified": "2019-02-01T15:53:21.786788",
   "title": "Maui",
   "@title": {
     "type": "text",
@@ -925,172 +925,172 @@
     "type": "text",
     "placeholders": {}
   },
-  "zero": "Zero",
+  "zero": "शून्य",
   "@zero": {
     "type": "text",
     "placeholders": {}
   },
-  "one": "One",
+  "one": "एक",
   "@one": {
     "type": "text",
     "placeholders": {}
   },
-  "two": "Two",
+  "two": "दो",
   "@two": {
     "type": "text",
     "placeholders": {}
   },
-  "three": "Three",
+  "three": "तीन",
   "@three": {
     "type": "text",
     "placeholders": {}
   },
-  "four": "Four",
+  "four": "चार",
   "@four": {
     "type": "text",
     "placeholders": {}
   },
-  "five": "Five",
+  "five": "पाँच",
   "@five": {
     "type": "text",
     "placeholders": {}
   },
-  "six": "Six",
+  "six": "छह",
   "@six": {
     "type": "text",
     "placeholders": {}
   },
-  "seven": "Seven",
+  "seven": "सात",
   "@seven": {
     "type": "text",
     "placeholders": {}
   },
-  "eight": "Eight",
+  "eight": "आठ",
   "@eight": {
     "type": "text",
     "placeholders": {}
   },
-  "nine": "Nine",
+  "nine": "नौ",
   "@nine": {
     "type": "text",
     "placeholders": {}
   },
-  "ten": "Ten",
+  "ten": "दस",
   "@ten": {
     "type": "text",
     "placeholders": {}
   },
-  "eleven": "Eleven",
+  "eleven": "ग्यारह",
   "@eleven": {
     "type": "text",
     "placeholders": {}
   },
-  "twelve": "Twelve",
+  "twelve": "बारह",
   "@twelve": {
     "type": "text",
     "placeholders": {}
   },
-  "thirteen": "Thirteen",
+  "thirteen": "तेरह",
   "@thirteen": {
     "type": "text",
     "placeholders": {}
   },
-  "fourteen": "Fourteen",
+  "fourteen": "चौदह",
   "@fourteen": {
     "type": "text",
     "placeholders": {}
   },
-  "fifteen": "Fifteen",
+  "fifteen": "पंद्रह",
   "@fifteen": {
     "type": "text",
     "placeholders": {}
   },
-  "sixteen": "Sixteen",
+  "sixteen": "सोलह",
   "@sixteen": {
     "type": "text",
     "placeholders": {}
   },
-  "seventeen": "Seventeen",
+  "seventeen": "सत्तरह",
   "@seventeen": {
     "type": "text",
     "placeholders": {}
   },
-  "eighteen": "Eighteen",
+  "eighteen": "अठारह",
   "@eighteen": {
     "type": "text",
     "placeholders": {}
   },
-  "nineteen": "Nineteen",
+  "nineteen": "उन्नीस",
   "@nineteen": {
     "type": "text",
     "placeholders": {}
   },
-  "twenty": "Twenty",
+  "twenty": "बीस",
   "@twenty": {
     "type": "text",
     "placeholders": {}
   },
-  "twentyOne": "Twenty One",
+  "twentyOne": "इक्कीस",
   "@twentyOne": {
     "type": "text",
     "placeholders": {}
   },
-  "twentyTwo": "Twenty Two",
+  "twentyTwo": "बाईस",
   "@twentyTwo": {
     "type": "text",
     "placeholders": {}
   },
-  "twentyThree": "Twenty Three",
+  "twentyThree": "तेईस",
   "@twentyThree": {
     "type": "text",
     "placeholders": {}
   },
-  "twentyFour": "Twenty Four",
+  "twentyFour": "चौबीस",
   "@twentyFour": {
     "type": "text",
     "placeholders": {}
   },
-  "twentyFive": "Twenty Five",
+  "twentyFive": "पच्चीस",
   "@twentyFive": {
     "type": "text",
     "placeholders": {}
   },
-  "twentySix": "Twenty Six",
+  "twentySix": "छब्बीस",
   "@twentySix": {
     "type": "text",
     "placeholders": {}
   },
-  "twentySeven": "Twenty Seven",
+  "twentySeven": "सत्ताईस",
   "@twentySeven": {
     "type": "text",
     "placeholders": {}
   },
-  "twentyEight": "Twenty Eight",
+  "twentyEight": "अट्ठाइस",
   "@twentyEight": {
     "type": "text",
     "placeholders": {}
   },
-  "twentyNine": "Twenty Nine",
+  "twentyNine": "उन्तीस",
   "@twentyNine": {
     "type": "text",
     "placeholders": {}
   },
-  "plus": "Plus",
+  "plus": "जोड़",
   "@plus": {
     "type": "text",
     "placeholders": {}
   },
-  "minus": "Minus",
+  "minus": "घटाउ",
   "@minus": {
     "type": "text",
     "placeholders": {}
   },
-  "forParents": "for Parents",
+  "forParents": "अभिभावक के लिए",
   "@forParents": {
     "type": "text",
     "placeholders": {}
   },
-  "submit": "Submit",
+  "submit": "जमा करें",
   "@submit": {
     "type": "text",
     "placeholders": {}

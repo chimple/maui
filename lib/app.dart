@@ -41,6 +41,7 @@ class MauiApp extends StatelessWidget {
       supportedLocales: [
         const Locale('en', ''),
         const Locale('sw', ''),
+        const Locale('hi', ''),
       ],
       theme: new ThemeData(
         primarySwatch: Colors.blue,
