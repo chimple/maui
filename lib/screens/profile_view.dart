@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:math';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/quack/user_collection.dart';
 import 'package:maui/quack/user_drawing_grid.dart';
@@ -295,7 +296,15 @@ class ProfileViewState extends State<ProfileView>
         overflow: Overflow.visible,
         children: <Widget>[
         Container(
-          color: Colors.blueAccent,
+          // color: Colors.blueAccent,
+          child: SvgPicture.asset(
+            
+          "assets/background_svg.svg",
+          fit: BoxFit.cover,
+         
+        
+          // allowDrawingOutsideViewBox: true,
+        ),
             
           ),
           Column(

@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/quack/card_header.dart';
 import 'package:maui/quack/collection_progress_indicator.dart';
@@ -206,11 +206,12 @@ class UserProgress extends StatelessWidget {
     int numberOfStar = int.parse(star);
     List dotLists = new List(numberOfStar);
     List<Widget> rows = new List<Widget>();
-final String assetName = 'assets/starsvg.svg';
-final Widget svg = new SvgPicture.asset(
-  assetName,
- color: Colors.yellow,
-);
+    final String assetName = 'assets/star_svg.svg';
+    // final Widget svg = new SvgPicture.asset(
+    //   assetName,
+    //   // allowDrawingOutsideViewBox: false,
+    //   color: Colors.yellow,
+    // );
 
     for (var i = 0; i < 1 + 1; ++i) {
       List<Widget> cells = dotLists.skip(i * 5).take(5).map((e) {
@@ -219,7 +220,14 @@ final Widget svg = new SvgPicture.asset(
         //   color: Colors.yellow,
         //   size: fontSize,
         // );
-        return svg;
+        // return Container(child: svg);
+        return new SvgPicture.asset(
+          assetName,
+          height: fontSize,
+          width: fontSize,
+          // color: Colors.yellow,
+          // allowDrawingOutsideViewBox: true,
+        );
       }).toList(growable: false);
       rows.add(Row(
         children: cells,
