@@ -1075,6 +1075,56 @@
     "type": "text",
     "placeholders": {}
   },
+  "d0": "०",
+  "@d0": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "d1": "१",
+  "@d1": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "d2": "२",
+  "@d2": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "d3": "३",
+  "@d3": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "d4": "४",
+  "@d4": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "d5": "५",
+  "@d5": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "d6": "६",
+  "@d6": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "d7": "७",
+  "@d7": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "d8": "८",
+  "@d8": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "d9": "९",
+  "@d9": {
+    "type": "text",
+    "placeholders": {}
+  },
   "plus": "जोड़",
   "@plus": {
     "type": "text",

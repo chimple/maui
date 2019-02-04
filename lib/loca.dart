@@ -254,6 +254,16 @@ class Loca {
   String get twentySeven => Intl.message('Twenty Seven', name: 'twentySeven');
   String get twentyEight => Intl.message('Twenty Eight', name: 'twentyEight');
   String get twentyNine => Intl.message('Twenty Nine', name: 'twentyNine');
+  String get d0 => Intl.message('0', name: 'd0');
+  String get d1 => Intl.message('1', name: 'd1');
+  String get d2 => Intl.message('2', name: 'd2');
+  String get d3 => Intl.message('3', name: 'd3');
+  String get d4 => Intl.message('4', name: 'd4');
+  String get d5 => Intl.message('5', name: 'd5');
+  String get d6 => Intl.message('6', name: 'd6');
+  String get d7 => Intl.message('7', name: 'd7');
+  String get d8 => Intl.message('8', name: 'd8');
+  String get d9 => Intl.message('9', name: 'd9');
   String get plus => Intl.message('plus', name: 'plus');
   String get minus => Intl.message('minus', name: 'minus');
   String get forParents => Intl.message('For Parents', name: 'forParents');

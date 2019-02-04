@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2018-07-19T18:33:55.014503",
+  "@@last_modified": "2019-02-04T12:48:11.336447",
   "title": "Maui",
   "@title": {
     "type": "text",
@@ -10,8 +10,38 @@
     "type": "text",
     "placeholders": {}
   },
+  "gallery": "Gallery",
+  "@gallery": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "collection": "Collection",
+  "@collection": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "progress": "Progress",
+  "@progress": {
+    "type": "text",
+    "placeholders": {}
+  },
   "game": "Game",
   "@game": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "home": "Home",
+  "@home": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "category": "Category",
+  "@category": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "profile": "Profile",
+  "@profile": {
     "type": "text",
     "placeholders": {}
   },
@@ -95,6 +125,11 @@
     "type": "text",
     "placeholders": {}
   },
+  "no_data": "No Data",
+  "@no_data": {
+    "type": "text",
+    "placeholders": {}
+  },
   "picture_sentence": "Picture Sentence",
   "@picture_sentence": {
     "type": "text",
@@ -162,6 +197,11 @@
   },
   "circle_word": "Circle Word",
   "@circle_word": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "quiz_pager": "Quiz",
+  "@quiz_pager": {
     "type": "text",
     "placeholders": {}
   },
@@ -735,43 +775,18 @@
     "type": "text",
     "placeholders": {}
   },
-     "tapACamera": "Tap a camera",
-     "@tapACamera": {
-       "type": "text",
-       "placeholders": {}
-     },
-     "enterYourDetails": "Enter your details",
-     "@enterYourDetails": {
-       "type": "text",
-       "placeholders": {}
-     },
-     "writeYourName": "Write your name...",
-     "@writeYourName": {
-       "type": "text",
-       "placeholders": {}
-     },
-  "gallery": "Gallery",
-  "@gallery": {
+  "tapACamera": "Tap a camera",
+  "@tapACamera": {
     "type": "text",
     "placeholders": {}
   },
-  "collection": "Collection",
-  "@collection": {
+  "enterYourDetails": "Enter your details",
+  "@enterYourDetails": {
     "type": "text",
     "placeholders": {}
   },
-  "progress": "Progress",
-  "@progress": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "home": "Home",
-  "@home": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "profile": "Profile",
-  "@profile": {
+  "writeYourName": "Write your name...",
+  "@writeYourName": {
     "type": "text",
     "placeholders": {}
   },
@@ -900,8 +915,238 @@
     "type": "text",
     "placeholders": {}
   },
+  "discuss": "Discuss",
+  "@discuss": {
+    "type": "text",
+    "placeholders": {}
+  },
   "topic": "Topic",
   "@topic": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "zero": "Zero",
+  "@zero": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "one": "One",
+  "@one": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "two": "Two",
+  "@two": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "three": "Three",
+  "@three": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "four": "Four",
+  "@four": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "five": "Five",
+  "@five": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "six": "Six",
+  "@six": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "seven": "Seven",
+  "@seven": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "eight": "Eight",
+  "@eight": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "nine": "Nine",
+  "@nine": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "ten": "Ten",
+  "@ten": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "eleven": "Eleven",
+  "@eleven": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "twelve": "Twelve",
+  "@twelve": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "thirteen": "Thirteen",
+  "@thirteen": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "fourteen": "Fourteen",
+  "@fourteen": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "fifteen": "Fifteen",
+  "@fifteen": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "sixteen": "Sixteen",
+  "@sixteen": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "seventeen": "Seventeen",
+  "@seventeen": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "eighteen": "Eighteen",
+  "@eighteen": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "nineteen": "Nineteen",
+  "@nineteen": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "twenty": "Twenty",
+  "@twenty": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "twentyOne": "Twenty One",
+  "@twentyOne": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "twentyTwo": "Twenty Two",
+  "@twentyTwo": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "twentyThree": "Twenty Three",
+  "@twentyThree": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "twentyFour": "Twenty Four",
+  "@twentyFour": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "twentyFive": "Twenty Five",
+  "@twentyFive": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "twentySix": "Twenty Six",
+  "@twentySix": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "twentySeven": "Twenty Seven",
+  "@twentySeven": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "twentyEight": "Twenty Eight",
+  "@twentyEight": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "twentyNine": "Twenty Nine",
+  "@twentyNine": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "d0": "0",
+  "@d0": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "d1": "1",
+  "@d1": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "d2": "2",
+  "@d2": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "d3": "3",
+  "@d3": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "d4": "4",
+  "@d4": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "d5": "5",
+  "@d5": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "d6": "6",
+  "@d6": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "d7": "7",
+  "@d7": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "d8": "8",
+  "@d8": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "d9": "9",
+  "@d9": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "plus": "plus",
+  "@plus": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "minus": "minus",
+  "@minus": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "forParents": "For Parents",
+  "@forParents": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "submit": "Submit",
+  "@submit": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "whatWillBe": "What will be",
+  "@whatWillBe": {
     "type": "text",
     "placeholders": {}
   }

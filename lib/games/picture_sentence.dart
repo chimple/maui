@@ -263,15 +263,22 @@ class PictureSentenceState extends State<PictureSentence> {
                 onPressed: () {
                   showDialog(
                     context: context,
-                    child: new FractionallySizedBox(
-                      heightFactor: 0.5,
-                      widthFactor: 0.8,
-                      // child: new PictureCard(
-                      //   text: "widget.text",
-                      //   image: "assets/dict/${ans[1].toLowerCase()}.png",
-                      // ),
-                      child: ChildLock(),
-                    ),
+                    child: MediaQuery.of(context).orientation ==
+                            Orientation.portrait
+                        ? FractionallySizedBox(
+                            heightFactor: 0.5,
+                            widthFactor: 0.8,
+                            // child: new PictureCard(
+                            //   text: "widget.text",
+                            //   image: "assets/dict/${ans[1].toLowerCase()}.png",
+                            // ),
+                            child: ChildLock(),
+                          )
+                        : FractionallySizedBox(
+                            heightFactor: 0.8,
+                            widthFactor: 0.4,
+                            child: ChildLock(),
+                          ),
                   );
                 },
               ),
@@ -308,7 +315,7 @@ class PictureSentenceState extends State<PictureSentence> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           new Row(
-            children: <Widget>[ blankSpace2],
+            children: <Widget>[blankSpace2],
           ),
         ],
       );
@@ -321,7 +328,7 @@ class PictureSentenceState extends State<PictureSentence> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           new Row(
-            children: <Widget>[ blankSpace2],
+            children: <Widget>[blankSpace2],
           ),
           new Row(
             children: <Widget>[text3],
@@ -351,7 +358,7 @@ class PictureSentenceState extends State<PictureSentence> {
           //   children: <Widget>[text1, blankSpace1],
           // ),
           new Row(
-            children: <Widget>[ blankSpace2],
+            children: <Widget>[blankSpace2],
           )
         ],
       );

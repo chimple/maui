@@ -10,12 +10,13 @@ class ChildLock extends StatefulWidget {
 
 class _ChildLockState extends State<ChildLock> {
   String _answer = "";
+  String _showAnswer = "";
   int _rightAnswer;
-  String _question;
   bool _isLoading = true;
   double _height;
   double _width;
   String _number1, _number2;
+  int _randomCase = new Random().nextInt(max(0, 2));
   final List<String> _choices = [
     '0',
     '1',
@@ -87,7 +88,7 @@ class _ChildLockState extends State<ChildLock> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Text(
-                  getParentsAccessData(context, _number1, _number2),
+                  getTheQuestion(context, _number1, _number2),
                   style: TextStyle(
                     fontSize: _height * 0.05,
                     color: Colors.yellow[800],
@@ -96,7 +97,7 @@ class _ChildLockState extends State<ChildLock> {
               ),
               Container(
                 child: Text(
-                  "$_answer",
+                  _showAnswer,
                   style: new TextStyle(
                     color: Colors.black87,
                     fontSize: _height * 0.07,
@@ -113,6 +114,7 @@ class _ChildLockState extends State<ChildLock> {
               ),
               Wrap(
                 alignment: WrapAlignment.center,
+                spacing: 20.0,
                 children: _choices
                     .map((a) => Padding(
                           padding: EdgeInsets.all(8.0),
@@ -141,11 +143,12 @@ class _ChildLockState extends State<ChildLock> {
                     onPressed: () {
                       if (_answer == _rightAnswer.toString()) {
                         setState(() {
-                          _answer = 'Right';
+                          _showAnswer = 'Right';
                         });
                       } else {
                         setState(() {
                           _answer = '';
+                          _showAnswer = '';
                           _initializeData();
                         });
                       }
@@ -166,15 +169,20 @@ class _ChildLockState extends State<ChildLock> {
       width: width * 0.1,
       child: FloatingActionButton(
         child: Text(
-          "$ans",
+          Loca.of(context).plus == 'plus'
+              ? ans
+              : Loca.of(context).intl('d$ans'),
           style: TextStyle(
             fontSize: height * 0.06,
           ),
         ),
         onPressed: () {
           setState(() {
-            if (_answer.length < 3) {
-              _answer = _answer + ans;
+            if (_showAnswer.length < 3) {
+              _answer += ans;
+              _showAnswer += Loca.of(context).plus == 'plus'
+                  ? ans
+                  : Loca.of(context).intl('d$ans');
             }
           });
         },
@@ -182,7 +190,7 @@ class _ChildLockState extends State<ChildLock> {
     );
   }
 
-  String getParentsAccessData(BuildContext context, String num1, String num2) {
+  String getTheQuestion(BuildContext context, String num1, String num2) {
     String word1, word2;
     String operand1, operand2, operator1, operator2;
     String questionPart;
@@ -194,19 +202,16 @@ class _ChildLockState extends State<ChildLock> {
     operator2 = Loca.of(context).minus;
     questionPart = Loca.of(context).whatWillBe;
 
-    var random = new Random();
-    var randomCase = random.nextInt(max(0, 2));
-
-    if (int.parse(num1) < int.parse(num2) && randomCase == 1) {
-      randomCase = 0;
+    if (int.parse(num1) < int.parse(num2) && _randomCase == 1) {
+      _randomCase = 0;
     }
-    if (randomCase == 0) {
+    if (_randomCase == 0) {
       _rightAnswer = int.parse(num1) + int.parse(num2);
     } else
       _rightAnswer = int.parse(num1) - int.parse(num2);
-   
+
     if (Loca.of(context).plus == 'plus') {
-      switch (randomCase) {
+      switch (_randomCase) {
         case 0:
           return "$questionPart '$operand1' $operator1 '$operand2' ?";
           break;
@@ -215,7 +220,7 @@ class _ChildLockState extends State<ChildLock> {
           break;
       }
     } else {
-      switch (randomCase) {
+      switch (_randomCase) {
         case 0:
           return "'$operand1' $operator1 '$operand2' $questionPart ?";
           break;
