@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2019-02-01T17:29:07.393420",
+  "@@last_modified": "2019-02-02T01:31:13.060115",
   "title": "Maui",
   "@title": {
     "type": "text",
@@ -1075,23 +1075,28 @@
     "type": "text",
     "placeholders": {}
   },
-  "plus": "Plus",
+  "plus": "plus",
   "@plus": {
     "type": "text",
     "placeholders": {}
   },
-  "minus": "Minus",
+  "minus": "minus",
   "@minus": {
     "type": "text",
     "placeholders": {}
   },
-  "forParents": "for Parents",
+  "forParents": "For Parents",
   "@forParents": {
     "type": "text",
     "placeholders": {}
   },
   "submit": "Submit",
   "@submit": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "whatWillBe": "What will be",
+  "@whatWillBe": {
     "type": "text",
     "placeholders": {}
   }

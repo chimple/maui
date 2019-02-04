@@ -185,12 +185,15 @@ class _ChildLockState extends State<ChildLock> {
   String getParentsAccessData(BuildContext context, String num1, String num2) {
     String word1, word2;
     String operand1, operand2, operator1, operator2;
+    String questionPart;
     word1 = convertToWords(num1);
     word2 = convertToWords(num2);
     operand1 = Loca.of(context).intl(word1);
     operand2 = Loca.of(context).intl(word2);
     operator1 = Loca.of(context).plus;
     operator2 = Loca.of(context).minus;
+    questionPart = Loca.of(context).whatWillBe;
+
     var random = new Random();
     var randomCase = random.nextInt(max(0, 2));
 
@@ -201,14 +204,25 @@ class _ChildLockState extends State<ChildLock> {
       _rightAnswer = int.parse(num1) + int.parse(num2);
     } else
       _rightAnswer = int.parse(num1) - int.parse(num2);
-
-    switch (randomCase) {
-      case 0:
-        return "'$operand1' $operator1 '$operand2'";
-        break;
-      case 1:
-        return "'$operand1' $operator2 '$operand2'";
-        break;
+   
+    if (Loca.of(context).plus == 'plus') {
+      switch (randomCase) {
+        case 0:
+          return "$questionPart '$operand1' $operator1 '$operand2' ?";
+          break;
+        case 1:
+          return "$questionPart '$operand1' $operator2 '$operand2' ?";
+          break;
+      }
+    } else {
+      switch (randomCase) {
+        case 0:
+          return "'$operand1' $operator1 '$operand2' $questionPart ?";
+          break;
+        case 1:
+          return "'$operand1' $operator2 '$operand2' $questionPart ?";
+          break;
+      }
     }
     return null;
   }

@@ -1094,5 +1094,10 @@
   "@submit": {
     "type": "text",
     "placeholders": {}
+  },
+  "whatWillBe": "कितने होंगे",
+  "@whatWillBe": {
+    "type": "text",
+    "placeholders": {}
   }
 }

@@ -254,10 +254,11 @@ class Loca {
   String get twentySeven => Intl.message('Twenty Seven', name: 'twentySeven');
   String get twentyEight => Intl.message('Twenty Eight', name: 'twentyEight');
   String get twentyNine => Intl.message('Twenty Nine', name: 'twentyNine');
-  String get plus => Intl.message('Plus', name: 'plus');
-  String get minus => Intl.message('Minus', name: 'minus');
-  String get forParents => Intl.message('for Parents', name: 'forParents');
+  String get plus => Intl.message('plus', name: 'plus');
+  String get minus => Intl.message('minus', name: 'minus');
+  String get forParents => Intl.message('For Parents', name: 'forParents');
   String get submit => Intl.message('Submit', name: 'submit');
+  String get whatWillBe => Intl.message('What will be', name: 'whatWillBe');
 }
 
 class LocaDelegate extends LocalizationsDelegate<Loca> {
