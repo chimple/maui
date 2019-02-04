@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/quack/card_header.dart';
 import 'package:maui/quack/collection_progress_indicator.dart';
@@ -9,12 +12,14 @@ class UserData {
   String coins;
   String star;
   String progress;
+  Color color;
   UserData.fromJson(Map json) {
     this.gameName = json["Name"];
     this.level = json["Level"];
     this.coins = json["Coins"];
     this.star = json["Star"];
     this.progress = json["Progress"];
+    this.color = json["Color"];
   }
 }
 
@@ -30,84 +35,96 @@ class UserProgress extends StatelessWidget {
         "Progress": "0.1",
         "Level": "1",
         "Coins": "10",
-        "Star": "3"
+        "Star": "3",
+        "Color": Colors.pinkAccent,
       },
       {
         "Name": "BBBBBB",
         "Progress": "0.2",
         "Level": "2",
         "Coins": "20",
-        "Star": "3"
+        "Star": "3",
+        "Color": Colors.green,
       },
       {
         "Name": "CCCCCC",
         "Progress": "0.3",
         "Level": "3",
         "Coins": "20",
-        "Star": "4"
+        "Star": "4",
+        "Color": Colors.deepPurple,
       },
       {
         "Name": "AAAAAA",
         "Progress": "0.4",
         "Level": "1",
         "Coins": "10",
-        "Star": "5"
+        "Star": "5",
+        "Color": Colors.deepOrangeAccent,
       },
       {
         "Name": "BBBBBB",
         "Progress": "0.5",
         "Level": "2",
-        "Coins": "40",
-        "Star": "3"
+        "Coins": "400",
+        "Star": "3",
+        "Color": Colors.brown,
       },
       {
         "Name": "CCCCCC",
         "Progress": "0.6",
         "Level": "3",
         "Coins": "5",
-        "Star": "4"
+        "Star": "4",
+        "Color": Colors.yellow,
       },
       {
         "Name": "AAAAAA",
         "Progress": "0.3",
         "Level": "1",
         "Coins": "20",
-        "Star": "3"
+        "Star": "3",
+        "Color": Colors.cyanAccent,
       },
       {
         "Name": "BBBBBB",
         "Progress": "0.8",
         "Level": "2",
         "Coins": "25",
-        "Star": "3"
+        "Star": "3",
+        "Color": Colors.amber,
       },
       {
         "Name": "CCCCCC",
         "Progress": "0.9",
         "Level": "3",
         "Coins": "50",
-        "Star": "4"
+        "Star": "4",
+        "Color": Colors.pink,
       },
       {
         "Name": "AAAAAA",
         "Progress": "1.1",
         "Level": "1",
         "Coins": "30",
-        "Star": "5"
+        "Star": "5",
+        "Color": Colors.orange,
       },
       {
         "Name": "BBBBBB",
         "Progress": "0.4",
         "Level": "2",
         "Coins": "20",
-        "Star": "3"
+        "Star": "3",
+        "Color": Colors.lime,
       },
       {
         "Name": "CCCCCC",
         "Progress": "0.5",
         "Level": "3",
         "Coins": "20",
-        "Star": "4"
+        "Star": "4",
+        "Color": Colors.grey,
       },
     ]
   };
@@ -116,7 +133,9 @@ class UserProgress extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    double width = size.width / 4;
+    double width = size.width / 5;
+    double widthSize = width / 5;
+    double fontSize = min(widthSize, 30.0);
 
     return new ListView.builder(
         shrinkWrap: true,
@@ -125,103 +144,82 @@ class UserProgress extends StatelessWidget {
           userData = new UserData.fromJson(listOfGames["Users"][index]);
           // return new Text("${userData.gameName}");
 
-          return Container(
-              height: 180.0,
-              child: Column(children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    Container(
-                      width: width ,
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: width,
-                              child: Center(
-                                child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(5.0),
-                                        child: Container(
-                                          height: 100.0,
-                                          width: width,
-                                          color: Colors.teal,
-                                          child: Icon(
-                                            Icons.access_alarm,
-                                            size: 75.0,
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(bottom: 10.0),
-                                        child: Text("${userData.gameName}"),
-                                      ),
-                                    ]),
-                              ),
-                            ),
-                            // Container(
-                            //   width: width,
-                            //   // margin:
-                            //   //     EdgeInsets.only(bottom: 150 / 2.0),
-                            //   child: CollectionProgressIndicator(
-                            //     progress: double.tryParse(userData.progress),
-                            //     width: width,
-                            //   ),
-                            // ),
-                          ]),
-                    ),
-                    Container(
-                        width: width,
-                        child: Center(
-                          child: Text("${userData.level}",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 20)),
-                        )),
-                    Container(
-                        width: width,
-                        child: Center(
-                          child: Text("${userData.coins}",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 20)),
-                        )),
-                    Container(
-                        width: width,
-                        child: Center(child: _buildStars(userData.star))),
-                  ],
-                ),
+          return Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
                 Container(
-                  // margin:
-                  //     EdgeInsets.only(bottom: 150 / 2.0),
-                  child: CollectionProgressIndicator(
-                    progress: double.tryParse(userData.progress),
-                    width: size.width,
+                  width: width,
+                  child: Center(
+                    child: Column(
+                        // crossAxisAlignment: CrossAxisAlignment.center,
+                        // mainAxisSize: MainAxisSize.max,
+                        // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Icon(
+                            Icons.access_alarm,
+                            size: 75.0,
+                            color: userData.color,
+                          ),
+                          // Image.asset("assets/apple.png"),
+                          Text("${userData.gameName}",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: fontSize * .5)),
+                        ]),
                   ),
                 ),
-              ]));
+                Container(
+                  width: width,
+                ),
+                Container(
+                    width: width * .8,
+                    child: Center(
+                      child: Text("${userData.level}",
+                          style: TextStyle(
+                              color: Colors.white, fontSize: fontSize)),
+                    )),
+                Container(
+                    width: width * .8,
+                    child: Center(
+                      child: Text("${userData.coins}",
+                          style: TextStyle(
+                              color: Colors.white, fontSize: fontSize)),
+                    )),
+                Container(
+                    width: width * 1.2,
+                    child: Center(child: _buildStars(userData.star, fontSize))),
+              ],
+            ),
+            CollectionProgressIndicator(
+              progress: double.tryParse(userData.progress),
+              color: userData.color,
+              width: size.width - 25,
+            ),
+          ]);
         });
   }
 
-  _buildStars(String star) {
+  _buildStars(String star, double fontSize) {
     int numberOfStar = int.parse(star);
     List dotLists = new List(numberOfStar);
     List<Widget> rows = new List<Widget>();
+final String assetName = 'assets/starsvg.svg';
+final Widget svg = new SvgPicture.asset(
+  assetName,
+ color: Colors.yellow,
+);
 
     for (var i = 0; i < 1 + 1; ++i) {
       List<Widget> cells = dotLists.skip(i * 5).take(5).map((e) {
-        return new Icon(
-          Icons.star,
-          color: Colors.yellow,
-          size: 20.0,
-        );
+        // return new Icon(
+        //   Icons.star,
+        //   color: Colors.yellow,
+        //   size: fontSize,
+        // );
+        return svg;
       }).toList(growable: false);
       rows.add(Row(
         children: cells,

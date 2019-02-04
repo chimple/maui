@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/quack/user_collection.dart';
 import 'package:maui/quack/user_drawing_grid.dart';
@@ -48,7 +49,7 @@ class ProfileViewState extends State<ProfileView>
         indicatorColor: Colors.grey,
         indicatorSize: TabBarIndicatorSize.tab,
         indicatorWeight: 5.0,
-        labelColor: Colors.black,
+        labelColor: Colors.white,
         labelStyle: new TextStyle(
             fontSize: 20.0,
             fontWeight: FontWeight.bold,
@@ -63,6 +64,12 @@ class ProfileViewState extends State<ProfileView>
 
   Widget getTabBarPages(BuildContext context) {
     MediaQueryData media = MediaQuery.of(context);
+
+    double width = media.size.width / 5;
+    double widthSize=width/5;
+    double fontSize=min(widthSize, 19.0);
+
+    print("what is the fontsize in it.......$fontSize");
     Orientation orientation = media.orientation;
 
     return Align(
@@ -75,26 +82,45 @@ class ProfileViewState extends State<ProfileView>
           userId: AppStateContainer.of(context).state.loggedInUser.id,
         ),
         Container(
-          color: Colors.blueAccent,
+          color: Colors.transparent,
           child: Column(children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              // crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Text("Games",
-                    style: TextStyle(color: Colors.white, fontSize: 15)),
-                // Text(""),
-                Text("Levels",
-                    style: TextStyle(color: Colors.white, fontSize: 15)),
-                Text("Coins",
-                    style: TextStyle(color: Colors.white, fontSize: 15)),
-                Text("Star",
-                    style: TextStyle(color: Colors.white, fontSize: 15))
+                Container(
+                  width: width,
+                  child: Center(
+                    child: Text("Games",
+                        style: TextStyle(color: Colors.grey[400], fontSize: fontSize)),
+                  ),
+                ),
+                Container(
+                  width: width,
+                ),
+                Container(
+                  width: width * .8,
+                  child: Center(
+                    child: Text("Level",
+                        style: TextStyle(color: Colors.grey[400], fontSize: fontSize)),
+                  ),
+                ),
+                Container(
+                  width: width * .8,
+                  child: Center(
+                    child: Text("Coins",
+                        style: TextStyle(color: Colors.grey[400], fontSize: fontSize)),
+                  ),
+                ),
+                Container(
+                    width: width * 1.2,
+                    child: Center(
+                        child: Text("Best Star",
+                            style:
+                                TextStyle(color: Colors.grey[400], fontSize: fontSize))))
               ],
             ),
-            Expanded(
-                child:
-                    Container(color: Colors.blueAccent, child: UserProgress()))
+            Expanded(child: UserProgress())
           ]),
         ),
       ]),
@@ -268,6 +294,10 @@ class ProfileViewState extends State<ProfileView>
       child: Stack(
         overflow: Overflow.visible,
         children: <Widget>[
+        Container(
+          color: Colors.blueAccent,
+            
+          ),
           Column(
             children: <Widget>[
               Flexible(
