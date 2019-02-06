@@ -916,7 +916,7 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
         break;
       case 'counting':
         playTime = 15000;
-        maxIterations = 5;
+        maxIterations = 1;
         return new Counting(
             key: new GlobalObjectKey(keyName),
             onScore: _onScore,
