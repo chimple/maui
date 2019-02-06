@@ -76,7 +76,7 @@ class _MyMoveContainer extends State<MoveContainer>
     //         .animate(_controller);
     _width = Tween<double>(
       begin: 0,
-      end: -60,
+      end: -40,
     ).animate(
       CurvedAnimation(
         parent: _controller,

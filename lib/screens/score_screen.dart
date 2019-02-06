@@ -354,7 +354,7 @@ class _ScoreScreenState extends State<ScoreScreen>
         }
 
         return new Scaffold(
-            backgroundColor: Colors.blue,
+            backgroundColor: Colors.blue[900],
             body: new SafeArea(
                 child: new Flex(
               direction: Axis.vertical,
@@ -428,7 +428,7 @@ class _ScoreScreenState extends State<ScoreScreen>
                                     width: 2.0,
                                     style: BorderStyle.solid)),
                             image: new DecorationImage(
-                                image: AssetImage("assets/chimple_logo.png"),
+                                image: AssetImage("assets/home_icon.png"),
                                 fit: BoxFit.fill))),
                   ],
                 ),
@@ -732,8 +732,8 @@ class _ScoreScreenState extends State<ScoreScreen>
                                 }
                               },
                               child: Container(
-                                height: ht * .05,
-                                width: wd * .2,
+                                height: ht * .07,
+                                width: wd * .3,
                                 margin: EdgeInsets.only(bottom: 10.0),
                                 decoration: new BoxDecoration(
                                   color: Colors.orange,
@@ -741,24 +741,13 @@ class _ScoreScreenState extends State<ScoreScreen>
                                       color: Colors.white, width: 2.0),
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
-                                child: Center(child: Text("Next")),
+                                child: Center(child: Text("Next", style: new TextStyle(
+                                          fontSize:
+                                              ht > wd ? ht * 0.03 : wd * 0.03,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white))),
                               ),
                             ))
-                            // IconButton(
-                            //     icon: new Image.asset(
-                            //         "assets/forward_button.png"),
-                            //     iconSize: ht > wd ? ht * 0.1 : wd * 0.08,
-                            //     onPressed: () {
-                            //       setState(() {
-                            //         _pageExited = true;
-                            //       });
-                            //       AppStateContainer.of(context)
-                            //           .play('_audiotap.mp3');
-                            //       if (flag == true) {
-                            //         Navigator.of(context)
-                            //             .popUntil(ModalRoute.withName('/tab'));
-                            //       }
-                            //     }),
                           ],
                         ))),
               ],
