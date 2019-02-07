@@ -104,11 +104,11 @@ class _ScoreScreenState extends State<ScoreScreen>
            buttoncontroller.reverse();
         });
       }
-      
-      if (buttoncontroller.value < 0.2) {
+     
+      if (buttoncontroller.value < .2) {
         setState(() {
           moveAnime = true;
-          // coinCount = starCount;
+          coinCount = coinCount + starCount;
           // buttoncontroller.reverse();
         });
       }

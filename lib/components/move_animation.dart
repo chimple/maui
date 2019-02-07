@@ -80,8 +80,8 @@ class _MyMoveContainer extends State<MoveContainer>
     );
 
     _width.addListener(() {
-      print(
-          "start issssssssssssssssssssssssssssssssssssssssssssssssssssssssssss  ${_controller.value}");
+      // print(
+          // "start issssssssssssssssssssssssssssssssssssssssssssssssssssssssssss  ${_controller.value}");
       if (_controller.value < 0.3) {
         extraSize = extraSize;
       } else if (_controller.value > 0.3 && _controller.value < 0.35) {
