@@ -83,23 +83,33 @@ class _ScoreScreenState extends State<ScoreScreen>
         duration: const Duration(milliseconds: 1000), vsync: this);
 
     buttoncontroller = new AnimationController(
-        duration: const Duration(milliseconds: 800), vsync: this);
+        duration: const Duration(milliseconds: 2000), vsync: this);
 
     _buttonAnimation =
         new CurvedAnimation(parent: buttoncontroller, curve: Curves.easeOut);
+
     _characterAnimation =
         new CurvedAnimation(parent: controller, curve: Curves.bounceOut);
 
-    final int totalDuration = 4000;
-    _animationController = AnimationController(
-        vsync: this, duration: new Duration(milliseconds: totalDuration));
-    animationDuration = totalDuration / (100 * (totalDuration / starCount));
-    _animationController.forward();
-    _animationController.addStatusListener((status) {
-      if (_animationController.isCompleted) {
+    // final int totalDuration = 4000;
+    // _animationController = AnimationController(
+    //     vsync: this, duration: new Duration(milliseconds: totalDuration));
+    // animationDuration = totalDuration / (100 * (totalDuration / starCount));
+    buttoncontroller.forward();
+
+    buttoncontroller.addStatusListener((status) {
+      if (buttoncontroller.isCompleted) {
+        setState(() {
+          // moveAnime = true;
+           buttoncontroller.reverse();
+        });
+      }
+      
+      if (buttoncontroller.value < 0.2) {
         setState(() {
           moveAnime = true;
-          coinCount = starCount;
+          // coinCount = starCount;
+          // buttoncontroller.reverse();
         });
       }
     });
@@ -210,23 +220,23 @@ class _ScoreScreenState extends State<ScoreScreen>
         duration: animationDuration);
   }
 
-  // buildFlareAnimation() {
-  //   new Future.delayed(Duration(milliseconds: 500), () {
-  //     setState(() {
-  //       moveAnime = true;
-  //       coinCount = starCount;
-  //     });
-  //   });
-  //   Size media = MediaQuery.of(context).size;
-  // return Container(
-  //   height: media.height * .1,
-  //   width: media.width * .1,
-  //   child: FlareActor(
-  //     "assets/coin.flr",
-  //     animation: "coin",
-  //   ),
-  // );
-  // }
+  buildFlareAnimation() {
+    // new Future.delayed(Duration(milliseconds: 500), () {
+    //   setState(() {
+    //     moveAnime = true;
+    //     coinCount = starCount;
+    //   });
+    // });
+    Size media = MediaQuery.of(context).size;
+    return Container(
+      height: media.height * .18,
+      width: media.width * .18,
+      child: FlareActor(
+        "assets/coin.flr",
+        animation: "coin",
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -506,10 +516,19 @@ class _ScoreScreenState extends State<ScoreScreen>
                         ? new Container(
                             height: ht * .15,
                             child: Center(
-                                child: Text("Excellent",
-                                    style: TextStyle(
-                                        fontSize: 60.0,
-                                        fontWeight: FontWeight.w900))),
+                              child: MoveContainer(
+                                  coinCount: coinCount,
+                                  index: inc,
+                                  offset: _offset,
+                                  starValue: starValues,
+                                  starCount: starCount,
+                                  animationController: _animationController,
+                                  duration: animationDuration),
+                              // Text("Excellent",
+                              //     style: TextStyle(
+                              //         fontSize: 60.0,
+                              //         fontWeight: FontWeight.w900))
+                            ),
                             // decoration: new BoxDecoration(
                             //   color: Colors.transparent,
                             //   borderRadius:
@@ -533,13 +552,16 @@ class _ScoreScreenState extends State<ScoreScreen>
                         : Container(),
                     !moveAnime
                         ? Container(
-                            child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: starValues
-                                    .map((e) => Padding(
-                                        padding: EdgeInsets.all(1.0),
-                                        child: _buildCoinItem(inc++, e)))
-                                    .toList(growable: false)),
+                            child: new ScaleTransition(
+                              scale: buttoncontroller,
+                              child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: starValues
+                                      .map((e) => Padding(
+                                          padding: EdgeInsets.all(1.0),
+                                          child: buildFlareAnimation()))
+                                      .toList(growable: false)),
+                            ),
                           )
                         : Container()
                     // Center(child: MoveContainer(coinCount: coinCount))
@@ -697,59 +719,44 @@ class _ScoreScreenState extends State<ScoreScreen>
 
                 // Icons which redirect to home, refresh and fast-forward
                 new Container(
-                    child: new ScaleTransition(
-                        scale: buttoncontroller,
-                        child: new Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            // IconButton(
-                            //     icon: new Image.asset("assets/home_button.png"),
-                            //     iconSize: ht > wd ? ht * 0.1 : wd * 0.08,
-                            //     onPressed: () {
-                            //       setState(() {
-                            //         _pageExited = true;
-                            //       });
+                    child: new Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Center(
+                        child: InkWell(
+                      onTap: () {
+                        setState(() {
+                          _pageExited = true;
+                        });
 
-                            //       AppStateContainer.of(context)
-                            //           .play('_audiotap.mp3');
-                            //       if (flag == true) {
-                            //         Navigator.of(context)
-                            //             .popUntil(ModalRoute.withName('/tab'));
-                            //       }
-                            //     }),
-                            Center(
-                                child: InkWell(
-                              onTap: () {
-                                setState(() {
-                                  _pageExited = true;
-                                });
-                                AppStateContainer.of(context)
-                                    .play('_audiotap.mp3');
-                                if (flag == true) {
-                                  Navigator.of(context)
-                                      .popUntil(ModalRoute.withName('/tab'));
-                                }
-                              },
-                              child: Container(
-                                height: ht * .07,
-                                width: wd * .3,
-                                margin: EdgeInsets.only(bottom: 10.0),
-                                decoration: new BoxDecoration(
-                                  color: Colors.orange,
-                                  border: new Border.all(
-                                      color: Colors.white, width: 2.0),
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                                child: Center(child: Text("Next", style: new TextStyle(
-                                          fontSize:
-                                              ht > wd ? ht * 0.03 : wd * 0.03,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white))),
-                              ),
-                            ))
-                          ],
-                        ))),
+                        AppStateContainer.of(context).play('_audiotap.mp3');
+
+                        if (flag == true) {
+                          Navigator.of(context)
+                              .popUntil(ModalRoute.withName('/tab'));
+                        }
+                      },
+                      child: Container(
+                        height: ht * .07,
+                        width: wd * .3,
+                        margin: EdgeInsets.only(bottom: 10.0),
+                        decoration: new BoxDecoration(
+                          color: Colors.orange,
+                          border:
+                              new Border.all(color: Colors.white, width: 2.0),
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: Center(
+                            child: Text("Next",
+                                style: new TextStyle(
+                                    fontSize: ht > wd ? ht * 0.03 : wd * 0.03,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white))),
+                      ),
+                    ))
+                  ],
+                )),
               ],
             )));
       }),
