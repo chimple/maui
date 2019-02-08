@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 class MoveContainer extends StatefulWidget {
-   int coinCount;
+  Function(bool) callback;
+  int coinCount;
   List<int> starValue;
   int index;
   Offset offset;
@@ -13,6 +14,7 @@ class MoveContainer extends StatefulWidget {
 
   MoveContainer(
       {Key key,
+      this.callback,
       this.index,
       this.coinCount,
       this.offset,
@@ -48,7 +50,6 @@ class _MyMoveContainer extends State<MoveContainer>
   double ending;
   int index = 100;
   double animationDuration = 0.0;
-  bool animeDone = false;
 
   @override
   void initState() {
@@ -80,16 +81,16 @@ class _MyMoveContainer extends State<MoveContainer>
     );
 
     _width.addListener(() {
-      // print(
-          // "start issssssssssssssssssssssssssssssssssssssssssssssssssssssssssss  ${_controller.value}");
+      print(
+          "start issssssssssssssssssssssssssssssssssssssssssssssssssssssssssss  ${_controller.value}");
       if (_controller.value < 0.3) {
         extraSize = extraSize;
       } else if (_controller.value > 0.3 && _controller.value < 0.35) {
-        extraSize = extraSize + 4;
+        extraSize = extraSize + 3;
       } else if (_controller.value > 0.35 && _controller.value < 0.6) {
-        extraSize = extraSize + .5;
+        extraSize = extraSize;
       } else if (_controller.value > 0.6 && _controller.value < .7) {
-        extraSize = extraSize - 1.5;
+        extraSize = extraSize - 1;
       } else {
         extraSize = extraSize - 2.5;
       }
@@ -98,12 +99,10 @@ class _MyMoveContainer extends State<MoveContainer>
       // });
     });
     _controller.forward();
-
     _controller.addStatusListener((status) {
       if (_controller.isCompleted) {
         setState(() {
-          animeDone = true;
-           widget.coinCount = widget.starCount;
+          widget.callback(true);
         });
       }
     });
@@ -114,7 +113,6 @@ class _MyMoveContainer extends State<MoveContainer>
         _globalKey2.currentContext.findRenderObject();
     Offset offset = -renderBoxRed.globalToLocal(Offset.zero);
     begin = offset;
-    // print("ofsetsssssssssssssssssssssssssssisss  $begin");
   }
 
   @override
@@ -129,46 +127,38 @@ class _MyMoveContainer extends State<MoveContainer>
     // myEnd = (start + widget.duration).toDouble();
     Size media = MediaQuery.of(context).size;
 
-    return !animeDone
-        ? AnimatedBuilder(
-            animation: _controller,
-            builder: (BuildContext context, Widget child) {
-              return Stack(
-                children: <Widget>[
-                  _Animated(
-                    scale: Tween<Offset>(
-                            begin: begin / 100, end: (widget.offset) / 100)
-                        .animate(
-                      CurvedAnimation(
-                        parent: _controller,
-                        curve: Interval(
-                          start,
-                          1.0,
-                          curve: Curves.fastOutSlowIn,
-                        ),
-                      ),
-                    ),
-                    child: Container(
-                      key: _globalKey2,
-                      height: media.height * 0.1 + extraSize,
-                      width: media.width * 0.12 + extraSize,
-                      //  transform: Matrix4.identity()..rotateZ(_offset.value.dx*extraSize2),
-                      child: FlareActor(
-                        "assets/coin.flr",
-                        // animation: "rotate",
-                      ),
+    return AnimatedBuilder(
+        animation: _controller,
+        builder: (BuildContext context, Widget child) {
+          return Stack(
+            children: <Widget>[
+              _Animated(
+                scale: Tween<Offset>(
+                        begin: begin / 100, end: (widget.offset) / 100)
+                    .animate(
+                  CurvedAnimation(
+                    parent: _controller,
+                    curve: Interval(
+                      start,
+                      1.0,
+                      curve: Curves.fastOutSlowIn,
                     ),
                   ),
-                ],
-              );
-            })
-        : new Container(
-            height: media.height * .15,
-            child: Center(
-                child: Text("Excellent",
-                    style: TextStyle(
-                        fontSize: 60.0, fontWeight: FontWeight.w900))),
+                ),
+                child: Container(
+                  key: _globalKey2,
+                  height: media.height * 0.15 + extraSize,
+                  width: media.width * 0.15 + extraSize,
+                  //  transform: Matrix4.identity()..rotateZ(_offset.value.dx*extraSize2),
+                  child: FlareActor(
+                    "assets/coin.flr",
+                    // animation: "rotate",
+                  ),
+                ),
+              ),
+            ],
           );
+        });
   }
 }
 

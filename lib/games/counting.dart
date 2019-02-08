@@ -263,13 +263,13 @@ class CountingState extends State<Counting> {
                       flex: 1,
                       child: Padding(
                         padding: EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 5.0),
+                            vertical: 1.0, horizontal: 1.0),
                         child: ResponsiveGridView(
                             rows: 1,
                             cols: dropTargetValues.length,
                             children: dropTargetValues
                                 .map((e) => Padding(
-                                    padding: EdgeInsets.all(2.0),
+                                    padding: EdgeInsets.all(1.0),
                                     child:
                                         _buildItem(inc, e, anschecking[inc++])))
                                 .toList(growable: false)),
