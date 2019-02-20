@@ -4,24 +4,12 @@ import 'package:flutter/rendering.dart';
 
 class MoveContainer extends StatefulWidget {
   Function(bool) callback;
-  int coinCount;
   List<int> starValue;
   int index;
   Offset offset;
-  final AnimationController animationController;
-  final double duration;
-  int starCount;
 
   MoveContainer(
-      {Key key,
-      this.callback,
-      this.index,
-      this.coinCount,
-      this.offset,
-      this.starValue,
-      this.starCount,
-      this.animationController,
-      this.duration})
+      {Key key, this.callback, this.index, this.offset, this.starValue})
       : super(key: key);
 
   @override
@@ -34,9 +22,7 @@ class _MyMoveContainer extends State<MoveContainer>
     with TickerProviderStateMixin {
   GlobalKey _globalKey2 = new GlobalKey();
   Animation<Offset> rotate;
-  Animation<double> _width;
-  Animation<double> _height;
-  List<Offset> _offsetOffAllDottedCircle = [];
+  Animation<double> _size;
   AnimationController _controller;
   Animation<EdgeInsets> movement;
   Animation<Offset> _offset;
@@ -66,7 +52,7 @@ class _MyMoveContainer extends State<MoveContainer>
         vsync: this, duration: new Duration(milliseconds: totalDuration));
     animationDuration = totalDuration / (100 * (totalDuration / widget.index));
 
-    _width = Tween<double>(
+    _size = Tween<double>(
       begin: 0,
       end: 50,
     ).animate(
@@ -80,7 +66,7 @@ class _MyMoveContainer extends State<MoveContainer>
       ),
     );
 
-    _width.addListener(() {
+    _size.addListener(() {
       print(
           "start issssssssssssssssssssssssssssssssssssssssssssssssssssssssssss  ${_controller.value}");
       if (_controller.value < 0.3) {
@@ -90,7 +76,7 @@ class _MyMoveContainer extends State<MoveContainer>
       } else if (_controller.value > 0.35 && _controller.value < 0.6) {
         extraSize = extraSize;
       } else if (_controller.value > 0.6 && _controller.value < .7) {
-        extraSize = extraSize - 1;
+        extraSize = extraSize - 1.5;
       } else {
         extraSize = extraSize - 2.5;
       }
@@ -134,7 +120,7 @@ class _MyMoveContainer extends State<MoveContainer>
             children: <Widget>[
               _Animated(
                 scale: Tween<Offset>(
-                        begin: begin / 100, end: (widget.offset) / 100)
+                        begin: begin / 100, end: (widget.offset-Offset(0.0,20.0)) / 100)
                     .animate(
                   CurvedAnimation(
                     parent: _controller,

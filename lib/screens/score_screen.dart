@@ -201,21 +201,8 @@ class _ScoreScreenState extends State<ScoreScreen>
   }
 
   _buildCoinItem(int inc, int e) {
-    // new Future.delayed(Duration(milliseconds: 4000), () {
-    //   setState(() {
-    //     moveAnime = true;
-    //     coinCount = starCount;
-    //   });
-    // });
     return MoveContainer(
-        callback: callback,
-        coinCount: coinCount,
-        index: inc,
-        offset: _offset,
-        starValue: starValues,
-        starCount: starCount,
-        animationController: _animationController,
-        duration: animationDuration);
+        callback: callback, index: inc, offset: _offset, starValue: starValues);
   }
 
   buildFlareAnimation() {
