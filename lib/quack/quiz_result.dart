@@ -116,7 +116,7 @@ class QuizResultState extends State<QuizResult> {
                           padding: new EdgeInsets.only(
                               right: media.size.width * 0.08),
                           child: new NimaActor(
-                            "assets/quack",
+                            "assets/quack.nima",
                             alignment: Alignment.center,
                             paused: paused,
                             fit: BoxFit.scaleDown,
@@ -223,7 +223,7 @@ class QuizResultState extends State<QuizResult> {
           //         alignment: Alignment.center,
           //         scale: .85,
           //         child: new NimaActor(
-          //           "assets/quack",
+          //           "assets/quack.nima",
 
           //           alignment: Alignment.center,
 

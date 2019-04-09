@@ -179,7 +179,7 @@ class DialogContentState extends State<DialogContent> {
                         child: Center(
                           child: AspectRatio(
                             aspectRatio: 0.5,
-                            child: new NimaActor("assets/quack",
+                            child: new NimaActor("assets/quack.nima",
                                 alignment: Alignment.center,
                                 paused: paused,
                                 fit: BoxFit.scaleDown,
@@ -202,7 +202,7 @@ class DialogContentState extends State<DialogContent> {
                             children: <Widget>[
                               Center(
                                   child: new Text(
-                                 Loca.of(context).costIs,
+                                Loca.of(context).costIs,
                                 style: TextStyle(
                                     color: Colors.blue,
                                     fontStyle: FontStyle.normal,
