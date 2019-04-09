@@ -173,7 +173,7 @@ class DialogContentState extends State<DialogContent> {
                     ),
                     child: Center(
                       child: new Text(
-                       '${Loca.of(context).yourPoints} ${widget.initialPoints}',
+                        '${Loca.of(context).yourPoints} ${widget.initialPoints}',
                         style: TextStyle(
                             color: Colors.white,
                             fontStyle: FontStyle.normal,
@@ -190,7 +190,7 @@ class DialogContentState extends State<DialogContent> {
                       child: Center(
                         child: AspectRatio(
                           aspectRatio: 1,
-                          child: NimaActor("assets/quack",
+                          child: NimaActor("assets/quack.nima",
                               alignment: Alignment.center,
                               paused: paused,
                               fit: BoxFit.scaleDown,
