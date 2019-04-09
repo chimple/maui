@@ -95,6 +95,17 @@ flutter:
     - assets/nima_animation/
     - assets/masking/
     - assets/action/
+    - assets/map/
+    - assets/game/
+    - assets/accessories/
+    - assets/chat/
+    - assets/character/
+    - assets/stories/
+    - assets/stories/images/
+    - assets/audio/
+    - assets/stories/story_audio/
+    - assets/score/
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
