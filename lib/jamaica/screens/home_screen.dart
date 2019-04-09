@@ -97,27 +97,27 @@ class _HomeScreenState extends State<HomeScreen> {
                         IconButton(
                           icon: Icon(Icons.account_circle),
                           onPressed: () =>
-                              Navigator.of(context).pushNamed('/profile'),
+                              Navigator.of(context).pushNamed('/jam_profile'),
                         ),
                         IconButton(
                           icon: Icon(Icons.map),
                           onPressed: () =>
-                              Navigator.of(context).pushNamed('/map'),
+                              Navigator.of(context).pushNamed('/jam_map'),
                         ),
                         IconButton(
                           icon: Icon(Icons.games),
                           onPressed: () =>
-                              Navigator.of(context).pushNamed('/games'),
+                              Navigator.of(context).pushNamed('/jam_games'),
                         ),
                         IconButton(
                           icon: Icon(Icons.store),
                           onPressed: () =>
-                              Navigator.of(context).pushNamed('/store'),
+                              Navigator.of(context).pushNamed('/jam_store'),
                         ),
                         IconButton(
                           icon: Icon(Icons.book),
                           onPressed: () =>
-                              Navigator.of(context).pushNamed('/story'),
+                              Navigator.of(context).pushNamed('/jam_story'),
                         ),
                       ],
                     ),
