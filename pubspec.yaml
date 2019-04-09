@@ -12,10 +12,11 @@ dependencies:
   cupertino_icons: ^0.1.2
   sqflite: ^0.12.2+1
   uuid: ^1.0.3
-  path_provider: ^0.4.1
+  path_provider: ^0.5.0
   tuple: ^1.0.2
   json_annotation: ^2.0.0
   audioplayer: ^0.5.2
+  audioplayers: ^0.8.2
   percent_indicator: ^1.0.10
   tinycolor: ^1.0.2
   fluttery:
@@ -32,18 +33,24 @@ dependencies:
   intl: ^0.15.7
   intl_translation: ^0.17.2
   simple_permissions: ^0.1.9
-  flutter_svg: ^0.6.3
+  flutter_svg: ^0.10.3
   image: ^2.0.4
-  redux: ^3.0.0
-  flutter_redux: ^0.5.2
-  redux_logging: ^0.3.0
-  redux_thunk: ^0.2.1
+  flutter_redurx: ^0.4.3
+  built_value: ^6.3.0
+  built_collection: ^4.1.0
+  flare_flutter: ^1.2.3
+  flare_dart: ^1.2.3
+  bubble_tab_indicator: "^0.1.4"
+  storyboard:
+    git: https://github.com/chimple/storyboard
   flutter_localizations:
     sdk: flutter
   tahiti:
     path: ../tahiti
   flores:
     path: ../flores
+  data:
+    path: ../data
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -88,8 +95,17 @@ flutter:
     - assets/nima_animation/
     - assets/masking/
     - assets/action/
-    - assets/dot/
-    - assets/finger_count/
+    - assets/map/
+    - assets/game/
+    - assets/accessories/
+    - assets/chat/
+    - assets/character/
+    - assets/stories/
+    - assets/stories/images/
+    - assets/audio/
+    - assets/stories/story_audio/
+    - assets/score/
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
