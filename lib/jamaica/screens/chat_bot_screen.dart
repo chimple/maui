@@ -2,11 +2,12 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:built_value/standard_json_plugin.dart';
-import 'package:data/data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:maui/jamaica/widgets/chat_bot.dart';
 import 'package:maui/jamaica/widgets/slide_up_route.dart';
+import 'package:maui/models/chat_script.dart';
+import 'package:maui/models/serializers.dart';
 
 class ChatBotScreen extends StatefulWidget {
   @override

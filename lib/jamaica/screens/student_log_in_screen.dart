@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:built_value/standard_json_plugin.dart';
-import 'package:data/models/serializers.dart';
-import 'package:data/models/student.dart';
+import 'package:maui/models/serializers.dart';
+import 'package:maui/models/student.dart';
 import 'package:flutter/material.dart';
 import 'package:maui/jamaica/screens/self_sign_up_screen.dart';
 import 'package:maui/jamaica/widgets/student_details.dart';

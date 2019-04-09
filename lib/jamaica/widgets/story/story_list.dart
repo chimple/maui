@@ -6,7 +6,8 @@ import 'package:built_value/standard_json_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:maui/jamaica/widgets/story/story_card.dart';
-import 'package:data/data.dart';
+import 'package:maui/models/serializers.dart';
+import 'package:maui/models/story_config.dart';
 
 class StoryList extends StatefulWidget {
   @override

@@ -49,8 +49,6 @@ dependencies:
     path: ../tahiti
   flores:
     path: ../flores
-  data:
-    path: ../data
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -58,6 +56,7 @@ dev_dependencies:
     sdk: flutter
   video_player: "^0.7.2"
   build_runner: ^1.1.1
+  built_value_generator: ^6.3.0
   json_serializable: ^2.0.0
   flutter_markdown: ^0.2.0
 

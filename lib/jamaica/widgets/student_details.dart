@@ -1,5 +1,5 @@
-import 'package:data/data.dart';
 import 'package:flutter/material.dart';
+import 'package:maui/models/student.dart';
 
 class StudentDetails extends StatelessWidget {
   final Student studentDetails;
@@ -19,8 +19,7 @@ class StudentDetails extends StatelessWidget {
               borderRadius: const BorderRadius.all(const Radius.circular(60.0)),
               image: DecorationImage(
                 image: AssetImage(studentDetails.photo),
-              )
-              ),
+              )),
           width: orientation == Orientation.portrait
               ? size.width * 0.2
               : size.width * 0.12,
