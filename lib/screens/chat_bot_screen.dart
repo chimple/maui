@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:maui/components/chat_message.dart';
-import 'package:maui/components/join_text.dart';
 import 'package:maui/components/text_choice.dart';
 import 'package:maui/components/multiple_choice.dart';
 import 'package:maui/db/entity/lesson_unit.dart';

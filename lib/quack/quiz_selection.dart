@@ -341,6 +341,8 @@ class QuizSelectionState extends State<QuizSelection> {
                 endChoices: _endChoices);
           }
           break;
+        case QuizType.open:
+          break;
       }
     });
   }

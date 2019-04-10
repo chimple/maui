@@ -40,7 +40,8 @@ dependencies:
   built_collection: ^4.1.0
   flare_flutter: ^1.2.3
   flare_dart: ^1.2.3
-  bubble_tab_indicator: "^0.1.4"
+  bubble_tab_indicator: ^0.1.4
+  observable_state: ^0.3.0
   storyboard:
     git: https://github.com/chimple/storyboard
   flutter_localizations:
