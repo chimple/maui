@@ -1,7 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
-import 'package:data/models/game_config.dart';
+import 'package:maui/models/game_config.dart';
 import 'package:maui/jamaica/state/state_container.dart';
 import 'package:maui/jamaica/widgets/game_list.dart';
 

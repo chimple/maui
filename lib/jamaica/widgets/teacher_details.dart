@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:built_value/standard_json_plugin.dart';
-import 'package:data/models/class_session.dart';
-import 'package:data/models/serializers.dart';
+import 'package:maui/models/class_session.dart';
+import 'package:maui/models/serializers.dart';
 import 'package:flutter/material.dart';
 
 class TeacherDetails extends StatelessWidget {

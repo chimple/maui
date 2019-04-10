@@ -1,6 +1,9 @@
 import 'package:built_collection/built_collection.dart';
-import 'package:data/data.dart';
-import 'package:data/models/quiz_session.dart';
+import 'package:maui/models/crossword_data.dart';
+import 'package:maui/models/math_op_data.dart';
+import 'package:maui/models/multi_data.dart';
+import 'package:maui/models/num_multi_data.dart';
+import 'package:maui/models/quiz_session.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:maui/jamaica/widgets/game.dart';

@@ -1,7 +1,19 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:math';
 import 'dart:io';
 
+import 'package:built_value/standard_json_plugin.dart';
+import 'package:maui/models/class_interest.dart';
+import 'package:maui/models/class_join.dart';
+import 'package:maui/models/class_session.dart';
+import 'package:maui/models/class_students.dart';
+import 'package:maui/models/performance.dart';
+import 'package:maui/models/quiz_join.dart';
+import 'package:maui/models/quiz_session.dart';
+import 'package:maui/models/quiz_update.dart';
+import 'package:maui/models/serializers.dart';
+import 'package:maui/models/user_profile.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -34,6 +46,7 @@ import 'package:maui/db/entity/lesson.dart';
 import 'package:maui/repos/chat_bot_data.dart';
 import 'package:maui/repos/log_repo.dart';
 import 'package:maui/loca.dart';
+import 'package:uuid/uuid.dart';
 
 enum ChatMode { teach, conversation, quiz }
 
@@ -79,6 +92,11 @@ class AppStateContainerState extends State<AppStateContainer> {
   ChatMode _currentMode = ChatMode.conversation;
   String _expectedAnswer;
   String extStorageDir;
+
+  // teacher objects
+  List<ClassSession> _classSessions;
+  ClassSession _myClassSession;
+  List<String> _classStudents;
 
   @override
   void initState() {
@@ -346,6 +364,48 @@ class AppStateContainerState extends State<AppStateContainer> {
                 comment: comment,
                 tileType: TileType.values[int.parse(msgList[1])]));
       }
+    } else if (message['messageType'] == 'json') {
+      final standardSerializers =
+          (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
+      final obj = standardSerializers.deserialize(message['message']);
+      if (obj is ClassInterest) {
+      } else if (obj is ClassJoin) {
+        if (state.loggedInUser.userType == UserType.teacher &&
+            _myClassSession.sessionId == obj.sessionId) {
+          _classStudents.add(obj.studentId);
+        }
+      } else if (obj is ClassSession) {
+        setState(() {
+          switch (obj.status) {
+            case StatusEnum.start:
+              final i = _classSessions
+                  .indexWhere((c) => c.sessionId == obj.sessionId);
+              if (i > -1) {
+                _classSessions[i] = obj;
+              } else {
+                _classSessions.add(obj);
+              }
+              break;
+            case StatusEnum.progress:
+              final i = _classSessions
+                  .indexWhere((c) => c.sessionId == obj.sessionId);
+              if (i > -1) {
+                _classSessions[i] = obj;
+              } else {
+                _classSessions.add(obj);
+              }
+              break;
+            case StatusEnum.end:
+              _classSessions.removeWhere((c) => c.sessionId == obj.sessionId);
+              break;
+          }
+        });
+      } else if (obj is ClassStudents) {
+      } else if (obj is Performance) {
+      } else if (obj is QuizJoin) {
+      } else if (obj is QuizSession) {
+      } else if (obj is QuizUpdate) {
+      } else if (obj is UserProfile) {}
     } else if (message['recipientUserId'] == state.loggedInUser?.id) {
 //      NotifRepo().increment(message['userId'], message['messageType'], 1);
       if (message['messageType'] == 'chat') {
@@ -361,6 +421,40 @@ class AppStateContainerState extends State<AppStateContainer> {
 //        showNotification(message['userId'], message['messageType'], '',
 //            message['messageType'] + ':' + message['userId']);
       }
+    }
+  }
+
+  startClassSession({String classId}) async {
+    if (state.loggedInUser.userType == UserType.teacher) {
+      setState(() {
+        _myClassSession = ClassSession((c) => c
+          ..classId = classId
+          ..teacherId = state.loggedInUser.id
+          ..sessionId = Uuid().v4()
+          ..status = StatusEnum.start);
+      });
+      final standardSerializers =
+          (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
+      String message =
+          jsonEncode(standardSerializers.serialize(_myClassSession));
+      await p2p.addGroupMessage(
+          state.loggedInUser.id, '0', 'json', message, true, '');
+    }
+  }
+
+  joinClassSession(ClassSession classSession) async {
+    if (state.loggedInUser.userType == UserType.student) {
+      setState(() {
+        _myClassSession = classSession;
+      });
+      ClassJoin classJoin = ClassJoin((c) => c
+        ..sessionId = classSession.sessionId
+        ..studentId = state.loggedInUser.id);
+      final standardSerializers =
+          (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
+      String message = jsonEncode(standardSerializers.serialize(classJoin));
+      await p2p.addGroupMessage(
+          state.loggedInUser.id, '0', 'json', message, true, '');
     }
   }
 

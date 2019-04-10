@@ -1,7 +1,7 @@
 library app_state;
 
 import 'package:built_value/built_value.dart';
-import 'package:data/models/user_profile.dart';
+import 'package:maui/models/user_profile.dart';
 
 part 'app_state.g.dart';
 

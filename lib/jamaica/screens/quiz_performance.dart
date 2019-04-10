@@ -1,5 +1,5 @@
-import 'package:data/models/class_students.dart';
-import 'package:data/models/quiz_update.dart';
+import 'package:maui/models/class_students.dart';
+import 'package:maui/models/quiz_update.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:maui/jamaica/screens/quiz_score_screen.dart';

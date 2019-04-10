@@ -2,6 +2,8 @@ import 'package:maui/state/app_state_container.dart';
 import 'package:uuid/uuid.dart';
 import 'dart:math';
 
+enum UserType { student, teacher }
+
 final Map<int, int> userColors = {
   0xFF48AECC: 0xFFffb300,
   0xFFAD85F9: 0xFFFFB300,
@@ -43,6 +45,8 @@ class User {
   static const imageCol = 'image';
   static const currentLessonIdCol = 'currentLessonId';
   static const pointsCol = 'points';
+  static const userTypeCol = 'userType';
+  static const gradeCol = 'grade';
 
   static const idSel = '${table}_id';
   static const deviceIdSel = '${table}_deviceId';
@@ -51,6 +55,8 @@ class User {
   static const imageSel = '${table}_image';
   static const currentLessonIdSel = '${table}_currentLessonId';
   static const pointsSel = '${table}_points';
+  static const userTypeSel = '${table}_userType';
+  static const gradeSel = '${table}_grade';
 
   static const allCols = [
     '${table}.$idCol AS $idSel',
@@ -60,6 +66,8 @@ class User {
     '${table}.$imageCol AS $imageSel',
     '${table}.$currentLessonIdCol AS $currentLessonIdSel',
     '${table}.$pointsCol AS $pointsSel',
+    '${table}.$userTypeCol AS $userTypeSel',
+    '${table}.$gradeCol AS $gradeSel',
   ];
 
   String id;
@@ -69,16 +77,20 @@ class User {
   String image;
   int points;
   int currentLessonId;
+  UserType userType;
+  int grade;
 
-  User(
-      {String id,
-      this.deviceId,
-      String name,
-      int color,
-      this.image,
-      this.points,
-      this.currentLessonId})
-      : this.id = id ?? new Uuid().v4(),
+  User({
+    String id,
+    this.deviceId,
+    String name,
+    int color,
+    this.image,
+    this.points,
+    this.currentLessonId,
+    this.userType = UserType.student,
+    this.grade,
+  })  : this.id = id ?? new Uuid().v4(),
         this.color = color ??
             userColors.entries
                 .elementAt(Random().nextInt(userColors.length))
@@ -93,19 +105,24 @@ class User {
       colorCol: color,
       imageCol: image,
       pointsCol: points,
-      currentLessonIdCol: currentLessonId
+      currentLessonIdCol: currentLessonId,
+      userTypeCol: userType.index,
+      gradeCol: grade,
     };
   }
 
   User.fromMap(Map<String, dynamic> map)
       : this(
-            id: map[idSel],
-            deviceId: map[deviceIdSel],
-            name: map[nameSel],
-            color: map[colorSel],
-            image: map[imageSel],
-            points: map[pointsSel],
-            currentLessonId: map[currentLessonIdSel]);
+          id: map[idSel],
+          deviceId: map[deviceIdSel],
+          name: map[nameSel],
+          color: map[colorSel],
+          image: map[imageSel],
+          points: map[pointsSel],
+          currentLessonId: map[currentLessonIdSel],
+          userType: UserType.values[map[userTypeSel]],
+          grade: map[gradeSel],
+        );
 
   @override
   int get hashCode =>
@@ -115,7 +132,9 @@ class User {
       color.hashCode ^
       image.hashCode ^
       points.hashCode ^
-      currentLessonId.hashCode;
+      currentLessonId.hashCode ^
+      userType.hashCode ^
+      grade.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -128,10 +147,12 @@ class User {
           color == other.color &&
           image == other.image &&
           points == other.points &&
-          currentLessonId == other.currentLessonId;
+          currentLessonId == other.currentLessonId &&
+          userType == other.userType &&
+          grade == other.grade;
 
   @override
   String toString() {
-    return 'User{id: $id, deviceId: $deviceId, name: $name, color: $color, image: $image, points: $points, currentLessonId: $currentLessonId}';
+    return 'User{id: $id, deviceId: $deviceId, name: $name, color: $color, image: $image, points: $points, currentLessonId: $currentLessonId, userType: ${userType}, grade: ${grade}';
   }
 }
