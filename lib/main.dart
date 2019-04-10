@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redurx/flutter_redurx.dart';
 import 'package:maui/actions/fetch_initial_data.dart';
 import 'package:maui/app.dart';
-import 'package:maui/jamaica/state/state_container.dart';
 import 'package:maui/middlewares/collections_middleware.dart';
 import 'package:maui/models/root_state.dart';
 import 'package:maui/repos/card_extra_repo.dart';
@@ -38,7 +37,7 @@ void main() async {
   runApp(Provider(
     store: store,
     child: AppStateContainer(
-      child: StateContainer(child: MauiApp()),
+      child: MauiApp(),
     ),
   ));
 }

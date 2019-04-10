@@ -3,12 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:maui/games/head_to_head_game.dart';
 import 'package:maui/games/single_game.dart';
-import 'package:maui/jamaica/screens/games_screen.dart';
-import 'package:maui/jamaica/screens/home_screen.dart';
-import 'package:maui/jamaica/screens/map_screen.dart';
-import 'package:maui/jamaica/screens/profile_screen.dart';
-import 'package:maui/jamaica/screens/store_screen.dart';
-import 'package:maui/jamaica/screens/story_screen.dart';
 import 'package:maui/quack/bento.dart';
 import 'package:maui/quack/card_detail.dart';
 import 'package:maui/quack/main_collection.dart';
@@ -54,13 +48,7 @@ class MauiApp extends StatelessWidget {
         '/camera': (BuildContext context) => CameraScreen(false),
         '/stories': (BuildContext context) => StoryPage(),
         '/topics': (BuildContext context) => MainCollection(),
-        '/games': (BuildContext context) => GameListView(),
-        '/jam_chatbot': (BuildContext context) => HomeScreen(),
-        '/jam_profile': (BuildContext context) => ProfileScreen(),
-        '/jam_map': (BuildContext context) => MapScreen(),
-        '/jam_games': (BuildContext context) => GamesScreen(),
-        '/jam_store': (BuildContext context) => StoreScreen(),
-        '/jam_story': (BuildContext context) => StoryScreen(),
+        '/games': (BuildContext context) => GameListView()
       },
       onGenerateRoute: _getRoute,
     );
