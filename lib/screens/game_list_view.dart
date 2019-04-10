@@ -10,6 +10,7 @@ import 'package:tuple/tuple.dart';
 
 List<Tuple2<String, String>> gameNames = [
   Tuple2('reflex', 'Reflex'),
+  Tuple2('counting', 'Counting'),
   Tuple2('order_it', 'Order It'),
   Tuple2('memory', 'Memory'),
   Tuple2('drawing', 'drawing'),
@@ -30,6 +31,13 @@ List<Tuple2<String, String>> gameNames = [
   Tuple2('wordgrid', 'Word Grid'),
   Tuple2('spin_wheel', 'Spin The Wheel'),
   Tuple2('dice', 'Dice'),
+  Tuple2('domino_math', 'Domino'),
+  Tuple2('basic_addition', 'Basic Addition'),
+  Tuple2('basic_counting', 'Basic Counting'),
+  Tuple2('recognize_number', 'Recognize Number'),
+  Tuple2('find_size_game', 'Find Size Game'),
+  Tuple2('matching', 'Matching Game'),
+  Tuple2('sequence_the_number', 'Sequence The Number'),
 ];
 
 //            GameButton( 'abacus', 'Abacus', notifs: _notifs),

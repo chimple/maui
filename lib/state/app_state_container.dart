@@ -1,39 +1,37 @@
 import 'dart:async';
-import 'dart:math';
 import 'dart:io';
+import 'dart:math';
 
-import 'package:path_provider/path_provider.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_redurx/flutter_redurx.dart';
-import 'package:maui/actions/add_comment.dart';
-import 'package:maui/actions/add_like.dart';
-import 'package:maui/actions/fetch_card_detail.dart';
-import 'package:maui/actions/fetch_initial_data.dart';
-import 'package:maui/actions/post_tile.dart';
-import 'package:maui/db/entity/comment.dart';
-import 'package:maui/db/entity/tile.dart';
-import 'package:maui/models/root_state.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:audioplayers/audioplayers.dart';
-import 'package:maui/repos/p2p.dart' as p2p;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:maui/actions/activity_actions.dart';
+import 'package:maui/actions/comment_actions.dart';
+import 'package:maui/actions/tile_actions.dart';
+import 'package:maui/actions/user_actions.dart';
 import 'package:maui/components/flash_card.dart';
+import 'package:maui/db/entity/comment.dart';
+import 'package:maui/db/entity/lesson.dart';
+import 'package:maui/db/entity/lesson_unit.dart';
+import 'package:maui/db/entity/notif.dart';
+import 'package:maui/db/entity/tile.dart';
 import 'package:maui/db/entity/user.dart';
-import 'package:maui/repos/user_repo.dart';
+import 'package:maui/loca.dart';
+import 'package:maui/models/red_state.dart';
+import 'package:maui/repos/chat_bot_data.dart';
 import 'package:maui/repos/lesson_repo.dart';
 import 'package:maui/repos/lesson_unit_repo.dart';
-import 'package:maui/state/app_state.dart';
-import 'package:maui/screens/chat_screen.dart';
-import 'package:maui/repos/notif_repo.dart';
-import 'package:maui/db/entity/notif.dart';
-import 'package:maui/db/entity/lesson_unit.dart';
-import 'package:maui/db/entity/lesson.dart';
-import 'package:maui/repos/chat_bot_data.dart';
 import 'package:maui/repos/log_repo.dart';
-import 'package:maui/loca.dart';
+import 'package:maui/repos/notif_repo.dart';
+import 'package:maui/repos/p2p.dart' as p2p;
+import 'package:maui/repos/user_repo.dart';
+import 'package:maui/screens/chat_screen.dart';
+import 'package:maui/state/app_state.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 enum ChatMode { teach, conversation, quiz }
 
@@ -309,12 +307,16 @@ class AppStateContainerState extends State<AppStateContainer> {
       String content = message['message'];
       final msgList = content.split(floresSeparator);
       if (msgList?.length == 2) {
-        Provider.dispatch<RootState>(
-            context,
-            AddLike(
-                parentId: msgList[1],
-                tileType: TileType.values[int.parse(msgList[0])],
-                userId: message['userId']));
+//        Provider.dispatch<RootState>(
+//            context,
+//            AddLike(
+//                parentId: msgList[1],
+//                tileType: TileType.values[int.parse(msgList[0])],
+//                userId: message['userId']));
+        StoreProvider.of<RedState>(context).dispatch(addLike(
+            parentId: msgList[1],
+            tileType: TileType.values[int.parse(msgList[0])],
+            userId: message['userId']));
       }
     } else if (message['messageType'] == 'tile') {
       String content = message['message'];
@@ -327,7 +329,10 @@ class AppStateContainerState extends State<AppStateContainer> {
             content: msgList[3],
             userId: message['userId'],
             updatedAt: DateTime.now());
-        Provider.dispatch<RootState>(context, PostTile(tile: tile));
+//        Provider.dispatch<RootState>(context, PostTile(tile: tile));
+        StoreProvider.of<RedState>(context).dispatch(addTile(
+          tile: tile,
+        ));
       }
     } else if (message['messageType'] == 'comment') {
       String content = message['message'];
@@ -340,11 +345,15 @@ class AppStateContainerState extends State<AppStateContainer> {
             comment: msgList[3],
             userId: message['userId'],
             timeStamp: DateTime.now());
-        Provider.dispatch<RootState>(
-            context,
-            AddComment(
-                comment: comment,
-                tileType: TileType.values[int.parse(msgList[1])]));
+//        Provider.dispatch<RootState>(
+//            context,
+//            AddComment(
+//                comment: comment,
+//                tileType: TileType.values[int.parse(msgList[1])]));
+        StoreProvider.of<RedState>(context).dispatch(addComment(
+          comment: comment,
+          tileType: TileType.values[int.parse(msgList[1])],
+        ));
       }
     } else if (message['recipientUserId'] == state.loggedInUser?.id) {
 //      NotifRepo().increment(message['userId'], message['messageType'], 1);
@@ -494,8 +503,8 @@ class AppStateContainerState extends State<AppStateContainer> {
         print('Stack trace:\n $s');
       }
     }
-    Provider.dispatch<RootState>(context, FetchInitialData(user));
-
+//    Provider.dispatch<RootState>(context, FetchInitialData(user));
+    StoreProvider.of<RedState>(context).dispatch(UserSetAction(user: user));
 //    try {
 //      p2p.start();
 //    } on PlatformException {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redurx/flutter_redurx.dart';
-import 'package:maui/actions/fetch_initial_data.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:maui/app.dart';
 import 'package:maui/jamaica/state/state_container.dart';
 import 'package:maui/middlewares/collections_middleware.dart';
@@ -14,6 +13,9 @@ import 'package:maui/repos/like_repo.dart';
 import 'package:maui/repos/tile_repo.dart';
 import 'package:maui/repos/user_repo.dart';
 import 'package:maui/state/app_state_container.dart';
+import 'package:redux/src/store.dart' as redux;
+import 'package:redux_logging/redux_logging.dart';
+import 'package:redux_thunk/redux_thunk.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
@@ -22,23 +24,18 @@ void main() async {
   if (prefs.getString('deviceId') == null) {
     prefs.setString('deviceId', Uuid().v4());
   }
-  final initialState = RootState(collectionMap: {}, cardMap: {});
-  final store = Store<RootState>(initialState);
 
-  store.add(CollectionMiddleware(
-      collectionRepo: CollectionRepo(),
-      cardProgressRepo: CardProgressRepo(),
-      likeRepo: LikeRepo(),
-      cardRepo: CardRepo(),
-      tileRepo: TileRepo(),
-      cardExtraRepo: CardExtraRepo(),
-      userRepo: UserRepo(),
-      commentRepo: CommentRepo()));
+  final reduxStore = redux.Store<RedState>(appReducer,
+      initialState: RedState.loading(),
+      middleware: [
+        thunkMiddleware,
+        LoggingMiddleware.printer(),
+      ]);
 
   runApp(Provider(
     store: store,
     child: AppStateContainer(
       child: StateContainer(child: MauiApp()),
     ),
-  ));
+  );
 }

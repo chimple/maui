@@ -1,6 +1,10 @@
 import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:maui/containers/stories_container.dart';
+import 'package:maui/containers/topics_container.dart';
 import 'package:maui/games/head_to_head_game.dart';
 import 'package:maui/games/single_game.dart';
 import 'package:maui/jamaica/screens/games_screen.dart';
@@ -11,18 +15,20 @@ import 'package:maui/jamaica/screens/store_screen.dart';
 import 'package:maui/jamaica/screens/story_screen.dart';
 import 'package:maui/quack/bento.dart';
 import 'package:maui/quack/card_detail.dart';
-import 'package:maui/quack/main_collection.dart';
-import 'package:maui/quack/story_page.dart';
+import 'package:maui/reducers/red_state_reducer.dart';
 import 'package:maui/screens/chat_bot_screen.dart';
-import 'package:maui/screens/chat_screen.dart';
 import 'package:maui/screens/game_category_list_screen.dart';
 import 'package:maui/screens/game_list_view.dart';
 import 'package:maui/screens/login_screen.dart';
 import 'package:maui/screens/switch_screen.dart';
 import 'package:maui/screens/tab_home.dart';
-import 'package:maui/state/app_state_container.dart';
-import 'components/camera.dart';
 import 'package:maui/screens/welcome_screen.dart';
+import 'package:maui/state/app_state_container.dart';
+import 'package:redux/redux.dart';
+import 'package:redux_logging/redux_logging.dart';
+import 'package:redux_thunk/redux_thunk.dart';
+
+import 'components/camera.dart';
 import 'loca.dart';
 
 final RouteObserver<PageRoute> routeObserver = new RouteObserver<PageRoute>();
@@ -30,7 +36,7 @@ final RouteObserver<PageRoute> routeObserver = new RouteObserver<PageRoute>();
 class MauiApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
+    return MaterialApp(
       localizationsDelegates: [
         const LocaDelegate(),
         GlobalMaterialLocalizations.delegate,
@@ -49,7 +55,7 @@ class MauiApp extends StatelessWidget {
         '/': (BuildContext context) => new SwitchScreen(),
         '/login': (BuildContext context) => new LoginScreen(),
         '/welcome': (BuildContext context) => new WelcomeScreen(),
-        '/tab': (BuildContext context) => new Bento(),
+        '/tab': (BuildContext context) => new TabHome(),
         '/chatbot': (BuildContext context) => new ChatBotScreen(),
         '/camera': (BuildContext context) => CameraScreen(false),
         '/stories': (BuildContext context) => StoryPage(),
@@ -157,13 +163,6 @@ class MauiApp extends StatelessWidget {
                 ),
           );
       }
-    } else if (path[1] == 'card' && path.length == 4) {
-//      Provider.dispatch<RootState>(context, FetchCardDetail(card.id));
-
-      return new MaterialPageRoute<Null>(
-        settings: settings,
-        builder: (BuildContext context) => new CardDetail(),
-      );
     }
 
     return null;
