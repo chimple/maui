@@ -1,0 +1,59 @@
+{
+  "$": "ChatScript",
+  "questions": {
+    "a": {
+      "question": "What did you eat?",
+      "choices": ["idli", "dosa", "nothing"],
+      "emotion": "hungry"
+    },
+    "b": {
+      "question": "What did you like with idli?",
+      "choices": ["chutney", "sambar", "sugar"],
+      "emotion": "yummy"
+    },
+    "c": {
+      "question": "How was the idli?",
+      "choices": ["fluffy", "hard"],
+      "emotion": "curious"
+    },
+    "d": {
+      "question": "What do you want to eat?",
+      "choices": ["idli", "dosa", "nothing"],
+      "emotion": "hungry"
+    }
+  },
+  "choices": {
+    "idli": {
+      "choice": "idli",
+      "reply": "Tasty",
+      "questions": ["b", "c"]
+    },
+    "dosa": {
+      "choice": "dosa"
+    },
+    "nothing": {
+      "choice": "nothing",
+      "reply": "So sad!",
+      "questions": ["d"]
+    },
+    "chutney": {
+      "choice": "chutney",
+      "reply": "Spicy!"
+    },
+    "sambar": {
+      "choice": "sambar"
+    },
+    "sugar": {
+      "choice": "sugar",
+      "reply": "Sweet!"
+    },
+    "fluffy": {
+      "choice": "fluffy",
+      "reply": "Too good"
+    },
+    "hard": {
+      "choice": "hard",
+      "reply": "So sad!"
+    }
+  }
+}

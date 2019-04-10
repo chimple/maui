@@ -220,7 +220,7 @@ class QuizResultState extends State<QuizResult> {
           //         alignment: Alignment.center,
           //         scale: .85,
           //         child: new NimaActor(
-          //           "assets/quack",
+          //           "assets/quack.nima",
 
           //           alignment: Alignment.center,
 
