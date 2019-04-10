@@ -17,10 +17,11 @@ class SwitchScreenState extends State<SwitchScreen> {
   _initData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final userId = prefs.getString('userId');
+    print('SwitchScreen: $userId');
     if (userId != null) {
       User user = await UserRepo().getUser(userId);
       await AppStateContainer.of(context).setLoggedInUser(user);
-      Navigator.of(context).pushReplacementNamed('/welcome');
+      Navigator.of(context).pushReplacementNamed('/jam_chatbot');
     } else {
       Navigator.of(context).pushReplacementNamed('/login');
     }
