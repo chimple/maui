@@ -14,6 +14,13 @@ Future<bool> addMessage(String userId, String recipientId, String messageType,
 //  return true;
 }
 
+Future<bool> addGroupMessage(String userId, String recipientId,
+    String messageType, String message, bool status, String sessionId) async {
+  return await Flores().addGroupMessage(
+      userId, recipientId, messageType, message, status, sessionId);
+//  return true;
+}
+
 Future<List<dynamic>> getLatestConversations(
     String userId, String messageType) async {
   return await Flores().getLatestConversations(userId, messageType);

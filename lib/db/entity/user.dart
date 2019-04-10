@@ -88,7 +88,7 @@ class User {
     this.image,
     this.points,
     this.currentLessonId,
-    this.userType,
+    this.userType = UserType.student,
     this.grade,
   })  : this.id = id ?? new Uuid().v4(),
         this.color = color ??

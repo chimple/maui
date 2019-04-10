@@ -22,17 +22,15 @@ class _$ClassSessionSerializer implements StructuredSerializer<ClassSession> {
       'classId',
       serializers.serialize(object.classId,
           specifiedType: const FullType(String)),
-      'name',
-      serializers.serialize(object.name, specifiedType: const FullType(String)),
-      'teacherName',
-      serializers.serialize(object.teacherName,
-          specifiedType: const FullType(String)),
-      'teacherPhoto',
-      serializers.serialize(object.teacherPhoto,
+      'teacherId',
+      serializers.serialize(object.teacherId,
           specifiedType: const FullType(String)),
       'sessionId',
       serializers.serialize(object.sessionId,
           specifiedType: const FullType(String)),
+      'status',
+      serializers.serialize(object.status,
+          specifiedType: const FullType(StatusEnum)),
     ];
 
     return result;
@@ -53,21 +51,17 @@ class _$ClassSessionSerializer implements StructuredSerializer<ClassSession> {
           result.classId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'teacherName':
-          result.teacherName = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'teacherPhoto':
-          result.teacherPhoto = serializers.deserialize(value,
+        case 'teacherId':
+          result.teacherId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'sessionId':
           result.sessionId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'status':
+          result.status = serializers.deserialize(value,
+              specifiedType: const FullType(StatusEnum)) as StatusEnum;
           break;
       }
     }
@@ -80,38 +74,28 @@ class _$ClassSession extends ClassSession {
   @override
   final String classId;
   @override
-  final String name;
-  @override
-  final String teacherName;
-  @override
-  final String teacherPhoto;
+  final String teacherId;
   @override
   final String sessionId;
+  @override
+  final StatusEnum status;
 
   factory _$ClassSession([void updates(ClassSessionBuilder b)]) =>
       (new ClassSessionBuilder()..update(updates)).build();
 
-  _$ClassSession._(
-      {this.classId,
-      this.name,
-      this.teacherName,
-      this.teacherPhoto,
-      this.sessionId})
+  _$ClassSession._({this.classId, this.teacherId, this.sessionId, this.status})
       : super._() {
     if (classId == null) {
       throw new BuiltValueNullFieldError('ClassSession', 'classId');
     }
-    if (name == null) {
-      throw new BuiltValueNullFieldError('ClassSession', 'name');
-    }
-    if (teacherName == null) {
-      throw new BuiltValueNullFieldError('ClassSession', 'teacherName');
-    }
-    if (teacherPhoto == null) {
-      throw new BuiltValueNullFieldError('ClassSession', 'teacherPhoto');
+    if (teacherId == null) {
+      throw new BuiltValueNullFieldError('ClassSession', 'teacherId');
     }
     if (sessionId == null) {
       throw new BuiltValueNullFieldError('ClassSession', 'sessionId');
+    }
+    if (status == null) {
+      throw new BuiltValueNullFieldError('ClassSession', 'status');
     }
   }
 
@@ -127,30 +111,26 @@ class _$ClassSession extends ClassSession {
     if (identical(other, this)) return true;
     return other is ClassSession &&
         classId == other.classId &&
-        name == other.name &&
-        teacherName == other.teacherName &&
-        teacherPhoto == other.teacherPhoto &&
-        sessionId == other.sessionId;
+        teacherId == other.teacherId &&
+        sessionId == other.sessionId &&
+        status == other.status;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc(
-            $jc($jc($jc(0, classId.hashCode), name.hashCode),
-                teacherName.hashCode),
-            teacherPhoto.hashCode),
-        sessionId.hashCode));
+        $jc($jc($jc(0, classId.hashCode), teacherId.hashCode),
+            sessionId.hashCode),
+        status.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('ClassSession')
           ..add('classId', classId)
-          ..add('name', name)
-          ..add('teacherName', teacherName)
-          ..add('teacherPhoto', teacherPhoto)
-          ..add('sessionId', sessionId))
+          ..add('teacherId', teacherId)
+          ..add('sessionId', sessionId)
+          ..add('status', status))
         .toString();
   }
 }
@@ -163,31 +143,26 @@ class ClassSessionBuilder
   String get classId => _$this._classId;
   set classId(String classId) => _$this._classId = classId;
 
-  String _name;
-  String get name => _$this._name;
-  set name(String name) => _$this._name = name;
-
-  String _teacherName;
-  String get teacherName => _$this._teacherName;
-  set teacherName(String teacherName) => _$this._teacherName = teacherName;
-
-  String _teacherPhoto;
-  String get teacherPhoto => _$this._teacherPhoto;
-  set teacherPhoto(String teacherPhoto) => _$this._teacherPhoto = teacherPhoto;
+  String _teacherId;
+  String get teacherId => _$this._teacherId;
+  set teacherId(String teacherId) => _$this._teacherId = teacherId;
 
   String _sessionId;
   String get sessionId => _$this._sessionId;
   set sessionId(String sessionId) => _$this._sessionId = sessionId;
+
+  StatusEnum _status;
+  StatusEnum get status => _$this._status;
+  set status(StatusEnum status) => _$this._status = status;
 
   ClassSessionBuilder();
 
   ClassSessionBuilder get _$this {
     if (_$v != null) {
       _classId = _$v.classId;
-      _name = _$v.name;
-      _teacherName = _$v.teacherName;
-      _teacherPhoto = _$v.teacherPhoto;
+      _teacherId = _$v.teacherId;
       _sessionId = _$v.sessionId;
+      _status = _$v.status;
       _$v = null;
     }
     return this;
@@ -211,10 +186,9 @@ class ClassSessionBuilder
     final _$result = _$v ??
         new _$ClassSession._(
             classId: classId,
-            name: name,
-            teacherName: teacherName,
-            teacherPhoto: teacherPhoto,
-            sessionId: sessionId);
+            teacherId: teacherId,
+            sessionId: sessionId,
+            status: status);
     replace(_$result);
     return _$result;
   }
