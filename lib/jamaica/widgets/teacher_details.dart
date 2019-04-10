@@ -33,8 +33,8 @@ class TeacherDetails extends StatelessWidget {
                 borderRadius:
                     const BorderRadius.all(const Radius.circular(50.0)),
                 image: DecorationImage(
-                  image: AssetImage(
-                      'assets/stories/images/${classSession.teacherPhoto}'),
+                  image: AssetImage('assets/score/star.png'),
+//                      'assets/stories/images/${classSession.teacherPhoto}'),
                 )),
             width: orientation == Orientation.portrait
                 ? size.width * 0.2
@@ -43,14 +43,14 @@ class TeacherDetails extends StatelessWidget {
                 ? size.height * .1
                 : size.height * .2,
           ),
-          Text(classSession.teacherName,
+          Text(classSession.teacherId,
               style: TextStyle(
                   fontSize: orientation == Orientation.portrait
                       ? size.height * .02
                       : size.height * .05,
                   color: Colors.white),
               overflow: TextOverflow.ellipsis),
-          Text(classSession.name,
+          Text(classSession.classId,
               style: TextStyle(
                   fontSize: orientation == Orientation.portrait
                       ? size.height * .015
