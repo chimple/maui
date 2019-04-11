@@ -59,7 +59,7 @@ class _NumberBalanceGameState extends State<NumberBalanceGame> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
         Flexible(
           flex: 1,
