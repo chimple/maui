@@ -31,9 +31,9 @@ class StoryPageState extends State<StoryPage> {
       _storyMode.add(StoryMode.textMode);
     _controller = new ScrollController();
     _controller.addListener(() {
-      print('sadsdsa ${_controller.position}');
+      print('controller ${_controller.position.maxScrollExtent}');
     });
-    print('_sdsad ${_controller.initialScrollOffset}');
+    print('${_controller.initialScrollOffset}');
   }
 
   @override
@@ -54,11 +54,6 @@ class StoryPageState extends State<StoryPage> {
       ));
     }).toList();
     return new Scaffold(
-      // appBar: AppBar(
-      //   title: Text(widget.title),
-      //   backgroundColor: Colors.orange,
-      //   centerTitle: true,
-      // ),
       body: Column(
         children: <Widget>[
           SizedBox(
@@ -96,7 +91,6 @@ class StoryPageState extends State<StoryPage> {
           Expanded(
             flex: 1,
             child: Container(
-              // constraints: BoxConstraints.expand(),
               child: Scrollbar(
                 child: SingleChildScrollView(
                     controller: _controller,
@@ -105,43 +99,6 @@ class StoryPageState extends State<StoryPage> {
                         padding: EdgeInsets.all(12.0),
                         child: Column(
                           children: widgets,
-//                              widget.pages.map((data) {
-//                           return AudioTextBold(
-//                             imagePath: data.imagePath,
-//                             audioFile: data.audioPath,
-//                             fullText: data.text,
-// //              imageItemsAnswer: widget.pages[index].imageItemsAnswer,
-//                             pageNumber: data.pageNumber,
-//                             // storyMode: _storyMode[index],
-//                             // index: index,
-//                           );
-//                           // return Column(
-//                           //   children: <Widget>[
-//                           //     SizedBox(
-//                           //         height:
-//                           //             MediaQuery.of(context).size.height * .3,
-//                           //         child: Container(
-//                           //           decoration: BoxDecoration(
-//                           //               borderRadius:
-//                           //                   BorderRadius.circular(20.0),
-//                           //               image: DecorationImage(
-//                           //                 fit: BoxFit.cover,
-//                           //                 image: AssetImage(
-//                           //                     'assets/stories/images/${data.imagePath}'),
-//                           //               )),
-//                           //         )),
-//                           //     SizedBox(
-//                           //       height: MediaQuery.of(context).size.height * .6,
-//                           //       child: Container(
-//                           //         child: Text(
-//                           //           data.text,
-//                           //           style: TextStyle(fontSize: 20),
-//                           //         ),
-//                           //       ),
-//                           //     )
-//                           //   ],
-//                           // );
-//                         }).toList(growable: false)
                         ))),
               ),
             ),

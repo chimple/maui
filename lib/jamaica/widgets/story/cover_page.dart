@@ -22,7 +22,7 @@ class CoverPage extends StatelessWidget {
               )),
         ),
         Container(
-            height: MediaQuery.of(context).size.height * .5,
+            height: MediaQuery.of(context).size.height * .7,
             child: Padding(
               padding: const EdgeInsets.only(top: 8.0),
               child: Column(
