@@ -207,7 +207,6 @@ class CustomRenderEditable extends RenderBox {
         HorizontalDragGestureRecognizer(debugOwner: this)
           ..onUpdate = (p) {
             _onUpdate(p.globalPosition);
-            print('update $p');
           }
           ..onCancel = () {}
           ..onEnd = (e) {

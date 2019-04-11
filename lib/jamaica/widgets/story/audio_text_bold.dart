@@ -73,7 +73,6 @@ class _TextAudioState extends State<AudioTextBold> {
   @override
   void initState() {
     super.initState();
-
     print('initState');
   }
 

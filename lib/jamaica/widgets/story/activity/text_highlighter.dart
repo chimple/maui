@@ -29,9 +29,14 @@ class _TextHighlighterState extends State<TextHighlighter> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        Text(""),
+        Text(
+          " Question.............",
+          style: TextStyle(color: Colors.black, fontSize: 23),
+        ),
         Stack(
+          alignment: AlignmentDirectional.center,
           children: <Widget>[
             RichText(
               text: TextSpan(
@@ -56,6 +61,7 @@ class _TextHighlighterState extends State<TextHighlighter> {
               ),
             ),
             CustomEditableText(
+                textAlign: TextAlign.center,
                 controller: CustomTextEditingController(text: widget.text),
                 focusNode: FocusNode(),
                 cursorColor: Colors.transparent,
