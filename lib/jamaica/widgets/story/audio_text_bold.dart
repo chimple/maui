@@ -36,10 +36,10 @@ class AudioTextBold extends StatefulWidget {
       {Key key,
       this.storyMode,
       this.imageItemsPosition,
-      this.fullText,
+      @required this.fullText,
       this.pageSliding,
-      this.audioFile,
-      this.imagePath,
+      @required this.audioFile,
+      @required this.imagePath,
       this.storyModeCallback,
       this.imageItemsAnswer,
       this.index,
@@ -314,9 +314,8 @@ class _TextAudioState extends State<AudioTextBold> {
           ),
         ),
         Container(
-          height: MediaQuery.of(context).size.height * .7,
-          child: Container(child: _buildText()),
-        )
+            height: MediaQuery.of(context).size.height * .7,
+            child: Container(child: _buildText()))
       ],
     );
     return Stack(
@@ -413,13 +412,9 @@ class _TextAudioState extends State<AudioTextBold> {
             print(l);
           });
     else if (storyMode == StoryMode.showDialogOnLongPressMode)
-      return ShowDialogMode(
-        listofWords: widget.fullText.split(' '),
-      );
+      return ShowDialogMode(listofWords: widget.fullText.split(' '));
     else if (storyMode == StoryMode.dragTextMode)
-      return DragText(
-        data: widget.imageItemsAnswer,
-      );
+      return DragText(data: widget.imageItemsAnswer);
     else {
       return Container();
     }
