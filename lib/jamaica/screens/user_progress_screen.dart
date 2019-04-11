@@ -1,8 +1,8 @@
 import 'dart:math';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
-import 'package:data/models/game_config.dart';
-import 'package:data/models/game_status.dart';
+import 'package:maui/models/game_config.dart';
+import 'package:maui/models/game_status.dart';
 import 'package:maui/jamaica/screens/collection_progress_indicator.dart';
 
 final BuiltMap<String, GameConfig> _games = BuiltMap<String, GameConfig>({

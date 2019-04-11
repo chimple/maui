@@ -1,10 +1,10 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
-import 'package:data/data.dart';
 import 'package:maui/jamaica/widgets/story/audio_text_bold.dart';
 import 'package:maui/jamaica/widgets/story/cover_page.dart';
 import 'package:maui/jamaica/widgets/story/play_pause_button.dart';
 import 'package:maui/jamaica/widgets/story/show_dialog_mode.dart';
+import 'package:maui/models/story_config.dart';
 
 class StoryPage extends StatefulWidget {
   final BuiltList<Page> pages;

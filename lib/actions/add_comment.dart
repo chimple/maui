@@ -46,6 +46,8 @@ class AddComment implements AsyncAction<RootState> {
         if (commentTile != null)
           commentTile.comments = (commentTile.comments ?? 0) + 1;
         break;
+      case TileType.dot:
+        break;
     }
 
     var tile;
