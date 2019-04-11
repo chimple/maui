@@ -12,11 +12,11 @@ dependencies:
   cupertino_icons: ^0.1.2
   sqflite: ^0.12.2+1
   uuid: ^1.0.3
-  path_provider: ^0.5.0
+  path_provider: 
   tuple: ^1.0.2
   json_annotation: ^2.0.0
   audioplayer: ^0.5.2
-  audioplayers: ^0.8.2
+  audioplayers: 
   percent_indicator: ^1.0.10
   tinycolor: ^1.0.2
   fluttery:

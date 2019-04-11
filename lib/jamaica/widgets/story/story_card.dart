@@ -60,9 +60,13 @@ class StoryCard extends StatelessWidget {
               // excludeFromSemantics: true,
               // splashColor: Colors.red,
               onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
+                Navigator.of(context).push(MaterialPageRoute<Null>(
+                  fullscreenDialog: true,
+                  settings: RouteSettings(),
                   builder: (context) => StoryPage(
-                      pages: storyConfig.pages, title: storyConfig.title),
+                      coverImagePath: storyConfig.coverImagePath,
+                      pages: storyConfig.pages,
+                      title: storyConfig.title),
                 ));
               },
             )

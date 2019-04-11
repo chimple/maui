@@ -289,97 +289,95 @@ class _TextAudioState extends State<AudioTextBold> {
 
   @override
   Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        SizedBox(
+            height: MediaQuery.of(context).size.height * .3,
+            child: Container(
+              decoration: BoxDecoration(
+                  border: Border.all(width: 2.0, color: Colors.orange),
+                  borderRadius: BorderRadius.circular(20.0),
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image:
+                        AssetImage('assets/stories/images/${widget.imagePath}'),
+                  )),
+            )),
+        CircleAvatar(
+          child: PlayPauseButton(
+            audioPlayer: audioPlayer,
+            isPause: isPause,
+            isPlaying: isPlaying,
+            loadAudio: () => loadAudio(widget.fullText, widget.audioFile),
+            pause: () => pause(),
+            resume: () => resume(),
+          ),
+        ),
+        Container(
+          height: MediaQuery.of(context).size.height * .7,
+          child: Container(child: _buildText()),
+        )
+      ],
+    );
     return Stack(
       alignment: AlignmentDirectional.topEnd,
       children: <Widget>[
-        MediaQuery.of(context).orientation == Orientation.portrait
-            ? Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        Column(
+          children: <Widget>[
+            Expanded(
+              flex: 10,
+              child: Row(
                 children: <Widget>[
-                  Expanded(flex: 12, child: _buildImage()),
-                  (storyMode == StoryMode.textMode ||
-                          storyMode == StoryMode.audioBoldTextMode ||
-                          storyMode == StoryMode.showDialogOnLongPressMode)
-                      ? Expanded(
-                          flex: 1,
-                          child: SizedBox(
-                            child: PlayPauseButton(
-                              audioPlayer: audioPlayer,
-                              isPause: isPause,
-                              isPlaying: isPlaying,
-                              loadAudio: () =>
-                                  loadAudio(widget.fullText, widget.audioFile),
-                              pause: () => pause(),
-                              resume: () => resume(),
-                            ),
-                          ))
-                      : Container(),
+                  Expanded(flex: 4, child: _buildImage()),
                   Expanded(
-                    flex: 7,
+                    flex: 5,
                     child: Padding(
                       padding: const EdgeInsets.only(left: 8, right: 8),
-                      child: _buildText(),
+                      child: SingleChildScrollView(
+                          controller: ScrollController(), child: _buildText()),
                     ),
                   ),
                 ],
-              )
-            : Column(
-                children: <Widget>[
-                  Expanded(
-                    flex: 10,
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(flex: 5, child: _buildImage()),
-                        Expanded(
-                          flex: 5,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 8, right: 8),
-                            child: SingleChildScrollView(
-                                controller: ScrollController(),
-                                child: _buildText()),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: (storyMode != StoryMode.textHighlighterMode)
-                        ? PlayPauseButton(
-                            audioPlayer: audioPlayer,
-                            isPause: isPause,
-                            isPlaying: isPlaying,
-                            loadAudio: () =>
-                                loadAudio(widget.fullText, widget.audioFile),
-                            pause: () => pause(),
-                            resume: () => resume(),
-                          )
-                        : Container(),
-                  )
-                ],
               ),
-        CircleAvatar(
-          backgroundColor: Colors.cyanAccent,
-          maxRadius: 25,
-          child: IconButton(
-              icon: Icon(
-                (storyMode == StoryMode.textHighlighterMode ||
-                        storyMode == StoryMode.dragTextMode)
-                    ? Icons.close
-                    : Icons.navigate_next,
-                color: Colors.blue,
-                size: 25,
-              ),
-              onPressed: () {
-                if (storyMode == StoryMode.showDialogOnLongPressMode) {
-                  setState(() => storyMode = StoryMode.textHighlighterMode);
-                } else if (storyMode == StoryMode.textHighlighterMode ||
-                    storyMode == StoryMode.dragTextMode) {
-                  setState(
-                      () => storyMode = StoryMode.showDialogOnLongPressMode);
-                }
-              }),
+            ),
+            Expanded(
+              flex: 1,
+              child: (storyMode != StoryMode.textHighlighterMode)
+                  ? PlayPauseButton(
+                      audioPlayer: audioPlayer,
+                      isPause: isPause,
+                      isPlaying: isPlaying,
+                      loadAudio: () =>
+                          loadAudio(widget.fullText, widget.audioFile),
+                      pause: () => pause(),
+                      resume: () => resume(),
+                    )
+                  : Container(),
+            )
+          ],
         ),
+        // CircleAvatar(
+        //   backgroundColor: Colors.cyanAccent,
+        //   maxRadius: 25,
+        //   child: IconButton(
+        //       icon: Icon(
+        //         (storyMode == StoryMode.textHighlighterMode ||
+        //                 storyMode == StoryMode.dragTextMode)
+        //             ? Icons.close
+        //             : Icons.navigate_next,
+        //         color: Colors.blue,
+        //         size: 25,
+        //       ),
+        //       onPressed: () {
+        //         if (storyMode == StoryMode.showDialogOnLongPressMode) {
+        //           setState(() => storyMode = StoryMode.textHighlighterMode);
+        //         } else if (storyMode == StoryMode.textHighlighterMode ||
+        //             storyMode == StoryMode.dragTextMode) {
+        //           setState(
+        //               () => storyMode = StoryMode.showDialogOnLongPressMode);
+        //         }
+        //       }),
+        // ),
       ],
     );
   }
@@ -391,21 +389,15 @@ class _TextAudioState extends State<AudioTextBold> {
         text: widget.fullText,
       );
     else if (storyMode == StoryMode.audioBoldTextMode) {
-      return Padding(
-        padding: const EdgeInsets.only(left: 8),
-        child: SingleChildScrollView(
-          controller: _scrollController,
-          child: RichText(
-            text: new TextSpan(
-              children: <TextSpan>[
-                new TextSpan(text: startLine, style: textStyle),
-                new TextSpan(text: start, style: textStyle),
-                new TextSpan(text: middle, style: highlightTextStyle),
-                new TextSpan(text: end, style: textStyle),
-                new TextSpan(text: endLine, style: textStyle),
-              ],
-            ),
-          ),
+      return RichText(
+        text: new TextSpan(
+          children: <TextSpan>[
+            new TextSpan(text: startLine, style: textStyle),
+            new TextSpan(text: start, style: textStyle),
+            new TextSpan(text: middle, style: highlightTextStyle),
+            new TextSpan(text: end, style: textStyle),
+            new TextSpan(text: endLine, style: textStyle),
+          ],
         ),
       );
     } else if (storyMode == StoryMode.textHighlighterMode)
@@ -438,13 +430,18 @@ class _TextAudioState extends State<AudioTextBold> {
       alignment: AlignmentDirectional.center,
       children: <Widget>[
         SizedBox(
-          width: double.infinity,
-          height: double.infinity,
-          child: Image.asset(
-            'assets/stories/images/${widget.imagePath}',
-            fit: BoxFit.cover,
-          ),
-        ),
+            width: double.infinity,
+            height: double.infinity,
+            child: Container(
+              margin: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  border: Border.all(width: 2.0, color: Colors.orange),
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage(
+                          'assets/stories/images/${widget.imagePath}'))),
+            )),
         storyMode == StoryMode.textHighlighterMode
             ? Text('Where georgie Porgie went in the  afternoon',
                 style: TextStyle(
@@ -462,14 +459,8 @@ class TextMode extends StatelessWidget {
   TextMode({this.text});
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 8),
-      child: SingleChildScrollView(
-        controller: ScrollController(),
-        child: RichText(
-          text: TextSpan(text: text, style: textStyle),
-        ),
-      ),
+    return RichText(
+      text: TextSpan(text: text, style: textStyle),
     );
   }
 }
