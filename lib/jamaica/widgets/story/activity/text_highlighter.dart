@@ -5,7 +5,7 @@ import 'package:maui/jamaica/widgets/story/custom_editable_text.dart';
 class TextHighlighter extends StatefulWidget {
   final String text;
   final Function(String) onCorrectAnswer;
-  TextHighlighter({this.text, this.onCorrectAnswer});
+  TextHighlighter({this.text = "Text Highlighter", this.onCorrectAnswer});
   @override
   _TextHighlighterState createState() => _TextHighlighterState();
 }
@@ -28,66 +28,58 @@ class _TextHighlighterState extends State<TextHighlighter> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        RichText(
-          text: TextSpan(
-            children: <TextSpan>[
-              TextSpan(
-                  text: _startSubString,
-                  style: TextStyle(fontSize: 23, color: Colors.transparent)),
-              TextSpan(
-                  text: _middleSubString,
-                  style: TextStyle(
-                      fontSize: 23,
-                      background: Paint()..color = Colors.red,
-                      color: Colors.transparent)),
-              TextSpan(
-                  text: _endSubString,
-                  style: TextStyle(
-                    color: Colors.transparent,
-                    fontSize: 23,
-                  ))
-            ],
-          ),
+        Text(
+          " Question.............",
+          style: TextStyle(color: Colors.black, fontSize: 23),
         ),
-        CustomEditableText(
-            controller: CustomTextEditingController(text: widget.text),
-            focusNode: FocusNode(),
-            cursorColor: Colors.transparent,
-            style: TextStyle(color: Colors.black, fontSize: 23),
-            backgroundCursorColor: Colors.transparent,
-            maxLines: null,
-            dragStartBehavior: DragStartBehavior.start,
-            startOffset: (s) => _startOffset(s),
-            updateOffset: (o) => _updateOffset(o.extentOffset),
-            draEnd: (t) {
-              _baseOffset = t.base.offset;
-              _updateOffset(t.extent.offset);
-              widget.onCorrectAnswer(_middleSubString);
-            },
-            onLongPress: (s, textSelection) {
-              // showDialogOnLongPress(
-              //   context: context,
-              //   builder: (context) {
-              //     return FractionallySizedBox(
-              //         heightFactor: MediaQuery.of(context).orientation ==
-              //                 Orientation.portrait
-              //             ? 0.5
-              //             : 0.8,
-              //         widthFactor: MediaQuery.of(context).orientation ==
-              //                 Orientation.portrait
-              //             ? 0.8
-              //             : 0.4,
-              //         child: DialogBoxScreen().textDescriptionDialog(
-              //             context, s, 'textDesciption'));
-              //   },
-              // );
-              // _baseOffset = textSelection.base.offset;
-              // _updateOffset(textSelection.extentOffset);
-            }),
+        Stack(
+          alignment: AlignmentDirectional.center,
+          children: <Widget>[
+            RichText(
+              text: TextSpan(
+                children: <TextSpan>[
+                  TextSpan(
+                      text: _startSubString,
+                      style:
+                          TextStyle(fontSize: 23, color: Colors.transparent)),
+                  TextSpan(
+                      text: _middleSubString,
+                      style: TextStyle(
+                          fontSize: 23,
+                          background: Paint()..color = Colors.red,
+                          color: Colors.transparent)),
+                  TextSpan(
+                      text: _endSubString,
+                      style: TextStyle(
+                        color: Colors.transparent,
+                        fontSize: 23,
+                      ))
+                ],
+              ),
+            ),
+            CustomEditableText(
+                textAlign: TextAlign.center,
+                controller: CustomTextEditingController(text: widget.text),
+                focusNode: FocusNode(),
+                cursorColor: Colors.transparent,
+                style: TextStyle(color: Colors.black, fontSize: 23),
+                backgroundCursorColor: Colors.transparent,
+                maxLines: null,
+                dragStartBehavior: DragStartBehavior.start,
+                startOffset: (s) => _startOffset(s),
+                updateOffset: (o) => _updateOffset(o.extentOffset),
+                draEnd: (t) {
+                  _baseOffset = t.base.offset;
+                  _updateOffset(t.extent.offset);
+                  widget.onCorrectAnswer(_middleSubString);
+                },
+                onLongPress: (s, textSelection) {}),
+          ],
+        )
       ],
     );
-    ;
   }
 }

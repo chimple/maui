@@ -15,6 +15,7 @@ import 'package:maui/storyboards/games/match_the_shape_game_story.dart';
 import 'package:maui/storyboards/games/match_with_image_game_story.dart';
 import 'package:maui/storyboards/games/math_op_game_story.dart';
 import 'package:maui/storyboards/games/memory_game_story.dart';
+import 'package:maui/storyboards/games/number_balance_game_story.dart';
 import 'package:maui/storyboards/games/order_by_size_game_story.dart';
 import 'package:maui/storyboards/games/order_it_game_story.dart';
 import 'package:maui/storyboards/games/recognize_number_game_story.dart';
@@ -62,6 +63,7 @@ void main() {
     CuteButtonStory(),
     DiceGameStory(),
     DotNumberStory(),
+    NumberBalanceGameStory(),
     FillInTheBlanksGameStory(),
     FindWordGameStory(),
     FingerGameStory(),
