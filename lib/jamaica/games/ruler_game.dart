@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class RulerGame extends StatefulWidget {
   final List<String> sequence;
   final List<int> blankPosition;
-  final List answer;
+  final List<int> answer;
   const RulerGame({this.sequence, this.blankPosition, this.answer});
   @override
   _RulerGameState createState() => _RulerGameState();
@@ -22,7 +22,7 @@ class _RulerGameState extends State<RulerGame> {
   List<Status> _statuses;
   List<String> formateData = [];
   List<Offset> offsets = [];
-  List ansDataDarging = [];
+  List<int> ansDataDarging = [];
   bool translateAnimation = false;
   @override
   void initState() {
