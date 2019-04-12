@@ -90,7 +90,7 @@ class _JumbleWordsState extends State<JumbleWords> {
             child: Text(
               s,
               style: textStyle(
-                  color: !c ? Colors.red[50] : Colors.red, fSize: textSize),
+                  color: !c ? Colors.white : Colors.red, fSize: textSize),
             ),
           );
         });
