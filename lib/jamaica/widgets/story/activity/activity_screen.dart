@@ -68,6 +68,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
             Expanded(
               flex: 1,
               child: PageView(
+                scrollDirection: Axis.vertical,
                 physics: NeverScrollableScrollPhysics(),
                 controller: _pageController,
                 onPageChanged: (index) {

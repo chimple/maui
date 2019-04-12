@@ -36,7 +36,6 @@ class _TextHighlighterState extends State<TextHighlighter> {
           style: TextStyle(color: Colors.black, fontSize: 23),
         ),
         Stack(
-          alignment: AlignmentDirectional.center,
           children: <Widget>[
             RichText(
               text: TextSpan(
@@ -61,7 +60,6 @@ class _TextHighlighterState extends State<TextHighlighter> {
               ),
             ),
             CustomEditableText(
-                textAlign: TextAlign.center,
                 controller: CustomTextEditingController(text: widget.text),
                 focusNode: FocusNode(),
                 cursorColor: Colors.transparent,
@@ -74,7 +72,7 @@ class _TextHighlighterState extends State<TextHighlighter> {
                 draEnd: (t) {
                   _baseOffset = t.base.offset;
                   _updateOffset(t.extent.offset);
-                  widget.onCorrectAnswer(_middleSubString);
+                  // widget.onCorrectAnswer(_middleSubString);
                 },
                 onLongPress: (s, textSelection) {}),
           ],

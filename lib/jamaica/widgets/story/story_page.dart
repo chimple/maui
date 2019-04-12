@@ -26,43 +26,61 @@ class StoryPageState extends State<StoryPage> {
   PageController pageController = PageController();
   List<StoryMode> _storyMode = [];
   ScrollController _controller;
+  int incr = 0;
   @override
   void initState() {
     super.initState();
     for (int i = 0; i < widget.pages.length; i++)
       _storyMode.add(StoryMode.textMode);
     _controller = new ScrollController();
-    _controller.addListener(() {
-      print('controller ${_controller.position.maxScrollExtent}');
-    });
-    print('${_controller.initialScrollOffset}');
   }
 
   @override
   Widget build(BuildContext context) {
+    print(widget.pages.length);
+    int index = 0;
     final widgets = <Widget>[];
-    widgets.add(CoverPage(
-      coverImagePath: widget.coverImagePath,
+    widgets.add(SizedBox(
+      height: MediaQuery.of(context).size.height * 1.1,
+      child: CoverPage(
+        coverImagePath: widget.coverImagePath,
+      ),
     ));
     widget.pages.map((data) {
-      widgets.add(AudioTextBold(
-          imagePath: data.imagePath,
-          audioFile: data.audioPath,
-          fullText: data.text,
+      widgets.add(SizedBox(
+        height: MediaQuery.of(context).size.height * 1.1,
+        child: AudioTextBold(
+            imagePath: data.imagePath,
+            audioFile: data.audioPath,
+            fullText: data.text,
+            onComplete: () => incr++,
+            pageSliding: (index) {
+              setState(() {
+                _isPlaying = !_isPlaying;
+                _controller.animateTo(
+                    (MediaQuery.of(context).size.height * 1.1 * (index + 1)),
+                    curve: Curves.ease,
+                    duration: Duration(milliseconds: 500));
+              });
+            },
+            index: index++,
 //              imageItemsAnswer: widget.pages[index].imageItemsAnswer,
-          pageNumber: data.pageNumber
-          // storyMode: _storyMode[index],
-          // index: index,
-          ));
+            pageNumber: data.pageNumber
+            // storyMode: _storyMode[index],
+            // index: index,
+            ),
+      ));
     }).toList();
     return new Scaffold(
       floatingActionButton: ActivityButton(
         icon: Icons.pie_chart,
         string: "Activity",
-        onTap: (i) {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => ActivityScreen()));
-        },
+        onTap: incr != widget.pages.length.toInt()
+            ? (i) {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ActivityScreen()));
+              }
+            : (i) {},
       ),
       body: Column(
         children: <Widget>[
@@ -104,6 +122,9 @@ class StoryPageState extends State<StoryPage> {
                 child: Scrollbar(
               child: SingleChildScrollView(
                   controller: _controller,
+                  physics: _isPlaying
+                      ? NeverScrollableScrollPhysics()
+                      : ScrollPhysics(),
                   scrollDirection: Axis.vertical,
                   child: Padding(
                       padding: EdgeInsets.all(12.0),

@@ -10,28 +10,32 @@ class CoverPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        Container(
-          height: MediaQuery.of(context).size.height * .4,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: AssetImage(
-                  'assets/stories/images/${coverImagePath}',
-                ),
-              )),
+        Expanded(
+          flex: 4,
+          child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage(
+                    'assets/stories/images/${coverImagePath}',
+                  ),
+                )),
+          ),
         ),
-        Container(
-            height: MediaQuery.of(context).size.height * .7,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: Column(
-                children: <Widget>[
-                  Text(conveImageDescription ?? "Credit: Ram Kumar Bhadoria"),
-                  Text(conveImageDescription ?? "Credit: Ram Kumar Bhadoria")
-                ],
-              ),
-            )),
+        Expanded(
+          flex: 6,
+          child: Container(
+              child: Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: Column(
+              children: <Widget>[
+                Text(conveImageDescription ?? "Credit: Ram Kumar Bhadoria"),
+                Text(conveImageDescription ?? "Writer: Ram Kumar Bhadoria")
+              ],
+            ),
+          )),
+        ),
       ],
     );
   }
