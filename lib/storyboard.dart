@@ -27,6 +27,7 @@ import 'package:maui/storyboards/games/basic_counting_game_story.dart';
 import 'package:maui/storyboards/games/spin_wheel_game_story.dart';
 import 'package:maui/storyboards/games/tap_wrong_game_story.dart';
 import 'package:maui/storyboards/games/true_false_game_story.dart';
+import 'package:maui/storyboards/screens/loggin_as.dart';
 import 'package:maui/storyboards/user_progress_screen_story.dart';
 import 'package:maui/storyboards/widgets/audio_widget_story.dart';
 import 'package:maui/storyboards/widgets/bento_box_story.dart';
@@ -90,5 +91,6 @@ void main() {
     ThemeMapStory(),
     TrueFalseGameStory(),
     UserProgressScreenStory(),
+    LoginAsStory()
   ]));
 }
