@@ -1,13 +1,14 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:built_value/standard_json_plugin.dart';
-import 'package:data/models/serializers.dart';
+import 'package:maui/models/chat_script.dart';
+import 'package:maui/models/quiz_join.dart';
+import 'package:maui/models/serializers.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:maui/jamaica/state/state_container.dart';
 
 import 'package:maui/jamaica/widgets/quiz_game.dart';
-import 'package:data/data.dart';
 import 'package:flutter/services.dart';
 import 'package:maui/jamaica/widgets/chat_bot.dart';
 import 'package:maui/jamaica/widgets/quiz_game.dart';

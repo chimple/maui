@@ -31,6 +31,10 @@ class LikeRepo {
       case TileType.drawing:
         await TileRepo().incrementLikes(tileLike.parentId, 1);
         break;
+      case TileType.dot:
+        break;
+      case TileType.message:
+        break;
     }
   }
 
@@ -46,6 +50,10 @@ class LikeRepo {
         break;
       case TileType.drawing:
         await TileRepo().incrementLikes(tileLike.parentId, -1);
+        break;
+      case TileType.dot:
+        break;
+      case TileType.message:
         break;
     }
   }
