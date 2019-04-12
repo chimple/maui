@@ -84,7 +84,7 @@ class _NumberBalanceGameState extends State<NumberBalanceGame> {
                       child: Text(
                         "${widget.question}",
                         style: TextStyle(
-                            color: Colors.orangeAccent,
+                            color: Colors.white,
                             fontSize: 50.0,
                             fontWeight: FontWeight.bold),
                       ),
@@ -119,9 +119,10 @@ class _NumberBalanceGameState extends State<NumberBalanceGame> {
                             return Text(
                               "?",
                               style: TextStyle(
-                                  color: Colors.orangeAccent,
-                                  fontSize: 50.0,
-                                  fontWeight: FontWeight.bold),
+                                color: Colors.white,
+                                fontSize: 50.0,
+                                fontWeight: FontWeight.bold,
+                              ),
                             );
                           },
                           //  onWillAccept: (data) => data[0] == a.choice,
@@ -149,7 +150,7 @@ class _NumberBalanceGameState extends State<NumberBalanceGame> {
                       child: Text(
                         "?",
                         style: TextStyle(
-                            color: Colors.orangeAccent,
+                            color: Colors.white,
                             fontSize: 50.0,
                             fontWeight: FontWeight.bold),
                       ),
@@ -166,7 +167,7 @@ class _NumberBalanceGameState extends State<NumberBalanceGame> {
             height: 100.0,
             width: 500.0,
             child: BentoBox(
-              dragConfig: DragConfig.draggableNoBounceBack,
+              dragConfig: DragConfig.draggableBounceBack,
               rows: 1,
               cols: choiceDetails.length,
               children: choiceDetails
@@ -176,7 +177,7 @@ class _NumberBalanceGameState extends State<NumberBalanceGame> {
                           child: Text(
                             "${c.number}",
                             style: TextStyle(
-                                color: Colors.orangeAccent,
+                                color: Colors.white,
                                 fontSize: 50.0,
                                 fontWeight: FontWeight.bold),
                           ),
