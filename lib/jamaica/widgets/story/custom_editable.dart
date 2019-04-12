@@ -213,7 +213,9 @@ class CustomRenderEditable extends RenderBox {
             _handleOnEnd();
           }
           ..onDown = (s) => _handleOnStart(s.globalPosition);
+    // dragGestureRecognizer=VerticalDragGestureRecognizer()..
   }
+  DragGestureRecognizer dragGestureRecognizer;
 
   /// Character used to obscure text if [obscureText] is true.
   static const String obscuringCharacter = '•';
