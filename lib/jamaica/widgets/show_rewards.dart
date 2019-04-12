@@ -18,7 +18,7 @@ class _ShowRewardsState extends State<ShowRewards>
       List<Tuple4<String, String, int, int>>();
   int _itemCount = 0;
   int itemCrossAxisCount = 4;
-  List<int> _colorStatus = [];
+  List<int> colorStatus = [];
   List<String> category = [];
   String highlightedItem;
   int flag = 0;
@@ -35,7 +35,7 @@ class _ShowRewardsState extends State<ShowRewards>
     });
     var totalRewards =
         widget.rewardList.values.map((v) => v.length).reduce((a, b) => a + b);
-    for (int i = 0; i < totalRewards + 1; i++) _colorStatus.add(0);
+    for (int i = 0; i < totalRewards + 1; i++) colorStatus.add(0);
     highlightedItem = itemRange.first.item1;
   }
 
@@ -47,6 +47,7 @@ class _ShowRewardsState extends State<ShowRewards>
 
   @override
   Widget build(BuildContext context) {
+    int index = 0;
     return Container(
       child: Column(
         children: <Widget>[
@@ -89,7 +90,7 @@ class _ShowRewardsState extends State<ShowRewards>
                                 child: Text(
                                   d.categoryName,
                                   style: TextStyle(
-                                      fontSize: 30, color: Colors.white),
+                                      fontSize: 20, color: Colors.white),
                                 ),
                               ),
                             ),
@@ -105,13 +106,17 @@ class _ShowRewardsState extends State<ShowRewards>
                               SliverGridDelegateWithFixedCrossAxisCount(
                                   childAspectRatio: 0.7, crossAxisCount: 5),
                           children: widget.rewardList[d].map((f) {
+                            index++;
+
                             return Container(
                               child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: <Widget>[
                                     CircleAvatar(
-                                      radius: 45.0,
-                                      backgroundColor: Colors.white,
+                                      radius: 35.0,
+                                      backgroundColor: colorStatus[index] == 0
+                                          ? Colors.grey
+                                          : null,
                                       child: AspectRatio(
                                         aspectRatio: 2.0,
                                         child: new SvgPicture.asset(
@@ -122,8 +127,7 @@ class _ShowRewardsState extends State<ShowRewards>
                                     ),
                                     Text(
                                       f.rewarditemName,
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 15.0),
+                                      style: TextStyle(color: Colors.white,fontSize: 20.0),
                                     ),
                                   ]),
                             );
