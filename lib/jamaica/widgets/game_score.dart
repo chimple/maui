@@ -24,27 +24,18 @@ class _GameScoreState extends State<GameScore> with TickerProviderStateMixin {
     super.initState();
     print("animation");
     controller = new AnimationController(
-        duration: new Duration(seconds: 3), vsync: this);
+        duration: new Duration(seconds: 1), vsync: this);
     animationDance = new Tween(begin: 0.0, end: 1.0).animate(
-      new CurvedAnimation(parent: controller, curve: Curves.fastOutSlowIn),
-     
-      
+      new CurvedAnimation(parent: controller, curve: Curves.bounceInOut),
     );
-     controller.forward();
+    controller.forward();
     // _myZoom();
     print("this is new ${controller.value}");
   }
 
-  // void _myZoom() {
-  //   animationDance.addStatusListener((status) {
-  //     setState(() {});
-  //   });
-  //   controller.forward();
-  // }
-
   @override
   void dispose() {
-    // controller?.dispose();
+    controller?.dispose();
 
     super.dispose();
   }
@@ -53,109 +44,86 @@ class _GameScoreState extends State<GameScore> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     MediaQueryData media = MediaQuery.of(context);
     print("this ispben");
-    final TextStyle textStyle = Theme.of(context).textTheme.display2;
+    final TextStyle textStyle = Theme.of(context).textTheme.display1;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.white24,
       body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             Expanded(
-              child: Stack(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Container(
-                    // width: media.size.width,
-                    decoration: BoxDecoration(
-                        // color: Colors.green,
-                        // borderRadius: BorderRadius.all(Radius.circular(45)
-                        // )
-                        ),
-                    child: SvgPicture.asset(
-                      "assets/category/pen.svg",
-                      fit: BoxFit.contain,
-                      width: media.size.width,
-                      height: media.size.height,
+                  Expanded(
+                    flex: 2,
+                    child: Container(
+                      color: Colors.teal,
+                      child: FlareActor("assets/character/chimp_ik.flr",
+                          alignment: Alignment.center,
+                          fit: BoxFit.scaleDown,
+                          animation: "happy"),
                     ),
                   ),
-                  Container(
-                    width: media.size.width,
-                    // decoration: BoxDecoration(
-                    //     // color: Colors.green,
-                    //     borderRadius: BorderRadius.all(Radius.circular(45))),
+                  Expanded(
+                    flex: 1,
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Expanded(
-                          flex: 2,
-                          child: new NimaActor(
-                            "assets/quack.nima",
-                            fit: BoxFit.contain,
-                            animation: _animationName,
-                            mixSeconds: 0.1,
-                          ),
+                        Container(
+                          child: widget.scores == null
+                              ? Text(
+                                  "00",
+                                  style: new TextStyle(
+                                      fontSize: 60.0,
+                                      color: Colors.orangeAccent),
+                                )
+                              : Text(
+                                  "${widget.scores}",
+                                  style: new TextStyle(
+                                      fontSize: 60.0,
+                                      color: Colors.orangeAccent),
+                                ),
                         ),
-                        Expanded(
-                          flex: 1,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Expanded(
-                                flex: 1,
-                                child: Container(
-                                  // color: Colors.green,
-
-                                  child: widget.scores == null
-                                      ? Text(
-                                          "15",
-                                          style: new TextStyle(fontSize: 60.0),
-                                        )
-                                      : Text(
-                                          "${widget.scores}",
-                                          style: new TextStyle(fontSize: 60.0),
-                                        ),
-                                ),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: ScaleTransition(
-                                  scale: animationDance,
-                                  child: Stars(
-                                    total: 5,
-                                    show: 3,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            padding: EdgeInsets.all(8),
-
-                            // color: Colors.yellow,
-
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: <Widget>[
-                                RawMaterialButton(
-                                  shape: new CircleBorder(),
-                                  elevation: 2.0,
-                                  onPressed: () {},
-                                  fillColor: Colors.redAccent,
-                                  child: Center(
-                                    child: new Icon(
-                                      Icons.redeem,
-                                      size: 50.0,
-                                    ),
-                                  ),
-                                ),
-                              ],
+                        Container(
+                          width: media.size.width / 2,
+                          child: ScaleTransition(
+                            scale: animationDance,
+                            child: Stars(
+                              total: 5,
+                              show: 3,
                             ),
                           ),
                         ),
+                        RawMaterialButton(
+                          padding: EdgeInsets.all(8.0),
+                          shape: new CircleBorder(),
+                          elevation: 2.0,
+                          onPressed: () {},
+                          fillColor: Colors.white,
+                          child: Center(
+                            child: new Icon(
+                              Icons.redeem,
+                              size: 70.0,
+                              color: Colors.orangeAccent,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(2.0),
+                          child: Text(
+                            "REWARD",
+                            style: new TextStyle(
+                                fontSize: 15.0, color: Colors.white),
+                          ),
+                        ),
+                        Text(
+                          "OPENED",
+                          style: new TextStyle(
+                              fontSize: 15.0, color: Colors.white),
+                        )
                       ],
                     ),
                   ),
@@ -175,7 +143,7 @@ class _GameScoreState extends State<GameScore> with TickerProviderStateMixin {
                     highlightedBorderColor: Colors.red,
                     textColor: Colors.white,
                     borderSide: BorderSide(
-                        color: Colors.redAccent,
+                        color: Colors.white,
                         width: 5.0,
                         style: BorderStyle.solid),
                     shape: RoundedRectangleBorder(
@@ -184,15 +152,13 @@ class _GameScoreState extends State<GameScore> with TickerProviderStateMixin {
                             right: Radius.circular(30.0))),
                     onPressed: () {
                       Navigator.of(context).pop();
-                      controller.dispose();
-                      deactivate();
                     },
                     child: Text(
                       "Continue",
                       style: textStyle,
                     )),
               )),
-              flex: 2,
+              flex: 1,
             ),
           ],
         ),
