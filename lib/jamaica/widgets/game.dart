@@ -97,7 +97,7 @@ class _GameState extends State<Game> {
 
             setState(() {
               _score += score;
-              updateScore(_score);
+              // updateScore(_score);
               if (score > 0) _stars++;
 //              _currentGame++;
             });
@@ -109,7 +109,7 @@ class _GameState extends State<Game> {
                         _buildGame(context, ++index, updateScore)));
           });
     } else {
-      return GameScore(scores:_score);
+      return GameScore(scores: _score);
     }
   }
 }

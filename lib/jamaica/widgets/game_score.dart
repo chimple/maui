@@ -14,7 +14,8 @@ class GameScore extends StatefulWidget {
 }
 
 class _GameScoreState extends State<GameScore> with TickerProviderStateMixin {
-  String _animationName = "signup";
+   String _animationName = "waving";
+   int _starcount = 1;
   AnimationController controller;
   Animation<double> animationDance;
   Duration duration;
@@ -23,8 +24,22 @@ class _GameScoreState extends State<GameScore> with TickerProviderStateMixin {
     // TODO: implement initState
     super.initState();
     print("animation");
+    print("scores ${widget.scores}");
+    if(widget.scores != null && widget.scores <= 10)
+    {
+      setState(() {
+       _animationName ="failure";
+       _starcount = 3; 
+      });
+    }else{
+      setState(() {
+       _animationName = "joy";
+       _starcount = 5; 
+      });
+
+    }
     controller = new AnimationController(
-        duration: new Duration(seconds: 1), vsync: this);
+        duration: new Duration(seconds: 2), vsync: this);
     animationDance = new Tween(begin: 0.0, end: 1.0).animate(
       new CurvedAnimation(parent: controller, curve: Curves.bounceInOut),
     );
@@ -59,11 +74,11 @@ class _GameScoreState extends State<GameScore> with TickerProviderStateMixin {
                   Expanded(
                     flex: 2,
                     child: Container(
-                      color: Colors.teal,
+                      // color: Colors.teal,
                       child: FlareActor("assets/character/chimp_ik.flr",
                           alignment: Alignment.center,
                           fit: BoxFit.scaleDown,
-                          animation: "happy"),
+                          animation: _animationName),
                     ),
                   ),
                   Expanded(
@@ -75,7 +90,7 @@ class _GameScoreState extends State<GameScore> with TickerProviderStateMixin {
                         Container(
                           child: widget.scores == null
                               ? Text(
-                                  "00",
+                                  "10",
                                   style: new TextStyle(
                                       fontSize: 60.0,
                                       color: Colors.orangeAccent),
@@ -93,7 +108,7 @@ class _GameScoreState extends State<GameScore> with TickerProviderStateMixin {
                             scale: animationDance,
                             child: Stars(
                               total: 5,
-                              show: 3,
+                              show: _starcount,
                             ),
                           ),
                         ),
