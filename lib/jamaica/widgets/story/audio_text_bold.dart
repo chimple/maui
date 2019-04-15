@@ -297,7 +297,7 @@ class _TextAudioState extends State<AudioTextBold> {
                   flex: 4,
                   child: Container(
                     decoration: BoxDecoration(
-                        border: Border.all(width: 2.0, color: Colors.orange),
+                        // border: Border.all(width: 2.0, color: Colors.white),
                         borderRadius: BorderRadius.circular(20.0),
                         image: DecorationImage(
                           fit: BoxFit.cover,
@@ -325,12 +325,12 @@ class _TextAudioState extends State<AudioTextBold> {
               Column(
                 children: <Widget>[
                   Expanded(
-                    flex: 10,
+                    flex: 6,
                     child: Row(
                       children: <Widget>[
-                        Expanded(flex: 4, child: _buildImage()),
+                        Expanded(flex: 6, child: _buildImage()),
                         Expanded(
-                          flex: 5,
+                          flex: 4,
                           child: Padding(
                             padding: const EdgeInsets.only(left: 8, right: 8),
                             child: SingleChildScrollView(
@@ -354,7 +354,8 @@ class _TextAudioState extends State<AudioTextBold> {
                             resume: () => resume(),
                           )
                         : Container(),
-                  )
+                  ),
+                  Expanded(flex: 3, child: Container())
                 ],
               ),
               // CircleAvatar(

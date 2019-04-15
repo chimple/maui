@@ -48,6 +48,7 @@ class _JumbleWordsState extends State<JumbleWords> {
   List<List<String>> addToBox = [];
   int complete, score = 0;
   List<bool> _colorStatus = [];
+  double textSize;
   @override
   void initState() {
     super.initState();
@@ -96,7 +97,6 @@ class _JumbleWordsState extends State<JumbleWords> {
         });
   }
 
-  double textSize;
   @override
   Widget build(BuildContext context) {
     textSize = MediaQuery.of(context).orientation == Orientation.portrait
@@ -151,8 +151,5 @@ class _FlowDelegate extends FlowDelegate {
   }
 
   @override
-  bool shouldRepaint(FlowDelegate oldDelegate) {
-    // TODO: implement shouldRepaint
-    return true;
-  }
+  bool shouldRepaint(FlowDelegate oldDelegate) => true;
 }
