@@ -20,6 +20,7 @@ abstract class QuizUpdate implements Built<QuizUpdate, QuizUpdateBuilder> {
 class StatusEnum extends EnumClass {
   static Serializer<StatusEnum> get serializer => _$statusEnumSerializer;
 
+  static const StatusEnum create = _$create;
   static const StatusEnum start = _$start;
   static const StatusEnum progress = _$progress;
   static const StatusEnum end = _$end;
