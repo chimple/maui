@@ -2,6 +2,7 @@ import 'package:data/models/quiz_session.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:maui/jamaica/state/game_utils.dart';
+import 'package:maui/jamaica/widgets/game_score.dart';
 import 'package:maui/jamaica/widgets/score.dart';
 import 'package:maui/jamaica/widgets/slide_up_route.dart';
 import 'package:maui/jamaica/widgets/stars.dart';
@@ -108,12 +109,7 @@ class _GameState extends State<Game> {
                         _buildGame(context, ++index, updateScore)));
           });
     } else {
-      return Score(
-        score: _score,
-        starCount: _score,
-        coinsCount: _score,
-        updateCoins: widget.updateCoins,
-      );
+      return GameScore(scores:_score);
     }
   }
 }
