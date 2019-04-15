@@ -10,7 +10,6 @@ class NumberBalanceGameStory extends FullScreenStory {
           body: SafeArea(
             child: NumberBalanceGame(
               question: 6,
-              answerPosition: 1,
               choices: BuiltList<int>([2, 4, 3, 1]),
               onGameOver: (_) {},
             ),
