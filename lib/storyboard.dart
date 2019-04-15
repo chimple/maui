@@ -21,6 +21,7 @@ import 'package:maui/storyboards/games/order_it_game_story.dart';
 import 'package:maui/storyboards/games/recognize_number_game_story.dart';
 import 'package:maui/storyboards/games/reflex_game_story.dart';
 import 'package:maui/storyboards/games/rhyme_words_game_story.dart';
+import 'package:maui/storyboards/games/ruler_game_story.dart';
 import 'package:maui/storyboards/games/sequence_alphabet_game_story.dart';
 import 'package:maui/storyboards/games/sequence_the_number_game_story.dart';
 
@@ -50,6 +51,8 @@ import 'package:storyboard/storyboard.dart';
 
 void main() {
   runApp(StoryboardApp([
+
+    RulerNumbersGameStory(),
     AudioWidgetStory(),
     BasicCountingGameStory(),
     BentoBoxStory(),
