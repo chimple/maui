@@ -15,19 +15,22 @@ import 'package:maui/storyboards/games/match_the_shape_game_story.dart';
 import 'package:maui/storyboards/games/match_with_image_game_story.dart';
 import 'package:maui/storyboards/games/math_op_game_story.dart';
 import 'package:maui/storyboards/games/memory_game_story.dart';
+import 'package:maui/storyboards/games/number_balance_game_story.dart';
 import 'package:maui/storyboards/games/order_by_size_game_story.dart';
 import 'package:maui/storyboards/games/order_it_game_story.dart';
 import 'package:maui/storyboards/games/recognize_number_game_story.dart';
 import 'package:maui/storyboards/games/reflex_game_story.dart';
 import 'package:maui/storyboards/games/rhyme_words_game_story.dart';
+import 'package:maui/storyboards/games/ruler_game_story.dart';
 import 'package:maui/storyboards/games/sequence_alphabet_game_story.dart';
 import 'package:maui/storyboards/games/sequence_the_number_game_story.dart';
-
 import 'package:maui/storyboards/games/basic_counting_game_story.dart';
 import 'package:maui/storyboards/games/spin_wheel_game_story.dart';
 import 'package:maui/storyboards/games/tap_wrong_game_story.dart';
 import 'package:maui/storyboards/games/true_false_game_story.dart';
 import 'package:maui/storyboards/screens/progress_screen.dart';
+import 'package:maui/storyboards/map_reward_screen_story.dart';
+import 'package:maui/storyboards/screens/loggin_as.dart';
 import 'package:maui/storyboards/user_progress_screen_story.dart';
 import 'package:maui/storyboards/widgets/audio_widget_story.dart';
 import 'package:maui/storyboards/widgets/bento_box_story.dart';
@@ -49,6 +52,8 @@ import 'package:storyboard/storyboard.dart';
 
 void main() {
   runApp(StoryboardApp([
+
+    RulerNumbersGameStory(),
     AudioWidgetStory(),
     BasicCountingGameStory(),
     BentoBoxStory(),
@@ -62,6 +67,7 @@ void main() {
     CuteButtonStory(),
     DiceGameStory(),
     DotNumberStory(),
+    NumberBalanceGameStory(),
     FillInTheBlanksGameStory(),
     FindWordGameStory(),
     FingerGameStory(),
@@ -91,6 +97,8 @@ void main() {
     TapWrongGameStory(),
     ThemeMapStory(),
     TrueFalseGameStory(),
+    MapRewardsScreenStory(),
     UserProgressScreenStory(),
+    LoginAsStory()
   ]));
 }

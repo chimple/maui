@@ -56,19 +56,66 @@ class StoryListState extends State<StoryList> {
         ),
       );
     } else {
-      return new Container(
-        color: Colors.orange,
-        child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 1.45,
-          ),
-          itemBuilder: (context, index) {
-            return StoryCard(storyConfig: _stories[index]);
-          },
-          itemCount: _stories.length,
-        ),
+      return Column(
+        children: <Widget>[
+          SizedBox(height: 70, child: CustomAppBar()),
+          Expanded(
+            flex: 1,
+            child: new Container(
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 1.45,
+                ),
+                itemBuilder: (context, index) {
+                  return StoryCard(storyConfig: _stories[index]);
+                },
+                itemCount: _stories.length,
+              ),
+            ),
+          )
+        ],
       );
     }
+  }
+}
+
+class CustomAppBar extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Container(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                IconButton(
+                    color: Colors.white,
+                    icon: Icon(
+                      Icons.arrow_back,
+                      size: 35,
+                    ),
+                    onPressed: () => Navigator.of(context).pop()),
+                Text(
+                  "Stories",
+                  style: TextStyle(fontSize: 20, color: Colors.white),
+                ),
+                IconButton(
+                  color: Colors.white,
+                  icon: Icon(Icons.library_books),
+                  onPressed: () {},
+                )
+              ],
+            ),
+            height: 68,
+            color: Colors.transparent),
+        Container(
+          color: Colors.white70,
+          width: MediaQuery.of(context).size.width - 40,
+          height: 1.0,
+        )
+      ],
+    );
   }
 }
