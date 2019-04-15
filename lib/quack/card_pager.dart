@@ -10,7 +10,7 @@ import 'package:maui/quack/comment_list.dart';
 import 'package:maui/quack/comment_text_field.dart';
 import 'package:maui/quack/knowledge_detail.dart';
 import 'package:maui/quack/quiz_navigator.dart';
-import 'package:maui/components/quiz_welcome.dart';
+import 'package:maui/quack/quiz_welcome.dart';
 import 'package:maui/repos/collection_repo.dart';
 
 class CardPager extends StatefulWidget {

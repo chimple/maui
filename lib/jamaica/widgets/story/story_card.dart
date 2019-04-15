@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:data/data.dart';
 import 'package:maui/jamaica/widgets/story/router.dart';
 import 'package:maui/jamaica/widgets/story/story_page.dart';
+import 'package:maui/models/story_config.dart';
 
 class StoryCard extends StatelessWidget {
   final index;
@@ -60,9 +60,13 @@ class StoryCard extends StatelessWidget {
               // excludeFromSemantics: true,
               // splashColor: Colors.red,
               onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
+                Navigator.of(context).push(MaterialPageRoute<Null>(
+                  fullscreenDialog: true,
+                  settings: RouteSettings(),
                   builder: (context) => StoryPage(
-                      pages: storyConfig.pages, title: storyConfig.title),
+                      coverImagePath: storyConfig.coverImagePath,
+                      pages: storyConfig.pages,
+                      title: storyConfig.title),
                 ));
               },
             )

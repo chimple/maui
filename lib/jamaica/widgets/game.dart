@@ -1,4 +1,4 @@
-import 'package:data/models/quiz_session.dart';
+import 'package:maui/models/quiz_session.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:maui/jamaica/state/game_utils.dart';

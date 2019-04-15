@@ -1,4 +1,3 @@
-import 'package:data/data.dart';
 import 'package:flutter/widgets.dart';
 import 'package:maui/jamaica/games/basic_counting_game.dart';
 import 'package:maui/jamaica/games/bingo_game.dart';
@@ -21,6 +20,11 @@ import 'package:maui/jamaica/games/sequence_alphabet_game.dart';
 import 'package:maui/jamaica/games/sequence_the_number_game.dart';
 import 'package:maui/jamaica/games/true_false_game.dart';
 import 'package:maui/jamaica/widgets/story/activity/jumble_words.dart';
+import 'package:maui/models/crossword_data.dart';
+import 'package:maui/models/game_data.dart';
+import 'package:maui/models/math_op_data.dart';
+import 'package:maui/models/multi_data.dart';
+import 'package:maui/models/num_multi_data.dart';
 
 typedef void OnGameOver(int score);
 

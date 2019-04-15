@@ -29,6 +29,8 @@ class CommentRepo {
       case TileType.message:
         await TileRepo().incrementComments(tileComment.parentId, 1);
         break;
+      case TileType.dot:
+        break;
     }
   }
 
@@ -44,6 +46,10 @@ class CommentRepo {
         break;
       case TileType.drawing:
         await TileRepo().incrementComments(tileComment.parentId, -1);
+        break;
+      case TileType.dot:
+        break;
+      case TileType.message:
         break;
     }
   }

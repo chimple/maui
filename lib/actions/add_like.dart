@@ -60,6 +60,8 @@ class AddLike implements AsyncAction<RootState> {
             state.tiles.firstWhere((t) => t.id == parentId, orElse: () => null);
         if (likeTile != null) likeTile.likes = (likeTile.likes ?? 0) + 1;
         break;
+      case TileType.dot:
+        break;
     }
 
 //    var tile =

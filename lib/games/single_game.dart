@@ -1,60 +1,56 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
-import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
-import 'package:maui/components/show_help.dart';
-import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:maui/state/button_state_container.dart';
-import 'package:maui/games/clue_game.dart';
+import 'package:maui/components/hud.dart';
+import 'package:maui/components/show_help.dart';
+import 'package:maui/db/entity/lesson.dart';
+import 'package:maui/db/entity/score.dart';
+import 'package:maui/db/entity/user.dart';
 import 'package:maui/games/Draw_Challenge.dart';
-import 'package:maui/games/true_false.dart';
 import 'package:maui/games/abacus.dart';
 import 'package:maui/games/bingo.dart';
 import 'package:maui/games/calculate_numbers.dart';
 import 'package:maui/games/casino.dart';
 import 'package:maui/games/circleword.dart';
+import 'package:maui/games/clue_game.dart';
 import 'package:maui/games/connectdots.dart';
 import 'package:maui/games/crossword.dart';
-import 'package:maui/games/drawing_game.dart';
 import 'package:maui/games/dice_game.dart';
+import 'package:maui/games/drawing_game.dart';
 import 'package:maui/games/fill_in_the_blanks.dart';
 import 'package:maui/games/fill_number.dart';
+import 'package:maui/games/first_word.dart';
 import 'package:maui/games/friendWord.dart';
 import 'package:maui/games/guess.dart';
 import 'package:maui/games/identify_game.dart';
 import 'package:maui/games/match_the_following.dart';
 import 'package:maui/games/memory.dart';
 import 'package:maui/games/order_it.dart';
+import 'package:maui/games/picture_sentence.dart';
 import 'package:maui/games/quiz.dart';
 import 'package:maui/games/reflex.dart';
 import 'package:maui/games/spin_wheel.dart';
 import 'package:maui/games/tables.dart';
 import 'package:maui/games/tap_home.dart';
 import 'package:maui/games/tap_wrong.dart';
-import 'package:maui/games/wordgrid.dart';
-import 'package:maui/games/picture_sentence.dart';
-import 'package:maui/screens/score_screen.dart';
-import 'package:maui/state/app_state_container.dart';
-import 'package:maui/db/entity/user.dart';
-import 'package:maui/components/hud.dart';
-import 'package:maui/games/friendWord.dart';
+import 'package:maui/games/true_false.dart';
 import 'package:maui/games/word_fight.dart';
-import 'package:maui/games/first_word.dart';
-import 'package:maui/quiz/quiz_pager.dart';
+import 'package:maui/games/wordgrid.dart';
+import 'package:maui/repos/game_category_repo.dart';
+import 'package:maui/repos/log_repo.dart';
+import 'package:maui/repos/notif_repo.dart';
 import 'package:maui/repos/p2p.dart' as p2p;
 import 'package:maui/repos/score_repo.dart';
-import 'package:maui/db/entity/score.dart';
-import 'package:maui/repos/notif_repo.dart';
-import 'package:maui/repos/log_repo.dart';
-import 'package:maui/repos/game_category_repo.dart';
 import 'package:maui/repos/user_repo.dart';
-import 'package:maui/components/gameaudio.dart';
-import 'package:maui/db/entity/lesson.dart';
-
-import '../components/progress_bar.dart';
+import 'package:maui/screens/score_screen.dart';
+import 'package:maui/state/app_state_container.dart';
+import 'package:maui/state/button_state_container.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uuid/uuid.dart';
 
 enum GameMode { timed, iterations }
 
@@ -575,16 +571,6 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                                             backgroundColor:
                                                 oh2h ? colors[0] : colors[2],
                                             foregroundColor: colors[1])),
-                                    //  game.runtimeType==QuizPager
-                                    //       ? Container()
-                                    //       : new Center(
-                                    //           child: Nima(
-                                    //               name: widget.gameName,
-                                    //               score: _cumulativeIncrement,
-                                    //               tag: !oh2h
-                                    //                   ? 'assets/hoodie/${widget.gameName}.png'
-                                    //                   : 'other.png'),
-                                    //         ),
                                     !oh2h
                                         ? Positioned(
                                             left: 0.0,
@@ -888,18 +874,6 @@ class _SingleGameState extends State<SingleGame> with TickerProviderStateMixin {
                 widget.gameConfig.otherIteration,
             isRotated: widget.isRotated,
             gameConfig: widget.gameConfig);
-        break;
-      case 'quiz_pager':
-        playTime = 15000;
-        maxIterations = 1;
-        return new QuizPager(
-            key: new GlobalObjectKey(keyName),
-            onScore: _onScore,
-            onProgress: _onProgress,
-            onEnd: () => _onEnd(context),
-            iteration: widget.gameConfig.myIteration +
-                widget.gameConfig.otherIteration,
-            isRotated: widget.isRotated);
         break;
       case 'order_it':
         playTime = 15000;

@@ -40,7 +40,8 @@ dependencies:
   built_collection: ^4.1.0
   flare_flutter: ^1.2.3
   flare_dart: ^1.2.3
-  bubble_tab_indicator: "^0.1.4"
+  bubble_tab_indicator: ^0.1.4
+  observable_state: ^0.3.0
   storyboard:
     git: https://github.com/chimple/storyboard
   flutter_localizations:
@@ -49,8 +50,6 @@ dependencies:
     path: ../tahiti
   flores:
     path: ../flores
-  data:
-    path: ../data
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -58,6 +57,7 @@ dev_dependencies:
     sdk: flutter
   video_player: "^0.7.2"
   build_runner: ^1.1.1
+  built_value_generator: ^6.3.0
   json_serializable: ^2.0.0
   flutter_markdown: ^0.2.0
 
@@ -95,6 +95,17 @@ flutter:
     - assets/nima_animation/
     - assets/masking/
     - assets/action/
+    - assets/map/
+    - assets/game/
+    - assets/accessories/
+    - assets/chat/
+    - assets/character/
+    - assets/stories/
+    - assets/stories/images/
+    - assets/audio/
+    - assets/stories/story_audio/
+    - assets/score/
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

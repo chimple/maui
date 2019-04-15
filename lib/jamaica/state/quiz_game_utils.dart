@@ -1,8 +1,15 @@
 import 'dart:convert';
 import 'package:built_value/standard_json_plugin.dart';
-import 'package:data/data.dart';
 import 'package:flutter/widgets.dart';
 import 'package:maui/jamaica/state/state_container.dart';
+import 'package:maui/models/crossword_data.dart';
+import 'package:maui/models/game_data.dart';
+import 'package:maui/models/math_op_data.dart';
+import 'package:maui/models/multi_data.dart';
+import 'package:maui/models/num_multi_data.dart';
+import 'package:maui/models/performance.dart';
+import 'package:maui/models/quiz_session.dart';
+import 'package:maui/models/serializers.dart';
 
 sendQuizPerformance(
     {GameData gameData,

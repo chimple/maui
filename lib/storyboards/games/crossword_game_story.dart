@@ -1,8 +1,8 @@
 import 'package:built_collection/built_collection.dart';
-import 'package:data/data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:maui/jamaica/games/crossword_game.dart';
+import 'package:maui/models/crossword_data.dart';
 import 'package:storyboard/storyboard.dart';
 
 class CrosswordGameStory extends FullScreenStory {
