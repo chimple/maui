@@ -97,7 +97,7 @@ class AppStateContainerState extends State<AppStateContainer> {
   List<ClassSession> _classSessions;
   ClassSession _myClassSession;
   List<String> _classStudents;
-  Map<String, Performance> _performances;
+  Map<String, Performance> performances;
   Set<String> _quizStudents;
   QuizSession _quizSession;
   Map<String, Performance> _quizPerformances;
@@ -410,7 +410,7 @@ class AppStateContainerState extends State<AppStateContainer> {
           _quizPerformances[obj.studentId] = obj;
         } else if (state.loggedInUser.userType == UserType.teacher) {
           setState(() {
-            _performances[obj.studentId] = obj;
+            performances[obj.studentId] = obj;
           });
         }
       } else if (obj is QuizJoin) {
