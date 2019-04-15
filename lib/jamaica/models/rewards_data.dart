@@ -5,9 +5,9 @@ class RewardData {
 }
 
 class RewardCategory {
-  String rewarditemName;
-  String rewarditemImagePath;
-  RewardCategory(this.rewarditemImagePath, this.rewarditemName);
+  String rewardItemName;
+  String rewardItemImagePath;
+  RewardCategory(this.rewardItemImagePath, this.rewardItemName);
 }
 
 Map<RewardData, List<RewardCategory>> rewardList = {

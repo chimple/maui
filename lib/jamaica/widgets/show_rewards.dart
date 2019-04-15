@@ -120,14 +120,15 @@ class _ShowRewardsState extends State<ShowRewards>
                                       child: AspectRatio(
                                         aspectRatio: 2.0,
                                         child: new SvgPicture.asset(
-                                          f.rewarditemImagePath,
+                                          f.rewardItemImagePath,
                                           package: 'tahiti',
                                         ),
                                       ),
                                     ),
                                     Text(
-                                      f.rewarditemName,
-                                      style: TextStyle(color: Colors.white,fontSize: 20.0),
+                                      f.rewardItemName,
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 20.0),
                                     ),
                                   ]),
                             );
