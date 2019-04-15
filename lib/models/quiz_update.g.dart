@@ -6,12 +6,15 @@ part of 'quiz_update.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
+const StatusEnum _$create = const StatusEnum._('create');
 const StatusEnum _$start = const StatusEnum._('start');
 const StatusEnum _$progress = const StatusEnum._('progress');
 const StatusEnum _$end = const StatusEnum._('end');
 
 StatusEnum _$valueOf(String name) {
   switch (name) {
+    case 'create':
+      return _$create;
     case 'start':
       return _$start;
     case 'progress':
@@ -25,6 +28,7 @@ StatusEnum _$valueOf(String name) {
 
 final BuiltSet<StatusEnum> _$values =
     new BuiltSet<StatusEnum>(const <StatusEnum>[
+  _$create,
   _$start,
   _$progress,
   _$end,
