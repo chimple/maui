@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maui/components/user_item.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/user_repo.dart';
 
@@ -29,7 +30,7 @@ class _LoginAsState extends State<LoginAs> {
     });
   }
 
-  Widget renderGridView(List<User> _users) {
+  Widget renderTeachersGrid(List<User> _users) {
     return GridView.count(
         padding: EdgeInsets.all(2.0),
         crossAxisCount: 3,
@@ -40,11 +41,26 @@ class _LoginAsState extends State<LoginAs> {
               onTap: () {
                 print("Hello World..!!");
               },
-              child: Container(
-                  padding: EdgeInsets.all(4.0),
-                  decoration: new BoxDecoration(
-                      shape: BoxShape.circle, color: Colors.grey),
-                  child: Center(child: new Text("${_users[index].name}"))));
+              child: _users[index].userType == UserType.teacher
+                  ? UserItem(user: _users[index])
+                  : Container());
+        }));
+  }
+
+  Widget renderStudentsGrid(List<User> _users) {
+    return GridView.count(
+        padding: EdgeInsets.all(2.0),
+        crossAxisCount: 3,
+        mainAxisSpacing: 8.0,
+        crossAxisSpacing: 8.0,
+        children: List.generate(_users.length, (index) {
+          return new GestureDetector(
+              onTap: () {
+                print("Hello World..!!");
+              },
+              child: _users[index].userType == UserType.student
+                  ? UserItem(user: _users[index])
+                  : Container());
         }));
   }
 
@@ -80,7 +96,7 @@ class _LoginAsState extends State<LoginAs> {
                       ),
                       new Expanded(
                         flex: 1,
-                        child: renderGridView(users),
+                        child: renderTeachersGrid(users),
                       ),
                     ],
                   ),
@@ -103,7 +119,7 @@ class _LoginAsState extends State<LoginAs> {
                       ),
                       new Expanded(
                         flex: 1,
-                        child: renderGridView(users),
+                        child: renderStudentsGrid(users),
                       ),
                     ],
                   ),
