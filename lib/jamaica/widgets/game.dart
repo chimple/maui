@@ -157,7 +157,7 @@ class _GameState extends State<Game> {
                       ),
                     ],
                   ),
-                ), 
+                ),
                 Flexible(
                   flex: 2,
                   child: Text('Game Name',style: TextStyle(fontSize: size.width * 0.02)),
