@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:maui/jamaica/widgets/story/activity/activity_screen.dart';
 import 'package:maui/jamaica/widgets/story/audio_text_bold.dart';
 import 'package:maui/jamaica/widgets/story/cover_page.dart';
-import 'package:maui/jamaica/widgets/story/custom_editable_text.dart';
-import 'package:maui/jamaica/widgets/story/play_pause_button.dart';
 import 'package:maui/jamaica/widgets/story/show_dialog_mode.dart';
 import 'package:maui/models/story_config.dart';
 
@@ -73,15 +71,13 @@ class StoryPageState extends State<StoryPage> {
     }).toList();
     return new Scaffold(
       floatingActionButton: ActivityButton(
-        icon: Icons.pie_chart,
-        string: "Activity",
-        onTap: incr != widget.pages.length.toInt()
-            ? (i) {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ActivityScreen()));
-              }
-            : (i) {},
-      ),
+          isEnable: incr == widget.pages.length.toInt(),
+          icon: Icons.pie_chart,
+          string: "Activity",
+          onTap: (i) {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ActivityScreen()));
+          }),
       body: Column(
         children: <Widget>[
           SizedBox(
@@ -132,45 +128,6 @@ class StoryPageState extends State<StoryPage> {
                         children: widgets,
                       ))),
             )),
-//             child: PageView.builder(
-//               pageSnapping: false,
-//               controller: pageController,
-//               onPageChanged: (int index) {
-//                 print(index);
-//               },
-//               scrollDirection: Axis.vertical,
-//               physics:
-//                   _isPlaying ? NeverScrollableScrollPhysics() : ScrollPhysics(),
-//               itemBuilder: (context, index) {
-// //          var d = widget.pages[index].imageItemsPosition;
-// //          print('drag data :: ${d}');
-// //          print('data:: ${widget.pages[index].highlightQuestion}');
-//                 if (index == 0)
-//                   return CoverPage(
-//                     coverImagePath: widget.coverImagePath,
-//                   );
-//                 else {
-//                   index = index - 1;
-//                   return AudioTextBold(
-//                       imagePath: widget.pages[index].imagePath,
-//                       audioFile: widget.pages[index].audioPath,
-//                       fullText: widget.pages[index].text,
-// //              imageItemsAnswer: widget.pages[index].imageItemsAnswer,
-//                       pageNumber: widget.pages[index].pageNumber,
-//                       storyMode: _storyMode[index],
-//                       index: index,
-//                       storyModeCallback: (index, StoryMode sm) => setState(
-//                             () => _storyMode[index] = sm,
-//                           ),
-//                       pageSliding: () => setState(() {
-//                             _isPlaying = !_isPlaying;
-//                             // pageController.jumpToPage(
-//                             //     int.parse(widget.pages[index].pageNumber) - 1);
-//                           }));
-//                 }
-//               },
-//               itemCount: widget.pages.length + 1,
-//             ),
           )
         ],
       ),
@@ -183,22 +140,29 @@ class ActivityButton extends StatelessWidget {
   final String string;
   final Function(int) onTap;
   final int pageIndex;
-  ActivityButton(
-      {@required this.icon, @required this.string, this.onTap, this.pageIndex});
+  final bool isEnable;
+  ActivityButton({
+    @required this.icon,
+    @required this.string,
+    @required this.onTap,
+    this.isEnable = false,
+    this.pageIndex,
+  });
   @override
   Widget build(BuildContext context) => Padding(
       padding: const EdgeInsets.only(right: 0.0, bottom: 0.0),
       child: Container(
-          width: 130,
+          width: 138,
           height: 50,
           child: RaisedButton(
               color: Colors.white,
+              disabledColor: Colors.grey,
               shape: RoundedRectangleBorder(
                   side: BorderSide(width: 2.0, color: Colors.orange),
                   borderRadius: BorderRadius.circular(25.0)),
-              onPressed: () => onTap(pageIndex),
+              onPressed: isEnable ? () => onTap(pageIndex) : null,
               child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
                       string,

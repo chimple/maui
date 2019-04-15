@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 
 class DragText extends StatefulWidget {
   final BuiltList<String> data;
-  DragText({this.data});
+  final Function(String) onComplete;
+  DragText({this.data, this.onComplete});
   @override
   _DragTextState createState() => new _DragTextState();
 }
@@ -82,6 +83,9 @@ class _DragTextState extends State<DragText> {
                   alignment: WrapAlignment.center,
                   children: list
                       .map((s) => Draggable(
+                            onDragEnd: (d) {
+                              widget.onComplete("");
+                            },
                             feedback: Material(
                               color: Colors.transparent,
                               child: _build(s),

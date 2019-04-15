@@ -30,8 +30,10 @@ class _ChoiceDetail {
 class JumbleWords extends StatefulWidget {
   final BuiltList choices;
   final BuiltList answers;
+  final Function onComplete;
   final OnGameOver onGameOver;
-  const JumbleWords({Key key, this.answers, this.choices, this.onGameOver})
+  const JumbleWords(
+      {Key key, this.answers, this.choices, this.onGameOver, this.onComplete})
       : super(key: key);
 
   @override
@@ -80,6 +82,7 @@ class _JumbleWordsState extends State<JumbleWords> {
             if (--complete == 0) {
               print('game over');
               widget.onGameOver(score);
+              widget.onComplete();
             }
             // print('on accept ${widget.choices.indexOf(a)}, $answerDetails');
           }

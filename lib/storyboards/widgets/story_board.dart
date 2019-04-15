@@ -30,7 +30,7 @@ class StoryBoard extends FullScreenStory {
             child: TextHighlighter(
               text:
                   'Look at these beautiful horses and elephants! Who brought them here? squealed Ahilya. Reluctantly, she tore her eyes away from the beautiful animals – it would get dark soon! She hurried inside the temple and lit a lamp. Ahilya closed her eyes and bowed in prayer.',
-              onCorrectAnswer: (_) {},
+              onComplete: (_) {},
             ),
           ),
         ),

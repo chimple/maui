@@ -405,7 +405,7 @@ class _TextAudioState extends State<AudioTextBold> {
     } else if (storyMode == StoryMode.textHighlighterMode)
       return TextHighlighter(
           text: widget.fullText,
-          onCorrectAnswer: (l) {
+          onComplete: (l) {
             new Future.delayed(Duration(seconds: 1), () {
               setState(() {
                 storyMode = StoryMode.dragTextMode;
