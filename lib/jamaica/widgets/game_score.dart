@@ -14,8 +14,8 @@ class GameScore extends StatefulWidget {
 }
 
 class _GameScoreState extends State<GameScore> with TickerProviderStateMixin {
-   String _animationName = "waving";
-   int _starcount = 1;
+  String _animationName = "waving";
+  int _starcount = 1;
   AnimationController controller;
   Animation<double> animationDance;
   Duration duration;
@@ -25,18 +25,16 @@ class _GameScoreState extends State<GameScore> with TickerProviderStateMixin {
     super.initState();
     print("animation");
     print("scores ${widget.scores}");
-    if(widget.scores != null && widget.scores <= 10)
-    {
+    if (widget.scores != null && widget.scores <= 10) {
       setState(() {
-       _animationName ="failure";
-       _starcount = 3; 
+        _animationName = "failure";
+        _starcount = 3;
       });
-    }else{
+    } else {
       setState(() {
-       _animationName = "joy";
-       _starcount = 5; 
+        _animationName = "joy";
+        _starcount = 5;
       });
-
     }
     controller = new AnimationController(
         duration: new Duration(seconds: 2), vsync: this);
