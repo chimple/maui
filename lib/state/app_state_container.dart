@@ -97,6 +97,10 @@ class AppStateContainerState extends State<AppStateContainer> {
   List<ClassSession> _classSessions;
   ClassSession _myClassSession;
   List<String> _classStudents;
+  Map<String, Performance> _performances;
+  Set<String> _quizStudents;
+  QuizSession _quizSession;
+  Map<String, Performance> _quizPerformances;
 
   @override
   void initState() {
@@ -402,9 +406,27 @@ class AppStateContainerState extends State<AppStateContainer> {
         });
       } else if (obj is ClassStudents) {
       } else if (obj is Performance) {
+        if (_quizSession?.sessionId == obj.sessionId) {
+          _quizPerformances[obj.studentId] = obj;
+        } else if (state.loggedInUser.userType == UserType.teacher) {
+          setState(() {
+            _performances[obj.studentId] = obj;
+          });
+        }
       } else if (obj is QuizJoin) {
+        if (state.loggedInUser.userType == UserType.teacher &&
+            _quizSession.sessionId == obj.sessionId) {
+          _quizStudents.add(obj.studentId);
+        }
       } else if (obj is QuizSession) {
+        //notify UI that quiz is there
+        if (_quizSession == null) {
+          setState(() {
+            _quizSession = obj;
+          });
+        }
       } else if (obj is QuizUpdate) {
+        //not needed
       } else if (obj is UserProfile) {}
     } else if (message['recipientUserId'] == state.loggedInUser?.id) {
 //      NotifRepo().increment(message['userId'], message['messageType'], 1);
