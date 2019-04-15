@@ -10,43 +10,42 @@ class RulerGame extends StatefulWidget {
   _RulerGameState createState() => _RulerGameState();
 }
 
-enum Status {
-  Active,
-  Draggable,
-  Dragtarget,
+enum DraggableStatus {
+  active,
+  draggable,
+  dragTarget,
 }
 
 class _RulerGameState extends State<RulerGame> {
-  List<String> data = [];
-  List<int> positionn = [];
-  List<Status> _statuses;
-  List<String> formateData = [];
+  List<String> sequenceData = [];
+  List<DraggableStatus> _statuses;
+  List<String> formatData = [];
   List<Offset> offsets = [];
-  List<int> ansDataDarging = [];
+  List<int> ansDataDragging = [];
   bool translateAnimation = false;
   @override
   void initState() {
     super.initState();
-
-    positionn = widget.blankPosition;
-    ansDataDarging = widget.answer;
+    ansDataDragging = widget.answer;
     widget.sequence.forEach((e) {
-      formateData.add(e);
+      formatData.add(e);
     });
-    data = widget.sequence;
-    _statuses =
-        widget.answer.map((a) => Status.Draggable).toList(growable: false);
+    sequenceData = widget.sequence;
+    _statuses = widget.answer
+        .map((a) => DraggableStatus.active)
+        .toList(growable: false);
     widget.blankPosition.forEach((e) {
-      data.removeAt(e);
-      data.insert(e, "?");
+      sequenceData.removeAt(e);
+      sequenceData.insert(e, "?");
     });
   }
 
   Widget build(BuildContext context) {
     MediaQueryData media = MediaQuery.of(context);
+    print("..........${media.size.width}");
     double yAxis = media.size.height / 2;
-    double xAxis = media.size.width / (ansDataDarging.length + 1);
-    for (int i = 1; i <= ansDataDarging.length; i++) {
+    double xAxis = media.size.width / (ansDataDragging.length + 1);
+    for (int i = 1; i <= ansDataDragging.length; i++) {
       offsets.add(Offset(xAxis * i, yAxis));
     }
     int j = 0, k = 0;
@@ -69,11 +68,11 @@ class _RulerGameState extends State<RulerGame> {
                 ),
                 Expanded(
                   child: Row(
-                    children: data
+                    children: sequenceData
                         .map((e) => _buildTarget(
                               e,
                               j,
-                              formateData[j++],
+                              formatData[j++],
                               fontSize,
                             ))
                         .toList(),
@@ -83,7 +82,7 @@ class _RulerGameState extends State<RulerGame> {
         ),
       ),
       Stack(
-        children: ansDataDarging
+        children: ansDataDragging
             .map((e) => _buildDragable(
                   e,
                   k,
@@ -123,7 +122,7 @@ class _RulerGameState extends State<RulerGame> {
             ),
         onWillAccept: (values) {
           print("data is...........");
-          if (values.toString() == formateData[index]) {
+          if (values.toString() == formatData[index]) {
             return true;
           } else {
             setState(() {
@@ -134,19 +133,18 @@ class _RulerGameState extends State<RulerGame> {
         },
         onAccept: (val) {
           setState(() {
-            int ansIndex = ansDataDarging.indexOf(val);
-            ansDataDarging.remove(val);
-            ansDataDarging.insert(ansIndex, null);
-            print("............$positionn");
-            data.removeAt(index);
-            data.insert(index, val.toString());
+            int ansIndex = ansDataDragging.indexOf(val);
+            ansDataDragging.remove(val);
+            ansDataDragging.insert(ansIndex, null);
+            sequenceData.removeAt(index);
+            sequenceData.insert(index, val.toString());
           });
         },
       ),
     );
   }
 
-  Widget _buildDragable(e, int k, Status status, double fontSize) {
+  Widget _buildDragable(e, int k, DraggableStatus status, double fontSize) {
     return AnimatedPositioned(
       top: offsets[k].dy,
       left: offsets[k].dx,
