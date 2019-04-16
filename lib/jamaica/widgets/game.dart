@@ -1,5 +1,6 @@
-import 'package:maui/models/quiz_session.dart';
 import 'package:flare_flutter/flare_actor.dart';
+import 'package:maui/models/quiz_session.dart';
+// import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:maui/jamaica/state/game_utils.dart';
 import 'package:maui/jamaica/widgets/game_score.dart';
@@ -44,45 +45,129 @@ class _GameState extends State<Game> {
   @override
   Widget build(BuildContext context) {
     print("......controll comming in game");
+    MediaQueryData media = MediaQuery.of(context);
+    Size size = media.size;
     return Scaffold(
       backgroundColor: Colors.purple,
       body: SafeArea(
-        child: Column(
-          verticalDirection: VerticalDirection.up,
+        child: Stack(
           children: <Widget>[
-            Expanded(
-              child: _navigator,
+            Container(
+              color: Colors.indigo,
+              child: FlareActor("assets/hud/bg.flr",
+                  alignment: Alignment.center,
+                  fit: BoxFit.cover,
+                  animation: "bg"),
             ),
             Column(
+              verticalDirection: VerticalDirection.up,
               children: <Widget>[
-                SizedBox(
-                  height: 128.0,
-                  child: Row(
-                    children: <Widget>[
-                      SizedBox(
-                        height: 128.0,
-                        width: 128.0,
-                        child: Hero(
-                          tag: 'chimp',
-                          child: FlareActor("assets/character/chimp.flr",
-                              alignment: Alignment.center,
-                              fit: BoxFit.contain,
-                              animation: "idle"),
-                        ),
-                      ),
-                      Expanded(
-                        child: Stars(
-                          total: widget.quizSession.gameData.length,
-                          show: _stars,
-                        ),
-                      )
-                    ],
-                  ),
+                Expanded(
+                  flex: 27,
+                  child: _navigator,
                 ),
+                Row(
+                  children: <Widget>[
+                    Container(
+                      height: size.width * 0.17,
+                      width: size.width * 0.17,
+                      child: Hero(
+                        tag: 'chimp',
+                        child: FlareActor("assets/hud/chimp_1.flr",
+                            alignment: Alignment.center,
+                            fit: BoxFit.cover,
+                            animation: "happy"),
+                      ),
+                    ),
+                    Flexible(
+                      flex: 5,
+                        child: Text(
+                      'In this game you have to click on the alphabets in sequence order.',
+                      style: TextStyle(fontSize: size.width * 0.023),
+                    ))
+                  ],
+                ),
+                Divider(
+                  color: Colors.black,
+                  height: 0.0,
+                ),
+                Expanded(flex: 2, child: buildUI(size)),
               ],
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget buildUI(Size size) {
+    return Container(
+      child: Row(
+        children: <Widget>[
+          Flexible(
+            flex: 1,
+            child: Column(
+              children: <Widget>[
+                Icon(
+                  Icons.close,
+                  size: size.width * 0.055,
+                  color: Colors.black,
+                ),
+                Text('Close',style: TextStyle(fontSize: size.width * 0.02),),
+              ],
+            ),
+          ),
+          Flexible(
+            flex: 10,
+            child: Container(
+                ),
+          ),
+          Flexible(
+            flex: 3,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Flexible(
+                  flex: 1,
+                  child: Stack(
+                    children: <Widget>[
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(15))),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Flexible(
+                            flex: 2,
+                            child: Text(
+                              '$_stars',
+                              style: TextStyle(fontSize: size.width * 0.027),
+                            ),
+                          ),
+                          Flexible(
+                            flex: 7,
+                            child: Stars(
+                              total: 5,
+                              show: _stars,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                Flexible(
+                  flex: 2,
+                  child: Text('Game Name',style: TextStyle(fontSize: size.width * 0.02)),
+                ),
+                // Text('Game name')
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

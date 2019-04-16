@@ -100,6 +100,7 @@ class AppStateContainerState extends State<AppStateContainer> {
   Map<String, Performance> _performances;
   Set<String> _quizStudents;
   QuizSession _quizSession;
+  Map<QuizSession, StatusEnum> _quizSessions;
   Map<String, Performance> _quizPerformances;
 
   @override
@@ -420,13 +421,20 @@ class AppStateContainerState extends State<AppStateContainer> {
         }
       } else if (obj is QuizSession) {
         //notify UI that quiz is there
-        if (_quizSession == null) {
-          setState(() {
-            _quizSession = obj;
-          });
-        }
+        setState(() {
+          _quizSessions[obj] = StatusEnum.create;
+        });
       } else if (obj is QuizUpdate) {
-        //not needed
+        setState(() {
+          final quizSession = _quizSessions.keys
+              .firstWhere((q) => q.sessionId == obj.sessionId);
+          _quizSessions[quizSession] = obj.status;
+          if (_quizSession?.sessionId == obj.sessionId) {
+            _quizSession = null;
+          }
+          //trigger quiz start or end
+        });
+        //show scoreboard
       } else if (obj is UserProfile) {}
     } else if (message['recipientUserId'] == state.loggedInUser?.id) {
 //      NotifRepo().increment(message['userId'], message['messageType'], 1);
@@ -443,6 +451,72 @@ class AppStateContainerState extends State<AppStateContainer> {
 //        showNotification(message['userId'], message['messageType'], '',
 //            message['messageType'] + ':' + message['userId']);
       }
+    }
+  }
+
+  createQuizSession(QuizSession quizSession) async {
+    if (state.loggedInUser.userType == UserType.teacher &&
+        _quizSession == null) {
+      setState(() {
+        _quizSessions[quizSession] = StatusEnum.create;
+        _quizSession = quizSession;
+      });
+      final standardSerializers =
+          (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
+      String message = jsonEncode(standardSerializers.serialize(quizSession));
+      await p2p.addGroupMessage(
+          state.loggedInUser.id, '0', 'json', message, true, '');
+    }
+  }
+
+  startQuizSession(QuizSession quizSession) async {
+    if (state.loggedInUser.userType == UserType.teacher &&
+        _quizSession != null) {
+      QuizUpdate quizUpdate = QuizUpdate((q) => q
+        ..sessionId = _quizSession.sessionId
+        ..status = StatusEnum.start);
+      setState(() {
+        _quizSessions[quizSession] = StatusEnum.start;
+      });
+      final standardSerializers =
+          (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
+      String message = jsonEncode(standardSerializers.serialize(quizUpdate));
+      await p2p.addGroupMessage(
+          state.loggedInUser.id, '0', 'json', message, true, '');
+    }
+  }
+
+  endQuizSession() async {
+    if (state.loggedInUser.userType == UserType.teacher &&
+        _quizSession != null) {
+      QuizUpdate quizUpdate = QuizUpdate((q) => q
+        ..sessionId = _quizSession.sessionId
+        ..status = StatusEnum.end);
+      setState(() {
+        _quizSessions[_quizSession] = StatusEnum.end;
+        _quizSession = null;
+      });
+      final standardSerializers =
+          (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
+      String message = jsonEncode(standardSerializers.serialize(quizUpdate));
+      await p2p.addGroupMessage(
+          state.loggedInUser.id, '0', 'json', message, true, '');
+    }
+  }
+
+  joinQuizSession(QuizSession quizSession) async {
+    if (_quizSession == null) {
+      QuizJoin quizJoin = QuizJoin((q) => q
+        ..sessionId = quizSession.sessionId
+        ..studentId = state.loggedInUser.id);
+      setState(() {
+        _quizSession = quizSession;
+      });
+      final standardSerializers =
+          (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
+      String message = jsonEncode(standardSerializers.serialize(quizJoin));
+      await p2p.addGroupMessage(
+          state.loggedInUser.id, '0', 'json', message, true, '');
     }
   }
 
