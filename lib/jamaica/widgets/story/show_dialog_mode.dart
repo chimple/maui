@@ -109,30 +109,25 @@ class _ShowDialogModeState extends State<ShowDialogMode> {
                     }),
               ],
             ),
-            Column(
-              children: <Widget>[
-                Text(
-                  text,
-                  style: TextStyle(
-                      fontSize: mediaQuery.size.height * 0.05,
-                      color: Colors.green),
-                ),
-                Image.asset('assets/stories/images/$text.jpg',
-                    height: mediaQuery.orientation == Orientation.portrait
-                        ? mediaQuery.size.height * 0.2
-                        : mediaQuery.size.height * 0.3),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Text(
-                    textDesciption + '$text',
-                    style: TextStyle(
-                        fontSize: mediaQuery.orientation == Orientation.portrait
-                            ? mediaQuery.size.height * 0.02
-                            : mediaQuery.size.height * 0.03,
-                        color: Colors.black),
-                  ),
-                )
-              ],
+            Text(
+              text,
+              style: TextStyle(
+                  fontSize: mediaQuery.size.height * 0.05, color: Colors.green),
+            ),
+            Image.asset('assets/stories/images/$text.jpg',
+                height: mediaQuery.orientation == Orientation.portrait
+                    ? mediaQuery.size.height * 0.2
+                    : mediaQuery.size.height * 0.3),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Text(
+                textDesciption + '$text',
+                style: TextStyle(
+                    fontSize: mediaQuery.orientation == Orientation.portrait
+                        ? mediaQuery.size.height * 0.02
+                        : mediaQuery.size.height * 0.03,
+                    color: Colors.black),
+              ),
             )
           ],
         ),
