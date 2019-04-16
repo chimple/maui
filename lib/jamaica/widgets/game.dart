@@ -89,7 +89,6 @@ class _GameState extends State<Game> {
                           child: Text(
                             'In this game you have to click on the alphabets in sequence order.',
                             style: Theme.of(context).textTheme.headline,
-                            // TextStyle(fontSize: size.width * 0.023),
                           ))
                     ],
                   ),
@@ -119,11 +118,10 @@ class _GameState extends State<Game> {
                   padding: const EdgeInsets.all(1.0),
                   child: Icon(
                     Icons.close,
-                    size: size.width * 0.1,
+                    size: size.width * 0.095,
                     color: Colors.black,
                   ),
                 ),
-                // Text('Close',style: TextStyle(fontSize: size.width * 0.02),),
               ],
             ),
           ),
@@ -172,14 +170,6 @@ class _GameState extends State<Game> {
                     ],
                   ),
                 ),
-                // Flexible(
-                //   child: Container(),
-                // )
-                // Flexible(
-                //   flex: 2,
-                //   child: Text('Game Name',style: TextStyle(fontSize: size.width * 0.02)),
-                // ),
-                // Text('Game name')
               ],
             ),
           ),
