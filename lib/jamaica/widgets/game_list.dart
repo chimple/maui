@@ -218,8 +218,8 @@ class GameButton extends StatelessWidget {
                         Expanded(
                           child: Align(
                             alignment: Alignment.centerLeft,
-                                                      child: Text(gameConfig.name,
-                        //  maxLines: 2,
+                            child: Text(gameConfig.name,
+                                //  maxLines: 2,
                                 // Text(Loca.of(context).intl(gameConfig.name),
                                 textDirection: TextDirection.ltr,
                                 style: TextStyle(
@@ -253,10 +253,9 @@ class GameButton extends StatelessWidget {
                                       color: Colors.white,
                                       fontWeight: FontWeight.w600),
                                 ),
-                                onPressed:
-                                    buttonStatus == _ButtonStatus.active
-                                        ? () => onTap(gameConfig)
-                                        : () {},
+                                onPressed: buttonStatus == _ButtonStatus.active
+                                    ? () => onTap(gameConfig)
+                                    : () {},
                               )),
                         ),
                       ],
