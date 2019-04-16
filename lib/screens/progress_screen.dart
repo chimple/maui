@@ -57,66 +57,46 @@ class _ProgressScreenState extends State<ProgressScreen> {
   @override
   Widget build(BuildContext context) {
     var keys = _performance.keys.toList();
-    return Scaffold(
-      appBar: _buildAppBar(),
-      body: _buildPerformanceCardList(keys),
-    );
-    //return _buildPerformanceCardList(keys);
-  }
 
-  AppBar _buildAppBar(){
-    return AppBar(
-      actions: <Widget>[
-        IconButton(
-          icon: Icon(Icons.add),
-          onPressed: (){
-            print('Add Button pressed');
-          },
-        )
-      ]
-    );
-  }
-
-  Column _buildPerformanceCardList(List<String> keys) {
     return Column(
-    children: <Widget>[
-      Expanded(
-        flex: 1,
-        child: ListView.builder(
-            itemCount: keys.length,
-            itemBuilder: (context, index) {
-              return Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
-                elevation: 3,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Container(
+      children: <Widget>[
+        Expanded(
+          flex: 1,
+          child: ListView.builder(
+              itemCount: keys.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8)),
+                  elevation: 3,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Container(
+                          child: Expanded(
+                              flex: 1, child: buildLeftSection(keys, index))),
+                      Container(
                         child: Expanded(
-                            flex: 1, child: buildLeftSection(keys, index))),
-                    Container(
-                      child: Expanded(
-                        flex: 4,
-                        child: Column(
-                          children: <Widget>[
-                            Text('Game Name', style: TextStyle(fontSize: 20)),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: LinearProgressIndicator(),
-                            )
-                          ],
+                          flex: 4,
+                          child: Column(
+                            children: <Widget>[
+                              Text('Game Name', style: TextStyle(fontSize: 20)),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: LinearProgressIndicator(),
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                    )
-                  ],
-                ),
-              );
-            }),
-      ),
-      RaisedButton(child: Text('Add'), onPressed: changeData)
-    ],
-  );
+                      )
+                    ],
+                  ),
+                );
+              }),
+        ),
+        RaisedButton(child: Text('Add'), onPressed: changeData)
+      ],
+    );
   }
 
   Column buildLeftSection(List<String> keys, int index) {
