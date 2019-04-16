@@ -90,15 +90,24 @@ class _ShowDialogModeState extends State<ShowDialogMode> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Align(
-              alignment: AlignmentDirectional.topEnd,
-              child: new IconButton(
-                  icon: new Icon(Icons.volume_up),
-                  iconSize: mediaQuery.size.height * 0.07,
-                  color: Colors.black,
-                  onPressed: () {
-                    flutterTts.speak(text);
-                  }),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                new IconButton(
+                    icon: new Icon(Icons.close),
+                    iconSize: mediaQuery.size.height * 0.07,
+                    color: Colors.black,
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    }),
+                new IconButton(
+                    icon: new Icon(Icons.volume_up),
+                    iconSize: mediaQuery.size.height * 0.07,
+                    color: Colors.black,
+                    onPressed: () {
+                      flutterTts.speak(text);
+                    }),
+              ],
             ),
             Column(
               children: <Widget>[
