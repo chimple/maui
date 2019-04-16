@@ -31,7 +31,7 @@ class StoryPageState extends State<StoryPage> {
     for (int i = 0; i < widget.pages.length; i++)
       _storyMode.add(StoryMode.textMode);
     _controller = new ScrollController();
-    new Future.delayed(Duration(seconds: 3), () {
+    new Future.delayed(Duration(seconds: 2), () {
       _controller.animateTo((MediaQuery.of(context).size.height * 1.1),
           curve: Curves.ease, duration: Duration(milliseconds: 500));
     });
