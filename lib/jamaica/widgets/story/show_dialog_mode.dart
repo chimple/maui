@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 enum StoryMode {
   activityMode,
@@ -27,6 +28,7 @@ class _ShowDialogModeState extends State<ShowDialogMode> {
   StoryMode storyMode = StoryMode.textHighlighterMode;
   bool highlightOnLongPress = false;
   int highlightIndex = -1;
+  FlutterTts flutterTts = new FlutterTts();
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +96,9 @@ class _ShowDialogModeState extends State<ShowDialogMode> {
                   icon: new Icon(Icons.volume_up),
                   iconSize: mediaQuery.size.height * 0.07,
                   color: Colors.black,
-                  onPressed: () {}),
+                  onPressed: () {
+                    flutterTts.speak(text);
+                  }),
             ),
             Column(
               children: <Widget>[

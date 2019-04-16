@@ -296,6 +296,8 @@ class _TextAudioState extends State<AudioTextBold> {
               Expanded(
                   flex: 4,
                   child: Container(
+                    height: double.infinity,
+                    width: double.infinity,
                     decoration: BoxDecoration(
                         // border: Border.all(width: 2.0, color: Colors.white),
                         borderRadius: BorderRadius.circular(20.0),

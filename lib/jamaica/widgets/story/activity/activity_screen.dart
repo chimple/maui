@@ -86,6 +86,16 @@ class _ActivityScreenState extends State<ActivityScreen> {
                     onComplete: (s) {
                       setState(() => _isEnable = true);
                     },
+                    data: BuiltList([
+                      "tiger",
+                      "cloud",
+                      "building",
+                      "tree",
+                      "hospital",
+                      "building",
+                      "tree",
+                      "hospital"
+                    ]),
                   ),
                   JumbleWords(
                       answers: BuiltList<String>(
