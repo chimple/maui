@@ -29,4 +29,8 @@ class LessonRepo {
   Future<List<Lesson>> getLessonsByHasOrder(int hasOrder) async {
     return await lessonDao.getLessonsByHasOrder(hasOrder);
   }
+
+  Future<List<Lesson>> getLessonsByTopic(TopicType topic) async {
+    return await lessonDao.getLessonsByTopic(topic);
+  }
 }
