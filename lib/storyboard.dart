@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:maui/jamaica/screens/story_screen.dart';
 import 'package:maui/storyboards/collected_item_story.dart';
+import 'package:maui/storyboards/game_score_story.dart';
 import 'package:maui/storyboards/games/bingo_game_story.dart';
 import 'package:maui/storyboards/games/counting_game_story.dart';
 import 'package:maui/storyboards/games/crossword_game_story.dart';
@@ -21,14 +22,16 @@ import 'package:maui/storyboards/games/order_it_game_story.dart';
 import 'package:maui/storyboards/games/recognize_number_game_story.dart';
 import 'package:maui/storyboards/games/reflex_game_story.dart';
 import 'package:maui/storyboards/games/rhyme_words_game_story.dart';
+import 'package:maui/storyboards/games/ruler_game_story.dart';
 import 'package:maui/storyboards/games/sequence_alphabet_game_story.dart';
 import 'package:maui/storyboards/games/sequence_the_number_game_story.dart';
-
 import 'package:maui/storyboards/games/basic_counting_game_story.dart';
 import 'package:maui/storyboards/games/spin_wheel_game_story.dart';
 import 'package:maui/storyboards/games/tap_wrong_game_story.dart';
 import 'package:maui/storyboards/games/true_false_game_story.dart';
+import 'package:maui/storyboards/monster_game_story.dart';
 import 'package:maui/storyboards/map_reward_screen_story.dart';
+import 'package:maui/storyboards/screens/loggin_as.dart';
 import 'package:maui/storyboards/user_progress_screen_story.dart';
 import 'package:maui/storyboards/widgets/audio_widget_story.dart';
 import 'package:maui/storyboards/widgets/bento_box_story.dart';
@@ -50,6 +53,8 @@ import 'package:storyboard/storyboard.dart';
 
 void main() {
   runApp(StoryboardApp([
+    GameScoreStory(),
+    RulerNumbersGameStory(),
     AudioWidgetStory(),
     BasicCountingGameStory(),
     BentoBoxStory(),
@@ -75,6 +80,7 @@ void main() {
     MatchWithImageGameStory(),
     MathOpGameStory(),
     MemoryGameStory(),
+    MonsterGameStory(),
     OrderBySizeGameStory(),
     OrderItGameStory(),
     RecognizeNumberGameStory(),
@@ -94,5 +100,6 @@ void main() {
     TrueFalseGameStory(),
     MapRewardsScreenStory(),
     UserProgressScreenStory(),
+    LoginAsStory()
   ]));
 }
