@@ -8,12 +8,15 @@ class Stars extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: List<Widget>.generate(
         total,
         (int index) => Flexible(
+          
               child: Image.asset(index < show
-                  ? 'assets/score/star_gained.png'
-                  : 'assets/score/star.png'),
+                  ? 'assets/star_gained.png'
+                  : 'assets/star.png'),
             ),
       ),
     );

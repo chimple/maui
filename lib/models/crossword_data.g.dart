@@ -130,7 +130,7 @@ class _$CrosswordData extends CrosswordData {
   @override
   final BuiltList<BuiltList<String>> data;
 
-  factory _$CrosswordData([void updates(CrosswordDataBuilder b)]) =>
+  factory _$CrosswordData([void Function(CrosswordDataBuilder) updates]) =>
       (new CrosswordDataBuilder()..update(updates)).build();
 
   _$CrosswordData._({this.gameId, this.images, this.data}) : super._() {
@@ -146,7 +146,7 @@ class _$CrosswordData extends CrosswordData {
   }
 
   @override
-  CrosswordData rebuild(void updates(CrosswordDataBuilder b)) =>
+  CrosswordData rebuild(void Function(CrosswordDataBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -216,7 +216,7 @@ class CrosswordDataBuilder
   }
 
   @override
-  void update(void updates(CrosswordDataBuilder b)) {
+  void update(void Function(CrosswordDataBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -253,7 +253,7 @@ class _$ImageData extends ImageData {
   @override
   final int y;
 
-  factory _$ImageData([void updates(ImageDataBuilder b)]) =>
+  factory _$ImageData([void Function(ImageDataBuilder) updates]) =>
       (new ImageDataBuilder()..update(updates)).build();
 
   _$ImageData._({this.image, this.x, this.y}) : super._() {
@@ -269,7 +269,7 @@ class _$ImageData extends ImageData {
   }
 
   @override
-  ImageData rebuild(void updates(ImageDataBuilder b)) =>
+  ImageData rebuild(void Function(ImageDataBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -335,7 +335,7 @@ class ImageDataBuilder implements Builder<ImageData, ImageDataBuilder> {
   }
 
   @override
-  void update(void updates(ImageDataBuilder b)) {
+  void update(void Function(ImageDataBuilder) updates) {
     if (updates != null) updates(this);
   }
 

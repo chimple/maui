@@ -266,7 +266,7 @@ class _$StoryConfig extends StoryConfig {
   @override
   final BuiltList<Page> pages;
 
-  factory _$StoryConfig([void updates(StoryConfigBuilder b)]) =>
+  factory _$StoryConfig([void Function(StoryConfigBuilder) updates]) =>
       (new StoryConfigBuilder()..update(updates)).build();
 
   _$StoryConfig._({this.storyId, this.coverImagePath, this.title, this.pages})
@@ -286,7 +286,7 @@ class _$StoryConfig extends StoryConfig {
   }
 
   @override
-  StoryConfig rebuild(void updates(StoryConfigBuilder b)) =>
+  StoryConfig rebuild(void Function(StoryConfigBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -363,7 +363,7 @@ class StoryConfigBuilder implements Builder<StoryConfig, StoryConfigBuilder> {
   }
 
   @override
-  void update(void updates(StoryConfigBuilder b)) {
+  void update(void Function(StoryConfigBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -405,7 +405,7 @@ class _$Page extends Page {
   @override
   final BuiltList<ImageItemDetail> imageitemDetails;
 
-  factory _$Page([void updates(PageBuilder b)]) =>
+  factory _$Page([void Function(PageBuilder) updates]) =>
       (new PageBuilder()..update(updates)).build();
 
   _$Page._(
@@ -433,7 +433,7 @@ class _$Page extends Page {
   }
 
   @override
-  Page rebuild(void updates(PageBuilder b)) =>
+  Page rebuild(void Function(PageBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -520,7 +520,7 @@ class PageBuilder implements Builder<Page, PageBuilder> {
   }
 
   @override
-  void update(void updates(PageBuilder b)) {
+  void update(void Function(PageBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -563,7 +563,7 @@ class _$ImageItemDetail extends ImageItemDetail {
   @override
   final String width;
 
-  factory _$ImageItemDetail([void updates(ImageItemDetailBuilder b)]) =>
+  factory _$ImageItemDetail([void Function(ImageItemDetailBuilder) updates]) =>
       (new ImageItemDetailBuilder()..update(updates)).build();
 
   _$ImageItemDetail._({this.itemName, this.x, this.y, this.height, this.width})
@@ -586,7 +586,7 @@ class _$ImageItemDetail extends ImageItemDetail {
   }
 
   @override
-  ImageItemDetail rebuild(void updates(ImageItemDetailBuilder b)) =>
+  ImageItemDetail rebuild(void Function(ImageItemDetailBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -671,7 +671,7 @@ class ImageItemDetailBuilder
   }
 
   @override
-  void update(void updates(ImageItemDetailBuilder b)) {
+  void update(void Function(ImageItemDetailBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -689,7 +689,7 @@ class _$Stories extends Stories {
   @override
   final BuiltList<StoryConfig> stories;
 
-  factory _$Stories([void updates(StoriesBuilder b)]) =>
+  factory _$Stories([void Function(StoriesBuilder) updates]) =>
       (new StoriesBuilder()..update(updates)).build();
 
   _$Stories._({this.stories}) : super._() {
@@ -699,7 +699,7 @@ class _$Stories extends Stories {
   }
 
   @override
-  Stories rebuild(void updates(StoriesBuilder b)) =>
+  Stories rebuild(void Function(StoriesBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -750,7 +750,7 @@ class StoriesBuilder implements Builder<Stories, StoriesBuilder> {
   }
 
   @override
-  void update(void updates(StoriesBuilder b)) {
+  void update(void Function(StoriesBuilder) updates) {
     if (updates != null) updates(this);
   }
 
