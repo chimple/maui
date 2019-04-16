@@ -5,7 +5,8 @@ class RulerGame extends StatefulWidget {
   final List<String> sequence;
   final List<int> blankPosition;
   final List<int> answer;
-  const RulerGame({this.sequence, this.blankPosition, this.answer});
+  const RulerGame({Key key, this.sequence, this.blankPosition, this.answer})
+      : super(key: key);
   @override
   _RulerGameState createState() => _RulerGameState();
 }
@@ -26,11 +27,13 @@ class _RulerGameState extends State<RulerGame> {
   @override
   void initState() {
     super.initState();
-    ansDataDragging = widget.answer;
+    widget.answer.forEach((e) {
+      ansDataDragging.add(e);
+    });
     widget.sequence.forEach((e) {
       formatData.add(e);
+      sequenceData.add(e);
     });
-    sequenceData = widget.sequence;
     _statuses = widget.answer
         .map((a) => DraggableStatus.active)
         .toList(growable: false);
@@ -53,7 +56,7 @@ class _RulerGameState extends State<RulerGame> {
     double fontSize = rulerHeight * 0.2;
     return Stack(children: [
       Positioned(
-        top: 50.0,
+        top: media.size.height / 4,
         left: 0.0,
         child: SizedBox(
           height: rulerHeight,
@@ -121,7 +124,6 @@ class _RulerGameState extends State<RulerGame> {
               ],
             ),
         onWillAccept: (values) {
-          print("data is...........");
           if (values.toString() == formatData[index]) {
             return true;
           } else {
@@ -144,10 +146,10 @@ class _RulerGameState extends State<RulerGame> {
     );
   }
 
-  Widget _buildDragable(e, int k, DraggableStatus status, double fontSize) {
+  Widget _buildDragable(e, int index, DraggableStatus status, double fontSize) {
     return AnimatedPositioned(
-      top: offsets[k].dy,
-      left: offsets[k].dx,
+      top: offsets[index].dy,
+      left: offsets[index].dx,
       duration:
           !translateAnimation ? Duration.zero : Duration(milliseconds: 500),
       child: Draggable(
@@ -157,15 +159,14 @@ class _RulerGameState extends State<RulerGame> {
           });
         },
         onDragEnd: (d) {
-          final currentOffset = Offset(offsets[k].dx, offsets[k].dy);
+          final currentOffset = Offset(offsets[index].dx, offsets[index].dy);
           WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {
-                offsets[k] = currentOffset;
+                offsets[index] = currentOffset;
                 translateAnimation = true;
               }));
           setState(() {
-            offsets[k] = (context.findRenderObject() as RenderBox)
+            offsets[index] = (context.findRenderObject() as RenderBox)
                 .globalToLocal(d.offset);
-            print("offsets is....${offsets[k]}");
           });
         },
         data: e,
@@ -173,7 +174,7 @@ class _RulerGameState extends State<RulerGame> {
             ? Container()
             : Text(
                 "$e",
-                style: TextStyle(fontSize: fontSize),
+                style: TextStyle(fontSize: 1.5 * fontSize),
               ),
         feedback: e == null
             ? Container()
