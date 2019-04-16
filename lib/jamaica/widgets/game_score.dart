@@ -37,9 +37,9 @@ class _GameScoreState extends State<GameScore> with TickerProviderStateMixin {
       });
     }
     controller = new AnimationController(
-        duration: new Duration(seconds: 2), vsync: this);
+        duration: new Duration(seconds: 1), vsync: this);
     animationDance = new Tween(begin: 0.0, end: 1.0).animate(
-      new CurvedAnimation(parent: controller, curve: Curves.bounceInOut),
+      new CurvedAnimation(parent: controller, curve: Curves.easeInOut),
     );
     controller.forward();
     // _myZoom();
