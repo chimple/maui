@@ -12,9 +12,9 @@ abstract class Performance implements Built<Performance, PerformanceBuilder> {
   String get answer;
   bool get correct;
   int get score;
+  int get total;
   DateTime get startTime;
   DateTime get endTime;
-
   Performance._();
   factory Performance([updates(PerformanceBuilder b)]) = _$Performance;
   static Serializer<Performance> get serializer => _$performanceSerializer;

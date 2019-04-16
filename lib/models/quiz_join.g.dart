@@ -61,7 +61,7 @@ class _$QuizJoin extends QuizJoin {
   @override
   final String studentId;
 
-  factory _$QuizJoin([void updates(QuizJoinBuilder b)]) =>
+  factory _$QuizJoin([void Function(QuizJoinBuilder) updates]) =>
       (new QuizJoinBuilder()..update(updates)).build();
 
   _$QuizJoin._({this.sessionId, this.studentId}) : super._() {
@@ -74,7 +74,7 @@ class _$QuizJoin extends QuizJoin {
   }
 
   @override
-  QuizJoin rebuild(void updates(QuizJoinBuilder b)) =>
+  QuizJoin rebuild(void Function(QuizJoinBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -133,7 +133,7 @@ class QuizJoinBuilder implements Builder<QuizJoin, QuizJoinBuilder> {
   }
 
   @override
-  void update(void updates(QuizJoinBuilder b)) {
+  void update(void Function(QuizJoinBuilder) updates) {
     if (updates != null) updates(this);
   }
 
