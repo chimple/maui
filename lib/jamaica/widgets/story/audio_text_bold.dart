@@ -318,7 +318,11 @@ class _TextAudioState extends State<AudioTextBold> {
                   resume: () => resume(),
                 ),
               ),
-              Expanded(flex: 7, child: Container(child: _buildText()))
+              Expanded(
+                  flex: 7,
+                  child: Padding(
+                      padding: EdgeInsets.only(left: 20, right: 20),
+                      child: _buildText()))
             ],
           )
         : Stack(
