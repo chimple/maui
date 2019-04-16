@@ -8,7 +8,7 @@ part of 'game_data.dart';
 
 abstract class GameDataBuilder {
   void replace(GameData other);
-  void update(void updates(GameDataBuilder b));
+  void update(void Function(GameDataBuilder) updates);
   String get gameId;
   set gameId(String gameId);
 }

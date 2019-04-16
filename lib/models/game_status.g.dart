@@ -78,7 +78,7 @@ class _$GameStatus extends GameStatus {
   @override
   final bool open;
 
-  factory _$GameStatus([void updates(GameStatusBuilder b)]) =>
+  factory _$GameStatus([void Function(GameStatusBuilder) updates]) =>
       (new GameStatusBuilder()..update(updates)).build();
 
   _$GameStatus._(
@@ -99,7 +99,7 @@ class _$GameStatus extends GameStatus {
   }
 
   @override
-  GameStatus rebuild(void updates(GameStatusBuilder b)) =>
+  GameStatus rebuild(void Function(GameStatusBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -175,7 +175,7 @@ class GameStatusBuilder implements Builder<GameStatus, GameStatusBuilder> {
   }
 
   @override
-  void update(void updates(GameStatusBuilder b)) {
+  void update(void Function(GameStatusBuilder) updates) {
     if (updates != null) updates(this);
   }
 
