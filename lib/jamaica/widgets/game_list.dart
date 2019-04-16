@@ -11,9 +11,11 @@ import 'package:maui/jamaica/screens/game_level.dart';
 enum _ButtonStatus { active, disabled }
 
 class GameList extends StatefulWidget {
-  final Map<String, List<GameConfig>> games;
+  final Map<String, Map<String, List<GameConfig>>> games;
   final BuiltMap<String, GameStatus> gameStatuses;
-  const GameList({Key key, this.games, this.gameStatuses}) : super(key: key);
+  final int score;
+  const GameList({Key key, this.games, this.gameStatuses, this.score = 4})
+      : super(key: key);
 
   @override
   GameListState createState() {
@@ -21,10 +23,20 @@ class GameList extends StatefulWidget {
   }
 }
 
-class GameListState extends State<GameList> {
+class GameListState extends State<GameList>
+    with SingleTickerProviderStateMixin {
   String gameToOpen = '';
   GameConfig gameConfig;
   bool isComplete = false;
+  TabController _tabController;
+
+  List data;
+  @override
+  void initState() {
+    super.initState();
+    data = widget.games.values.toList();
+    _tabController = new TabController(vsync: this, length: 3);
+  }
 
   void _onTap(GameConfig gameConfig) {
     setState(() {
@@ -58,77 +70,91 @@ class GameListState extends State<GameList> {
   }
 
   @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  Widget tabBarView(data, MediaQueryData media, bool _isPortrait) {
+    List<GameConfig> gameConfig = [];
+    for (int i = 0; i < data.values.length; i++) {
+      gameConfig.addAll(data.values.toList()[i]);
+    }
+    return FractionallySizedBox(
+        widthFactor: .6,
+        child: ListView(
+          shrinkWrap: true,
+          children: gameConfig
+              .map((t) => GameButton(
+                    t,
+                    score: widget.score,
+                    onTap: _onTap,
+                    flareCallback: _flareCallback,
+                    animationFlag: t.name == gameToOpen ? true : false,
+                    buttonStatus: gameToOpen != ''
+                        ? _ButtonStatus.disabled
+                        : _ButtonStatus.active,
+                  ))
+              .toList(growable: false),
+        ));
+  }
+
+  @override
   Widget build(BuildContext context) {
     MediaQueryData media = MediaQuery.of(context);
     final _isPortrait = media.size.width < media.size.height;
-    final TextStyle textStyle = Theme.of(context).textTheme.display1;
-    return Container(
-        color: Colors.blueGrey[300],
-        child: Stack(children: [
-          FlareActor("assets/map/map_background2.flr",
-              alignment: Alignment.center,
-              fit: _isPortrait ? BoxFit.fitHeight : BoxFit.fitWidth,
-              isPaused: isComplete,
-              animation: "bird"),
-          ListView.builder(
-              shrinkWrap: true,
-              itemCount: widget.games.length,
-              itemBuilder: (_, int index) {
-                var categoryName = widget.games.keys.toList()[index];
-                var gameConfig = widget.games.values.toList()[index];
-
-                return Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Container(
-                          constraints: BoxConstraints(
-                              maxHeight: _isPortrait
-                                  ? media.size.height * .08
-                                  : media.size.height * .15),
-                          padding: EdgeInsets.only(
-                              left: 12 + media.size.width * .02, bottom: 10),
-                          child: Align(
-                              alignment: Alignment.bottomLeft,
-                              child: Text(
-                                categoryName,
-                                //Loca.of(context).intl(categoryName),
-                                style: new TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.white,
-                                  fontSize: _isPortrait
-                                      ? media.size.height * .03
-                                      : media.size.width * .03,
-                                ),
-                              ))),
-                      Container(
-                        constraints:
-                            BoxConstraints(maxHeight: media.size.height * 100),
-                        child: new GridView.count(
-                          shrinkWrap: true,
-                          key: new Key('Game_page'),
-                          physics: NeverScrollableScrollPhysics(),
-                          primary: true,
-                          crossAxisSpacing: 12.0,
-                          mainAxisSpacing: 12.0,
-                          crossAxisCount: _isPortrait ? 3 : 4,
-                          children: gameConfig
-                              .map((t) => GameButton(
-                                    t,
-                                    onTap: _onTap,
-                                    flareCallback: _flareCallback,
-                                    animationFlag:
-                                        t.name == gameToOpen ? true : false,
-                                    buttonStatus: gameToOpen != ''
-                                        ? _ButtonStatus.disabled
-                                        : _ButtonStatus.active,
-                                  ))
-                              .toList(growable: false),
-                        ),
-                      ),
-                    ]);
-              }),
-        ]));
+    return Stack(alignment: Alignment.center, children: [
+      Column(
+        children: <Widget>[
+          Expanded(
+            child: TabBarView(
+                controller: _tabController,
+                children: widget.games.values
+                    .map((f) => tabBarView(f, media, _isPortrait))
+                    .toList()),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+                constraints: BoxConstraints(
+                  maxHeight: 120,
+                  minHeight: 90,
+                ),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [Colors.orange[400], Colors.deepOrange],
+                  ),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30)),
+                ),
+                child: TabBar(
+                  labelColor: Colors.white,
+                  indicatorColor: Colors.white,
+                  indicatorWeight: 7,
+                  indicatorPadding: EdgeInsets.symmetric(horizontal: 30),
+                  tabs: [
+                    Tab(
+                      icon: Icon(Icons.menu),
+                      text: 'Litereacy',
+                    ),
+                    Tab(
+                      icon: Icon(Icons.search),
+                      text: 'Math',
+                    ),
+                    Tab(
+                      icon: Icon(Icons.access_time),
+                      text: 'Writing',
+                    ),
+                  ],
+                  controller: _tabController,
+                )),
+          ),
+        ],
+      )
+    ]);
   }
 }
 
@@ -139,10 +165,12 @@ class GameButton extends StatelessWidget {
   final bool animationFlag;
   final void Function(String) flareCallback;
   final _ButtonStatus buttonStatus;
+  final int score;
 
   const GameButton(this.gameConfig,
       {Key key,
       this.onTap,
+      this.score,
       this.animationFlag,
       this.buttonStatus,
       this.flareCallback})
@@ -150,50 +178,88 @@ class GameButton extends StatelessWidget {
 
   Widget build(BuildContext context) {
     MediaQueryData media = MediaQuery.of(context);
-    var size = media.size;
-    final iconSize = min(media.size.width, media.size.height) / 33;
+    final iconSize = min(media.size.width, media.size.height) / 32;
 
-    return new Container(
-      decoration: new BoxDecoration(
-        borderRadius: const BorderRadius.all(const Radius.circular(16.0)),
-      ),
-      margin: EdgeInsets.symmetric(horizontal: size.width * .02),
-      child: new InkWell(
-        onTap: buttonStatus == _ButtonStatus.active
-            ? () => onTap(gameConfig)
-            : null,
-        key: new Key(gameConfig.name),
-        child: new Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Expanded(
-              child: AspectRatio(
-                aspectRatio: 1,
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: const Color(0xff9309c6),
-                      borderRadius: BorderRadius.all(Radius.circular(12.0))),
-                  child: FlareActor("assets/character/button.flr",
-                      alignment: Alignment.center,
-                      fit: BoxFit.fill,
-                      callback: flareCallback,
-                      isPaused: !animationFlag,
-                      animation: animationFlag ? "correct" : "idle"),
-                ),
+    return Opacity(
+      opacity: 1,
+      child: Container(
+        margin: EdgeInsets.all(media.size.width * .03),
+        child: Material(
+          color: Colors.transparent,
+          elevation: 12.0,
+          child: Container(
+            padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(const Radius.circular(16.0)),
+              gradient: LinearGradient(
+                begin: Alignment.bottomLeft,
+                end: Alignment.bottomRight,
+                colors: [Colors.orange[400], Colors.white],
               ),
             ),
-            new Container(
-                padding: EdgeInsets.only(top: 10),
-                child: Text(gameConfig.name,
-                    // Text(Loca.of(context).intl(gameConfig.name),
-                    textAlign: TextAlign.center,
-                    textDirection: TextDirection.rtl,
-                    style: new TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: iconSize,
-                        color: Colors.white),
-                    overflow: TextOverflow.ellipsis))
-          ],
+            child: Row(
+              children: [
+                Expanded(
+                  child: AspectRatio(
+                    aspectRatio: .7,
+                    child: FlareActor("assets/character/button.flr",
+                        alignment: Alignment.center,
+                        fit: BoxFit.contain,
+                        callback: flareCallback,
+                        isPaused: !animationFlag,
+                        animation: animationFlag ? "happy" : "idle"),
+                  ),
+                ),
+                Flexible(
+                  flex: 2,
+                  child: IntrinsicHeight(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Text(gameConfig.name,
+                              // Text(Loca.of(context).intl(gameConfig.name),
+                              textDirection: TextDirection.rtl,
+                              style: new TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: iconSize,
+                                  color: Colors.deepOrange),
+                              overflow: TextOverflow.ellipsis),
+                        ),
+                        Text(
+                          'Progress',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                        LinearProgressIndicator(
+                          value: score / 5,
+                        ),
+                        Expanded(
+                          child: Align(
+                              alignment: Alignment.bottomRight,
+                              child: RaisedButton(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(16.0))),
+                                color: Colors.orange,
+                                child: Text(
+                                  '   play   ',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                onPressed: buttonStatus == _ButtonStatus.active
+                                    ? () => onTap(gameConfig)
+                                    : () {},
+                              )),
+                        )
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
         ),
       ),
     );
