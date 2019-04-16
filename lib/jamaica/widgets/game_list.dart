@@ -81,7 +81,7 @@ class GameListState extends State<GameList>
       gameConfig.addAll(data.values.toList()[i]);
     }
     return FractionallySizedBox(
-        widthFactor: .6,
+        widthFactor: .7,
         child: ListView(
           shrinkWrap: true,
           children: gameConfig
@@ -102,7 +102,9 @@ class GameListState extends State<GameList>
   @override
   Widget build(BuildContext context) {
     MediaQueryData media = MediaQuery.of(context);
-    final _isPortrait = media.size.width < media.size.height;
+    final double height = media.size.height;
+    final double width = media.size.width;
+    final _isPortrait = width < height;
     return Stack(alignment: Alignment.center, children: [
       Column(
         children: <Widget>[
@@ -116,10 +118,7 @@ class GameListState extends State<GameList>
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-                constraints: BoxConstraints(
-                  maxHeight: 120,
-                  minHeight: 90,
-                ),
+                height: _isPortrait ? height * .1 : height * .18,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
@@ -178,30 +177,32 @@ class GameButton extends StatelessWidget {
 
   Widget build(BuildContext context) {
     MediaQueryData media = MediaQuery.of(context);
-    final iconSize = min(media.size.width, media.size.height) / 32;
+    final iconSize = max(media.size.width, media.size.height) / 42;
 
-    return Opacity(
-      opacity: 1,
-      child: Container(
-        margin: EdgeInsets.all(media.size.width * .03),
-        child: Material(
-          color: Colors.transparent,
-          elevation: 12.0,
-          child: Container(
-            padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(const Radius.circular(16.0)),
-              gradient: LinearGradient(
-                begin: Alignment.bottomLeft,
-                end: Alignment.bottomRight,
-                colors: [Colors.orange[400], Colors.white],
+    return AspectRatio(
+      aspectRatio: 2.1,
+      child: Opacity(
+        opacity: 1,
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 10.0),
+          margin: EdgeInsets.all(media.size.width * .03),
+          child: Material(
+            color: Colors.transparent,
+            elevation: 10.0,
+            child: Container(
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                borderRadius:
+                    const BorderRadius.all(const Radius.circular(16.0)),
+                gradient: LinearGradient(
+                  begin: Alignment.bottomLeft,
+                  end: Alignment.bottomRight,
+                  colors: [Colors.orange[400], Colors.white],
+                ),
               ),
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: AspectRatio(
-                    aspectRatio: .7,
+              child: Row(
+                children: [
+                  Expanded(
                     child: FlareActor("assets/character/button.flr",
                         alignment: Alignment.center,
                         fit: BoxFit.contain,
@@ -209,23 +210,24 @@ class GameButton extends StatelessWidget {
                         isPaused: !animationFlag,
                         animation: animationFlag ? "happy" : "idle"),
                   ),
-                ),
-                Flexible(
-                  flex: 2,
-                  child: IntrinsicHeight(
+                  Flexible(
+                    flex: 2,
                     child: Column(
-                      mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Expanded(
-                          child: Text(gameConfig.name,
-                              // Text(Loca.of(context).intl(gameConfig.name),
-                              textDirection: TextDirection.rtl,
-                              style: new TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: iconSize,
-                                  color: Colors.deepOrange),
-                              overflow: TextOverflow.ellipsis),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(gameConfig.name,
+                                //  maxLines: 2,
+                                // Text(Loca.of(context).intl(gameConfig.name),
+                                textDirection: TextDirection.ltr,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: iconSize,
+                                    color: Colors.deepOrange),
+                                overflow: TextOverflow.ellipsis),
+                          ),
                         ),
                         Text(
                           'Progress',
@@ -233,6 +235,9 @@ class GameButton extends StatelessWidget {
                         ),
                         LinearProgressIndicator(
                           value: score / 5,
+                        ),
+                        Divider(
+                          color: Colors.transparent,
                         ),
                         Expanded(
                           child: Align(
@@ -243,7 +248,7 @@ class GameButton extends StatelessWidget {
                                         Radius.circular(16.0))),
                                 color: Colors.orange,
                                 child: Text(
-                                  '   play   ',
+                                  'play',
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.w600),
@@ -252,12 +257,12 @@ class GameButton extends StatelessWidget {
                                     ? () => onTap(gameConfig)
                                     : () {},
                               )),
-                        )
+                        ),
                       ],
                     ),
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
           ),
         ),
