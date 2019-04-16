@@ -1,13 +1,15 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:maui/jamaica/models/rewards_data.dart';
+import 'package:tahiti/activity_board.dart';
 import 'package:tuple/tuple.dart';
 import 'package:flutter_svg/svg.dart';
 
 class ShowRewards extends StatefulWidget {
   final Map<RewardData, List<RewardCategory>> rewardList;
+  final BuiltMap<String, int> items;
 
-  const ShowRewards({Key key, this.rewardList}) : super(key: key);
+  const ShowRewards({Key key, this.rewardList, this.items}) : super(key: key);
   @override
   _ShowRewardsState createState() => _ShowRewardsState();
 }
@@ -17,10 +19,13 @@ class _ShowRewardsState extends State<ShowRewards>
   PageController pageController = new PageController();
   List<Tuple4<String, String, int, int>> itemRange =
       List<Tuple4<String, String, int, int>>();
+
   int _itemCount = 0;
   int itemCrossAxisCount = 4;
   List<int> colorStatus = [];
-  List<String> category = [];
+  List<String> categoryList = [];
+  List<String> rewardImageList = [];
+  List<String> dummyList = [];
   String highlightedItem;
   int flag = 0;
   var currentPageValue = 0.0;
@@ -32,11 +37,24 @@ class _ShowRewardsState extends State<ShowRewards>
       itemRange.add(Tuple4(e.categoryName, e.categoryImagePath, _itemCount,
           _itemCount + (l.length / itemCrossAxisCount).ceil()));
       _itemCount += (l.length / itemCrossAxisCount).ceil();
-      category.add(e.categoryName);
+      categoryList.add(e.categoryName);
     });
-    var totalRewards =
-        widget.rewardList.values.map((v) => v.length).reduce((a, b) => a + b);
-    for (int i = 0; i < totalRewards + 1; i++) colorStatus.add(0);
+    print(widget.items);
+    // var totalRewards =
+    //     widget.rewardList.values.map((v) => v.length).reduce((a, b) => a + b);
+
+    widget.items.forEach((k, v) {
+      colorStatus.add(v);
+      dummyList.add(k);
+    });
+    for (int i = 0; i < dummyList.length; i++) {
+      if (colorStatus[i] == 0) {
+        rewardImageList.add(dummyList[i]);
+      }
+    }
+    print('imagelist is $rewardImageList');
+    print('color Status is  is $colorStatus');
+
     highlightedItem = itemRange.first.item1;
   }
 
@@ -48,7 +66,7 @@ class _ShowRewardsState extends State<ShowRewards>
 
   @override
   Widget build(BuildContext context) {
-    int index = 0;
+    int index = -1;
     return Container(
       child: Column(
         children: <Widget>[
@@ -111,6 +129,7 @@ class _ShowRewardsState extends State<ShowRewards>
                           children: widget.rewardList[d].map((f) {
                             index++;
                             return Container(
+                              key: Key('index $index'),
                               child: Center(
                                 child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -119,15 +138,22 @@ class _ShowRewardsState extends State<ShowRewards>
                                         radius:
                                             MediaQuery.of(context).size.width /
                                                 15,
-                                        backgroundColor: colorStatus[index] == 0
-                                            ? Colors.grey
-                                            : null,
+                                        backgroundColor: index <= 7
+                                            ? colorStatus[index] == 0
+                                                ? Colors.grey
+                                                : Colors.white
+                                            : Colors.grey,
                                         child: AspectRatio(
                                           aspectRatio: 2.0,
                                           child: SvgPicture.asset(
                                             f.rewardItemImagePath,
                                             package: 'tahiti',
-                                            color: Colors.red.withOpacity(0.3),
+                                            color: index <= 7
+                                                ? colorStatus[index] == 0
+                                                    ? Colors.red
+                                                        .withOpacity(0.3)
+                                                    : null
+                                                : Colors.red.withOpacity(0.3),
                                           ),
                                         ),
                                       ),
@@ -231,6 +257,12 @@ class _ShowRewardsState extends State<ShowRewards>
               color: Colors.white,
             ),
             onPressed: () {
+              setState(() {
+                ActivityBoard(
+                  rewardImageList: rewardImageList,
+                );
+              });
+              print('reward list on pop is  $rewardImageList');
               Navigator.of(context).pop();
             }),
       ],
