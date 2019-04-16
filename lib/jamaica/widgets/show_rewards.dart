@@ -48,7 +48,7 @@ class _ShowRewardsState extends State<ShowRewards>
       dummyList.add(k);
     });
     for (int i = 0; i < dummyList.length; i++) {
-      if (colorStatus[i] == 0) {
+      if (colorStatus[i] == 1) {
         rewardImageList.add(dummyList[i]);
       }
     }
