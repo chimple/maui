@@ -123,8 +123,8 @@ class _GameLevelState extends State<GameLevel>
                                 padding:
                                     EdgeInsets.all(media.size.height * 0.01),
                                 scrollDirection: Axis.horizontal,
-                                children: widget.levelList.map((e) =>
-                                      RawMaterialButton(
+                                children: widget.levelList
+                                    .map((e) => RawMaterialButton(
                                           key: ValueKey("$e"),
                                           shape: new CircleBorder(),
                                           elevation: 2.0,
@@ -140,8 +140,8 @@ class _GameLevelState extends State<GameLevel>
                                                     media.size.width * 0.05,
                                                 color: Colors.white),
                                           ),
-                                        )
-                                ).toList(growable: false),
+                                        ))
+                                    .toList(growable: false),
                               )),
                         ],
                       )
