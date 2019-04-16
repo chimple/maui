@@ -34,15 +34,11 @@ class PlayPauseButton extends StatelessWidget {
                       else if (audioPlayer.state == AudioPlayerState.PLAYING)
                         pause();
                     },
-              child: CircleAvatar(
-                radius: constraint.maxHeight * .8 / 2,
-                backgroundColor: Colors.white,
-                child: isPause
-                    ? Icon(Icons.play_arrow,
-                        size: constraint.maxHeight * .8, color: Colors.orange)
-                    : Icon(Icons.pause,
-                        size: constraint.maxHeight * .8, color: Colors.orange),
-              ),
+              child: isPause
+                  ? Icon(Icons.play_arrow,
+                      size: constraint.maxHeight * .8, color: Colors.orange)
+                  : Icon(Icons.pause,
+                      size: constraint.maxHeight * .8, color: Colors.orange),
             )
           : Container();
     });
