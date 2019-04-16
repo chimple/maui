@@ -8,6 +8,7 @@ import 'package:maui/components/Shaker.dart';
 import 'package:maui/components/camera.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/user_repo.dart';
+import 'package:maui/screens/login_as.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -67,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen>
     if (userId != null) {
       User user = await UserRepo().getUser(userId);
       await AppStateContainer.of(context).setLoggedInUser(user);
-      Navigator.of(context).pushNamed('/welcome');
+      //Navigator.of(context).pushNamed('/welcome');
     }
     var users = await UserRepo().getLocalUsers();
 
@@ -358,8 +359,9 @@ class _LoginScreenState extends State<LoginScreen>
             currentLessonId: 1,
             name: userName,
             points: 100));
-        AppStateContainer.of(context).setLoggedInUser(user);
-        Navigator.of(context).pushReplacementNamed('/welcome');
+        //AppStateContainer.of(context).setLoggedInUser(user);
+        //Navigator.of(context).pushReplacementNamed('/welcome');
+        Navigator.of(context).pushReplacementNamed('/login_as');
       });
     } else {
       controller.addStatusListener((status) {
