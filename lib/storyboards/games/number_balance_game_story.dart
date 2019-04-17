@@ -10,7 +10,6 @@ class NumberBalanceGameStory extends FullScreenStory {
         Scaffold(
           body: SafeArea(
             child: NumberBalanceGame(
-              question: 6,
               leftExpression: Tuple3('6', null, null),
               rightExpression: Tuple3('9', '-', '?'),
               choices: BuiltList<int>([2, 4, 3, 1]),
@@ -21,7 +20,6 @@ class NumberBalanceGameStory extends FullScreenStory {
         Scaffold(
           body: SafeArea(
             child: NumberBalanceGame(
-              question: 6,
               leftExpression: Tuple3('6', null, null),
               rightExpression: Tuple3('4', '+', '?'),
               choices: BuiltList<int>([2, 4, 3, 1]),
@@ -32,7 +30,6 @@ class NumberBalanceGameStory extends FullScreenStory {
         Scaffold(
           body: SafeArea(
             child: NumberBalanceGame(
-              question: 6,
               leftExpression: Tuple3('12', '-', '?'),
               rightExpression: Tuple3('9', '+', '?'),
               choices: BuiltList<int>([2, 6, 7, 1]),
@@ -43,7 +40,6 @@ class NumberBalanceGameStory extends FullScreenStory {
         Scaffold(
           body: SafeArea(
             child: NumberBalanceGame(
-              question: 6,
               leftExpression: Tuple3('2', '+', '?'),
               rightExpression: Tuple3('9', '-', '?'),
               choices: BuiltList<int>([2, 6, 7, 0]),

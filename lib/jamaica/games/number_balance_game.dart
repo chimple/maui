@@ -23,16 +23,15 @@ class _ChoiceDetail {
 }
 
 enum _Type { choice, question, answer }
+enum Equation { lefthandside, righthandside }
 
 class NumberBalanceGame extends StatefulWidget {
-  final int question;
   final Tuple3<String, String, String> leftExpression;
   final Tuple3<String, String, String> rightExpression;
   final BuiltList<int> choices;
   final OnGameOver onGameOver;
   const NumberBalanceGame(
       {Key key,
-      this.question,
       this.leftExpression,
       this.rightExpression,
       this.choices,
@@ -112,99 +111,9 @@ class _NumberBalanceGameState extends State<NumberBalanceGame> {
     }
   }
 
-  Widget _leftExpressionLayout(String operand1, String op, String operand2) {
-    return AnimatedContainer(
-      duration: Duration(seconds: 1),
-      alignment: _leftAlignment,
-      curve: Curves.decelerate,
-      child: Container(
-          height: 100.0,
-          width: 250.0,
-          decoration: new BoxDecoration(
-            color: Colors.orange[200],
-            border: new Border.all(color: Colors.redAccent, width: 5.0),
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          child: Row(
-            mainAxisAlignment: op == null
-                ? MainAxisAlignment.center
-                : MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              operand1 != null
-                  ? DragTarget<String>(
-                      key: Key('lbox1'),
-                      builder: (context, candidateData, rejectedData) =>
-                          Container(
-                            height: 70.0,
-                            width: 70.0,
-                            decoration: BoxDecoration(
-                                color: Colors.blue,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(16.0))),
-                            child: Center(
-                              child: Text(
-                                "$operand1",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 50.0,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ),
-                      onWillAccept: (data) => true,
-                      onAccept: (data) => setState(() {
-                            _leftOperand1 = data;
-                          }),
-                    )
-                  : Container(),
-              op != null
-                  ? Text(
-                      "$op",
-                      style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 50.0,
-                          fontWeight: FontWeight.bold),
-                    )
-                  : Container(),
-              operand2 != null
-                  ? DragTarget<String>(
-                      key: Key('rbox2'),
-                      builder: (context, candidateData, rejectedData) =>
-                          Container(
-                            height: 70.0,
-                            width: 70.0,
-                            decoration: BoxDecoration(
-                                color: Colors.blue,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(16.0))),
-                            child: Center(
-                              child: Text(
-                                "$operand2",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 50.0,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ),
-                      onWillAccept: (data) => true,
-                      onAccept: (data) {
-                        setState(() {
-                          _leftOperand2 = data;
-                        });
-                      })
-                  : Container(),
-            ],
-          )),
-    );
-  }
-
-  Widget _rightExpressionLayout(String operand1, String op, String operand2) {
-    return AnimatedContainer(
-      duration: Duration(seconds: 1),
-      alignment: _rightAlignment,
-      curve: Curves.decelerate,
-      child: Container(
+  Widget _equationLayout(
+      String operand1, String op, String operand2, Equation equation) {
+    return Container(
         height: 100.0,
         width: 250.0,
         decoration: new BoxDecoration(
@@ -213,11 +122,13 @@ class _NumberBalanceGameState extends State<NumberBalanceGame> {
           borderRadius: BorderRadius.circular(10.0),
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: op == null
+              ? MainAxisAlignment.center
+              : MainAxisAlignment.spaceAround,
           children: <Widget>[
             operand1 != null
                 ? DragTarget<String>(
-                    key: Key('rbox1'),
+                    key: Key('lbox1'),
                     builder: (context, candidateData, rejectedData) =>
                         Container(
                           height: 70.0,
@@ -238,7 +149,10 @@ class _NumberBalanceGameState extends State<NumberBalanceGame> {
                         ),
                     onWillAccept: (data) => true,
                     onAccept: (data) => setState(() {
-                          _rightOperand1 = data;
+                          if (equation == Equation.lefthandside) {
+                            _leftOperand1 = data;
+                          } else
+                            _rightOperand1 = data;
                         }),
                   )
                 : Container(),
@@ -275,14 +189,15 @@ class _NumberBalanceGameState extends State<NumberBalanceGame> {
                     onWillAccept: (data) => true,
                     onAccept: (data) {
                       setState(() {
-                        _rightOperand2 = data;
+                        if (equation == Equation.lefthandside) {
+                          _leftOperand2 = data;
+                        } else
+                          _rightOperand2 = data;
                       });
                     })
                 : Container(),
           ],
-        ),
-      ),
-    );
+        ));
   }
 
   @override
@@ -298,8 +213,16 @@ class _NumberBalanceGameState extends State<NumberBalanceGame> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                _leftExpressionLayout(
-                    _leftOperand1, widget.leftExpression.item2, _leftOperand2),
+                AnimatedContainer(
+                  duration: Duration(seconds: 1),
+                  alignment: _leftAlignment,
+                  curve: Curves.decelerate,
+                  child: _equationLayout(
+                      _leftOperand1,
+                      widget.leftExpression.item2,
+                      _leftOperand2,
+                      Equation.lefthandside),
+                ),
                 Text(
                   "=",
                   style: TextStyle(
@@ -307,8 +230,16 @@ class _NumberBalanceGameState extends State<NumberBalanceGame> {
                       fontSize: 100.0,
                       fontWeight: FontWeight.bold),
                 ),
-                _rightExpressionLayout(_rightOperand1,
-                    widget.rightExpression.item2, _rightOperand2),
+                AnimatedContainer(
+                  duration: Duration(seconds: 1),
+                  alignment: _rightAlignment,
+                  curve: Curves.decelerate,
+                  child: _equationLayout(
+                      _rightOperand1,
+                      widget.rightExpression.item2,
+                      _rightOperand2,
+                      Equation.righthandside),
+                ),
               ],
             ),
           ),
