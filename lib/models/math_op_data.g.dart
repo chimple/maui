@@ -84,7 +84,7 @@ class _$MathOpData extends MathOpData {
   @override
   final int answer;
 
-  factory _$MathOpData([void updates(MathOpDataBuilder b)]) =>
+  factory _$MathOpData([void Function(MathOpDataBuilder) updates]) =>
       (new MathOpDataBuilder()..update(updates)).build();
 
   _$MathOpData._({this.gameId, this.first, this.second, this.op, this.answer})
@@ -107,7 +107,7 @@ class _$MathOpData extends MathOpData {
   }
 
   @override
-  MathOpData rebuild(void updates(MathOpDataBuilder b)) =>
+  MathOpData rebuild(void Function(MathOpDataBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -191,7 +191,7 @@ class MathOpDataBuilder
   }
 
   @override
-  void update(void updates(MathOpDataBuilder b)) {
+  void update(void Function(MathOpDataBuilder) updates) {
     if (updates != null) updates(this);
   }
 

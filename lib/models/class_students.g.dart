@@ -73,7 +73,7 @@ class _$ClassStudents extends ClassStudents {
   @override
   final BuiltList<Student> students;
 
-  factory _$ClassStudents([void updates(ClassStudentsBuilder b)]) =>
+  factory _$ClassStudents([void Function(ClassStudentsBuilder) updates]) =>
       (new ClassStudentsBuilder()..update(updates)).build();
 
   _$ClassStudents._({this.classId, this.sessionId, this.students}) : super._() {
@@ -89,7 +89,7 @@ class _$ClassStudents extends ClassStudents {
   }
 
   @override
-  ClassStudents rebuild(void updates(ClassStudentsBuilder b)) =>
+  ClassStudents rebuild(void Function(ClassStudentsBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -158,7 +158,7 @@ class ClassStudentsBuilder
   }
 
   @override
-  void update(void updates(ClassStudentsBuilder b)) {
+  void update(void Function(ClassStudentsBuilder) updates) {
     if (updates != null) updates(this);
   }
 

@@ -80,7 +80,7 @@ class _$QuizSession extends QuizSession {
   @override
   final BuiltList<GameData> gameData;
 
-  factory _$QuizSession([void updates(QuizSessionBuilder b)]) =>
+  factory _$QuizSession([void Function(QuizSessionBuilder) updates]) =>
       (new QuizSessionBuilder()..update(updates)).build();
 
   _$QuizSession._({this.sessionId, this.gameId, this.level, this.gameData})
@@ -100,7 +100,7 @@ class _$QuizSession extends QuizSession {
   }
 
   @override
-  QuizSession rebuild(void updates(QuizSessionBuilder b)) =>
+  QuizSession rebuild(void Function(QuizSessionBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -176,7 +176,7 @@ class QuizSessionBuilder implements Builder<QuizSession, QuizSessionBuilder> {
   }
 
   @override
-  void update(void updates(QuizSessionBuilder b)) {
+  void update(void Function(QuizSessionBuilder) updates) {
     if (updates != null) updates(this);
   }
 

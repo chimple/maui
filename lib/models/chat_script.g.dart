@@ -197,7 +197,7 @@ class _$ChatQuestion extends ChatQuestion {
   @override
   final BuiltList<String> choices;
 
-  factory _$ChatQuestion([void updates(ChatQuestionBuilder b)]) =>
+  factory _$ChatQuestion([void Function(ChatQuestionBuilder) updates]) =>
       (new ChatQuestionBuilder()..update(updates)).build();
 
   _$ChatQuestion._({this.question, this.emotion, this.choices}) : super._() {
@@ -210,7 +210,7 @@ class _$ChatQuestion extends ChatQuestion {
   }
 
   @override
-  ChatQuestion rebuild(void updates(ChatQuestionBuilder b)) =>
+  ChatQuestion rebuild(void Function(ChatQuestionBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -279,7 +279,7 @@ class ChatQuestionBuilder
   }
 
   @override
-  void update(void updates(ChatQuestionBuilder b)) {
+  void update(void Function(ChatQuestionBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -314,7 +314,7 @@ class _$ChatChoice extends ChatChoice {
   @override
   final BuiltList<String> questions;
 
-  factory _$ChatChoice([void updates(ChatChoiceBuilder b)]) =>
+  factory _$ChatChoice([void Function(ChatChoiceBuilder) updates]) =>
       (new ChatChoiceBuilder()..update(updates)).build();
 
   _$ChatChoice._({this.choice, this.reply, this.questions}) : super._() {
@@ -324,7 +324,7 @@ class _$ChatChoice extends ChatChoice {
   }
 
   @override
-  ChatChoice rebuild(void updates(ChatChoiceBuilder b)) =>
+  ChatChoice rebuild(void Function(ChatChoiceBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -392,7 +392,7 @@ class ChatChoiceBuilder implements Builder<ChatChoice, ChatChoiceBuilder> {
   }
 
   @override
-  void update(void updates(ChatChoiceBuilder b)) {
+  void update(void Function(ChatChoiceBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -425,7 +425,7 @@ class _$ChatScript extends ChatScript {
   @override
   final BuiltMap<String, ChatChoice> choices;
 
-  factory _$ChatScript([void updates(ChatScriptBuilder b)]) =>
+  factory _$ChatScript([void Function(ChatScriptBuilder) updates]) =>
       (new ChatScriptBuilder()..update(updates)).build();
 
   _$ChatScript._({this.questions, this.choices}) : super._() {
@@ -438,7 +438,7 @@ class _$ChatScript extends ChatScript {
   }
 
   @override
-  ChatScript rebuild(void updates(ChatScriptBuilder b)) =>
+  ChatScript rebuild(void Function(ChatScriptBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -501,7 +501,7 @@ class ChatScriptBuilder implements Builder<ChatScript, ChatScriptBuilder> {
   }
 
   @override
-  void update(void updates(ChatScriptBuilder b)) {
+  void update(void Function(ChatScriptBuilder) updates) {
     if (updates != null) updates(this);
   }
 

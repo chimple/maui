@@ -99,7 +99,7 @@ class _$UserProfile extends UserProfile {
   @override
   final BuiltMap<String, String> accessories;
 
-  factory _$UserProfile([void updates(UserProfileBuilder b)]) =>
+  factory _$UserProfile([void Function(UserProfileBuilder) updates]) =>
       (new UserProfileBuilder()..update(updates)).build() as _$UserProfile;
 
   _$UserProfile._(
@@ -127,7 +127,7 @@ class _$UserProfile extends UserProfile {
   }
 
   @override
-  UserProfile rebuild(void updates(UserProfileBuilder b)) =>
+  UserProfile rebuild(void Function(UserProfileBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -252,7 +252,7 @@ class _$UserProfileBuilder extends UserProfileBuilder {
   }
 
   @override
-  void update(void updates(UserProfileBuilder b)) {
+  void update(void Function(UserProfileBuilder) updates) {
     if (updates != null) updates(this);
   }
 
