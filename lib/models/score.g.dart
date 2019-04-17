@@ -112,7 +112,7 @@ class _$Score extends Score {
   @override
   final DateTime endTime;
 
-  factory _$Score([void updates(ScoreBuilder b)]) =>
+  factory _$Score([void Function(ScoreBuilder) updates]) =>
       (new ScoreBuilder()..update(updates)).build();
 
   _$Score._(
@@ -152,7 +152,7 @@ class _$Score extends Score {
   }
 
   @override
-  Score rebuild(void updates(ScoreBuilder b)) =>
+  Score rebuild(void Function(ScoreBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -264,7 +264,7 @@ class ScoreBuilder implements Builder<Score, ScoreBuilder> {
   }
 
   @override
-  void update(void updates(ScoreBuilder b)) {
+  void update(void Function(ScoreBuilder) updates) {
     if (updates != null) updates(this);
   }
 

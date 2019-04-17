@@ -43,12 +43,12 @@ class GameCategoryRepo {
     } else if (orderedGames.contains(game)) {
       var lessons = await lessonDao.getLessonsByHasOrder(1);
       return lessons
-          .map((l) => new Tuple4(l.id, l.conceptId, l.title, l.id))
+          .map((l) => new Tuple4(l.id, l.conceptId.index, l.title, l.id))
           .toList(growable: false);
     } else {
       var lessons = await lessonDao.getLessons();
       return lessons
-          .map((l) => new Tuple4(l.id, l.conceptId, l.title, l.id))
+          .map((l) => new Tuple4(l.id, l.conceptId.index, l.title, l.id))
           .toList(growable: false);
     }
   }

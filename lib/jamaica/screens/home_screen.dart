@@ -83,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Hero(
                         tag: 'chimp',
                         child: FlareActor(
-                          "assets/character/chimp.flr",
+                          "assets/character/chimp_ik.flr",
                           alignment: Alignment.center,
                           fit: BoxFit.contain,
                           animation: _emotion,
@@ -118,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         IconButton(
                           icon: Icon(Icons.book),
                           onPressed: () =>
-                              Navigator.of(context).pushNamed('/jam_story'),
+                              Navigator.of(context).pushNamed('/stories'),
                         ),
                       ],
                     ),

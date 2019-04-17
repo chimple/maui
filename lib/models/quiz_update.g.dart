@@ -6,12 +6,15 @@ part of 'quiz_update.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
+const StatusEnum _$create = const StatusEnum._('create');
 const StatusEnum _$start = const StatusEnum._('start');
 const StatusEnum _$progress = const StatusEnum._('progress');
 const StatusEnum _$end = const StatusEnum._('end');
 
 StatusEnum _$valueOf(String name) {
   switch (name) {
+    case 'create':
+      return _$create;
     case 'start':
       return _$start;
     case 'progress':
@@ -25,6 +28,7 @@ StatusEnum _$valueOf(String name) {
 
 final BuiltSet<StatusEnum> _$values =
     new BuiltSet<StatusEnum>(const <StatusEnum>[
+  _$create,
   _$start,
   _$progress,
   _$end,
@@ -118,7 +122,7 @@ class _$QuizUpdate extends QuizUpdate {
   @override
   final BuiltList<Performance> performances;
 
-  factory _$QuizUpdate([void updates(QuizUpdateBuilder b)]) =>
+  factory _$QuizUpdate([void Function(QuizUpdateBuilder) updates]) =>
       (new QuizUpdateBuilder()..update(updates)).build();
 
   _$QuizUpdate._({this.sessionId, this.status, this.performances}) : super._() {
@@ -131,7 +135,7 @@ class _$QuizUpdate extends QuizUpdate {
   }
 
   @override
-  QuizUpdate rebuild(void updates(QuizUpdateBuilder b)) =>
+  QuizUpdate rebuild(void Function(QuizUpdateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -200,7 +204,7 @@ class QuizUpdateBuilder implements Builder<QuizUpdate, QuizUpdateBuilder> {
   }
 
   @override
-  void update(void updates(QuizUpdateBuilder b)) {
+  void update(void Function(QuizUpdateBuilder) updates) {
     if (updates != null) updates(this);
   }
 

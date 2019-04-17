@@ -13,6 +13,7 @@ abstract class UserProfile implements Built<UserProfile, UserProfileBuilder> {
   BuiltMap<String, GameStatus> get gameStatuses;
   BuiltMap<String, int> get items;
   BuiltMap<String, String> get accessories;
+  BuiltMap<String, int> get lessons;
 
   UserProfile._();
   factory UserProfile([updates(UserProfileBuilder b)]) = _$UserProfile;
@@ -26,6 +27,7 @@ abstract class UserProfileBuilder
   BuiltMap<String, GameStatus> gameStatuses = BuiltMap<String, GameStatus>({});
   BuiltMap<String, int> items = BuiltMap<String, int>({});
   BuiltMap<String, String> accessories = BuiltMap<String, String>({});
+  BuiltMap<String, int> lessons = BuiltMap<String, int>({});
 
   factory UserProfileBuilder() = _$UserProfileBuilder;
   UserProfileBuilder._();

@@ -51,37 +51,50 @@ class _DragTextState extends State<DragText> {
     textSize = MediaQuery.of(context).orientation == Orientation.portrait
         ? MediaQuery.of(context).size.width * .065
         : MediaQuery.of(context).size.height * .065;
-    print('textSize $textSize');
     return Center(
-      child: Column(
-        // mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: <Widget>[
-          Text(
-            'Drag and drop the text to their relevant image',
-            style: TextStyle(fontSize: 23),
-          ),
-          Wrap(
-              runAlignment: WrapAlignment.center,
-              verticalDirection: VerticalDirection.down,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              alignment: WrapAlignment.center,
-              children: list
-                  .map((s) => Draggable(
-                        feedback: Material(
-                          color: Colors.transparent,
-                          child: _build(s),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: _build(s),
-                        ),
-                        childWhenDragging: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: _build(s),
-                        ),
-                      ))
-                  .toList()),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            Text(
+              'Drag and drop the text to their relevant image',
+              style: TextStyle(fontSize: 23),
+            ),
+            SizedBox(
+                height: MediaQuery.of(context).size.height * .3,
+                child: Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(width: 2.0, color: Colors.orange),
+                      borderRadius: BorderRadius.circular(20.0),
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage('assets/stories/images/001page1.jpg'),
+                      )),
+                )),
+            Wrap(
+                runAlignment: WrapAlignment.center,
+                verticalDirection: VerticalDirection.down,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                alignment: WrapAlignment.center,
+                children: list
+                    .map((s) => Draggable(
+                          feedback: Material(
+                            color: Colors.transparent,
+                            child: _build(s),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: _build(s),
+                          ),
+                          childWhenDragging: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: _build(s),
+                          ),
+                        ))
+                    .toList()),
+          ],
+        ),
       ),
     );
   }

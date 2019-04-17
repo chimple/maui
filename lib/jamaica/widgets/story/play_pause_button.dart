@@ -23,7 +23,6 @@ class PlayPauseButton extends StatelessWidget {
     return LayoutBuilder(builder: (context, constraint) {
       return Container(
         width: double.infinity,
-        color: Colors.green[200],
         child: storyMode != StoryMode.textHighlighterMode
             ? InkWell(
                 onTap: !isPlaying
@@ -38,7 +37,7 @@ class PlayPauseButton extends StatelessWidget {
                       },
                 child: CircleAvatar(
                   maxRadius: constraint.maxHeight,
-                  backgroundColor: Colors.white,
+                  // backgroundColor: Colors.white,
                   child: isPause
                       ? Icon(
                           Icons.play_arrow,
