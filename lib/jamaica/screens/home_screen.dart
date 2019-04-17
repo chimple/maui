@@ -118,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         IconButton(
                           icon: Icon(Icons.book),
                           onPressed: () =>
-                              Navigator.of(context).pushNamed('/jam_story'),
+                              Navigator.of(context).pushNamed('/stories'),
                         ),
                       ],
                     ),
