@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:maui/jamaica/state/game_utils.dart';
 import 'package:maui/jamaica/widgets/bento_box.dart';
 import 'package:maui/jamaica/widgets/cute_button.dart';
+import 'package:tuple/tuple.dart';
 
 class _ChoiceDetail {
   int number;
@@ -25,10 +26,17 @@ enum _Type { choice, question, answer }
 
 class NumberBalanceGame extends StatefulWidget {
   final int question;
+  final Tuple3<String, String, String> leftExpression;
+  final Tuple3<String, String, String> rightExpression;
   final BuiltList<int> choices;
   final OnGameOver onGameOver;
   const NumberBalanceGame(
-      {Key key, this.question, this.choices, this.onGameOver})
+      {Key key,
+      this.question,
+      this.leftExpression,
+      this.rightExpression,
+      this.choices,
+      this.onGameOver})
       : super(key: key);
   @override
   _NumberBalanceGameState createState() => new _NumberBalanceGameState();
@@ -36,9 +44,13 @@ class NumberBalanceGame extends StatefulWidget {
 
 class _NumberBalanceGameState extends State<NumberBalanceGame> {
   List<_ChoiceDetail> choiceDetails;
-  int _operand1;
-  int _operand2;
-  int _answer;
+  String _leftOperand1;
+  String _leftOperand2;
+  String _rightOperand1;
+  String _rightOperand2;
+  int _leftHandAnswer;
+  int _rightHandAnswer;
+  bool _correct = false;
   var _leftAlignment = Alignment.center;
   var _rightAlignment = Alignment.center;
   @override
@@ -48,31 +60,234 @@ class _NumberBalanceGameState extends State<NumberBalanceGame> {
     choiceDetails = widget.choices
         .map((c) => _ChoiceDetail(number: c, index: i++))
         .toList(growable: false);
+    _leftOperand1 = widget.leftExpression.item1;
+    _leftOperand2 = widget.leftExpression.item3;
+    _rightOperand1 = widget.rightExpression.item1;
+    _rightOperand2 = widget.rightExpression.item3;
   }
 
-  _calculateAnswer() {
-    if (_operand1 != null && _operand2 != null) {
-      _answer = _operand1 + _operand2;
-      if (_answer == widget.question) {
+  _solveEquation() {
+    if (_leftOperand1 != '?' &&
+        _leftOperand2 != '?' &&
+        _leftOperand1 != null &&
+        _leftOperand2 != null) {
+      if (widget.leftExpression.item2 == '+') {
+        _leftHandAnswer = int.parse(_leftOperand1) + int.parse(_leftOperand2);
+      } else
+        _leftHandAnswer = int.parse(_leftOperand1) - int.parse(_leftOperand2);
+    } else if (widget.leftExpression.item2 == null) {
+      _leftHandAnswer = int.parse(_leftOperand1);
+    }
+
+    if (_rightOperand1 != '?' &&
+        _rightOperand2 != '?' &&
+        _rightOperand1 != null &&
+        _rightOperand2 != null) {
+      if (widget.rightExpression.item2 == '+') {
+        _rightHandAnswer =
+            int.parse(_rightOperand1) + int.parse(_rightOperand2);
+      } else
+        _rightHandAnswer =
+            int.parse(_rightOperand1) - int.parse(_rightOperand2);
+    } else if (widget.rightExpression.item2 == null) {
+      _rightHandAnswer = int.parse(_rightOperand1);
+    }
+
+    if (_leftHandAnswer != null && _rightHandAnswer != null) {
+      if (_leftHandAnswer == _rightHandAnswer) {
+        _correct = true;
         _leftAlignment = Alignment.center;
         _rightAlignment = Alignment.center;
-      } else if (widget.question < _answer) {
-        setState(() {
-          _leftAlignment = Alignment.topCenter;
-          _rightAlignment = Alignment.bottomCenter;
-        });
-      } else {
+      } else if (_leftHandAnswer > _rightHandAnswer) {
         setState(() {
           _leftAlignment = Alignment.bottomCenter;
           _rightAlignment = Alignment.topCenter;
+        });
+      } else {
+        setState(() {
+          _leftAlignment = Alignment.topCenter;
+          _rightAlignment = Alignment.bottomCenter;
         });
       }
     }
   }
 
+  Widget _leftExpressionLayout(String operand1, String op, String operand2) {
+    return AnimatedContainer(
+      duration: Duration(seconds: 1),
+      alignment: _leftAlignment,
+      curve: Curves.decelerate,
+      child: Container(
+          height: 100.0,
+          width: 250.0,
+          decoration: new BoxDecoration(
+            color: Colors.orange[200],
+            border: new Border.all(color: Colors.redAccent, width: 5.0),
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          child: Row(
+            mainAxisAlignment: op == null
+                ? MainAxisAlignment.center
+                : MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              operand1 != null
+                  ? DragTarget<String>(
+                      key: Key('lbox1'),
+                      builder: (context, candidateData, rejectedData) =>
+                          Container(
+                            height: 70.0,
+                            width: 70.0,
+                            decoration: BoxDecoration(
+                                color: Colors.blue,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(16.0))),
+                            child: Center(
+                              child: Text(
+                                "$operand1",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 50.0,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                      onWillAccept: (data) => true,
+                      onAccept: (data) => setState(() {
+                            _leftOperand1 = data;
+                          }),
+                    )
+                  : Container(),
+              op != null
+                  ? Text(
+                      "$op",
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 50.0,
+                          fontWeight: FontWeight.bold),
+                    )
+                  : Container(),
+              operand2 != null
+                  ? DragTarget<String>(
+                      key: Key('rbox2'),
+                      builder: (context, candidateData, rejectedData) =>
+                          Container(
+                            height: 70.0,
+                            width: 70.0,
+                            decoration: BoxDecoration(
+                                color: Colors.blue,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(16.0))),
+                            child: Center(
+                              child: Text(
+                                "$operand2",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 50.0,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                      onWillAccept: (data) => true,
+                      onAccept: (data) {
+                        setState(() {
+                          _leftOperand2 = data;
+                        });
+                      })
+                  : Container(),
+            ],
+          )),
+    );
+  }
+
+  Widget _rightExpressionLayout(String operand1, String op, String operand2) {
+    return AnimatedContainer(
+      duration: Duration(seconds: 1),
+      alignment: _rightAlignment,
+      curve: Curves.decelerate,
+      child: Container(
+        height: 100.0,
+        width: 250.0,
+        decoration: new BoxDecoration(
+          color: Colors.orange[200],
+          border: new Border.all(color: Colors.redAccent, width: 5.0),
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            operand1 != null
+                ? DragTarget<String>(
+                    key: Key('rbox1'),
+                    builder: (context, candidateData, rejectedData) =>
+                        Container(
+                          height: 70.0,
+                          width: 70.0,
+                          decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(16.0))),
+                          child: Center(
+                            child: Text(
+                              "$operand1",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 50.0,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                    onWillAccept: (data) => true,
+                    onAccept: (data) => setState(() {
+                          _rightOperand1 = data;
+                        }),
+                  )
+                : Container(),
+            op != null
+                ? Text(
+                    "$op",
+                    style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 50.0,
+                        fontWeight: FontWeight.bold),
+                  )
+                : Container(),
+            operand2 != null
+                ? DragTarget<String>(
+                    key: Key('rbox2'),
+                    builder: (context, candidateData, rejectedData) =>
+                        Container(
+                          height: 70.0,
+                          width: 70.0,
+                          decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(16.0))),
+                          child: Center(
+                            child: Text(
+                              "$operand2",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 50.0,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                    onWillAccept: (data) => true,
+                    onAccept: (data) {
+                      setState(() {
+                        _rightOperand2 = data;
+                      });
+                    })
+                : Container(),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    _calculateAnswer();
+    _solveEquation();
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
@@ -83,127 +298,17 @@ class _NumberBalanceGameState extends State<NumberBalanceGame> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                AnimatedContainer(
-                  duration: Duration(seconds: 1),
-                  alignment: _leftAlignment,
-                  child: Container(
-                    height: 100.0,
-                    width: 250.0,
-                    decoration: new BoxDecoration(
-                      color: Colors.orange[200],
-                      border:
-                          new Border.all(color: Colors.redAccent, width: 5.0),
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: BentoBox(
-                      rows: 1,
-                      cols: 1,
-                      children: <Widget>[
-                        CuteButton(
-                          key: Key("unique"),
-                          cuteButtonType: CuteButtonType.cuteButton,
-                          child: Text(
-                            "${widget.question}",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 50.0,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                _leftExpressionLayout(
+                    _leftOperand1, widget.leftExpression.item2, _leftOperand2),
                 Text(
                   "=",
                   style: TextStyle(
-                      color: Colors.green,
+                      color: _correct ? Colors.green : Colors.grey,
                       fontSize: 100.0,
                       fontWeight: FontWeight.bold),
                 ),
-                AnimatedContainer(
-                  duration: Duration(seconds: 1),
-                  alignment: _rightAlignment,
-                  child: Container(
-                    height: 100.0,
-                    width: 250.0,
-                    decoration: new BoxDecoration(
-                      color: Colors.orange[200],
-                      border:
-                          new Border.all(color: Colors.redAccent, width: 5.0),
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        DragTarget<String>(
-                          key: Key('box1'),
-                          builder: (context, candidateData, rejectedData) =>
-                              Container(
-                                height: 70.0,
-                                width: 70.0,
-                                decoration: BoxDecoration(
-                                    color: Colors.blue,
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(16.0))),
-                                child: Center(
-                                  child: Text(
-                                    _operand1 == null ? "?" : "$_operand1",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 50.0,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              ),
-                          onWillAccept: (data) => true,
-                          onAccept: (data) => setState(() {
-                                _operand1 = int.parse(data);
-                              }),
-                        ),
-                        Text(
-                          "+",
-                          style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 50.0,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        DragTarget<String>(
-                            key: Key('box2'),
-                            builder: (context, candidateData, rejectedData) =>
-                                Container(
-                                  height: 70.0,
-                                  width: 70.0,
-                                  decoration: BoxDecoration(
-                                      color: Colors.blue,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(16.0))),
-                                  child: Center(
-                                    child: Text(
-                                      _operand2 == null ? "?" : "$_operand2",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 50.0,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                ),
-                            onWillAccept: (data) => true,
-                            onAccept: (data) {
-                              setState(() {
-                                _operand2 = int.parse(data);
-                              });
-
-                              // WidgetsBinding.instance
-                              //     .addPostFrameCallback((_) => setState(
-                              //           () => choiceDetails[1].type = _Type._answer,
-                              //         ));
-                              // widget.onGameOver(1);
-                            }),
-                      ],
-                    ),
-                  ),
-                ),
+                _rightExpressionLayout(_rightOperand1,
+                    widget.rightExpression.item2, _rightOperand2),
               ],
             ),
           ),
