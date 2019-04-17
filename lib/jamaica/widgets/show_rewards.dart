@@ -86,7 +86,7 @@ class _ShowRewardsState extends State<ShowRewards>
             ),
           ),
           Expanded(
-            flex: 82,
+            flex: 70,
             child: PageView(
               controller: pageController,
               physics: NeverScrollableScrollPhysics(),
@@ -98,25 +98,20 @@ class _ShowRewardsState extends State<ShowRewards>
                     Padding(
                       padding: EdgeInsets.only(top: 20.0),
                     ),
-                    Container(
-                      width: MediaQuery.of(context).size.width / 2,
-                      height: MediaQuery.of(context).size.width / 10,
-                      child: Card(
-                        color: Colors.red,
-                        elevation: 3.0,
-                        child: Center(
-                          child: Text(
-                            d.categoryName,
-                            style: TextStyle(
-                                fontSize:
-                                    MediaQuery.of(context).size.width / 15,
-                                color: Colors.white),
-                          ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16.0),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          d.categoryName,
+                          style: TextStyle(
+                              fontSize: MediaQuery.of(context).size.width / 15,
+                              color: Colors.white),
                         ),
                       ),
                     ),
                     Expanded(
-                      flex: 8,
+                      flex: 7,
                       child: Container(
                         child: GridView(
                           physics: NeverScrollableScrollPhysics(),
@@ -124,7 +119,7 @@ class _ShowRewardsState extends State<ShowRewards>
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
                                   mainAxisSpacing: 20.0,
-                                  childAspectRatio: 0.8,
+                                  childAspectRatio: 0.9,
                                   crossAxisCount: 5),
                           children: widget.rewardList[d].map((f) {
                             index++;
@@ -162,7 +157,7 @@ class _ShowRewardsState extends State<ShowRewards>
                                           f.rewardItemName,
                                           style: TextStyle(
                                               color: Colors.white,
-                                              fontSize: 20.0),
+                                              fontSize: 16.0),
                                         ),
                                       ),
                                     ]),
@@ -177,7 +172,7 @@ class _ShowRewardsState extends State<ShowRewards>
               }).toList(growable: false),
             ),
           ),
-          Expanded(flex: 8, child: mainCategoryList()),
+          Expanded(flex: 12, child: mainCategoryList()),
         ],
       ),
     );
@@ -272,7 +267,7 @@ class _ShowRewardsState extends State<ShowRewards>
   Widget buildIndexItem(BuildContext context, String text, String imagePath,
       bool enabled, int index) {
     return Padding(
-      padding: EdgeInsets.only(right: 10.0, left: 10.0),
+      padding: EdgeInsets.only(right: 20.0, left: 20.0),
       child: InkWell(
         onTap: () {
           print('index is $index');
@@ -286,7 +281,7 @@ class _ShowRewardsState extends State<ShowRewards>
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             Expanded(
-              flex: 7,
+              flex: 8,
               child: Image.asset(
                 imagePath,
                 color: flag == index ? Colors.red : null,
@@ -297,7 +292,7 @@ class _ShowRewardsState extends State<ShowRewards>
               padding: EdgeInsets.only(top: 10.0),
             ),
             Expanded(
-              flex: 3,
+              flex: 2,
               child: Text(
                 text,
                 style: TextStyle(color: flag == index ? Colors.red : null),
