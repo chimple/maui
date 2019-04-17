@@ -2,12 +2,12 @@ enum TopicType { reading, math }
 
 enum ConceptType {
   dummy,
-  uppercaseLetter,
-  uppercaseToLowercase,
-  lowercaseLetterToWord,
+  upperCaseLetter,
+  upperCaseToLowerCase,
+  lowerCaseLetterToWord,
   syllableToWord,
-  uppercaseLetterToWord,
-  lowercaseLetter,
+  upperCaseLetterToWord,
+  lowerCaseLetter,
   singleDigitAdditionWithoutCarryover,
   singleDigitAdditionWithCarryover,
   doubleDigitAdditionWithoutCarryover,

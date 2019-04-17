@@ -94,14 +94,14 @@ class AppStateContainerState extends State<AppStateContainer> {
   String extStorageDir;
 
   // teacher objects
-  List<ClassSession> _classSessions;
-  ClassSession _myClassSession;
-  List<String> _classStudents;
+  List<ClassSession> classSessions;
+  ClassSession myClassSession;
+  List<String> classStudents;
   Map<String, Performance> performances;
-  Set<String> _quizStudents;
-  QuizSession _quizSession;
-  Map<QuizSession, StatusEnum> _quizSessions;
-  Map<String, Performance> _quizPerformances;
+  Set<String> quizStudents;
+  QuizSession quizSession;
+  Map<QuizSession, StatusEnum> quizSessions;
+  Map<String, Performance> quizPerformances;
 
   @override
   void initState() {
@@ -376,39 +376,39 @@ class AppStateContainerState extends State<AppStateContainer> {
       if (obj is ClassInterest) {
       } else if (obj is ClassJoin) {
         if (state.loggedInUser.userType == UserType.teacher &&
-            _myClassSession.sessionId == obj.sessionId) {
-          _classStudents.add(obj.studentId);
+            myClassSession.sessionId == obj.sessionId) {
+          classStudents.add(obj.studentId);
         }
       } else if (obj is ClassSession) {
         setState(() {
           switch (obj.status) {
             case StatusEnum.start:
-              final i = _classSessions
+              final i = classSessions
                   .indexWhere((c) => c.sessionId == obj.sessionId);
               if (i > -1) {
-                _classSessions[i] = obj;
+                classSessions[i] = obj;
               } else {
-                _classSessions.add(obj);
+                classSessions.add(obj);
               }
               break;
             case StatusEnum.progress:
-              final i = _classSessions
+              final i = classSessions
                   .indexWhere((c) => c.sessionId == obj.sessionId);
               if (i > -1) {
-                _classSessions[i] = obj;
+                classSessions[i] = obj;
               } else {
-                _classSessions.add(obj);
+                classSessions.add(obj);
               }
               break;
             case StatusEnum.end:
-              _classSessions.removeWhere((c) => c.sessionId == obj.sessionId);
+              classSessions.removeWhere((c) => c.sessionId == obj.sessionId);
               break;
           }
         });
       } else if (obj is ClassStudents) {
       } else if (obj is Performance) {
-        if (_quizSession?.sessionId == obj.sessionId) {
-          _quizPerformances[obj.studentId] = obj;
+        if (quizSession?.sessionId == obj.sessionId) {
+          quizPerformances[obj.studentId] = obj;
         } else if (state.loggedInUser.userType == UserType.teacher) {
           setState(() {
             performances[obj.studentId] = obj;
@@ -416,21 +416,21 @@ class AppStateContainerState extends State<AppStateContainer> {
         }
       } else if (obj is QuizJoin) {
         if (state.loggedInUser.userType == UserType.teacher &&
-            _quizSession.sessionId == obj.sessionId) {
-          _quizStudents.add(obj.studentId);
+            quizSession.sessionId == obj.sessionId) {
+          quizStudents.add(obj.studentId);
         }
       } else if (obj is QuizSession) {
         //notify UI that quiz is there
         setState(() {
-          _quizSessions[obj] = StatusEnum.create;
+          quizSessions[obj] = StatusEnum.create;
         });
       } else if (obj is QuizUpdate) {
         setState(() {
-          final quizSession = _quizSessions.keys
+           quizSession = quizSessions.keys
               .firstWhere((q) => q.sessionId == obj.sessionId);
-          _quizSessions[quizSession] = obj.status;
-          if (_quizSession?.sessionId == obj.sessionId) {
-            _quizSession = null;
+          quizSessions[quizSession] = obj.status;
+          if (quizSession?.sessionId == obj.sessionId) {
+            quizSession = null;
           }
           //trigger quiz start or end
         });
@@ -456,10 +456,10 @@ class AppStateContainerState extends State<AppStateContainer> {
 
   createQuizSession(QuizSession quizSession) async {
     if (state.loggedInUser.userType == UserType.teacher &&
-        _quizSession == null) {
+        quizSession == null) {
       setState(() {
-        _quizSessions[quizSession] = StatusEnum.create;
-        _quizSession = quizSession;
+        quizSessions[quizSession] = StatusEnum.create;
+        quizSession = quizSession;
       });
       final standardSerializers =
           (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
@@ -471,12 +471,12 @@ class AppStateContainerState extends State<AppStateContainer> {
 
   startQuizSession(QuizSession quizSession) async {
     if (state.loggedInUser.userType == UserType.teacher &&
-        _quizSession != null) {
+        quizSession != null) {
       QuizUpdate quizUpdate = QuizUpdate((q) => q
-        ..sessionId = _quizSession.sessionId
+        ..sessionId = quizSession.sessionId
         ..status = StatusEnum.start);
       setState(() {
-        _quizSessions[quizSession] = StatusEnum.start;
+        quizSessions[quizSession] = StatusEnum.start;
       });
       final standardSerializers =
           (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
@@ -488,13 +488,13 @@ class AppStateContainerState extends State<AppStateContainer> {
 
   endQuizSession() async {
     if (state.loggedInUser.userType == UserType.teacher &&
-        _quizSession != null) {
+        quizSession != null) {
       QuizUpdate quizUpdate = QuizUpdate((q) => q
-        ..sessionId = _quizSession.sessionId
+        ..sessionId = quizSession.sessionId
         ..status = StatusEnum.end);
       setState(() {
-        _quizSessions[_quizSession] = StatusEnum.end;
-        _quizSession = null;
+        quizSessions[quizSession] = StatusEnum.end;
+        quizSession = null;
       });
       final standardSerializers =
           (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
@@ -505,12 +505,12 @@ class AppStateContainerState extends State<AppStateContainer> {
   }
 
   joinQuizSession(QuizSession quizSession) async {
-    if (_quizSession == null) {
+    if (quizSession == null) {
       QuizJoin quizJoin = QuizJoin((q) => q
         ..sessionId = quizSession.sessionId
         ..studentId = state.loggedInUser.id);
       setState(() {
-        _quizSession = quizSession;
+        quizSession = quizSession;
       });
       final standardSerializers =
           (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
@@ -523,7 +523,7 @@ class AppStateContainerState extends State<AppStateContainer> {
   startClassSession({String classId}) async {
     if (state.loggedInUser.userType == UserType.teacher) {
       setState(() {
-        _myClassSession = ClassSession((c) => c
+        myClassSession = ClassSession((c) => c
           ..classId = classId
           ..teacherId = state.loggedInUser.id
           ..sessionId = Uuid().v4()
@@ -532,7 +532,7 @@ class AppStateContainerState extends State<AppStateContainer> {
       final standardSerializers =
           (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
       String message =
-          jsonEncode(standardSerializers.serialize(_myClassSession));
+          jsonEncode(standardSerializers.serialize(myClassSession));
       await p2p.addGroupMessage(
           state.loggedInUser.id, '0', 'json', message, true, '');
     }
@@ -541,7 +541,7 @@ class AppStateContainerState extends State<AppStateContainer> {
   joinClassSession(ClassSession classSession) async {
     if (state.loggedInUser.userType == UserType.student) {
       setState(() {
-        _myClassSession = classSession;
+        myClassSession = classSession;
       });
       ClassJoin classJoin = ClassJoin((c) => c
         ..sessionId = classSession.sessionId
