@@ -174,7 +174,7 @@ class _RulerGameState extends State<RulerGame> {
             ? Container()
             : Text(
                 "$e",
-                style: TextStyle(fontSize: 1.5 * fontSize),
+                style: Theme.of(context).textTheme.display1,
               ),
         feedback: e == null
             ? Container()
