@@ -40,6 +40,8 @@ class _$PerformanceSerializer implements StructuredSerializer<Performance> {
           specifiedType: const FullType(bool)),
       'score',
       serializers.serialize(object.score, specifiedType: const FullType(int)),
+      'total',
+      serializers.serialize(object.total, specifiedType: const FullType(int)),
       'startTime',
       serializers.serialize(object.startTime,
           specifiedType: const FullType(DateTime)),
@@ -94,6 +96,10 @@ class _$PerformanceSerializer implements StructuredSerializer<Performance> {
           result.score = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
+        case 'total':
+          result.total = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'startTime':
           result.startTime = serializers.deserialize(value,
               specifiedType: const FullType(DateTime)) as DateTime;
@@ -127,11 +133,13 @@ class _$Performance extends Performance {
   @override
   final int score;
   @override
+  final int total;
+  @override
   final DateTime startTime;
   @override
   final DateTime endTime;
 
-  factory _$Performance([void updates(PerformanceBuilder b)]) =>
+  factory _$Performance([void Function(PerformanceBuilder) updates]) =>
       (new PerformanceBuilder()..update(updates)).build();
 
   _$Performance._(
@@ -143,6 +151,7 @@ class _$Performance extends Performance {
       this.answer,
       this.correct,
       this.score,
+      this.total,
       this.startTime,
       this.endTime})
       : super._() {
@@ -170,6 +179,9 @@ class _$Performance extends Performance {
     if (score == null) {
       throw new BuiltValueNullFieldError('Performance', 'score');
     }
+    if (total == null) {
+      throw new BuiltValueNullFieldError('Performance', 'total');
+    }
     if (startTime == null) {
       throw new BuiltValueNullFieldError('Performance', 'startTime');
     }
@@ -179,7 +191,7 @@ class _$Performance extends Performance {
   }
 
   @override
-  Performance rebuild(void updates(PerformanceBuilder b)) =>
+  Performance rebuild(void Function(PerformanceBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -197,6 +209,7 @@ class _$Performance extends Performance {
         answer == other.answer &&
         correct == other.correct &&
         score == other.score &&
+        total == other.total &&
         startTime == other.startTime &&
         endTime == other.endTime;
   }
@@ -211,14 +224,16 @@ class _$Performance extends Performance {
                         $jc(
                             $jc(
                                 $jc(
-                                    $jc($jc(0, studentId.hashCode),
-                                        gameId.hashCode),
-                                    sessionId.hashCode),
-                                level.hashCode),
-                            question.hashCode),
-                        answer.hashCode),
-                    correct.hashCode),
-                score.hashCode),
+                                    $jc(
+                                        $jc($jc(0, studentId.hashCode),
+                                            gameId.hashCode),
+                                        sessionId.hashCode),
+                                    level.hashCode),
+                                question.hashCode),
+                            answer.hashCode),
+                        correct.hashCode),
+                    score.hashCode),
+                total.hashCode),
             startTime.hashCode),
         endTime.hashCode));
   }
@@ -234,6 +249,7 @@ class _$Performance extends Performance {
           ..add('answer', answer)
           ..add('correct', correct)
           ..add('score', score)
+          ..add('total', total)
           ..add('startTime', startTime)
           ..add('endTime', endTime))
         .toString();
@@ -275,6 +291,10 @@ class PerformanceBuilder implements Builder<Performance, PerformanceBuilder> {
   int get score => _$this._score;
   set score(int score) => _$this._score = score;
 
+  int _total;
+  int get total => _$this._total;
+  set total(int total) => _$this._total = total;
+
   DateTime _startTime;
   DateTime get startTime => _$this._startTime;
   set startTime(DateTime startTime) => _$this._startTime = startTime;
@@ -295,6 +315,7 @@ class PerformanceBuilder implements Builder<Performance, PerformanceBuilder> {
       _answer = _$v.answer;
       _correct = _$v.correct;
       _score = _$v.score;
+      _total = _$v.total;
       _startTime = _$v.startTime;
       _endTime = _$v.endTime;
       _$v = null;
@@ -311,7 +332,7 @@ class PerformanceBuilder implements Builder<Performance, PerformanceBuilder> {
   }
 
   @override
-  void update(void updates(PerformanceBuilder b)) {
+  void update(void Function(PerformanceBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -327,6 +348,7 @@ class PerformanceBuilder implements Builder<Performance, PerformanceBuilder> {
             answer: answer,
             correct: correct,
             score: score,
+            total: total,
             startTime: startTime,
             endTime: endTime);
     replace(_$result);

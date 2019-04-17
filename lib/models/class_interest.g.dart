@@ -53,7 +53,7 @@ class _$ClassInterest extends ClassInterest {
   @override
   final String sessionId;
 
-  factory _$ClassInterest([void updates(ClassInterestBuilder b)]) =>
+  factory _$ClassInterest([void Function(ClassInterestBuilder) updates]) =>
       (new ClassInterestBuilder()..update(updates)).build();
 
   _$ClassInterest._({this.sessionId}) : super._() {
@@ -63,7 +63,7 @@ class _$ClassInterest extends ClassInterest {
   }
 
   @override
-  ClassInterest rebuild(void updates(ClassInterestBuilder b)) =>
+  ClassInterest rebuild(void Function(ClassInterestBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -115,7 +115,7 @@ class ClassInterestBuilder
   }
 
   @override
-  void update(void updates(ClassInterestBuilder b)) {
+  void update(void Function(ClassInterestBuilder) updates) {
     if (updates != null) updates(this);
   }
 

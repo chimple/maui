@@ -35,6 +35,10 @@ class _$UserProfileSerializer implements StructuredSerializer<UserProfile> {
       serializers.serialize(object.accessories,
           specifiedType: const FullType(BuiltMap,
               const [const FullType(String), const FullType(String)])),
+      'lessons',
+      serializers.serialize(object.lessons,
+          specifiedType: const FullType(
+              BuiltMap, const [const FullType(String), const FullType(int)])),
     ];
 
     return result;
@@ -80,6 +84,13 @@ class _$UserProfileSerializer implements StructuredSerializer<UserProfile> {
                 const FullType(String)
               ])) as BuiltMap;
           break;
+        case 'lessons':
+          result.lessons = serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(int)
+              ])) as BuiltMap;
+          break;
       }
     }
 
@@ -98,8 +109,10 @@ class _$UserProfile extends UserProfile {
   final BuiltMap<String, int> items;
   @override
   final BuiltMap<String, String> accessories;
+  @override
+  final BuiltMap<String, int> lessons;
 
-  factory _$UserProfile([void updates(UserProfileBuilder b)]) =>
+  factory _$UserProfile([void Function(UserProfileBuilder) updates]) =>
       (new UserProfileBuilder()..update(updates)).build() as _$UserProfile;
 
   _$UserProfile._(
@@ -107,7 +120,8 @@ class _$UserProfile extends UserProfile {
       this.currentTheme,
       this.gameStatuses,
       this.items,
-      this.accessories})
+      this.accessories,
+      this.lessons})
       : super._() {
     if (name == null) {
       throw new BuiltValueNullFieldError('UserProfile', 'name');
@@ -124,10 +138,13 @@ class _$UserProfile extends UserProfile {
     if (accessories == null) {
       throw new BuiltValueNullFieldError('UserProfile', 'accessories');
     }
+    if (lessons == null) {
+      throw new BuiltValueNullFieldError('UserProfile', 'lessons');
+    }
   }
 
   @override
-  UserProfile rebuild(void updates(UserProfileBuilder b)) =>
+  UserProfile rebuild(void Function(UserProfileBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -141,17 +158,20 @@ class _$UserProfile extends UserProfile {
         currentTheme == other.currentTheme &&
         gameStatuses == other.gameStatuses &&
         items == other.items &&
-        accessories == other.accessories;
+        accessories == other.accessories &&
+        lessons == other.lessons;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
         $jc(
-            $jc($jc($jc(0, name.hashCode), currentTheme.hashCode),
-                gameStatuses.hashCode),
-            items.hashCode),
-        accessories.hashCode));
+            $jc(
+                $jc($jc($jc(0, name.hashCode), currentTheme.hashCode),
+                    gameStatuses.hashCode),
+                items.hashCode),
+            accessories.hashCode),
+        lessons.hashCode));
   }
 
   @override
@@ -161,7 +181,8 @@ class _$UserProfile extends UserProfile {
           ..add('currentTheme', currentTheme)
           ..add('gameStatuses', gameStatuses)
           ..add('items', items)
-          ..add('accessories', accessories))
+          ..add('accessories', accessories)
+          ..add('lessons', lessons))
         .toString();
   }
 }
@@ -229,6 +250,18 @@ class _$UserProfileBuilder extends UserProfileBuilder {
     super.accessories = accessories;
   }
 
+  @override
+  BuiltMap<String, int> get lessons {
+    _$this;
+    return super.lessons;
+  }
+
+  @override
+  set lessons(BuiltMap<String, int> lessons) {
+    _$this;
+    super.lessons = lessons;
+  }
+
   _$UserProfileBuilder() : super._();
 
   UserProfileBuilder get _$this {
@@ -238,6 +271,7 @@ class _$UserProfileBuilder extends UserProfileBuilder {
       super.gameStatuses = _$v.gameStatuses;
       super.items = _$v.items;
       super.accessories = _$v.accessories;
+      super.lessons = _$v.lessons;
       _$v = null;
     }
     return this;
@@ -252,7 +286,7 @@ class _$UserProfileBuilder extends UserProfileBuilder {
   }
 
   @override
-  void update(void updates(UserProfileBuilder b)) {
+  void update(void Function(UserProfileBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -264,7 +298,8 @@ class _$UserProfileBuilder extends UserProfileBuilder {
             currentTheme: currentTheme,
             gameStatuses: gameStatuses,
             items: items,
-            accessories: accessories);
+            accessories: accessories,
+            lessons: lessons);
     replace(_$result);
     return _$result;
   }

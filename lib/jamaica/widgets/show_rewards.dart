@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:maui/jamaica/models/rewards_data.dart';
 import 'package:tuple/tuple.dart';
@@ -73,70 +74,79 @@ class _ShowRewardsState extends State<ShowRewards>
               physics: NeverScrollableScrollPhysics(),
               scrollDirection: Axis.vertical,
               children: widget.rewardList.keys.map((d) {
-                return Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      Expanded(
-                        flex: 1,
-                        child: Padding(
-                          padding: EdgeInsets.only(top: 20.0),
-                          child: Container(
-                            width: MediaQuery.of(context).size.width / 2,
-                            child: Card(
-                              color: Colors.red,
-                              elevation: 3.0,
-                              child: Center(
-                                child: Text(
-                                  d.categoryName,
-                                  style: TextStyle(
-                                      fontSize: 20, color: Colors.white),
-                                ),
-                              ),
-                            ),
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(top: 20.0),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width / 2,
+                      height: MediaQuery.of(context).size.width / 10,
+                      child: Card(
+                        color: Colors.red,
+                        elevation: 3.0,
+                        child: Center(
+                          child: Text(
+                            d.categoryName,
+                            style: TextStyle(
+                                fontSize:
+                                    MediaQuery.of(context).size.width / 15,
+                                color: Colors.white),
                           ),
                         ),
                       ),
-                      Expanded(
-                        flex: 9,
+                    ),
+                    Expanded(
+                      flex: 8,
+                      child: Container(
                         child: GridView(
                           physics: NeverScrollableScrollPhysics(),
                           padding: EdgeInsets.only(top: 16.0),
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
-                                  childAspectRatio: 0.7, crossAxisCount: 5),
+                                  mainAxisSpacing: 20.0,
+                                  childAspectRatio: 0.8,
+                                  crossAxisCount: 5),
                           children: widget.rewardList[d].map((f) {
                             index++;
-
                             return Container(
-                              child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    CircleAvatar(
-                                      radius: 35.0,
-                                      backgroundColor: colorStatus[index] == 0
-                                          ? Colors.grey
-                                          : null,
-                                      child: AspectRatio(
-                                        aspectRatio: 2.0,
-                                        child: new SvgPicture.asset(
-                                          f.rewardItemImagePath,
-                                          package: 'tahiti',
+                              child: Center(
+                                child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      CircleAvatar(
+                                        radius:
+                                            MediaQuery.of(context).size.width /
+                                                15,
+                                        backgroundColor: colorStatus[index] == 0
+                                            ? Colors.grey
+                                            : null,
+                                        child: AspectRatio(
+                                          aspectRatio: 2.0,
+                                          child: SvgPicture.asset(
+                                            f.rewardItemImagePath,
+                                            package: 'tahiti',
+                                            color: Colors.red.withOpacity(0.3),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    Text(
-                                      f.rewardItemName,
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 20.0),
-                                    ),
-                                  ]),
+                                      Expanded(
+                                        child: Text(
+                                          f.rewardItemName,
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 20.0),
+                                        ),
+                                      ),
+                                    ]),
+                              ),
                             );
                           }).toList(growable: false),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 );
               }).toList(growable: false),
             ),
@@ -161,6 +171,7 @@ class _ShowRewardsState extends State<ShowRewards>
           children: <Widget>[
             Positioned(
               child: ListView(
+                physics: AlwaysScrollableScrollPhysics(),
                 padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
                 scrollDirection: Axis.horizontal,
                 children: itemRange.map((f) {
@@ -229,7 +240,7 @@ class _ShowRewardsState extends State<ShowRewards>
   Widget buildIndexItem(BuildContext context, String text, String imagePath,
       bool enabled, int index) {
     return Padding(
-      padding: EdgeInsets.only(right: 20.0),
+      padding: EdgeInsets.only(right: 10.0, left: 10.0),
       child: InkWell(
         onTap: () {
           print('index is $index');
