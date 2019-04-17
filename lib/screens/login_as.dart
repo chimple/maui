@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:maui/components/user_item.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/user_repo.dart';
+import 'package:maui/state/app_state_container.dart';
 
 class LoginAs extends StatefulWidget {
   @override
@@ -39,7 +40,7 @@ class _LoginAsState extends State<LoginAs> {
         children: List.generate(_users.length, (index) {
           return new GestureDetector(
               onTap: () {
-                print("Hello World..!!");
+                print("Login As Tecaher..!!");
               },
               child: _users[index].userType == UserType.teacher
                   ? UserItem(user: _users[index])
@@ -55,8 +56,11 @@ class _LoginAsState extends State<LoginAs> {
         crossAxisSpacing: 8.0,
         children: List.generate(_users.length, (index) {
           return new GestureDetector(
-              onTap: () {
-                print("Hello World..!!");
+              onTap: () async {
+                print("Login As Student..!!");
+                await AppStateContainer.of(context)
+                    .setLoggedInUser(_users[index]);
+                Navigator.of(context).pushNamed('/welcome');
               },
               child: _users[index].userType == UserType.student
                   ? UserItem(user: _users[index])
