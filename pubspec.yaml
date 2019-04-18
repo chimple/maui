@@ -19,6 +19,7 @@ dependencies:
   audioplayers: ^0.8.2
   percent_indicator: ^1.0.10
   tinycolor: ^1.0.2
+  flutter_tts: ^0.2.4
   fluttery:
     git:
       https://github.com/chimple/fluttery.git

@@ -25,6 +25,7 @@ class AudioTextBold extends StatefulWidget {
   final String fullText;
   final Function pageSliding;
   final Function(int, StoryMode) storyModeCallback;
+  final VoidCallback onComplete;
   final String audioFile;
   final String pageNumber;
   final StoryMode storyMode;
@@ -36,6 +37,7 @@ class AudioTextBold extends StatefulWidget {
       {Key key,
       this.storyMode,
       this.imageItemsPosition,
+      this.onComplete,
       @required this.fullText,
       this.pageSliding,
       @required this.audioFile,
@@ -90,7 +92,7 @@ class _TextAudioState extends State<AudioTextBold> {
       _duration = 0;
       isDurationZero = false;
     });
-    widget.pageSliding();
+    widget.pageSliding(widget.index);
   }
 
   Future resume() async {
@@ -102,7 +104,7 @@ class _TextAudioState extends State<AudioTextBold> {
       });
     });
     print('audio status ${audioPlayer.state}');
-    widget.pageSliding();
+    widget.pageSliding(widget.index);
   }
 
   void reset() {
@@ -235,14 +237,13 @@ class _TextAudioState extends State<AudioTextBold> {
     try {
       await audioCache.loadAll(_audioFiles).then((s) {
         lastAudioFile = _audioFiles[0];
-        // reset();
         play(_audioFiles[0]);
         setState(() {
           isPlaying = true;
           isPause = false;
           isAudioFileAvailableOrNot = false;
         });
-        widget.pageSliding();
+        widget.pageSliding(widget.index);
         if (storyMode == StoryMode.audioBoldTextMode) {}
       }, onError: (e) {
         setState(() {
@@ -283,101 +284,110 @@ class _TextAudioState extends State<AudioTextBold> {
       endLine = '';
       storyMode = StoryMode.showDialogOnLongPressMode;
     });
-    widget.pageSliding();
+    widget.pageSliding(widget.index);
+    widget.onComplete();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        SizedBox(
-            height: MediaQuery.of(context).size.height * .3,
-            child: Container(
-              decoration: BoxDecoration(
-                  border: Border.all(width: 2.0, color: Colors.orange),
-                  borderRadius: BorderRadius.circular(20.0),
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image:
-                        AssetImage('assets/stories/images/${widget.imagePath}'),
+    return MediaQuery.of(context).orientation == Orientation.portrait
+        ? Column(
+            children: <Widget>[
+              Expanded(
+                  flex: 4,
+                  child: Container(
+                    height: double.infinity,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        // border: Border.all(width: 2.0, color: Colors.white),
+                        borderRadius: BorderRadius.circular(20.0),
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: AssetImage(
+                              'assets/stories/images/${widget.imagePath}'),
+                        )),
                   )),
-            )),
-        CircleAvatar(
-          child: PlayPauseButton(
-            audioPlayer: audioPlayer,
-            isPause: isPause,
-            isPlaying: isPlaying,
-            loadAudio: () => loadAudio(widget.fullText, widget.audioFile),
-            pause: () => pause(),
-            resume: () => resume(),
-          ),
-        ),
-        Container(
-            height: MediaQuery.of(context).size.height * .7,
-            child: Container(child: _buildText()))
-      ],
-    );
-    return Stack(
-      alignment: AlignmentDirectional.topEnd,
-      children: <Widget>[
-        Column(
-          children: <Widget>[
-            Expanded(
-              flex: 10,
-              child: Row(
+              Expanded(
+                flex: 1,
+                child: PlayPauseButton(
+                  audioPlayer: audioPlayer,
+                  isPause: isPause,
+                  isPlaying: isPlaying,
+                  loadAudio: () => loadAudio(widget.fullText, widget.audioFile),
+                  pause: () => pause(),
+                  resume: () => resume(),
+                ),
+              ),
+              Expanded(
+                  flex: 7,
+                  child: Padding(
+                      padding: EdgeInsets.only(left: 20, right: 20),
+                      child: _buildText()))
+            ],
+          )
+        : Stack(
+            alignment: AlignmentDirectional.topEnd,
+            children: <Widget>[
+              Column(
                 children: <Widget>[
-                  Expanded(flex: 4, child: _buildImage()),
                   Expanded(
-                    flex: 5,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 8, right: 8),
-                      child: SingleChildScrollView(
-                          controller: ScrollController(), child: _buildText()),
+                    flex: 6,
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(flex: 6, child: _buildImage()),
+                        Expanded(
+                          flex: 4,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 8, right: 8),
+                            child: SingleChildScrollView(
+                                controller: ScrollController(),
+                                child: _buildText()),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
+                  Expanded(
+                    flex: 1,
+                    child: (storyMode != StoryMode.textHighlighterMode)
+                        ? PlayPauseButton(
+                            audioPlayer: audioPlayer,
+                            isPause: isPause,
+                            isPlaying: isPlaying,
+                            loadAudio: () =>
+                                loadAudio(widget.fullText, widget.audioFile),
+                            pause: () => pause(),
+                            resume: () => resume(),
+                          )
+                        : Container(),
+                  ),
+                  Expanded(flex: 3, child: Container())
                 ],
               ),
-            ),
-            Expanded(
-              flex: 1,
-              child: (storyMode != StoryMode.textHighlighterMode)
-                  ? PlayPauseButton(
-                      audioPlayer: audioPlayer,
-                      isPause: isPause,
-                      isPlaying: isPlaying,
-                      loadAudio: () =>
-                          loadAudio(widget.fullText, widget.audioFile),
-                      pause: () => pause(),
-                      resume: () => resume(),
-                    )
-                  : Container(),
-            )
-          ],
-        ),
-        // CircleAvatar(
-        //   backgroundColor: Colors.cyanAccent,
-        //   maxRadius: 25,
-        //   child: IconButton(
-        //       icon: Icon(
-        //         (storyMode == StoryMode.textHighlighterMode ||
-        //                 storyMode == StoryMode.dragTextMode)
-        //             ? Icons.close
-        //             : Icons.navigate_next,
-        //         color: Colors.blue,
-        //         size: 25,
-        //       ),
-        //       onPressed: () {
-        //         if (storyMode == StoryMode.showDialogOnLongPressMode) {
-        //           setState(() => storyMode = StoryMode.textHighlighterMode);
-        //         } else if (storyMode == StoryMode.textHighlighterMode ||
-        //             storyMode == StoryMode.dragTextMode) {
-        //           setState(
-        //               () => storyMode = StoryMode.showDialogOnLongPressMode);
-        //         }
-        //       }),
-        // ),
-      ],
-    );
+              // CircleAvatar(
+              //   backgroundColor: Colors.cyanAccent,
+              //   maxRadius: 25,
+              //   child: IconButton(
+              //       icon: Icon(
+              //         (storyMode == StoryMode.textHighlighterMode ||
+              //                 storyMode == StoryMode.dragTextMode)
+              //             ? Icons.close
+              //             : Icons.navigate_next,
+              //         color: Colors.blue,
+              //         size: 25,
+              //       ),
+              //       onPressed: () {
+              //         if (storyMode == StoryMode.showDialogOnLongPressMode) {
+              //           setState(() => storyMode = StoryMode.textHighlighterMode);
+              //         } else if (storyMode == StoryMode.textHighlighterMode ||
+              //             storyMode == StoryMode.dragTextMode) {
+              //           setState(
+              //               () => storyMode = StoryMode.showDialogOnLongPressMode);
+              //         }
+              //       }),
+              // ),
+            ],
+          );
   }
 
   Widget _buildText() {
@@ -401,7 +411,7 @@ class _TextAudioState extends State<AudioTextBold> {
     } else if (storyMode == StoryMode.textHighlighterMode)
       return TextHighlighter(
           text: widget.fullText,
-          onCorrectAnswer: (l) {
+          onComplete: (l) {
             new Future.delayed(Duration(seconds: 1), () {
               setState(() {
                 storyMode = StoryMode.dragTextMode;
