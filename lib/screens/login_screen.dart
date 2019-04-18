@@ -325,7 +325,7 @@ class _LoginScreenState extends State<LoginScreen>
                 onTap: () async {
                   print("Login As Student..!!");
                   await AppStateContainer.of(context)
-                      .setLoggedInUser(_users[index]);
+                      .setLoggedInUser(existingUsers[index]);
                   Navigator.of(context).pushNamed('/welcome');
                 },
                 child: UserItem(user: _users[index]));
