@@ -44,6 +44,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
     b.startTime = DateTime.now();
     b.level = 2;
     b.score = 100;
+    b.total = 200;
     b.sessionId = randomString(10, from: 97, to: 122);
   }
 
