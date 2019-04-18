@@ -65,7 +65,7 @@ class StoryListState extends State<StoryList> {
               child: GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  childAspectRatio: 1.45,
+                  childAspectRatio: 1.30,
                 ),
                 itemBuilder: (context, index) {
                   return StoryCard(storyConfig: _stories[index]);

@@ -10,7 +10,7 @@ class StoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraint) {
       return Padding(
-        padding: EdgeInsets.all(constraint.maxHeight * .06),
+        padding: EdgeInsets.all(constraint.maxHeight * .08),
         child: Stack(
           children: <Widget>[
             Material(
