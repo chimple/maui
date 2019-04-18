@@ -21,8 +21,9 @@ class SwitchScreenState extends State<SwitchScreen> {
     if (userId != null) {
       User user = await UserRepo().getUser(userId);
       await AppStateContainer.of(context).setLoggedInUser(user);
-      Navigator.of(context).pushReplacementNamed('/jam_chatbot');
-    } else {
+      Navigator.of(context).pushReplacementNamed('/login');
+    } 
+    else {
       Navigator.of(context).pushReplacementNamed('/login');
     }
     setState(() {
