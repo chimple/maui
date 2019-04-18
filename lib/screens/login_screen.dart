@@ -318,6 +318,7 @@ class _LoginScreenState extends State<LoginScreen>
     return SizedBox(
       height: 50.0,
       child: ListView.builder(
+          reverse: true,
           scrollDirection: Axis.horizontal,
           itemCount: existingUsers.length,
           itemBuilder: (_, index) {
