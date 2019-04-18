@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:maui/jamaica/widgets/story/activity/activity_screen.dart';
 import 'package:maui/jamaica/widgets/story/audio_text_bold.dart';
 import 'package:maui/jamaica/widgets/story/cover_page.dart';
-import 'package:maui/jamaica/widgets/story/custom_editable_text.dart';
-import 'package:maui/jamaica/widgets/story/play_pause_button.dart';
 import 'package:maui/jamaica/widgets/story/show_dialog_mode.dart';
 import 'package:maui/models/story_config.dart';
 
@@ -26,44 +24,64 @@ class StoryPageState extends State<StoryPage> {
   PageController pageController = PageController();
   List<StoryMode> _storyMode = [];
   ScrollController _controller;
+  int incr = 0;
   @override
   void initState() {
     super.initState();
     for (int i = 0; i < widget.pages.length; i++)
       _storyMode.add(StoryMode.textMode);
     _controller = new ScrollController();
-    _controller.addListener(() {
-      print('controller ${_controller.position.maxScrollExtent}');
+    new Future.delayed(Duration(seconds: 2), () {
+      _controller.animateTo((MediaQuery.of(context).size.height * 1.1),
+          curve: Curves.ease, duration: Duration(milliseconds: 500));
     });
-    print('${_controller.initialScrollOffset}');
   }
 
   @override
   Widget build(BuildContext context) {
+    print(widget.pages.length);
+    int index = 0;
     final widgets = <Widget>[];
-    widgets.add(CoverPage(
-      coverImagePath: widget.coverImagePath,
+    widgets.add(SizedBox(
+      height: MediaQuery.of(context).size.height * 1.1,
+      child: CoverPage(
+        coverImagePath: widget.coverImagePath,
+      ),
     ));
     widget.pages.map((data) {
-      widgets.add(AudioTextBold(
-          imagePath: data.imagePath,
-          audioFile: data.audioPath,
-          fullText: data.text,
+      widgets.add(SizedBox(
+        height: MediaQuery.of(context).size.height * 1.1,
+        child: AudioTextBold(
+            imagePath: data.imagePath,
+            audioFile: data.audioPath,
+            fullText: data.text,
+            onComplete: () => incr++,
+            pageSliding: (index) {
+              setState(() {
+                _isPlaying = !_isPlaying;
+                _controller.animateTo(
+                    (MediaQuery.of(context).size.height * 1.1 * (index + 1)),
+                    curve: Curves.ease,
+                    duration: Duration(milliseconds: 500));
+              });
+            },
+            index: index++,
 //              imageItemsAnswer: widget.pages[index].imageItemsAnswer,
-          pageNumber: data.pageNumber
-          // storyMode: _storyMode[index],
-          // index: index,
-          ));
+            pageNumber: data.pageNumber
+            // storyMode: _storyMode[index],
+            // index: index,
+            ),
+      ));
     }).toList();
     return new Scaffold(
       floatingActionButton: ActivityButton(
-        icon: Icons.pie_chart,
-        string: "Activity",
-        onTap: (i) {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => ActivityScreen()));
-        },
-      ),
+          isEnable: incr == widget.pages.length.toInt(),
+          icon: Icons.pie_chart,
+          string: "Activity",
+          onTap: (i) {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ActivityScreen()));
+          }),
       body: Column(
         children: <Widget>[
           SizedBox(
@@ -104,6 +122,9 @@ class StoryPageState extends State<StoryPage> {
                 child: Scrollbar(
               child: SingleChildScrollView(
                   controller: _controller,
+                  physics: _isPlaying
+                      ? NeverScrollableScrollPhysics()
+                      : ScrollPhysics(),
                   scrollDirection: Axis.vertical,
                   child: Padding(
                       padding: EdgeInsets.all(12.0),
@@ -111,45 +132,6 @@ class StoryPageState extends State<StoryPage> {
                         children: widgets,
                       ))),
             )),
-//             child: PageView.builder(
-//               pageSnapping: false,
-//               controller: pageController,
-//               onPageChanged: (int index) {
-//                 print(index);
-//               },
-//               scrollDirection: Axis.vertical,
-//               physics:
-//                   _isPlaying ? NeverScrollableScrollPhysics() : ScrollPhysics(),
-//               itemBuilder: (context, index) {
-// //          var d = widget.pages[index].imageItemsPosition;
-// //          print('drag data :: ${d}');
-// //          print('data:: ${widget.pages[index].highlightQuestion}');
-//                 if (index == 0)
-//                   return CoverPage(
-//                     coverImagePath: widget.coverImagePath,
-//                   );
-//                 else {
-//                   index = index - 1;
-//                   return AudioTextBold(
-//                       imagePath: widget.pages[index].imagePath,
-//                       audioFile: widget.pages[index].audioPath,
-//                       fullText: widget.pages[index].text,
-// //              imageItemsAnswer: widget.pages[index].imageItemsAnswer,
-//                       pageNumber: widget.pages[index].pageNumber,
-//                       storyMode: _storyMode[index],
-//                       index: index,
-//                       storyModeCallback: (index, StoryMode sm) => setState(
-//                             () => _storyMode[index] = sm,
-//                           ),
-//                       pageSliding: () => setState(() {
-//                             _isPlaying = !_isPlaying;
-//                             // pageController.jumpToPage(
-//                             //     int.parse(widget.pages[index].pageNumber) - 1);
-//                           }));
-//                 }
-//               },
-//               itemCount: widget.pages.length + 1,
-//             ),
           )
         ],
       ),
@@ -162,22 +144,29 @@ class ActivityButton extends StatelessWidget {
   final String string;
   final Function(int) onTap;
   final int pageIndex;
-  ActivityButton(
-      {@required this.icon, @required this.string, this.onTap, this.pageIndex});
+  final bool isEnable;
+  ActivityButton({
+    @required this.icon,
+    @required this.string,
+    @required this.onTap,
+    this.isEnable = false,
+    this.pageIndex,
+  });
   @override
   Widget build(BuildContext context) => Padding(
       padding: const EdgeInsets.only(right: 0.0, bottom: 0.0),
       child: Container(
-          width: 130,
+          width: 138,
           height: 50,
           child: RaisedButton(
               color: Colors.white,
+              disabledColor: Colors.grey,
               shape: RoundedRectangleBorder(
                   side: BorderSide(width: 2.0, color: Colors.orange),
                   borderRadius: BorderRadius.circular(25.0)),
-              onPressed: () => onTap(pageIndex),
+              onPressed: isEnable ? () => onTap(pageIndex) : null,
               child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
                       string,

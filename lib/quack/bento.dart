@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redurx/flutter_redurx.dart';
 import 'package:maui/components/drawing_wrapper.dart';
 import 'package:maui/db/entity/quack_card.dart';
-import 'package:maui/jamaica/screens/home_screen.dart';
+import 'package:maui/home/home_screen.dart';
 import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/card_summary.dart';
 import 'package:maui/quack/fab_icon.dart';
@@ -27,7 +27,7 @@ class Bento extends StatelessWidget {
         floatingActionButton: FancyFab(),
         body: Column(
           children: <Widget>[
-            //FriendStrip(),
+            FriendStrip(),
             Expanded(
               child: HomeScreen(),
             ),
