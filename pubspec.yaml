@@ -107,6 +107,7 @@ flutter:
     - assets/score/
     - assets/background_flare/
     - assets/hud/
+    - assets/home_screen_icons/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
