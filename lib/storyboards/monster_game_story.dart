@@ -8,14 +8,14 @@ class MonsterGameStory extends FullScreenStory {
         Scaffold(
           body: SafeArea(
             child: ActivityBoard(
-              drawText: "A",
+              //drawText: "A",
             ),
           ),
         ),
         Scaffold(
           body: SafeArea(
             child: ActivityBoard(
-              drawText: "Z",
+              //drawText: "Z",
             ),
           ),
         ),

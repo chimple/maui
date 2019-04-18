@@ -59,48 +59,75 @@ class _ProgressScreenState extends State<ProgressScreen> {
   Widget build(BuildContext context) {
     var keys = _performance.keys.toList();
 
-    return Column(
+    var background = Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(image: AssetImage('assets/Background_potriat.png'),fit: BoxFit.cover)
+      ),
+    );
+
+    var padding = Padding(padding: EdgeInsets.all(8.0));
+
+    var bodyContent = Column(
       children: <Widget>[
         Expanded(
           flex: 1,
           child: ListView.builder(
               itemCount: keys.length,
               itemBuilder: (context, index) {
-                return Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8)),
-                  elevation: 3,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Container(
-                          child: Expanded(
-                              flex: 1, child: buildLeftSection(keys, index))),
-                      Container(
-                        child: Expanded(
-                          flex: 4,
-                          child: Column(
-                            children: <Widget>[
-                              Text('Game Name', style: TextStyle(fontSize: 20)),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: LinearProgressIndicator(),
-                              )
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                );
+                return buildPerformanceCard(keys, index);
               }),
-        ),
-        RaisedButton(child: Text('Add'), onPressed: changeData)
+        ), //RaisedButton(child: Text('Add'), onPressed: changeData)
+      ],
+    );
+
+
+    var scaffold = Scaffold(
+      backgroundColor: Colors.transparent,
+      appBar: AppBar(
+        backgroundColor: Colors.white30, elevation: 2,
+        leading: Icon(Icons.arrow_back, color: Colors.black),
+        actions: <Widget>[
+          IconButton(icon: Icon(Icons.notifications), color: Colors.white, onPressed: null)
+        ],
+      ),
+      body: bodyContent,
+    );
+
+
+    return Stack(
+      children: <Widget>[background, padding, scaffold],
+    );
+  }
+
+  Card buildPerformanceCard(List<String> keys, int index) {
+    return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      elevation: 3,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Container(
+              child:
+                  Expanded(flex: 1, child: buildCardLeftSection(keys, index))),
+          Container(child: Expanded(flex: 4, child: buildCardRightSection()))
+        ],
+      ),
+    );
+  }
+
+  Column buildCardRightSection() {
+    return Column(
+      children: <Widget>[
+        Text('Game Name', style: TextStyle(fontSize: 20)),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: LinearProgressIndicator(),
+        )
       ],
     );
   }
 
-  Column buildLeftSection(List<String> keys, int index) {
+  Column buildCardLeftSection(List<String> keys, int index) {
     Widget imageIcon = Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -110,6 +137,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
         decoration: BoxDecoration(color: Colors.red, shape: BoxShape.circle),
       ),
     );
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
@@ -117,7 +145,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
         Row(
           //mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Expanded(flex: 1,child: Icon(Icons.star, color: Colors.yellow)),
+            Expanded(flex: 1, child: Icon(Icons.star, color: Colors.yellow)),
             Expanded(
               flex: 3,
               child: Text('200000',
