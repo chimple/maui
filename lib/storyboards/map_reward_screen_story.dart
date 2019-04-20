@@ -12,6 +12,50 @@ class MapRewardsScreenStory extends FullScreenStory {
           body: SafeArea(
             child: MapRewardScreen(
               rewardList: rewardList,
+              items: BuiltMap<String, int>({
+                'a': 1,
+                'b': 0,
+                'c': 1,
+                'd': 0,
+                'e': 0,
+                'f': 1,
+                'g': 0,
+                'h': 1,
+              }),
+            ),
+          ),
+        ),
+        Scaffold(
+          body: SafeArea(
+            child: MapRewardScreen(
+              rewardList: rewardList,
+              items: BuiltMap<String, int>({
+                'a': 0,
+                'b': 0,
+                'c': 0,
+                'd': 1,
+                'e': 1,
+                'f': 1,
+                'g': 0,
+                'h': 1,
+              }),
+            ),
+          ),
+        ),
+        Scaffold(
+          body: SafeArea(
+            child: MapRewardScreen(
+              rewardList: rewardList,
+              items: BuiltMap<String, int>({
+                'a': 1,
+                'b': 1,
+                'c': 1,
+                'd': 0,
+                'e': 1,
+                'f': 1,
+                'g': 1,
+                'h': 0,
+              }),
             ),
           ),
         ),
