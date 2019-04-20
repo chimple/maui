@@ -74,25 +74,26 @@ class CardLockState extends State<CardLock> {
       builder: (progress) {
         return progress == null
             ? InkWell(
-                onTap: () => initialPoints < 5
-                    ? showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return DialogContent(
-                              onPressed: onPressed,
-                              initialPoints: initialPoints,
-                              onCompleteNima: onCompleteNima,
-                              shouldDisplayNima: true);
-                        },
-                        barrierDismissible: false)
-                    : showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return DialogContent(
-                              onPressed: onPressed,
-                              initialPoints: initialPoints,
-                              shouldDisplayNima: false);
-                        }),
+//                onTap: () => initialPoints < 5
+//                    ? showDialog(
+//                        context: context,
+//                        builder: (BuildContext context) {
+//                          return DialogContent(
+//                              onPressed: onPressed,
+//                              initialPoints: initialPoints,
+//                              onCompleteNima: onCompleteNima,
+//                              shouldDisplayNima: true);
+//                        },
+//                        barrierDismissible: false)
+//                    : showDialog(
+//                        context: context,
+//                        builder: (BuildContext context) {
+//                          return DialogContent(
+//                              onPressed: onPressed,
+//                              initialPoints: initialPoints,
+//                              shouldDisplayNima: false);
+//                        }),
+                onTap: () => _goToCardDetail(context),
                 child: AspectRatio(
                   aspectRatio: 1.0,
                   child: Container(

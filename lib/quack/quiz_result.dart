@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redurx/flutter_redurx.dart';
 import 'package:maui/actions/update_points.dart';
 import 'package:maui/db/entity/quack_card.dart';
+import 'package:maui/db/entity/quiz.dart';
 import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/quiz_card_detail.dart';
 import 'package:maui/quack/quiz_selection.dart';
@@ -12,7 +13,7 @@ import 'package:maui/state/app_state_container.dart';
 import 'package:nima/nima_actor.dart';
 
 class QuizResult extends StatefulWidget {
-  final List<QuackCard> quizzes;
+  final List<Quiz> quizzes;
   final Map<String, List<QuizItem>> quizItemMap;
   final Map<String, List<QuizItem>> answersMap;
   final Map<String, List<QuizItem>> startChoicesMap;
@@ -168,8 +169,7 @@ class QuizResultState extends State<QuizResult> {
                             });
                           },
                           children: widget.quizzes
-                              .where((q) => (q.type == CardType.question &&
-                                  q.option != 'open'))
+                              .where((q) => (q.type == QuizType.open))
                               .map(
                                 (q) => ExpansionPanel(
                                       isExpanded: (_expandedPanel == index++)
@@ -180,12 +180,14 @@ class QuizResultState extends State<QuizResult> {
                                           Container(
                                               height: 100.0,
                                               child: Center(
-                                                  child: Text(q.title ?? ''))),
+                                                  child:
+                                                      Text(q.question ?? ''))),
                                       body: Container(
                                         color: Colors.blueAccent,
                                         child: SizedBox(
                                           height: media.size.height,
                                           child: QuizSelection(
+                                            quiz: q,
                                             quizItems: widget.quizItemMap[q.id],
                                             answers: widget.answersMap[q.id],
                                             startChoices:

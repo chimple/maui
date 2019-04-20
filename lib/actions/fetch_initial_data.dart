@@ -56,15 +56,14 @@ class FetchInitialData implements AsyncAction<RootState> {
         collectionMap: collectionMap,
         progressMap: progressMap,
         likeMap: likeMap);
-    await fetchCollection(
-        name: 'open',
-        cardMap: cardMap,
-        collectionMap: collectionMap,
-        progressMap: progressMap,
-        likeMap: likeMap);
+//    await fetchCollection(
+//        name: 'open',
+//        cardMap: cardMap,
+//        collectionMap: collectionMap,
+//        progressMap: progressMap,
+//        likeMap: likeMap);
     final dummy = await cardRepo.getCard('dummy');
     cardMap['dummy'] = dummy;
-    print('open ${collectionMap['open']}');
     final tiles = await tileRepo.getTilesOtherThanDots();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final userActivity = prefs.getString('userActivity');
@@ -119,15 +118,15 @@ class FetchInitialData implements AsyncAction<RootState> {
 
   static Future<Map<String, QuackCard>> fetchFrontMap(RootState state) async {
     final rand = Random();
-    final openCollection = state.collectionMap['open'];
+//    final openCollection = state.collectionMap['open'];
     final mainCollection = state.collectionMap['main'];
     final topic = mainCollection[rand.nextInt(mainCollection.length)];
     final topicCollection = state.collectionMap[topic];
     final storyCollection = state.collectionMap['story'];
 
     return {
-      'open':
-          state.cardMap[openCollection[rand.nextInt(openCollection.length)]],
+//      'open':
+//          state.cardMap[openCollection[rand.nextInt(openCollection.length)]],
       'topic':
           state.cardMap[topicCollection[rand.nextInt(topicCollection.length)]],
       'story':
