@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redurx/flutter_redurx.dart';
-import 'package:maui/actions/add_progress.dart';
 import 'package:maui/actions/fetch_card_detail.dart';
 import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/db/entity/tile.dart';
@@ -8,10 +7,6 @@ import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/card_detail.dart';
 import 'package:maui/quack/card_header.dart';
 import 'package:maui/quack/card_lock.dart';
-import 'package:maui/quack/card_pager.dart';
-import 'package:maui/quack/like_button.dart';
-import 'package:maui/quack/quiz_card_detail.dart';
-import 'package:maui/quack/quiz_open_detail.dart';
 import 'package:maui/quack/social_summary.dart';
 
 class CardSummary extends StatelessWidget {
@@ -38,14 +33,10 @@ class CardSummary extends StatelessWidget {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (BuildContext context) {
-              return card.type == CardType.question
-                  ? QuizOpenDetail(
-                      card: card,
-                    )
-                  : CardDetail(
-                      card: card,
-                      parentCardId: parentCardId,
-                    );
+              return CardDetail(
+                card: card,
+                parentCardId: parentCardId,
+              );
             },
           ),
         );

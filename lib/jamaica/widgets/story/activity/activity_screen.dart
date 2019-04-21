@@ -13,6 +13,7 @@ class ActivityScreen extends StatefulWidget {
 class _ActivityScreenState extends State<ActivityScreen> {
   PageController _pageController;
   int pageIndex = 0;
+  bool _isEnable = false;
   @override
   void initState() {
     super.initState();
@@ -24,10 +25,13 @@ class _ActivityScreenState extends State<ActivityScreen> {
     return new Scaffold(
         floatingActionButton: ActivityButton(
           icon: Icons.arrow_forward,
+          isEnable: _isEnable,
           string: "Next",
           onTap: (index) {
-            _pageController.nextPage(
-                curve: Curves.easeIn, duration: Duration(milliseconds: 500));
+            _pageController
+                .nextPage(
+                    curve: Curves.easeIn, duration: Duration(milliseconds: 500))
+                .then((s) => setState(() => _isEnable = false));
           },
           pageIndex: pageIndex,
         ),
@@ -68,21 +72,40 @@ class _ActivityScreenState extends State<ActivityScreen> {
             Expanded(
               flex: 1,
               child: PageView(
+                scrollDirection: Axis.vertical,
                 physics: NeverScrollableScrollPhysics(),
                 controller: _pageController,
                 onPageChanged: (index) {
                   pageIndex = index;
                 },
                 children: <Widget>[
-                  TextHighlighter(),
-                  DragText(),
+                  TextHighlighter(onComplete: (s) {
+                    setState(() => _isEnable = true);
+                  }),
+                  DragText(
+                    onComplete: (s) {
+                      setState(() => _isEnable = true);
+                    },
+                    data: BuiltList([
+                      "tiger",
+                      "cloud",
+                      "building",
+                      "tree",
+                      "hospital",
+                      "building",
+                      "tree",
+                      "hospital"
+                    ]),
+                  ),
                   JumbleWords(
-                    answers: BuiltList<String>(
-                        ["He", 'Like', 'to', 'tease', 'people']),
-                    choices: BuiltList<String>(
-                        ["He", 'Like', 'to', 'tease', 'people']),
-                    onGameOver: (_) {},
-                  )
+                      answers: BuiltList<String>(
+                          ["He", 'Like', 'to', 'tease', 'people']),
+                      choices: BuiltList<String>(
+                          ["He", 'Like', 'to', 'tease', 'people']),
+                      onGameOver: (_) {},
+                      onComplete: () {
+                        setState(() => _isEnable = true);
+                      })
                 ],
               ),
             )
