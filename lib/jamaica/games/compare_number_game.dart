@@ -75,13 +75,13 @@ class _CompareNumberGameState extends State<CompareNumberGame>
 
   @override
   Widget build(BuildContext context) {
-    List<String> splitChoiceDataFirst = [];
-    List<String> splitChoiceDataSecond = [];
+    List<String> splitTheChoicesFirst = [];
+    List<String> splitTheChoicesSecond = [];
     for (int j = 0; j < widget.choices[0].length; j++) {
-      splitChoiceDataFirst.add(widget.choices[0][j]);
+      splitTheChoicesFirst.add(widget.choices[0][j]);
     }
     for (int k = 0; k < widget.choices[1].length; k++) {
-      splitChoiceDataSecond.add(widget.choices[1][k]);
+      splitTheChoicesSecond.add(widget.choices[1][k]);
     }
     return BentoBox(
         dragConfig: DragConfig.draggableBounceBack,
@@ -111,7 +111,7 @@ class _CompareNumberGameState extends State<CompareNumberGame>
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: splitChoiceDataFirst
+                      children: splitTheChoicesFirst
                           .map((e) => _buildWidget(e, widget.image))
                           .toList()),
                 ),
@@ -168,7 +168,7 @@ class _CompareNumberGameState extends State<CompareNumberGame>
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        children: splitChoiceDataSecond
+                        children: splitTheChoicesSecond
                             .map((e) => _buildWidget(e, widget.image))
                             .toList())),
               ),
