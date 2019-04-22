@@ -2,8 +2,11 @@ import 'dart:async';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:built_collection/built_collection.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:maui/jamaica/widgets/story/activity/drag_text.dart';
+import 'package:maui/jamaica/widgets/story/custom_editable_text.dart';
 // import 'package:maui/jamaica/widgets/story/activity/jumble_words.dart';
 import 'package:maui/jamaica/widgets/story/play_pause_button.dart';
 // import 'package:maui/jamaica/widgets/story/router.dart';
@@ -70,9 +73,11 @@ class _TextAudioState extends State<AudioTextBold> {
   StoryMode storyMode = StoryMode.textMode;
   List<StoryMode> listStoryMode = [];
   ScrollController _scrollController = new ScrollController();
+  FlutterTts flutterTts;
   @override
   void initState() {
     super.initState();
+    flutterTts = FlutterTts();
     print('initState');
   }
 
@@ -80,6 +85,7 @@ class _TextAudioState extends State<AudioTextBold> {
   void dispose() {
     audioCache?.clearCache();
     audioPlayer?.stop();
+    flutterTts.stop();
     super.dispose();
   }
 
@@ -208,51 +214,55 @@ class _TextAudioState extends State<AudioTextBold> {
   }
 
   Future loadAudio(String text, String audio) async {
-    String string = '';
-    words = text.split(" ");
-    listOfLines?.clear();
-    _audioFiles?.clear();
-    for (int i = 0; i < words.length; i++) {
-      string = string + words[i] + ' ';
-      if (words[i].contains(RegExp('[!.]'))) {
-        listOfLines.add(string);
-        string = '';
+    if (audio != null) {
+      String string = '';
+      words = text.split(" ");
+      listOfLines?.clear();
+      _audioFiles?.clear();
+      for (int i = 0; i < words.length; i++) {
+        string = string + words[i] + ' ';
+        if (words[i].contains(RegExp('[!.]'))) {
+          listOfLines.add(string);
+          string = '';
+        }
       }
-    }
 
-    // for (int i = 0; i < listOfLines.length; i++)
-    //   listOfLines[i] = listOfLines[i] + ".";
-    String str;
-    _count = '.'.allMatches(text).length + '!'.allMatches(text).length;
-    // bool b = words[words.length - 1].contains(_regex1);
-    // print(_count);
-    // if (b) _count = _count + 1;
-    for (int i = 1; i <= _count; i++) {
-      str = audio + i.toString();
-      _audioFiles.add('$str.m4a');
-    }
+      // for (int i = 0; i < listOfLines.length; i++)
+      //   listOfLines[i] = listOfLines[i] + ".";
+      String str;
+      _count = '.'.allMatches(text).length + '!'.allMatches(text).length;
+      // bool b = words[words.length - 1].contains(_regex1);
+      // print(_count);
+      // if (b) _count = _count + 1;
+      for (int i = 1; i <= _count; i++) {
+        str = audio + i.toString();
+        _audioFiles.add('$str.m4a');
+      }
 
-    try {
-      await audioCache.loadAll(_audioFiles).then((s) {
-        lastAudioFile = _audioFiles[0];
-        play(_audioFiles[0]);
-        setState(() {
-          isPlaying = true;
-          isPause = false;
-          isAudioFileAvailableOrNot = false;
+      try {
+        await audioCache.loadAll(_audioFiles).then((s) {
+          lastAudioFile = _audioFiles[0];
+          play(_audioFiles[0]);
+          setState(() {
+            isPlaying = true;
+            isPause = false;
+            isAudioFileAvailableOrNot = false;
+          });
+          widget.pageSliding(widget.index);
+          if (storyMode == StoryMode.audioBoldTextMode) {}
+        }, onError: (e) {
+          setState(() {
+            isPlaying = false;
+            isPause = true;
+            isAudioFileAvailableOrNot = true;
+          });
+          showSnackbar(e.toString());
         });
-        widget.pageSliding(widget.index);
-        if (storyMode == StoryMode.audioBoldTextMode) {}
-      }, onError: (e) {
-        setState(() {
-          isPlaying = false;
-          isPause = true;
-          isAudioFileAvailableOrNot = true;
-        });
-        showSnackbar(e.toString());
-      });
-    } catch (e) {
-      print(e);
+      } catch (e) {
+        print(e);
+      }
+    } else {
+      flutterTts.speak(widget.fullText);
     }
   }
 
@@ -285,144 +295,107 @@ class _TextAudioState extends State<AudioTextBold> {
     widget.onComplete();
   }
 
+  String _startSubString = '', _middleSubString = '', _endSubString = '';
   @override
   Widget build(BuildContext context) {
-    return MediaQuery.of(context).orientation == Orientation.portrait
-        ? Column(
-            children: <Widget>[
-              Expanded(
-                  flex: 4,
-                  child: Container(
-                    height: double.infinity,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        // border: Border.all(width: 2.0, color: Colors.white),
-                        borderRadius: BorderRadius.circular(20.0),
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: AssetImage('${widget.imagePath}'),
-                        )),
+    return Column(
+      children: <Widget>[
+        Expanded(
+            flex: 5,
+            child: Container(
+              height: double.infinity,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                  // border: Border.all(width: 2.0, color: Colors.white),
+                  borderRadius: BorderRadius.circular(20.0),
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage('${widget.imagePath}'),
                   )),
-              Expanded(
-                flex: 1,
-                child: PlayPauseButton(
-                  audioPlayer: audioPlayer,
-                  isPause: isPause,
-                  isPlaying: isPlaying,
-                  loadAudio: () => loadAudio(widget.fullText, widget.audioFile),
-                  pause: () => pause(),
-                  resume: () => resume(),
-                ),
-              ),
-              Expanded(
-                  flex: 7,
-                  child: Padding(
-                      padding: EdgeInsets.only(left: 20, right: 20),
-                      child: _buildText()))
-            ],
-          )
-        : Stack(
-            alignment: AlignmentDirectional.topEnd,
-            children: <Widget>[
-              Column(
-                children: <Widget>[
-                  Expanded(
-                    flex: 6,
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(flex: 6, child: _buildImage()),
-                        Expanded(
-                          flex: 4,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 8, right: 8),
-                            child: SingleChildScrollView(
-                                controller: ScrollController(),
-                                child: _buildText()),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: (storyMode != StoryMode.textHighlighterMode)
-                        ? PlayPauseButton(
-                            audioPlayer: audioPlayer,
-                            isPause: isPause,
-                            isPlaying: isPlaying,
-                            loadAudio: () =>
-                                loadAudio(widget.fullText, widget.audioFile),
-                            pause: () => pause(),
-                            resume: () => resume(),
-                          )
-                        : Container(),
-                  ),
-                  Expanded(flex: 3, child: Container())
-                ],
-              ),
-              // CircleAvatar(
-              //   backgroundColor: Colors.cyanAccent,
-              //   maxRadius: 25,
-              //   child: IconButton(
-              //       icon: Icon(
-              //         (storyMode == StoryMode.textHighlighterMode ||
-              //                 storyMode == StoryMode.dragTextMode)
-              //             ? Icons.close
-              //             : Icons.navigate_next,
-              //         color: Colors.blue,
-              //         size: 25,
-              //       ),
-              //       onPressed: () {
-              //         if (storyMode == StoryMode.showDialogOnLongPressMode) {
-              //           setState(() => storyMode = StoryMode.textHighlighterMode);
-              //         } else if (storyMode == StoryMode.textHighlighterMode ||
-              //             storyMode == StoryMode.dragTextMode) {
-              //           setState(
-              //               () => storyMode = StoryMode.showDialogOnLongPressMode);
-              //         }
-              //       }),
-              // ),
-            ],
-          );
+            )),
+        Expanded(
+          flex: 1,
+          child: PlayPauseButton(
+            audioPlayer: audioPlayer,
+            isPause: isPause,
+            isPlaying: isPlaying,
+            loadAudio: () => loadAudio(widget.fullText, widget.audioFile),
+            pause: () => pause(),
+            resume: () => resume(),
+          ),
+        ),
+        Expanded(
+            flex: 4,
+            child: Padding(
+                padding: EdgeInsets.only(left: 10, right: 10),
+                child: _buildText()))
+      ],
+    );
   }
 
   Widget _buildText() {
-    print('storymode: ${storyMode}');
-    if (storyMode == StoryMode.textMode)
-      return TextMode(
-        text: widget.fullText,
-      );
-    else if (storyMode == StoryMode.audioBoldTextMode) {
-      return RichText(
-        text: new TextSpan(
-          children: <TextSpan>[
-            new TextSpan(text: startLine, style: textStyle),
-            new TextSpan(text: start, style: textStyle),
-            new TextSpan(text: middle, style: highlightTextStyle),
-            new TextSpan(text: end, style: textStyle),
-            new TextSpan(text: endLine, style: textStyle),
-          ],
+    return Stack(
+      children: <Widget>[
+        RichText(
+          text: TextSpan(
+            children: <TextSpan>[
+              TextSpan(
+                  text: _startSubString,
+                  style: TextStyle(fontSize: 23, color: Colors.transparent)),
+              TextSpan(
+                  text: _middleSubString,
+                  style: TextStyle(
+                      fontSize: 23,
+                      background: Paint()..color = Colors.red,
+                      color: Colors.transparent)),
+              TextSpan(
+                  text: _endSubString,
+                  style: TextStyle(
+                    color: Colors.transparent,
+                    fontSize: 23,
+                  ))
+            ],
+          ),
         ),
-      );
-    } else if (storyMode == StoryMode.textHighlighterMode)
-      return TextHighlighter(
-          text: widget.fullText,
-          onComplete: (l) {
-            new Future.delayed(Duration(seconds: 1), () {
+        CustomEditableText(
+            controller: CustomTextEditingController(text: widget.fullText),
+            focusNode: FocusNode(),
+            cursorColor: Colors.transparent,
+            style: TextStyle(color: Colors.black, fontSize: 23),
+            backgroundCursorColor: Colors.transparent,
+            maxLines: null,
+            dragStartBehavior: DragStartBehavior.start,
+            startOffset: (s) => {},
+            updateOffset: (o) => {},
+            draEnd: (t) {},
+            onLongPress: (s, textSelection) {
               setState(() {
-                storyMode = StoryMode.dragTextMode;
+                _middleSubString = widget.fullText.substring(
+                    textSelection.baseOffset, textSelection.extentOffset);
+                _startSubString =
+                    widget.fullText.substring(0, textSelection.baseOffset);
+                _endSubString = widget.fullText.substring(
+                    textSelection.extentOffset, widget.fullText.length);
               });
-            });
-
-            print(l);
-          });
-    else if (storyMode == StoryMode.showDialogOnLongPressMode)
-      return ShowDialogMode(listofWords: widget.fullText.split(' '));
-    else if (storyMode == StoryMode.dragTextMode)
-      return DragText(data: widget.imageItemsAnswer);
-    else {
-      return Container();
-    }
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return FractionallySizedBox(
+                      heightFactor: MediaQuery.of(context).orientation ==
+                              Orientation.portrait
+                          ? 0.5
+                          : 0.8,
+                      widthFactor: MediaQuery.of(context).orientation ==
+                              Orientation.portrait
+                          ? 0.8
+                          : 0.4,
+                      child: ShowDialogModeState()
+                          .textDescriptionDialog(context, s, 'textDesciption'));
+                },
+              );
+            }),
+      ],
+    );
   }
 
   Widget _buildImage() {

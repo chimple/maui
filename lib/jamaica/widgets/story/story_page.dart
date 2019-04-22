@@ -27,7 +27,6 @@ class StoryPageState extends State<StoryPage> {
   bool _isPlaying = false;
   PageController pageController = PageController();
   List<StoryMode> _storyMode = [];
-  ScrollController _controller;
   int incr = 0;
 
   @override
@@ -44,11 +43,6 @@ class StoryPageState extends State<StoryPage> {
     story = standardSerializers.deserialize(jsonDecode(json));
     for (int i = 0; i < story.pages.length; i++)
       _storyMode.add(StoryMode.textMode);
-    _controller = new ScrollController();
-    new Future.delayed(Duration(seconds: 2), () {
-      _controller.animateTo((MediaQuery.of(context).size.height * 1.1),
-          curve: Curves.ease, duration: Duration(milliseconds: 500));
-    });
     setState(() {
       _isLoading = false;
     });
@@ -63,48 +57,23 @@ class StoryPageState extends State<StoryPage> {
         child: new CircularProgressIndicator(),
       );
     }
-    print(story.pages.length);
     int index = 0;
     final widgets = <Widget>[];
-    widgets.add(SizedBox(
-      height: MediaQuery.of(context).size.height * 1.1,
-      child: CoverPage(
-        coverImagePath: story.coverImagePath,
-      ),
-    ));
     story.pages.map((data) {
-      widgets.add(SizedBox(
-        height: MediaQuery.of(context).size.height * 1.1,
-        child: AudioTextBold(
-          imagePath: data.imagePath,
-          audioFile: data.audioPath,
-          fullText: data.text,
-          onComplete: () => incr++,
-          pageSliding: (index) {
-            setState(() {
-              _isPlaying = !_isPlaying;
-              _controller.animateTo(
-                  (MediaQuery.of(context).size.height * 1.1 * (index + 1)),
-                  curve: Curves.ease,
-                  duration: Duration(milliseconds: 500));
-            });
-          },
-          index: index++,
-//              imageItemsAnswer: widget.pages[index].imageItemsAnswer,
-          // storyMode: _storyMode[index],
-          // index: index,
-        ),
+      widgets.add(AudioTextBold(
+        imagePath: data.imagePath,
+        audioFile: data.audioPath,
+        fullText: data.text,
+        onComplete: () => incr++,
+        pageSliding: (index) {
+          setState(() {
+            _isPlaying = !_isPlaying;
+          });
+        },
+        index: index++,
       ));
     }).toList();
     return new Scaffold(
-      floatingActionButton: ActivityButton(
-          isEnable: incr == story.pages.length.toInt(),
-          icon: Icons.pie_chart,
-          string: "Activity",
-          onTap: (i) {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => ActivityScreen()));
-          }),
       body: Column(
         children: <Widget>[
           SizedBox(
@@ -140,20 +109,10 @@ class StoryPageState extends State<StoryPage> {
             ),
           ),
           Expanded(
-            flex: 1,
             child: Container(
-                child: Scrollbar(
-              child: SingleChildScrollView(
-                  controller: _controller,
-                  physics: _isPlaying
-                      ? NeverScrollableScrollPhysics()
-                      : ScrollPhysics(),
-                  scrollDirection: Axis.vertical,
-                  child: Padding(
-                      padding: EdgeInsets.all(12.0),
-                      child: Column(
-                        children: widgets,
-                      ))),
+                child: PageView(
+              scrollDirection: Axis.vertical,
+              children: widgets,
             )),
           )
         ],
