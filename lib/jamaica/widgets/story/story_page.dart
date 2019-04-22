@@ -3,9 +3,8 @@ import 'dart:convert';
 import 'package:built_value/standard_json_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:maui/jamaica/widgets/story/activity/activity_screen.dart';
+import 'package:maui/jamaica/widgets/story/activity/quiz_page.dart';
 import 'package:maui/jamaica/widgets/story/audio_text_bold.dart';
-import 'package:maui/jamaica/widgets/story/cover_page.dart';
 import 'package:maui/jamaica/widgets/story/show_dialog_mode.dart';
 import 'package:maui/models/serializers.dart';
 import 'package:maui/models/story_config.dart';
@@ -73,6 +72,7 @@ class StoryPageState extends State<StoryPage> {
         index: index++,
       ));
     }).toList();
+    widgets.add(QuizPage());
     return new Scaffold(
       body: Column(
         children: <Widget>[

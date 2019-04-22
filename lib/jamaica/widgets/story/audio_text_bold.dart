@@ -334,94 +334,69 @@ class _TextAudioState extends State<AudioTextBold> {
   }
 
   Widget _buildText() {
-    return Stack(
-      children: <Widget>[
-        RichText(
-          text: TextSpan(
-            children: <TextSpan>[
-              TextSpan(
-                  text: _startSubString,
-                  style: TextStyle(fontSize: 23, color: Colors.transparent)),
-              TextSpan(
-                  text: _middleSubString,
-                  style: TextStyle(
+    return SingleChildScrollView(
+      child: Stack(
+        children: <Widget>[
+          RichText(
+            text: TextSpan(
+              children: <TextSpan>[
+                TextSpan(
+                    text: _startSubString,
+                    style: TextStyle(fontSize: 23, color: Colors.transparent)),
+                TextSpan(
+                    text: _middleSubString,
+                    style: TextStyle(
+                        fontSize: 23,
+                        background: Paint()..color = Colors.red,
+                        color: Colors.transparent)),
+                TextSpan(
+                    text: _endSubString,
+                    style: TextStyle(
+                      color: Colors.transparent,
                       fontSize: 23,
-                      background: Paint()..color = Colors.red,
-                      color: Colors.transparent)),
-              TextSpan(
-                  text: _endSubString,
-                  style: TextStyle(
-                    color: Colors.transparent,
-                    fontSize: 23,
-                  ))
-            ],
+                    ))
+              ],
+            ),
           ),
-        ),
-        CustomEditableText(
-            controller: CustomTextEditingController(text: widget.fullText),
-            focusNode: FocusNode(),
-            cursorColor: Colors.transparent,
-            style: TextStyle(color: Colors.black, fontSize: 23),
-            backgroundCursorColor: Colors.transparent,
-            maxLines: null,
-            dragStartBehavior: DragStartBehavior.start,
-            startOffset: (s) => {},
-            updateOffset: (o) => {},
-            draEnd: (t) {},
-            onLongPress: (s, textSelection) {
-              setState(() {
-                _middleSubString = widget.fullText.substring(
-                    textSelection.baseOffset, textSelection.extentOffset);
-                _startSubString =
-                    widget.fullText.substring(0, textSelection.baseOffset);
-                _endSubString = widget.fullText.substring(
-                    textSelection.extentOffset, widget.fullText.length);
-              });
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return FractionallySizedBox(
-                      heightFactor: MediaQuery.of(context).orientation ==
-                              Orientation.portrait
-                          ? 0.5
-                          : 0.8,
-                      widthFactor: MediaQuery.of(context).orientation ==
-                              Orientation.portrait
-                          ? 0.8
-                          : 0.4,
-                      child: ShowDialogModeState()
-                          .textDescriptionDialog(context, s, 'textDesciption'));
-                },
-              );
-            }),
-      ],
-    );
-  }
-
-  Widget _buildImage() {
-    return Stack(
-      alignment: AlignmentDirectional.center,
-      children: <Widget>[
-        SizedBox(
-            width: double.infinity,
-            height: double.infinity,
-            child: Container(
-              margin: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                  border: Border.all(width: 2.0, color: Colors.orange),
-                  image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage('${widget.imagePath}'))),
-            )),
-        storyMode == StoryMode.textHighlighterMode
-            ? Text('Where georgie Porgie went in the  afternoon',
-                style: TextStyle(
-                  fontSize: 30,
-                  color: Colors.white,
-                ))
-            : Container()
-      ],
+          CustomEditableText(
+              controller: CustomTextEditingController(text: widget.fullText),
+              focusNode: FocusNode(),
+              cursorColor: Colors.transparent,
+              style: TextStyle(color: Colors.black, fontSize: 23),
+              backgroundCursorColor: Colors.transparent,
+              maxLines: null,
+              dragStartBehavior: DragStartBehavior.start,
+              startOffset: (s) => {},
+              updateOffset: (o) => {},
+              draEnd: (t) {},
+              onLongPress: (s, textSelection) {
+                setState(() {
+                  _middleSubString = widget.fullText.substring(
+                      textSelection.baseOffset, textSelection.extentOffset);
+                  _startSubString =
+                      widget.fullText.substring(0, textSelection.baseOffset);
+                  _endSubString = widget.fullText.substring(
+                      textSelection.extentOffset, widget.fullText.length);
+                });
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return FractionallySizedBox(
+                        heightFactor: MediaQuery.of(context).orientation ==
+                                Orientation.portrait
+                            ? 0.5
+                            : 0.8,
+                        widthFactor: MediaQuery.of(context).orientation ==
+                                Orientation.portrait
+                            ? 0.8
+                            : 0.4,
+                        child: ShowDialogModeState().textDescriptionDialog(
+                            context, s, 'textDesciption'));
+                  },
+                );
+              }),
+        ],
+      ),
     );
   }
 }
