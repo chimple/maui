@@ -53,7 +53,7 @@ dependencies:
   flores:
     path: ../flores
 dev_dependencies:
-  test: 1.6.1
+  test: 
   flutter_test:
     sdk: flutter
   flutter_driver:

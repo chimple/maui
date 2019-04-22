@@ -262,6 +262,7 @@ class _TextAudioState extends State<AudioTextBold> {
         print(e);
       }
     } else {
+      widget.pageSliding(widget.index);
       flutterTts.speak(widget.fullText);
     }
   }
