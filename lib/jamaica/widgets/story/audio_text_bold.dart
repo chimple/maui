@@ -13,6 +13,7 @@ import 'package:maui/jamaica/widgets/story/play_pause_button.dart';
 import 'package:maui/jamaica/widgets/story/show_dialog_mode.dart';
 import 'package:maui/jamaica/widgets/story/activity/text_highlighter.dart';
 
+enum TextToSpeachType { fromAdudio, fromTts, hear2Read }
 final TextStyle textStyle = TextStyle(
   color: Colors.black,
   fontSize: 23,
@@ -74,6 +75,7 @@ class _TextAudioState extends State<AudioTextBold> {
   List<StoryMode> listStoryMode = [];
   ScrollController _scrollController = new ScrollController();
   FlutterTts flutterTts;
+  TextToSpeachType textToSpeachType;
   @override
   void initState() {
     super.initState();
@@ -264,6 +266,12 @@ class _TextAudioState extends State<AudioTextBold> {
     } else {
       widget.pageSliding(widget.index);
       flutterTts.speak(widget.fullText);
+      flutterTts.startHandler = () {
+        setState(() {
+          isPlaying = true;
+          isPause = false;
+        });
+      };
     }
   }
 

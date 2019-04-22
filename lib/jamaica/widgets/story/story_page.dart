@@ -64,11 +64,9 @@ class StoryPageState extends State<StoryPage> {
         audioFile: data.audioPath,
         fullText: data.text,
         onComplete: () => incr++,
-        pageSliding: (index) {
-          setState(() {
-            _isPlaying = !_isPlaying;
-          });
-        },
+        pageSliding: (index) => setState(() {
+              _isPlaying = !_isPlaying;
+            }),
         index: index++,
       ));
     }).toList();
@@ -111,6 +109,9 @@ class StoryPageState extends State<StoryPage> {
           Expanded(
             child: Container(
                 child: PageView(
+              physics: !_isPlaying
+                  ? ScrollPhysics()
+                  : NeverScrollableScrollPhysics(),
               scrollDirection: Axis.vertical,
               children: widgets,
             )),
