@@ -105,18 +105,18 @@ class QuizOpenState extends State<QuizOpen> {
     setState(() {
       _isComposing = false;
     });
-    Provider.dispatch<RootState>(
-        context,
-        AddComment(
-            comment: Comment(
-                id: Uuid().v4(),
-                parentId: widget.quiz.id,
-                userId: AppStateContainer.of(context).state.loggedInUser.id,
-                timeStamp: DateTime.now(),
-                comment: text,
-                user: AppStateContainer.of(context).state.loggedInUser),
-            tileType: TileType.card,
-            addTile: true));
+//    Provider.dispatch<RootState>(
+//        context,
+//        AddComment(
+//            comment: Comment(
+//                id: Uuid().v4(),
+//                parentId: widget.quiz.id,
+//                userId: AppStateContainer.of(context).state.loggedInUser.id,
+//                timeStamp: DateTime.now(),
+//                comment: text,
+//                user: AppStateContainer.of(context).state.loggedInUser),
+//            tileType: TileType.card,
+//            addTile: true));
     widget.canProceed();
   }
 }
