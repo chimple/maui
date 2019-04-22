@@ -27,7 +27,6 @@ class AudioTextBold extends StatefulWidget {
   final Function(int, StoryMode) storyModeCallback;
   final VoidCallback onComplete;
   final String audioFile;
-  final String pageNumber;
   final StoryMode storyMode;
   final String imagePath;
   final imageItemsPosition;
@@ -44,8 +43,7 @@ class AudioTextBold extends StatefulWidget {
       @required this.imagePath,
       this.storyModeCallback,
       this.imageItemsAnswer,
-      this.index,
-      this.pageNumber})
+      this.index})
       : super(key: key);
   @override
   _TextAudioState createState() => new _TextAudioState();
@@ -270,7 +268,6 @@ class _TextAudioState extends State<AudioTextBold> {
   }
 
   void onComplete() {
-    print('completed ${widget.pageNumber}');
     setState(() {
       isPlaying = false;
       isPause = true;
@@ -303,8 +300,7 @@ class _TextAudioState extends State<AudioTextBold> {
                         borderRadius: BorderRadius.circular(20.0),
                         image: DecorationImage(
                           fit: BoxFit.cover,
-                          image: AssetImage(
-                              'assets/stories/images/${widget.imagePath}'),
+                          image: AssetImage('${widget.imagePath}'),
                         )),
                   )),
               Expanded(
@@ -443,8 +439,7 @@ class _TextAudioState extends State<AudioTextBold> {
                   border: Border.all(width: 2.0, color: Colors.orange),
                   image: DecorationImage(
                       fit: BoxFit.cover,
-                      image: AssetImage(
-                          'assets/stories/images/${widget.imagePath}'))),
+                      image: AssetImage('${widget.imagePath}'))),
             )),
         storyMode == StoryMode.textHighlighterMode
             ? Text('Where georgie Porgie went in the  afternoon',

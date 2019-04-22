@@ -25,7 +25,7 @@ class CardHeader extends StatelessWidget {
         tag: '$parentCardId/${card.type}/${card.id}',
         child: Container(
           padding: const EdgeInsets.all(8.0),
-          color: card.backgroundColor,
+          color: card.backgroundColor(),
           child: SvgPicture.file(
             File(AppStateContainer.of(context).extStorageDir + card.header),
             allowDrawingOutsideViewBox: false,

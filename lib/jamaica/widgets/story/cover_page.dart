@@ -17,8 +17,7 @@ class CoverPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                     image: DecorationImage(
                       fit: BoxFit.cover,
-                      image:
-                          AssetImage('assets/stories/images/${coverImagePath}'),
+                      image: AssetImage(coverImagePath),
                     )),
               )),
           Expanded(

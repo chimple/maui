@@ -327,7 +327,7 @@ class _LoginScreenState extends State<LoginScreen>
                   print("Login As Student..!!");
                   await AppStateContainer.of(context)
                       .setLoggedInUser(existingUsers[index]);
-                  Navigator.of(context).pushNamed('/welcome');
+                  Navigator.of(context).pushNamed('/jam_chatbot');
                 },
                 child: UserItem(user: _users[index]));
           }),

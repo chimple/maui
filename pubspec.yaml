@@ -43,6 +43,7 @@ dependencies:
   flare_dart: ^1.2.3
   bubble_tab_indicator: ^0.1.4
   observable_state: ^0.3.0
+  equatable: ^0.2.3
   storyboard:
     git: https://github.com/chimple/storyboard
   flutter_localizations:
@@ -52,6 +53,7 @@ dependencies:
   flores:
     path: ../flores
 dev_dependencies:
+  test: 1.6.1
   flutter_test:
     sdk: flutter
   flutter_driver:
@@ -109,7 +111,8 @@ flutter:
     - assets/background_flare/
     - assets/hud/
     - assets/home_screen_icons/
-
+    - assets/topic/
+    - assets/topic/asb/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

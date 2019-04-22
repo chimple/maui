@@ -383,8 +383,8 @@ class AppStateContainerState extends State<AppStateContainer> {
         setState(() {
           switch (obj.status) {
             case StatusEnum.start:
-              final i = classSessions
-                  .indexWhere((c) => c.sessionId == obj.sessionId);
+              final i =
+                  classSessions.indexWhere((c) => c.sessionId == obj.sessionId);
               if (i > -1) {
                 classSessions[i] = obj;
               } else {
@@ -392,8 +392,8 @@ class AppStateContainerState extends State<AppStateContainer> {
               }
               break;
             case StatusEnum.progress:
-              final i = classSessions
-                  .indexWhere((c) => c.sessionId == obj.sessionId);
+              final i =
+                  classSessions.indexWhere((c) => c.sessionId == obj.sessionId);
               if (i > -1) {
                 classSessions[i] = obj;
               } else {
@@ -426,8 +426,8 @@ class AppStateContainerState extends State<AppStateContainer> {
         });
       } else if (obj is QuizUpdate) {
         setState(() {
-           quizSession = quizSessions.keys
-              .firstWhere((q) => q.sessionId == obj.sessionId);
+          quizSession =
+              quizSessions.keys.firstWhere((q) => q.sessionId == obj.sessionId);
           quizSessions[quizSession] = obj.status;
           if (quizSession?.sessionId == obj.sessionId) {
             quizSession = null;
@@ -538,7 +538,13 @@ class AppStateContainerState extends State<AppStateContainer> {
     }
   }
 
-  joinClassSession(ClassSession classSession) async {
+  joinClassSession({ClassSession classSession}) async {
+    if (classSession == null)
+      classSession = ClassSession((c) => c
+        ..sessionId = 'A'
+        ..teacherId = 'A'
+        ..classId = 'A'
+        ..status = StatusEnum.progress);
     if (state.loggedInUser.userType == UserType.student) {
       setState(() {
         myClassSession = classSession;
