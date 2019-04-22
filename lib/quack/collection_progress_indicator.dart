@@ -24,7 +24,7 @@ class CollectionProgressIndicator extends StatelessWidget {
             lineHeight: constraints.maxWidth * 0.0743,
             percent: min(progress ?? 0.0, 1.0),
             linearStrokeCap: LinearStrokeCap.roundAll,
-            progressColor: TinyColor(card.backgroundColor).darken(20).color,
+            progressColor: TinyColor(card.backgroundColor()).darken(20).color,
             backgroundColor: Colors.white,
           );
         },

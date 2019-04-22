@@ -4,8 +4,8 @@ import 'package:maui/jamaica/widgets/story/custom_editable_text.dart';
 
 class TextHighlighter extends StatefulWidget {
   final String text;
-  final Function(String) onCorrectAnswer;
-  TextHighlighter({this.text = "Text Highlighter", this.onCorrectAnswer});
+  final Function(String) onComplete;
+  TextHighlighter({this.text = "Text Highlighter", this.onComplete});
   @override
   _TextHighlighterState createState() => _TextHighlighterState();
 }
@@ -36,7 +36,6 @@ class _TextHighlighterState extends State<TextHighlighter> {
           style: TextStyle(color: Colors.black, fontSize: 23),
         ),
         Stack(
-          alignment: AlignmentDirectional.center,
           children: <Widget>[
             RichText(
               text: TextSpan(
@@ -61,7 +60,6 @@ class _TextHighlighterState extends State<TextHighlighter> {
               ),
             ),
             CustomEditableText(
-                textAlign: TextAlign.center,
                 controller: CustomTextEditingController(text: widget.text),
                 focusNode: FocusNode(),
                 cursorColor: Colors.transparent,
@@ -74,7 +72,7 @@ class _TextHighlighterState extends State<TextHighlighter> {
                 draEnd: (t) {
                   _baseOffset = t.base.offset;
                   _updateOffset(t.extent.offset);
-                  widget.onCorrectAnswer(_middleSubString);
+                  widget.onComplete(_middleSubString);
                 },
                 onLongPress: (s, textSelection) {}),
           ],

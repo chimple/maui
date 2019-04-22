@@ -47,13 +47,17 @@ class _GameState extends State<Game> {
     print("......controll comming in game");
     MediaQueryData media = MediaQuery.of(context);
     Size size = media.size;
+
+    double upPadding =size.height * 0.05;
     return Scaffold(
       backgroundColor: Colors.purple,
       body: SafeArea(
         child: Stack(
           children: <Widget>[
             Container(
-              color: Colors.indigo,
+              // height: 1000,
+              // width: 1000,
+              color: Colors.white,
               child: FlareActor("assets/hud/bg.flr",
                   alignment: Alignment.center,
                   fit: BoxFit.cover,
@@ -66,33 +70,35 @@ class _GameState extends State<Game> {
                   flex: 37,
                   child: _navigator,
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        height: size.width * 0.17,
-                        width: size.width * 0.17,
-                        child: Hero(
-                          tag: 'chimp',
-                          child: FlareActor("assets/hud/chimp_1.flr",
-                              alignment: Alignment.center,
-                              fit: BoxFit.cover,
-                              animation: "happy"),
-                        ),
+               
+                Row(
+                  children: <Widget>[
+                    Container(
+                      height: size.width * 0.17,
+                      width: size.width * 0.17,
+                      child: Hero(
+                        tag: 'chimp',
+                        child: FlareActor("assets/hud/chimp_1.flr",
+                            alignment: Alignment.center,
+                            fit: BoxFit.cover,
+                            animation: "happy"),
                       ),
-                      Flexible(
-                        flex: 1,
-                        child: Container(),
-                      ),
-                      Flexible(
-                          flex: 50,
-                          child: Text(
-                            'In this game you have to click on the alphabets in sequence order.',
-                            style: Theme.of(context).textTheme.headline,
-                          ))
-                    ],
-                  ),
+                    ),
+                    Flexible(
+                      flex: 2,
+                      child: Container(),
+                    ),
+                    Flexible(
+                        flex: 50,
+                        child: Text(
+                          'In this game you have to click on the alphabets in sequence order.',
+                          style: Theme.of(context).textTheme.headline,
+                        ))
+                  ],
+                ),
+                 Expanded(
+                  flex: 1,
+                  child: Container(),
                 ),
                 Divider(
                   color: Colors.black,

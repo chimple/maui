@@ -1,9 +1,13 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+part 'quack_card.g.dart';
 
 enum CardType { question, activity, concept, knowledge }
 
+@JsonSerializable(nullable: false)
 class QuackCard {
   static const table = 'card';
 
@@ -127,6 +131,10 @@ class QuackCard {
     return 'Card{id: $id, title: $title, titleAudio: $titleAudio, header: $header,content: $content,contentAudio: $contentAudio,option: $option, likes: $likes, comments: $comments}';
   }
 
-  Color get backgroundColor =>
+  factory QuackCard.fromJson(Map<String, dynamic> json) =>
+      _$QuackCardFromJson(json);
+  Map<String, dynamic> toJson() => _$QuackCardToJson(this);
+
+  Color backgroundColor() =>
       Color(int.tryParse(option ?? 'ffccccff', radix: 16)) ?? Color(0xffccccff);
 }
