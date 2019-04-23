@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:maui/jamaica/screens/story_screen.dart';
 import 'package:maui/jamaica/widgets/story/activity/jumble_words.dart';
 import 'package:maui/jamaica/widgets/story/activity/text_highlighter.dart';
+import 'package:maui/jamaica/widgets/story/show_dialog_mode.dart';
 import 'package:storyboard/storyboard.dart';
 
 class StoryBoard extends FullScreenStory {
@@ -30,9 +31,17 @@ class StoryBoard extends FullScreenStory {
             child: TextHighlighter(
               text:
                   'Look at these beautiful horses and elephants! Who brought them here? squealed Ahilya. Reluctantly, she tore her eyes away from the beautiful animals – it would get dark soon! She hurried inside the temple and lit a lamp. Ahilya closed her eyes and bowed in prayer.',
-              onCorrectAnswer: (_) {},
+              onComplete: (_) {},
             ),
           ),
         ),
+        Scaffold(
+            body: Center(
+          child: ShowDialogMode(
+            listofWords:
+                'Look at these beautiful horses and elephants! Who brought them here? squealed Ahilya. Reluctantly, she tore her eyes away from the beautiful animals – it would get dark soon! She hurried inside the temple and lit a lamp. Ahilya closed her eyes and bowed in prayer.'
+                    .split(" "),
+          ),
+        ))
       ];
 }

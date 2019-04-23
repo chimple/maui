@@ -1,3 +1,7 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'quiz.g.dart';
+
 enum QuizType { oneAtATime, many, pair, open }
 
 final quizTypeMap = {
@@ -7,17 +11,21 @@ final quizTypeMap = {
   'open': QuizType.open
 };
 
+@JsonSerializable(nullable: false)
 class Quiz {
   String id;
   QuizType type;
   String question;
   String questionAudio;
   String header;
+  @JsonKey(nullable: true)
   List<String> answers;
+  @JsonKey(nullable: true)
   List<String> answerAudios;
+  @JsonKey(nullable: true)
   List<String> choices;
+  @JsonKey(nullable: true)
   List<String> choiceAudios;
-  Map<String, dynamic> quizInputs;
 
   Quiz(
       {this.id,
@@ -28,8 +36,7 @@ class Quiz {
       this.answers,
       this.answerAudios,
       this.choices,
-      this.choiceAudios,
-      this.quizInputs});
+      this.choiceAudios});
 
   @override
   int get hashCode =>
@@ -41,8 +48,7 @@ class Quiz {
       answers.hashCode ^
       answerAudios.hashCode ^
       choices.hashCode ^
-      choiceAudios.hashCode ^
-      quizInputs.hashCode;
+      choiceAudios.hashCode;
 
   @override
   bool operator ==(other) =>
@@ -57,11 +63,13 @@ class Quiz {
           answers == other.answers &&
           answerAudios == other.answerAudios &&
           choices == other.choices &&
-          choiceAudios == other.choiceAudios &&
-          quizInputs == other.quizInputs;
+          choiceAudios == other.choiceAudios;
 
   @override
   String toString() {
-    return 'Quiz{id: $id, type: $type, question: $question, questionAudio: $questionAudio, header: $header,answers: $answers,answerAudios: $answerAudios,choiceAudios: $choiceAudios, quizInputs: $quizInputs}';
+    return 'Quiz{id: $id, type: $type, question: $question, questionAudio: $questionAudio, header: $header,answers: $answers,answerAudios: $answerAudios,choices: $choices, choiceAudios: $choiceAudios}';
   }
+
+  factory Quiz.fromJson(Map<String, dynamic> json) => _$QuizFromJson(json);
+  Map<String, dynamic> toJson() => _$QuizToJson(this);
 }

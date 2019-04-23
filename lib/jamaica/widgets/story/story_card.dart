@@ -10,7 +10,7 @@ class StoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraint) {
       return Padding(
-        padding: EdgeInsets.all(constraint.maxHeight * .06),
+        padding: EdgeInsets.all(constraint.maxHeight * .08),
         child: Stack(
           children: <Widget>[
             Material(
@@ -32,8 +32,8 @@ class StoryCard extends StatelessWidget {
                                   Radius.circular(constraint.maxHeight * .16)),
                           image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: AssetImage(
-                                  'assets/stories/images/${storyConfig.coverImagePath}'))),
+                              image:
+                                  AssetImage('${storyConfig.coverImagePath}'))),
                       child: Container(),
                     ),
                   ),
@@ -64,9 +64,8 @@ class StoryCard extends StatelessWidget {
                   fullscreenDialog: true,
                   settings: RouteSettings(),
                   builder: (context) => StoryPage(
-                      coverImagePath: storyConfig.coverImagePath,
-                      pages: storyConfig.pages,
-                      title: storyConfig.title),
+                        storyId: storyConfig.storyId,
+                      ),
                 ));
               },
             )
