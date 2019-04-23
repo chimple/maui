@@ -4,9 +4,12 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:maui/jamaica/widgets/story/activity/drag_text.dart';
+import 'package:maui/jamaica/widgets/story/custom_editable.dart';
 import 'package:maui/jamaica/widgets/story/custom_editable_text.dart';
+import 'package:maui/jamaica/widgets/story/custom_text_selection.dart';
 // import 'package:maui/jamaica/widgets/story/activity/jumble_words.dart';
 import 'package:maui/jamaica/widgets/story/play_pause_button.dart';
 // import 'package:maui/jamaica/widgets/story/router.dart';
@@ -334,7 +337,6 @@ class _TextAudioState extends State<AudioTextBold> {
   String _startSubString = '', _middleSubString = '', _endSubString = '';
   @override
   Widget build(BuildContext context) {
-    print(text);
     if (text != null && widget.imagePath != null)
       return Column(
         children: <Widget>[
@@ -395,77 +397,113 @@ class _TextAudioState extends State<AudioTextBold> {
     );
   }
 
-  Widget _buildText() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 10),
-      child: SingleChildScrollView(
-        child: Stack(
-          children: <Widget>[
-            RichText(
-              text: TextSpan(
-                children: <TextSpan>[
-                  TextSpan(
-                      text: _startSubString,
-                      style:
-                          TextStyle(fontSize: 23, color: Colors.transparent)),
-                  TextSpan(
-                      text: _middleSubString,
-                      style: TextStyle(
-                          fontSize: 23,
-                          background: Paint()..color = Colors.red,
-                          color: Colors.transparent)),
-                  TextSpan(
-                      text: _endSubString,
-                      style: TextStyle(
-                        color: Colors.transparent,
-                        fontSize: 23,
-                      ))
-                ],
-              ),
-            ),
-            CustomEditableText(
-                controller: CustomTextEditingController(text: text),
-                focusNode: FocusNode(),
-                cursorColor: Colors.transparent,
-                style: TextStyle(color: Colors.black54, fontSize: 23),
-                backgroundCursorColor: Colors.transparent,
-                maxLines: null,
-                dragStartBehavior: DragStartBehavior.start,
-                startOffset: (s) => {},
-                updateOffset: (o) => {},
-                draEnd: (t) {},
-                onLongPress: (s, textSelection) {
-                  if (s != ' ' && s != '' && s != '\n') {
-                    print('show');
-                    setState(() {
-                      _middleSubString = text.substring(
-                          textSelection.baseOffset, textSelection.extentOffset);
-                      _startSubString =
-                          text.substring(0, textSelection.baseOffset);
-                      _endSubString = text.substring(
-                          textSelection.extentOffset, text.length);
-                    });
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return FractionallySizedBox(
-                            heightFactor: MediaQuery.of(context).orientation ==
-                                    Orientation.portrait
-                                ? 0.5
-                                : 0.8,
-                            widthFactor: MediaQuery.of(context).orientation ==
-                                    Orientation.portrait
-                                ? 0.8
-                                : 0.4,
-                            child: ShowDialogModeState().textDescriptionDialog(
-                                context, s, 'textDesciption'));
-                      },
-                    );
-                  }
-                }),
-          ],
-        ),
-      ),
+  int colorIndex = -1;
+  Widget _text(String s, int index) {
+    return InkWell(
+      onLongPress: () {
+        setState(() {
+          colorIndex = index;
+        });
+        showDialog(
+          context: context,
+          builder: (context) {
+            return FractionallySizedBox(
+                heightFactor:
+                    MediaQuery.of(context).orientation == Orientation.portrait
+                        ? 0.5
+                        : 0.8,
+                widthFactor:
+                    MediaQuery.of(context).orientation == Orientation.portrait
+                        ? 0.8
+                        : 0.4,
+                child: ShowDialogModeState()
+                    .textDescriptionDialog(context, s, 'textDesciption'));
+          },
+        );
+      },
+      child: Text(s + ' ',
+          style: TextStyle(
+              fontSize: 23,
+              color: Colors.black54,
+              background: Paint()
+                ..color =
+                    colorIndex == index ? Colors.red : Colors.transparent)),
     );
+  }
+
+  Widget _buildText() {
+    int index = 0;
+    return Wrap(
+      children: text.split(" ").map((s) {
+        return _text(s, index++);
+      }).toList(),
+    );
+    // return Stack(
+    //   children: <Widget>[
+    //     RichText(
+    //       text: TextSpan(
+    //         children: <TextSpan>[
+    //           TextSpan(
+    //               text: _startSubString,
+    //               style: TextStyle(fontSize: 23, color: Colors.blue)),
+    //           TextSpan(
+    //               text: _middleSubString,
+    //               style: TextStyle(
+    //                   fontSize: 23,
+    //                   background: Paint()..color = Colors.red,
+    //                   color: Colors.blue)),
+    //           TextSpan(
+    //               text: _endSubString,
+    //               style: TextStyle(
+    //                 color: Colors.blue,
+    //                 fontSize: 23,
+    //               ))
+    //         ],
+    //       ),
+    //     ),
+    //     CustomEditableText(
+    //         controller: CustomTextEditingController(text: text),
+    //         focusNode: FocusNode(),
+    //         cursorColor: Colors.transparent,
+    //         style: TextStyle(color: Colors.black54, fontSize: 23),
+    //         backgroundCursorColor: Colors.transparent,
+    //         maxLines: null,
+    //         dragStartBehavior: DragStartBehavior.start,
+    //         startOffset: (s) => {},
+    //         updateOffset: (o) => {},
+    //         draEnd: (t) {},
+    //         onLongPress: (s, textSelection) {
+    // if (s != ' ' && s != '' && s != '\n') {
+    //   print('show');
+    //   setState(() {
+    //     _middleSubString = text.substring(
+    //         textSelection.baseOffset, textSelection.extentOffset);
+    //     _startSubString = text.substring(0, textSelection.baseOffset);
+    //     _endSubString =
+    //         text.substring(textSelection.extentOffset, text.length);
+    //     print('star $_startSubString,');
+    //     print('middle $_middleSubString');
+    //     print('end $_endSubString');
+    //   });
+    // showDialog(
+    //   context: context,
+    //   builder: (context) {
+    //     return FractionallySizedBox(
+    //         heightFactor: MediaQuery.of(context).orientation ==
+    //                 Orientation.portrait
+    //             ? 0.5
+    //             : 0.8,
+    //         widthFactor: MediaQuery.of(context).orientation ==
+    //                 Orientation.portrait
+    //             ? 0.8
+    //             : 0.4,
+    //         child: ShowDialogModeState().textDescriptionDialog(
+    //             context, s, 'textDesciption'));
+    //   },
+    // );
+    //           }
+    //         }),
+    //   ],
+    // );
   }
 }
