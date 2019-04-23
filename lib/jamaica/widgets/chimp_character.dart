@@ -103,7 +103,7 @@ class _ChimpCharacterState extends State<ChimpCharacter>
       "assets/character/chimp_ik.flr",
       alignment: Alignment.center,
       fit: BoxFit.contain,
-      animation: "walking",
+      animation: "singing",
       controller: this,
     );
   }

@@ -157,7 +157,7 @@ class StoreWidget extends State<Store> with SingleTickerProviderStateMixin {
                                 flex: 1,
                                 child: ChimpCharacter(
                                   itemName: itemName,
-                                  key: GlobalObjectKey(itemName),
+                                  // key: GlobalObjectKey(itemName),
                                 ),
                               ),
                             ],
@@ -240,18 +240,17 @@ class StoreWidget extends State<Store> with SingleTickerProviderStateMixin {
                                 coin = 0;
                                 return showDialog(
                                     context: context,
-                                    barrierDismissible: false,
                                     builder: (context) {
                                       return FractionallySizedBox(
                                           heightFactor: MediaQuery.of(context)
                                                       .orientation ==
                                                   Orientation.portrait
-                                              ? 0.5
+                                              ? 0.3
                                               : 0.8,
                                           widthFactor: MediaQuery.of(context)
                                                       .orientation ==
                                                   Orientation.portrait
-                                              ? 0.8
+                                              ? 0.7
                                               : 0.4,
                                           child: Card(
                                             shape: RoundedRectangleBorder(
@@ -261,7 +260,12 @@ class StoreWidget extends State<Store> with SingleTickerProviderStateMixin {
                                             ),
                                             child: Center(
                                                 child: Text(
-                                                    'Sorry Not Enough Coins')),
+                                              'Sorry Not Enough Coins',
+                                              style: TextStyle(
+                                                  fontSize: 30.0,
+                                                  color: Colors.green,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
                                           ));
                                     });
                               } else if (_colorStatus[n] == 0) {
@@ -333,7 +337,6 @@ class _StoreAccessoryButtonState extends State<StoreAccessoryButton> {
                 setState(() {
                   showDialog(
                     context: context,
-                    barrierDismissible: false,
                     builder: (context) {
                       return _showDialog(
                           context, widget.name, widget.imagePath);
@@ -377,10 +380,10 @@ class _StoreAccessoryButtonState extends State<StoreAccessoryButton> {
   Widget _showDialog(BuildContext context, String text, String imagePath) {
     return FractionallySizedBox(
       heightFactor: MediaQuery.of(context).orientation == Orientation.portrait
-          ? 0.5
+          ? 0.3
           : 0.8,
       widthFactor: MediaQuery.of(context).orientation == Orientation.portrait
-          ? 0.8
+          ? 0.7
           : 0.4,
       child: Card(
         shape: RoundedRectangleBorder(
@@ -388,60 +391,39 @@ class _StoreAccessoryButtonState extends State<StoreAccessoryButton> {
             Radius.circular(20.0),
           ),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Expanded(
-              flex: 3,
-              child: Center(
-                child: Padding(
-                  padding: EdgeInsets.only(left: 10.0),
-                  child: Text(
-                    'Do you want to purchase $text ?',
-                    style: TextStyle(fontSize: 30.0),
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 4,
-              child: SizedBox(
-                child: SvgPicture.asset('${widget.imagePath}.svg'),
-              ),
-            ),
-            Expanded(
-              flex: 3,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+        child: Center(
+          child: Container(
+              decoration:
+                  BoxDecoration(border: Border.all(color: Colors.black)),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  IconButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    icon: Icon(
-                      Icons.cancel,
-                      size: 45.0,
-                      color: Colors.yellow,
-                    ),
+                  Text(
+                    'Do you want to purchase $text ?',
+                    style: TextStyle(
+                        fontSize: 20.0,
+                        color: Colors.green,
+                        fontWeight: FontWeight.bold),
                   ),
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        Navigator.of(context).pop();
-                        widget.setName(widget.name, widget.index);
-                      });
-                    },
-                    icon: Icon(
-                      Icons.check,
-                      size: 45.0,
-                      color: Colors.yellow,
-                    ),
+                  SizedBox(
+                    child: SvgPicture.asset('${widget.imagePath}.svg'),
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      RaisedButton(
+                        color: Colors.blue,
+                        elevation: 3.0,
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          widget.setName(widget.name, widget.index);
+                        },
+                        child: Text('BUY'),
+                      ),
+                    ],
+                  )
                 ],
-              ),
-            )
-          ],
+              )),
         ),
       ),
     );
