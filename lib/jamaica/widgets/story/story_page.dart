@@ -1,17 +1,19 @@
-import 'package:built_collection/built_collection.dart';
+import 'dart:convert';
+
+import 'package:built_value/standard_json_plugin.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:maui/jamaica/widgets/story/activity/activity_screen.dart';
 import 'package:maui/jamaica/widgets/story/audio_text_bold.dart';
 import 'package:maui/jamaica/widgets/story/cover_page.dart';
 import 'package:maui/jamaica/widgets/story/show_dialog_mode.dart';
+import 'package:maui/models/serializers.dart';
 import 'package:maui/models/story_config.dart';
 
 class StoryPage extends StatefulWidget {
-  final BuiltList<Page> pages;
-  final String title;
-  final String coverImagePath;
-  StoryPage({Key key, @required this.pages, this.title, this.coverImagePath})
-      : super(key: key);
+  final String storyId;
+
+  const StoryPage({Key key, this.storyId}) : super(key: key);
 
   @override
   StoryPageState createState() {
@@ -20,62 +22,83 @@ class StoryPage extends StatefulWidget {
 }
 
 class StoryPageState extends State<StoryPage> {
+  StoryConfig story;
+  bool _isLoading = true;
   bool _isPlaying = false;
   PageController pageController = PageController();
   List<StoryMode> _storyMode = [];
   ScrollController _controller;
   int incr = 0;
+
   @override
   void initState() {
     super.initState();
-    for (int i = 0; i < widget.pages.length; i++)
+    _initData();
+  }
+
+  void _initData() async {
+    final json =
+        await rootBundle.loadString('assets/topic/${widget.storyId}.json');
+    final standardSerializers =
+        (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
+    story = standardSerializers.deserialize(jsonDecode(json));
+    for (int i = 0; i < story.pages.length; i++)
       _storyMode.add(StoryMode.textMode);
     _controller = new ScrollController();
     new Future.delayed(Duration(seconds: 2), () {
       _controller.animateTo((MediaQuery.of(context).size.height * 1.1),
           curve: Curves.ease, duration: Duration(milliseconds: 500));
     });
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    print(widget.pages.length);
+    if (_isLoading) {
+      return new SizedBox(
+        width: 20.0,
+        height: 20.0,
+        child: new CircularProgressIndicator(),
+      );
+    }
+    print(story.pages.length);
     int index = 0;
     final widgets = <Widget>[];
     widgets.add(SizedBox(
       height: MediaQuery.of(context).size.height * 1.1,
       child: CoverPage(
-        coverImagePath: widget.coverImagePath,
+        coverImagePath: story.coverImagePath,
       ),
     ));
-    widget.pages.map((data) {
+    story.pages.map((data) {
       widgets.add(SizedBox(
         height: MediaQuery.of(context).size.height * 1.1,
         child: AudioTextBold(
-            imagePath: data.imagePath,
-            audioFile: data.audioPath,
-            fullText: data.text,
-            onComplete: () => incr++,
-            pageSliding: (index) {
-              setState(() {
-                _isPlaying = !_isPlaying;
-                _controller.animateTo(
-                    (MediaQuery.of(context).size.height * 1.1 * (index + 1)),
-                    curve: Curves.ease,
-                    duration: Duration(milliseconds: 500));
-              });
-            },
-            index: index++,
+          imagePath: data.imagePath,
+          audioFile: data.audioPath,
+          fullText: data.text,
+          onComplete: () => incr++,
+          pageSliding: (index) {
+            setState(() {
+              _isPlaying = !_isPlaying;
+              _controller.animateTo(
+                  (MediaQuery.of(context).size.height * 1.1 * (index + 1)),
+                  curve: Curves.ease,
+                  duration: Duration(milliseconds: 500));
+            });
+          },
+          index: index++,
 //              imageItemsAnswer: widget.pages[index].imageItemsAnswer,
-            pageNumber: data.pageNumber
-            // storyMode: _storyMode[index],
-            // index: index,
-            ),
+          // storyMode: _storyMode[index],
+          // index: index,
+        ),
       ));
     }).toList();
     return new Scaffold(
       floatingActionButton: ActivityButton(
-          isEnable: incr == widget.pages.length.toInt(),
+          isEnable: incr == story.pages.length.toInt(),
           icon: Icons.pie_chart,
           string: "Activity",
           onTap: (i) {

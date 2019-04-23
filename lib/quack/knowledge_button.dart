@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redurx/flutter_redurx.dart';
 import 'package:maui/actions/add_progress.dart';
+import 'package:maui/jamaica/widgets/story/story_page.dart';
 import 'package:maui/models/root_state.dart';
 import 'package:maui/loca.dart';
 import 'package:maui/quack/card_header.dart';
@@ -33,8 +34,8 @@ class KnowledgeButton extends StatelessWidget {
 //                              cardId: cardList[0].id,
 //                              parentCardId: cardId,
 //                              index: 1));
-              return QuizNavigator(
-                cardId: cardId,
+              return StoryPage(
+                storyId: cardId,
               );
             }));
           },

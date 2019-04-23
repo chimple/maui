@@ -36,6 +36,13 @@ class _$StoryConfigSerializer implements StructuredSerializer<StoryConfig> {
           specifiedType:
               const FullType(BuiltList, const [const FullType(Page)])),
     ];
+    if (object.gameDatas != null) {
+      result
+        ..add('gameDatas')
+        ..add(serializers.serialize(object.gameDatas,
+            specifiedType:
+                const FullType(BuiltList, const [const FullType(GameData)])));
+    }
 
     return result;
   }
@@ -69,6 +76,11 @@ class _$StoryConfigSerializer implements StructuredSerializer<StoryConfig> {
                       const FullType(BuiltList, const [const FullType(Page)]))
               as BuiltList);
           break;
+        case 'gameDatas':
+          result.gameDatas.replace(serializers.deserialize(value,
+              specifiedType: const FullType(
+                  BuiltList, const [const FullType(GameData)])) as BuiltList);
+          break;
       }
     }
 
@@ -85,23 +97,25 @@ class _$PageSerializer implements StructuredSerializer<Page> {
   @override
   Iterable serialize(Serializers serializers, Page object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
-      'pageNumber',
-      serializers.serialize(object.pageNumber,
-          specifiedType: const FullType(String)),
-      'imagePath',
-      serializers.serialize(object.imagePath,
-          specifiedType: const FullType(String)),
-      'text',
-      serializers.serialize(object.text, specifiedType: const FullType(String)),
-      'audioPath',
-      serializers.serialize(object.audioPath,
-          specifiedType: const FullType(String)),
-      'imageitemDetails',
-      serializers.serialize(object.imageitemDetails,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(ImageItemDetail)])),
-    ];
+    final result = <Object>[];
+    if (object.imagePath != null) {
+      result
+        ..add('imagePath')
+        ..add(serializers.serialize(object.imagePath,
+            specifiedType: const FullType(String)));
+    }
+    if (object.text != null) {
+      result
+        ..add('text')
+        ..add(serializers.serialize(object.text,
+            specifiedType: const FullType(String)));
+    }
+    if (object.audioPath != null) {
+      result
+        ..add('audioPath')
+        ..add(serializers.serialize(object.audioPath,
+            specifiedType: const FullType(String)));
+    }
 
     return result;
   }
@@ -117,10 +131,6 @@ class _$PageSerializer implements StructuredSerializer<Page> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'pageNumber':
-          result.pageNumber = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
         case 'imagePath':
           result.imagePath = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -132,12 +142,6 @@ class _$PageSerializer implements StructuredSerializer<Page> {
         case 'audioPath':
           result.audioPath = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
-          break;
-        case 'imageitemDetails':
-          result.imageitemDetails.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(ImageItemDetail)]))
-              as BuiltList);
           break;
       }
     }
@@ -265,11 +269,18 @@ class _$StoryConfig extends StoryConfig {
   final String title;
   @override
   final BuiltList<Page> pages;
+  @override
+  final BuiltList<GameData> gameDatas;
 
   factory _$StoryConfig([void Function(StoryConfigBuilder) updates]) =>
       (new StoryConfigBuilder()..update(updates)).build();
 
-  _$StoryConfig._({this.storyId, this.coverImagePath, this.title, this.pages})
+  _$StoryConfig._(
+      {this.storyId,
+      this.coverImagePath,
+      this.title,
+      this.pages,
+      this.gameDatas})
       : super._() {
     if (storyId == null) {
       throw new BuiltValueNullFieldError('StoryConfig', 'storyId');
@@ -299,15 +310,18 @@ class _$StoryConfig extends StoryConfig {
         storyId == other.storyId &&
         coverImagePath == other.coverImagePath &&
         title == other.title &&
-        pages == other.pages;
+        pages == other.pages &&
+        gameDatas == other.gameDatas;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc(0, storyId.hashCode), coverImagePath.hashCode),
-            title.hashCode),
-        pages.hashCode));
+        $jc(
+            $jc($jc($jc(0, storyId.hashCode), coverImagePath.hashCode),
+                title.hashCode),
+            pages.hashCode),
+        gameDatas.hashCode));
   }
 
   @override
@@ -316,7 +330,8 @@ class _$StoryConfig extends StoryConfig {
           ..add('storyId', storyId)
           ..add('coverImagePath', coverImagePath)
           ..add('title', title)
-          ..add('pages', pages))
+          ..add('pages', pages)
+          ..add('gameDatas', gameDatas))
         .toString();
   }
 }
@@ -341,6 +356,12 @@ class StoryConfigBuilder implements Builder<StoryConfig, StoryConfigBuilder> {
   ListBuilder<Page> get pages => _$this._pages ??= new ListBuilder<Page>();
   set pages(ListBuilder<Page> pages) => _$this._pages = pages;
 
+  ListBuilder<GameData> _gameDatas;
+  ListBuilder<GameData> get gameDatas =>
+      _$this._gameDatas ??= new ListBuilder<GameData>();
+  set gameDatas(ListBuilder<GameData> gameDatas) =>
+      _$this._gameDatas = gameDatas;
+
   StoryConfigBuilder();
 
   StoryConfigBuilder get _$this {
@@ -349,6 +370,7 @@ class StoryConfigBuilder implements Builder<StoryConfig, StoryConfigBuilder> {
       _coverImagePath = _$v.coverImagePath;
       _title = _$v.title;
       _pages = _$v.pages?.toBuilder();
+      _gameDatas = _$v.gameDatas?.toBuilder();
       _$v = null;
     }
     return this;
@@ -376,12 +398,15 @@ class StoryConfigBuilder implements Builder<StoryConfig, StoryConfigBuilder> {
               storyId: storyId,
               coverImagePath: coverImagePath,
               title: title,
-              pages: pages.build());
+              pages: pages.build(),
+              gameDatas: _gameDatas?.build());
     } catch (_) {
       String _$failedField;
       try {
         _$failedField = 'pages';
         pages.build();
+        _$failedField = 'gameDatas';
+        _gameDatas?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'StoryConfig', _$failedField, e.toString());
@@ -395,42 +420,16 @@ class StoryConfigBuilder implements Builder<StoryConfig, StoryConfigBuilder> {
 
 class _$Page extends Page {
   @override
-  final String pageNumber;
-  @override
   final String imagePath;
   @override
   final String text;
   @override
   final String audioPath;
-  @override
-  final BuiltList<ImageItemDetail> imageitemDetails;
 
   factory _$Page([void Function(PageBuilder) updates]) =>
       (new PageBuilder()..update(updates)).build();
 
-  _$Page._(
-      {this.pageNumber,
-      this.imagePath,
-      this.text,
-      this.audioPath,
-      this.imageitemDetails})
-      : super._() {
-    if (pageNumber == null) {
-      throw new BuiltValueNullFieldError('Page', 'pageNumber');
-    }
-    if (imagePath == null) {
-      throw new BuiltValueNullFieldError('Page', 'imagePath');
-    }
-    if (text == null) {
-      throw new BuiltValueNullFieldError('Page', 'text');
-    }
-    if (audioPath == null) {
-      throw new BuiltValueNullFieldError('Page', 'audioPath');
-    }
-    if (imageitemDetails == null) {
-      throw new BuiltValueNullFieldError('Page', 'imageitemDetails');
-    }
-  }
+  _$Page._({this.imagePath, this.text, this.audioPath}) : super._();
 
   @override
   Page rebuild(void Function(PageBuilder) updates) =>
@@ -443,41 +442,29 @@ class _$Page extends Page {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is Page &&
-        pageNumber == other.pageNumber &&
         imagePath == other.imagePath &&
         text == other.text &&
-        audioPath == other.audioPath &&
-        imageitemDetails == other.imageitemDetails;
+        audioPath == other.audioPath;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc(
-            $jc($jc($jc(0, pageNumber.hashCode), imagePath.hashCode),
-                text.hashCode),
-            audioPath.hashCode),
-        imageitemDetails.hashCode));
+        $jc($jc(0, imagePath.hashCode), text.hashCode), audioPath.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('Page')
-          ..add('pageNumber', pageNumber)
           ..add('imagePath', imagePath)
           ..add('text', text)
-          ..add('audioPath', audioPath)
-          ..add('imageitemDetails', imageitemDetails))
+          ..add('audioPath', audioPath))
         .toString();
   }
 }
 
 class PageBuilder implements Builder<Page, PageBuilder> {
   _$Page _$v;
-
-  String _pageNumber;
-  String get pageNumber => _$this._pageNumber;
-  set pageNumber(String pageNumber) => _$this._pageNumber = pageNumber;
 
   String _imagePath;
   String get imagePath => _$this._imagePath;
@@ -491,21 +478,13 @@ class PageBuilder implements Builder<Page, PageBuilder> {
   String get audioPath => _$this._audioPath;
   set audioPath(String audioPath) => _$this._audioPath = audioPath;
 
-  ListBuilder<ImageItemDetail> _imageitemDetails;
-  ListBuilder<ImageItemDetail> get imageitemDetails =>
-      _$this._imageitemDetails ??= new ListBuilder<ImageItemDetail>();
-  set imageitemDetails(ListBuilder<ImageItemDetail> imageitemDetails) =>
-      _$this._imageitemDetails = imageitemDetails;
-
   PageBuilder();
 
   PageBuilder get _$this {
     if (_$v != null) {
-      _pageNumber = _$v.pageNumber;
       _imagePath = _$v.imagePath;
       _text = _$v.text;
       _audioPath = _$v.audioPath;
-      _imageitemDetails = _$v.imageitemDetails?.toBuilder();
       _$v = null;
     }
     return this;
@@ -526,26 +505,8 @@ class PageBuilder implements Builder<Page, PageBuilder> {
 
   @override
   _$Page build() {
-    _$Page _$result;
-    try {
-      _$result = _$v ??
-          new _$Page._(
-              pageNumber: pageNumber,
-              imagePath: imagePath,
-              text: text,
-              audioPath: audioPath,
-              imageitemDetails: imageitemDetails.build());
-    } catch (_) {
-      String _$failedField;
-      try {
-        _$failedField = 'imageitemDetails';
-        imageitemDetails.build();
-      } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            'Page', _$failedField, e.toString());
-      }
-      rethrow;
-    }
+    final _$result = _$v ??
+        new _$Page._(imagePath: imagePath, text: text, audioPath: audioPath);
     replace(_$result);
     return _$result;
   }
