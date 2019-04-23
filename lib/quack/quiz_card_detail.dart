@@ -32,8 +32,8 @@ class QuizItem {
   }
 }
 
-class QuizCardDetail extends StatefulWidget {
-  final QuackCard card;
+class QuizCardDetail extends StatelessWidget {
+  final Quiz quiz;
   final List<QuizItem> answers;
   final List<QuizItem> startChoices;
   final List<QuizItem> endChoices;
@@ -43,7 +43,7 @@ class QuizCardDetail extends StatefulWidget {
 
   const QuizCardDetail(
       {Key key,
-      this.card,
+      this.quiz,
       this.answers,
       this.startChoices,
       this.endChoices,
@@ -53,31 +53,15 @@ class QuizCardDetail extends StatefulWidget {
       : super(key: key);
 
   @override
-  QuizCardDetailState createState() {
-    return new QuizCardDetailState();
-  }
-}
-
-class QuizCardDetailState extends State<QuizCardDetail> {
-  Quiz _quiz;
-  List<QuizItem> _quizItems;
-  bool _isLoading = true;
-
-  @override
-  void initState() {
-    super.initState();
-    _initData();
-  }
-
-  void _initData() async {
-    _quiz = await CardRepo().getQuiz(widget.card.id);
-    if (_quiz.answers.length > 1 && _quiz.type == QuizType.oneAtATime) {
-      _quiz.type = QuizType.many;
+  Widget build(BuildContext context) {
+    List<QuizItem> quizItems;
+    if (quiz.answers.length > 1 && quiz.type == QuizType.oneAtATime) {
+      quiz.type = QuizType.many;
     }
-    if (widget.answers == null) {
+    if (answers == null) {
       int id = 0;
       int index = 0;
-      _quizItems = _quiz.choices
+      quizItems = quiz.choices
           .map((s) => QuizItem(
               id: id++,
               text: s,
@@ -86,18 +70,14 @@ class QuizCardDetailState extends State<QuizCardDetail> {
               index: index++))
           .toList();
       index = 0;
-      _quizItems.addAll(_quiz.answers.map((s) => QuizItem(
+      quizItems.addAll(quiz.answers.map((s) => QuizItem(
           id: id++,
           text: s,
           status: QuizItemStatus.selectable,
           isAnswer: true,
           index: index++)));
     }
-    setState(() => _isLoading = false);
-  }
 
-  @override
-  Widget build(BuildContext context) {
     MediaQueryData media = MediaQuery.of(context);
 
     return Column(
@@ -105,46 +85,33 @@ class QuizCardDetailState extends State<QuizCardDetail> {
         SizedBox(
           height: media.size.height / 4,
           child: CardHeader(
-            card: widget.card,
-            parentCardId: widget.parentCardId,
+            card: QuackCard(
+                id: quiz.id, header: quiz.header, type: CardType.question),
+            parentCardId: parentCardId,
           ),
         ),
-        widget.card.title == null
+        quiz.question == null
             ? Container()
             : Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(widget.card.title ?? '',
+                child: Text(quiz.question ?? '',
                     style: Theme.of(context).textTheme.display1),
               ),
-        widget.card.content == null
-            ? Container()
-            : Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(widget.card.content ?? ''),
-              ),
         Expanded(
-          child: _isLoading
-              ? Center(
-                  child: new SizedBox(
-                    width: 20.0,
-                    height: 20.0,
-                    child: new CircularProgressIndicator(),
-                  ),
+          child: quiz.type == QuizType.open
+              ? QuizOpen(
+                  quiz: quiz,
+                  canProceed: canProceed,
                 )
-              : _quiz.type == QuizType.open
-                  ? QuizOpen(
-                      quiz: _quiz,
-                      canProceed: widget.canProceed,
-                    )
-                  : QuizSelection(
-                      quiz: _quiz,
-                      quizItems: _quizItems,
-                      answers: widget.answers,
-                      startChoices: widget.startChoices,
-                      endChoices: widget.endChoices,
-                      canProceed: widget.canProceed,
-                      resultMode: widget.resultMode,
-                    ),
+              : QuizSelection(
+                  quiz: quiz,
+                  quizItems: quizItems,
+                  answers: answers,
+                  startChoices: startChoices,
+                  endChoices: endChoices,
+                  canProceed: canProceed,
+                  resultMode: resultMode,
+                ),
         )
       ],
     );

@@ -70,4 +70,7 @@ class _ChimpCharacterState extends State<ChimpCharacter>
 
   @override
   void setViewTransform(Mat2D viewTransform) {}
+
+  @override
+  ValueNotifier<bool> isActive;
 }

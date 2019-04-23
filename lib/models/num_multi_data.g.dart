@@ -107,7 +107,7 @@ class _$NumMultiData extends NumMultiData {
   @override
   final BuiltList<int> specials;
 
-  factory _$NumMultiData([void updates(NumMultiDataBuilder b)]) =>
+  factory _$NumMultiData([void Function(NumMultiDataBuilder) updates]) =>
       (new NumMultiDataBuilder()..update(updates)).build();
 
   _$NumMultiData._(
@@ -122,7 +122,7 @@ class _$NumMultiData extends NumMultiData {
   }
 
   @override
-  NumMultiData rebuild(void updates(NumMultiDataBuilder b)) =>
+  NumMultiData rebuild(void Function(NumMultiDataBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -208,7 +208,7 @@ class NumMultiDataBuilder
   }
 
   @override
-  void update(void updates(NumMultiDataBuilder b)) {
+  void update(void Function(NumMultiDataBuilder) updates) {
     if (updates != null) updates(this);
   }
 

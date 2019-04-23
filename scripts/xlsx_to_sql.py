@@ -28,6 +28,13 @@ types = {
 	'sticker': -1,
 }
 
+gameIds = {
+	0 : 'MultipleChoiceGame',
+	4 : 'MultipleChoiceGame',
+	5 : 'MatchTheFollowingGame',
+	6 : 'CommentGame'
+}
+
 colors = [
 'FFB3C8FF',
 'FF9DEDE3',
@@ -40,8 +47,8 @@ colors = [
 
 type = 0
 header = 1
-title = 3
-content = 5
+title = 2
+content = 4
 #title_en = 2
 #content_en = 4
 #title_sw = 3
@@ -50,7 +57,8 @@ option = 6
 
 xlsx_file = sys.argv[1]
 asset_dir = 'assets/topic'
-collection_name = os.path.splitext(xlsx_file)[0]
+# collection_name = os.path.splitext(xlsx_file)[0]
+collection_name = sys.argv[2]
 
 
 def esc(a):
@@ -61,6 +69,11 @@ def esc(a):
 	else:
 		prefix = ''
 	return "'" + prefix + str(a).replace("'", "''") + "'"
+
+def j(a):
+	if str(a).lower().endswith(('.svg','.png','.jpg','.jpeg','.gif')):
+		return asset_dir + '/' + a
+	return a
 
 def row_value(row, name):
 	try:
@@ -75,9 +88,21 @@ wb = px.load_workbook(xlsx_file, read_only=True)
 
 collection_sql = ''
 topics = []
-
+chapter = {}
+topic = ''
 with open(collection_name+'.sql', 'w') as sqlfile:
 	for sheet in wb:
+		if topic != '':
+			with open('asb/'+topic+'.json','w') as json_file:
+				json_file.write(json.dumps(chapter))
+		chapter = {
+			'$': 'StoryConfig',
+			'pages': [],
+			'gameDatas': []
+		}
+		templates = []
+		choices = []
+		answers = []
 		topic = ''
 		card = ''
 		extra = -1
@@ -124,13 +149,32 @@ with open(collection_name+'.sql', 'w') as sqlfile:
 				if title_value != None or (type_data==3 and content_value != None):
 					if type_data == 2:
 						card = sheet.title
+						sqlfile.write(f"INSERT INTO `card` (id, type, title, header, content, option) VALUES ({esc(card)}, {type_data}, {esc(title_value)}, {esc(header_value)}, {esc(content_value)}, {esc(option_value)});\n")
+						chapter['storyId'] = card
+						chapter['coverImagePath'] = j(header_value)
+						chapter['title'] = title_value
 					else:
 						card = sheet.title+'_'+str(row_num)
-					if option_value == 'open' and header_value == None:
-						header_value = topic_header
-					sqlfile.write(f"INSERT INTO `card` (id, type, title, header, content, option) VALUES ({esc(card)}, {type_data}, {esc(title_value)}, {esc(header_value)}, {esc(content_value)}, {esc(option_value)});\n")
-					if add_template:
-						sqlfile.write(f"INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ({esc(card)}, 2, 1, {esc(header_value)});\n")
+						if option_value == 'open' and header_value == None:
+							header_value = topic_header
+						if(type_data == 0):
+							chapter['gameDatas'].append({
+								'$': 'MultiData',
+								'gameId': gameIds[type_data],
+								'question': title_value,
+								'answers': [],
+								'choices': []
+								})
+						elif(type_data == 1):
+							sqlfile.write(f"INSERT INTO `card` (id, type, title, header, content, option) VALUES ({esc(card)}, {type_data}, {esc(title_value)}, {esc(header_value)}, {esc(content_value)}, {esc(option_value)});\n")
+						elif(type_data == 3):
+							chapter['pages'].append({
+									'text': content_value,
+									'imagePath': j(header_value),
+								})
+						if add_template:
+							sqlfile.write(f"INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ({esc(card)}, 2, 1, {esc(header_value)});\n")
+							# chapter['activities'][-1]['templates'].append(j(header_value))
 				else:
 					card = ''
 			if type_data == 2:
@@ -144,7 +188,7 @@ with open(collection_name+'.sql', 'w') as sqlfile:
 			elif type_data <= 9:
 				if topic == '':
 					topic = sheet.title
-				if card != '':
+				if card != '' and type_data == 1:
 					collection_sql += f"INSERT INTO `collection` (id, serial, cardId) VALUES ({esc(topic)}, {card_number}, {esc(card)});\n"
 				card_number += 1
 				extra = -1
@@ -156,7 +200,15 @@ with open(collection_name+'.sql', 'w') as sqlfile:
 				if extra_content == None:
 					extra_content = title_value
 				if card != '':					
-					sqlfile.write(f"INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ({esc(card)}, {extra}, {extra_number}, {esc(extra_content)});\n")
+					# sqlfile.write(f"INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ({esc(card)}, {extra}, {extra_number}, {esc(extra_content)});\n")
+					if(type_data == 100):
+						chapter['gameDatas'][-1]['choices'].append(j(extra_content))
+					elif(type_data == 101):
+						chapter['gameDatas'][-1]['answers'].append(j(extra_content))
+					elif(type_data == 102):
+						# chapter['activities'][-1]['templates'].append(j(extra_content))
+						sqlfile.write(f"INSERT INTO `cardExtra` (cardId, type, serial, content) VALUES ({esc(card)}, {extra}, {extra_number}, {esc(extra_content)});\n")
+
 				extra_number += 1
 	sqlfile.write(f"INSERT INTO `card` (id, type, title, header, content, option) VALUES ({esc(collection_name)}, {types['topic']}, {esc(collection_name)}, NULL, NULL, NULL);\n")
 	serial = 0

@@ -77,7 +77,7 @@ class _$Student extends Student {
   @override
   final String photo;
 
-  factory _$Student([void updates(StudentBuilder b)]) =>
+  factory _$Student([void Function(StudentBuilder) updates]) =>
       (new StudentBuilder()..update(updates)).build();
 
   _$Student._({this.id, this.name, this.grade, this.photo}) : super._() {
@@ -96,7 +96,7 @@ class _$Student extends Student {
   }
 
   @override
-  Student rebuild(void updates(StudentBuilder b)) =>
+  Student rebuild(void Function(StudentBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -170,7 +170,7 @@ class StudentBuilder implements Builder<Student, StudentBuilder> {
   }
 
   @override
-  void update(void updates(StudentBuilder b)) {
+  void update(void Function(StudentBuilder) updates) {
     if (updates != null) updates(this);
   }
 

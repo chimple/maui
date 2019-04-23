@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:maui/jamaica/screens/story_screen.dart';
 import 'package:maui/storyboards/collected_item_story.dart';
+import 'package:maui/storyboards/game_score_story.dart';
 import 'package:maui/storyboards/games/bingo_game_story.dart';
+import 'package:maui/storyboards/games/compare_number_game_story.dart';
 import 'package:maui/storyboards/games/counting_game_story.dart';
 import 'package:maui/storyboards/games/crossword_game_story.dart';
 import 'package:maui/storyboards/games/dice_game_story.dart';
@@ -53,11 +55,14 @@ import 'package:storyboard/storyboard.dart';
 
 void main() {
   runApp(StoryboardApp([
+    GameScoreStory(),
+    CompareNumberGameStroy(),
     RulerNumbersGameStory(),
     AudioWidgetStory(),
     BasicCountingGameStory(),
     BentoBoxStory(),
     BingoGameStory(),
+    NumberBalanceGameStory(),
     BoxMatchingGameStory(),
     ChatBotStory(),
     ChatBotScreenStory(),
@@ -67,7 +72,6 @@ void main() {
     CuteButtonStory(),
     DiceGameStory(),
     DotNumberStory(),
-    NumberBalanceGameStory(),
     FillInTheBlanksGameStory(),
     FindWordGameStory(),
     FingerGameStory(),

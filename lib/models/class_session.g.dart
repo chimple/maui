@@ -80,7 +80,7 @@ class _$ClassSession extends ClassSession {
   @override
   final StatusEnum status;
 
-  factory _$ClassSession([void updates(ClassSessionBuilder b)]) =>
+  factory _$ClassSession([void Function(ClassSessionBuilder) updates]) =>
       (new ClassSessionBuilder()..update(updates)).build();
 
   _$ClassSession._({this.classId, this.teacherId, this.sessionId, this.status})
@@ -100,7 +100,7 @@ class _$ClassSession extends ClassSession {
   }
 
   @override
-  ClassSession rebuild(void updates(ClassSessionBuilder b)) =>
+  ClassSession rebuild(void Function(ClassSessionBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -177,7 +177,7 @@ class ClassSessionBuilder
   }
 
   @override
-  void update(void updates(ClassSessionBuilder b)) {
+  void update(void Function(ClassSessionBuilder) updates) {
     if (updates != null) updates(this);
   }
 
