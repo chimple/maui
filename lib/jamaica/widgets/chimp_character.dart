@@ -13,6 +13,79 @@ class ChimpCharacter extends StatefulWidget {
 
 class _ChimpCharacterState extends State<ChimpCharacter>
     implements FlareController {
+  List<String> accessories = [
+    'hat1',
+    'hat2',
+    'hat3',
+    'hat4',
+    'hat5',
+    'hat6',
+    'hat7',
+    'hat8',
+    'hat9',
+    'hat10',
+    'neck1',
+    'neck2',
+    'neck3',
+    'neck4',
+    'neck5',
+    'neck6',
+    'neck7',
+    'neck8',
+    'neck9',
+    'neck10',
+    'hat11',
+    'head1',
+    'head2',
+    'head3',
+    'head4',
+    'head5',
+    'head6',
+    'head7',
+    'head8',
+    'head9',
+    'head10',
+    'glasses1',
+    'glasses2',
+    'glasses3',
+    'glasses4',
+    'glasses5',
+    'glasses6',
+    'glasses7',
+    'glasses8',
+    'glasses9',
+    'glasses10',
+    'flag1',
+    'flag2',
+    'flag3',
+    'flag4',
+    'flag5',
+    'flag6',
+    'flag7',
+    'flag8',
+    'flag9',
+    'flag10',
+    'brac1',
+    'brac2',
+    'brac3',
+    'brac4',
+    'brac5',
+    'brac6',
+    'brac7',
+    'brac8',
+    'brac9',
+    'brac10',
+    'antenna1',
+    'antenna2',
+    'antenna3',
+    'antenna4',
+    'antenna5',
+    'antenna6',
+    'antenna7',
+    'antenna8',
+    'antenna9',
+    'antenna10',
+  ];
   @override
   void initState() {
     if (widget.itemName == null) {
@@ -26,11 +99,11 @@ class _ChimpCharacterState extends State<ChimpCharacter>
   @override
   Widget build(BuildContext context) {
     print('item name is ${widget.itemName}');
-    return new FlareActor(
-      "assets/character/chimple.flr",
+    return FlareActor(
+      "assets/character/chimp_ik.flr",
       alignment: Alignment.center,
       fit: BoxFit.contain,
-      animation: "happy",
+      animation: "walking",
       controller: this,
     );
   }
@@ -44,28 +117,10 @@ class _ChimpCharacterState extends State<ChimpCharacter>
 
   @override
   void initialize(FlutterActorArtboard artboard) {
-    // print('sadsasadsad');
-    print('initialize');
-    final hat1 = artboard.getNode('hat1');
-    hat1.collapsedVisibility = true;
-    final hat2 = artboard.getNode('hat2');
-    hat2.collapsedVisibility = true;
-    final glasses1 = artboard.getNode('glasses1');
-    glasses1.collapsedVisibility = true;
-    final glasses2 = artboard.getNode('glasses2');
-    glasses2.collapsedVisibility = true;
-    final earring1 = artboard.getNode('earring1');
-    earring1.collapsedVisibility = true;
-    final earring2 = artboard.getNode('earring2');
-    earring2.collapsedVisibility = true;
-    final tattoo1 = artboard.getNode('tattoo1');
-    tattoo1.collapsedVisibility = true;
-    final tattoo2 = artboard.getNode('tattoo2');
-    tattoo2.collapsedVisibility = true;
-    final beard1 = artboard.getNode('beard1');
-    beard1.collapsedVisibility = true;
-    final beard2 = artboard.getNode('beard2');
-    beard2.collapsedVisibility = true;
+    for (var i = 0; i < accessories.length; i++) {
+      final s = artboard.getNode(accessories[i]);
+      s.collapsedVisibility = true;
+    }
   }
 
   @override

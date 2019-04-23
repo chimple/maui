@@ -101,6 +101,13 @@ flutter:
     - assets/map/
     - assets/game/
     - assets/accessories/
+    - assets/accessories/antenna_acc/
+    - assets/accessories/brac_acc/
+    - assets/accessories/glasses_acc/
+    - assets/accessories/hat_acc/
+    - assets/accessories/head_acc/
+    - assets/accessories/neck_acc/
+    - assets/accessories/flag_acc/
     - assets/chat/
     - assets/character/
     - assets/stories/
