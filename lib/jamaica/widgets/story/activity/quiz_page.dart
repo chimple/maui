@@ -8,9 +8,7 @@ class QuizPage extends StatelessWidget {
     return new Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: RaisedButton(
-        onPressed: () {
-          // startQuiz();
-        },
+        onPressed: () => _startQuiz(context),
         child: Text('Start'),
       ),
       body: Center(
@@ -20,5 +18,14 @@ class QuizPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _startQuiz(BuildContext context) {
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) => Material(
+                  child: Center(child: Text('Quiz')),
+                )));
   }
 }
