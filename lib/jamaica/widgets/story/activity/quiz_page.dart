@@ -1,8 +1,13 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
+import 'package:maui/jamaica/widgets/game.dart';
+import 'package:maui/models/game_data.dart';
+import 'package:maui/models/quiz_session.dart';
 
 class QuizPage extends StatelessWidget {
+  final BuiltList<GameData> gameData;
   final VoidCallback startQuiz;
-  QuizPage({Key key, this.startQuiz}) : super(key: key);
+  QuizPage({Key key, this.startQuiz, this.gameData}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -21,11 +26,11 @@ class QuizPage extends StatelessWidget {
   }
 
   _startQuiz(BuildContext context) {
-    Navigator.pushReplacement(
+    Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => Material(
-                  child: Center(child: Text('Quiz')),
+                  child: Center(child: Game()),
                 )));
   }
 }
