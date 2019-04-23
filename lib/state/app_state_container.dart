@@ -375,8 +375,7 @@ class AppStateContainerState extends State<AppStateContainer> {
       final obj = standardSerializers.deserialize(message['message']);
       if (obj is ClassInterest) {
       } else if (obj is ClassJoin) {
-        if (state.loggedInUser.userType == UserType.teacher &&
-            myClassSession.sessionId == obj.sessionId) {
+        if (state.loggedInUser.userType == UserType.teacher) {
           classStudents.add(obj.studentId);
         }
       } else if (obj is ClassSession) {

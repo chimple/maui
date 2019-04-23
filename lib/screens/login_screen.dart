@@ -28,8 +28,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen>
     with SingleTickerProviderStateMixin {
-  List<User> _users, existingUsers;
-  var user;
+  List<User> existingUsers;
+  User user;
   dynamic decode;
   String userName;
   bool _isLoading = false, fileExist = false;
@@ -70,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen>
     //   await AppStateContainer.of(context).setLoggedInUser(user);
     //   Navigator.of(context).pushNamed('/welcome');
     // }
-    var users = await UserRepo().getLocalUsers();
+
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await UserRepo().getUsers().then((futureData) {
         setState(() {
@@ -78,10 +78,6 @@ class _LoginScreenState extends State<LoginScreen>
           _isLoading = false;
         });
       });
-    });
-    setState(() {
-      _users = users;
-      _isLoading = false;
     });
   }
 
@@ -126,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen>
   //   });
   // }
 
-  Widget renderLoginInput(List<User> _users, size) {
+  Widget renderLoginInput(List<User> existingUsers, size) {
     return new Container(
       decoration: new BoxDecoration(
         color: Colors.purple,
@@ -137,9 +133,8 @@ class _LoginScreenState extends State<LoginScreen>
               height: 20.0,
               child: new CircularProgressIndicator(),
             )
-          : (_users?.length ?? 0) == 0
+          : (existingUsers?.length ?? 0) == 0
               ? new Container()
-              // : new UserList(users: _users),
               : ListView(
                   children: <Widget>[
                     Container(
@@ -327,9 +322,16 @@ class _LoginScreenState extends State<LoginScreen>
                   print("Login As Student..!!");
                   await AppStateContainer.of(context)
                       .setLoggedInUser(existingUsers[index]);
-                  Navigator.of(context).pushNamed('/jam_chatbot');
+                  if (existingUsers[index].userType == UserType.student) {
+                    AppStateContainer.of(context).joinClassSession();
+                    Navigator.of(context).pushNamed('/jam_chatbot');
+                  } else {
+                    Navigator.of(context).pushNamed('/progressScreen');
+                  }
                 },
-                child: UserItem(user: _users[index]));
+                child: existingUsers[index] != null
+                    ? UserItem(user: existingUsers[index])
+                    : new Container());
           }),
     );
   }
@@ -374,7 +376,7 @@ class _LoginScreenState extends State<LoginScreen>
                   ),
                   new Expanded(
                     flex: 5,
-                    child: renderLoginInput(_users, size),
+                    child: renderLoginInput(existingUsers, size),
                   )
                 ],
               ),
@@ -409,15 +411,24 @@ class _LoginScreenState extends State<LoginScreen>
       setState(() {
         disabled = true;
       });
+
       compressImage(imagePathStore).then((s) async {
         compressedImage = s;
-        user = await new UserRepo().insertLocalUser(new User(
-            image: compressedImage,
-            currentLessonId: 1,
-            name: userName,
-            points: 100));
-        AppStateContainer.of(context).setLoggedInUser(user);
-        Navigator.of(context).pushReplacementNamed('/welcome');
+        await new UserRepo()
+            .insertLocalUser(new User(
+                image: compressedImage,
+                currentLessonId: 1,
+                name: userName,
+                points: 100))
+            .then((_user) async {
+          await AppStateContainer.of(context).setLoggedInUser(_user);
+          if (_user.userType == UserType.student) {
+            await AppStateContainer.of(context).joinClassSession();
+            Navigator.of(context).pushReplacementNamed('/jam_chatbot');
+          } else {
+            Navigator.of(context).pushReplacementNamed('/progressScreen');
+          }
+        });
       });
     } else {
       controller.addStatusListener((status) {
