@@ -122,7 +122,7 @@ class _GameState extends State<Game> {
                 ),
                 Expanded(flex: 3, child: buildUI(size)),
                 GameTimer(
-                    time: 10,
+                    time: 30,
                     timeCallback: timeCallback,
                     timeEndCallback: timeEndCallback),
               ],
