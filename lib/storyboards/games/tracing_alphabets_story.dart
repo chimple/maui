@@ -9,6 +9,14 @@ class TracingAlphabetStory extends FullScreenStory {
           body: SafeArea(
             child: TracingAlphabet(alphabets: [
               'A',
+              'B',
+              'C',
+              'D',
+              'E',
+              'F',
+              'G',
+              'H',
+              'I',
             ]),
           ),
         )
