@@ -254,8 +254,8 @@ class _ShowRewardsState extends State<ShowRewards>
             onPressed: () {
               setState(() {
                 ActivityBoard(
-                  rewardImageList: rewardImageList,
-                );
+//                  rewardImageList: rewardImageList,
+                    );
               });
               print('reward list on pop is  $rewardImageList');
               Navigator.of(context).pop();
