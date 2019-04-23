@@ -45,14 +45,17 @@ class _TracingAlphabetState extends State<TracingAlphabet> {
                     .map((t) => LayoutBuilder(builder:
                             (BuildContext context, BoxConstraints constraints) {
                           return Container(
-                            color: Colors.grey,
+                            // color: Colors.grey,
                             child: Center(
                               child: Text(
                                 t,
-                                // style: Theme.of(context).textTheme.display4,
                                 style: TextStyle(
-                                    color: Colors.black26,
-                                    fontSize: constraints.maxHeight * .7),
+                                  fontSize: constraints.maxHeight * .7,
+                                  foreground: Paint()
+                                    ..strokeWidth = 2.0
+                                    ..color = Colors.black
+                                    ..style = PaintingStyle.stroke,
+                                ),
                               ),
                             ),
                           );
