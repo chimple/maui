@@ -13,28 +13,38 @@ class ProgressScreen extends StatefulWidget {
 }
 
 class _ProgressScreenState extends State<ProgressScreen> {
+
   Map<String, Performance> _performance;
+  List<User> _users;
+  bool _isLoading;
 
   @override
   void initState() {
     super.initState();
-    _performance = new Map();
-    addDummyData();
+    _initData();
+  }
+
+  void _initData() async {
+    await UserRepo().getUsers().then((onValue){
+      setState(() {
+        _users = onValue;
+        _isLoading = true;
+      });
+    });
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    //_performance = AppStateContainer.of(context).performances;
   }
 
-  void addDummyData() {
+  /*void addDummyData() {
     Performance performance = new Performance(updates);
     _performance.putIfAbsent(
         randomString(10, from: 97, to: 122), () => performance);
-  }
+  }*/
 
-  void updates(PerformanceBuilder b) {
+  /*void updates(PerformanceBuilder b) {
     b.studentId = randomString(10, from: 97, to: 122);
     b.gameId = randomString(10, from: 97, to: 122);
     b.correct = true;
@@ -46,14 +56,14 @@ class _ProgressScreenState extends State<ProgressScreen> {
     b.score = 100;
     b.total = 200;
     b.sessionId = randomString(10, from: 97, to: 122);
-  }
+  }*/
 
-  void changeData() {
+  /*void changeData() {
     setState(() {
       Performance per = new Performance(updates);
       _performance.putIfAbsent(randomString(10, from: 97, to: 122), () => per);
     });
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +71,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
 
     var background = Container(
       decoration: BoxDecoration(
-        image: DecorationImage(image: AssetImage('assets/Background_potriat.png'),fit: BoxFit.cover)
+          image: DecorationImage(image: AssetImage('assets/Background_potriat.png'),fit: BoxFit.cover)
       ),
     );
 
@@ -72,7 +82,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
         Expanded(
           flex: 1,
           child: ListView.builder(
-              itemCount: keys.length,
+              itemCount: _users.length,
               itemBuilder: (context, index) {
                 return buildPerformanceCard(keys, index);
               }),
@@ -108,7 +118,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
         children: <Widget>[
           Container(
               child:
-                  Expanded(flex: 1, child: buildCardLeftSection(keys, index))),
+              Expanded(flex: 1, child: buildCardLeftSection(keys, index))),
           Container(child: Expanded(flex: 4, child: buildCardRightSection()))
         ],
       ),
@@ -128,6 +138,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
   }
 
   Column buildCardLeftSection(List<String> keys, int index) {
+
     Widget imageIcon = Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -145,43 +156,17 @@ class _ProgressScreenState extends State<ProgressScreen> {
         Row(
           //mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Expanded(flex: 1, child: Icon(Icons.star, color: Colors.yellow)),
+            Expanded(flex: 1, child: Icon(Icons.star, color: Colors.yellow)), //Star Icon
             Expanded(
               flex: 3,
               child: Text('200000',
                   style: TextStyle(fontSize: 20), overflow: TextOverflow.fade),
-            )
+            ) //Score
           ],
         ),
-        Text(_performance[keys[index]].studentId,
+        Text(_users[index].name,
             style: TextStyle(fontSize: 20), overflow: TextOverflow.fade)
       ],
     );
   }
-
-  /* @override
-  Widget build(BuildContext context) {
-    var keys = _performance.keys.toList();
-    return Container(
-        child: Column(
-          children: <Widget>[
-            ///Text(_performance.toString(), style: TextStyle(fontSize: 40)),
-            Expanded(
-              child: ListView.builder(
-                itemCount: _performance.length,
-                itemBuilder: (context, index) {
-                  return Column(
-                    children: <Widget>[
-                      Text(keys[index].toString(), style: TextStyle(fontSize: 40)),
-                      Text(_performance[keys[index]].toString(),
-                          style: TextStyle(fontSize: 40)),
-                    ],
-                  );
-                },
-              ),
-            ),
-            RaisedButton(child: Text('Add'), onPressed: changeData),
-          ],
-        ));
-  }*/
 }
