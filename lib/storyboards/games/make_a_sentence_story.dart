@@ -9,9 +9,9 @@ class MakeASentenceStory extends FullScreenStory {
           body: SafeArea(
             child: MakeASentence(
               words: [
-                ['The boy', 'The Tiger', 'The girl'],
-                ['speaks', 'eat', 'talk'],
-                ['nicely', 'food', 'loud'],
+                ['','The boy', 'The Tiger', 'The girl'],
+                ['','speaks', 'eat', 'talk'],
+                ['','nicely', 'food', 'loud'],
                 // ['nicely', 'food', 'loud'],
                 // ['nicely', 'food', 'loud']
               ],

@@ -11,9 +11,21 @@ class MakeASentence extends StatefulWidget {
 }
 
 class _MakeASentenceState extends State<MakeASentence> {
-  int selectitem = 1;
   int _buttonKey = 0;
-  List<String> sentence = List(3);
+  String _sentence = '';
+  Map<int, String> _wordPos = Map();
+
+  @override
+  void initState() {
+    super.initState();
+    initializeSentence();
+  }
+
+  initializeSentence() {
+    for (int i = 0; i < widget.words.length; i++) {
+      _wordPos[i] = widget.words[i][0];
+    }
+  }
 
   Widget _scrollTiles(BuildContext context, List<String> words, int button) {
     final buttonConfig = MediaQuery.of(context).size;
@@ -26,12 +38,7 @@ class _MakeASentenceState extends State<MakeASentence> {
         diameterRatio: 1.5,
         itemExtent: buttonConfig.height * 0.182,
         onSelectedItemChanged: (i) {
-          selectitem = i;
-          print(
-              "selectitem ====$i ......... ${widget.words[button][i]} ,,,,,,,, $button");
-          // sentence.add(widget.words[button][i]);
-          sentence[0] = widget.words[0][i];
-          print("sentence === $sentence");
+          _wordPos[button] = widget.words[button][i];
         },
         children: words.map((w) {
           return Column(
@@ -72,28 +79,27 @@ class _MakeASentenceState extends State<MakeASentence> {
           ),
         ),
         Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             Flexible(
               flex: 2,
-              child: TyperAnimatedTextKit(
-                  onTap: () {
-                    print("Tap Event");
-                  },
-                  text: [
-                    "The boy speaks nicely!!!",
-                    // "speaks",
-                    // " nicely!!!"
-                  ],
-                  textStyle: TextStyle(
-                      fontSize: 32.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                  textAlign: TextAlign.start,
-                  alignment: AlignmentDirectional.topStart),
+              child: FadeAnimatedTextKit(
+                // isRepeatingAnimation: false,
+                text: [
+                  _wordPos[0],
+                  _wordPos[0] + " " + _wordPos[1],
+                  _wordPos[0] + " " + _wordPos[1] + " " + _wordPos[2]
+                ],
+                textStyle: TextStyle(
+                    fontSize: 32.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+                textAlign: TextAlign.start,
+                alignment: AlignmentDirectional.topStart,
+              ),
               // child: Container(
               //   child: Text(
-              //     "The boy speaks nicely",
+              //     _sentence,
               //     style: TextStyle(
               //       color: Colors.white,
               //       fontWeight: FontWeight.bold,
@@ -144,7 +150,12 @@ class _MakeASentenceState extends State<MakeASentence> {
             ),
             FloatingActionButton.extended(
               backgroundColor: Colors.orangeAccent,
-              onPressed: () {},
+              onPressed: () {
+                setState(() {
+                  _sentence =
+                      _wordPos[0] + " " + _wordPos[1] + " " + _wordPos[2];
+                });
+              },
               icon: Icon(
                 Icons.done,
                 size: 40.0,
