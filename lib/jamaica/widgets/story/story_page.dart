@@ -35,6 +35,7 @@ class StoryPageState extends State<StoryPage> {
   }
 
   void _initData() async {
+    print('story id ${widget.storyId}');
     final json =
         await rootBundle.loadString('assets/topic/${widget.storyId}.json');
     final standardSerializers =

@@ -76,11 +76,13 @@ class _TextAudioState extends State<AudioTextBold> {
   ScrollController _scrollController = new ScrollController();
   FlutterTts flutterTts;
   TextToSpeachType textToSpeachType;
+  String text;
   @override
   void initState() {
     super.initState();
     flutterTts = FlutterTts();
     print('initState');
+    text = widget.fullText.replaceAll(RegExp(r'[\n]'), ' ');
   }
 
   @override
@@ -276,7 +278,7 @@ class _TextAudioState extends State<AudioTextBold> {
       }
     } else {
       widget.pageSliding(widget.index);
-      listOfLines.addAll(widget.fullText.split(RegExp('[!.]')));
+      listOfLines.addAll(text.split(RegExp('[!.]')));
       print(listOfLines);
       speak(listOfLines.removeAt(0));
       flutterTts.startHandler = () {
@@ -332,9 +334,8 @@ class _TextAudioState extends State<AudioTextBold> {
   String _startSubString = '', _middleSubString = '', _endSubString = '';
   @override
   Widget build(BuildContext context) {
-    print(widget.imagePath);
-
-    if (widget.fullText != null && widget.imagePath != null)
+    print(text);
+    if (text != null && widget.imagePath != null)
       return Column(
         children: <Widget>[
           Expanded(flex: 5, child: _buildImage()),
@@ -344,7 +345,7 @@ class _TextAudioState extends State<AudioTextBold> {
               audioPlayer: audioPlayer,
               isPause: isPause,
               isPlaying: isPlaying,
-              loadAudio: () => loadAudio(widget.fullText, widget.audioFile),
+              loadAudio: () => loadAudio(text, widget.audioFile),
               pause: () => pause(),
               resume: () => resume(),
             ),
@@ -352,7 +353,7 @@ class _TextAudioState extends State<AudioTextBold> {
           Expanded(flex: 4, child: _buildText())
         ],
       );
-    else if (widget.fullText == '') {
+    else if (text == '') {
       return Column(
         children: <Widget>[
           Expanded(child: _buildImage()),
@@ -371,7 +372,7 @@ class _TextAudioState extends State<AudioTextBold> {
               audioPlayer: audioPlayer,
               isPause: isPause,
               isPlaying: isPlaying,
-              loadAudio: () => loadAudio(widget.fullText, widget.audioFile),
+              loadAudio: () => loadAudio(text, widget.audioFile),
               pause: () => pause(),
               resume: () => resume(),
             ),
@@ -396,68 +397,74 @@ class _TextAudioState extends State<AudioTextBold> {
 
   Widget _buildText() {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Stack(
-        children: <Widget>[
-          RichText(
-            text: TextSpan(
-              children: <TextSpan>[
-                TextSpan(
-                    text: _startSubString,
-                    style: TextStyle(fontSize: 23, color: Colors.transparent)),
-                TextSpan(
-                    text: _middleSubString,
-                    style: TextStyle(
+      padding: const EdgeInsets.only(left: 10),
+      child: SingleChildScrollView(
+        child: Stack(
+          children: <Widget>[
+            RichText(
+              text: TextSpan(
+                children: <TextSpan>[
+                  TextSpan(
+                      text: _startSubString,
+                      style:
+                          TextStyle(fontSize: 23, color: Colors.transparent)),
+                  TextSpan(
+                      text: _middleSubString,
+                      style: TextStyle(
+                          fontSize: 23,
+                          background: Paint()..color = Colors.red,
+                          color: Colors.transparent)),
+                  TextSpan(
+                      text: _endSubString,
+                      style: TextStyle(
+                        color: Colors.transparent,
                         fontSize: 23,
-                        background: Paint()..color = Colors.red,
-                        color: Colors.transparent)),
-                TextSpan(
-                    text: _endSubString,
-                    style: TextStyle(
-                      color: Colors.transparent,
-                      fontSize: 23,
-                    ))
-              ],
+                      ))
+                ],
+              ),
             ),
-          ),
-          CustomEditableText(
-              controller: CustomTextEditingController(text: widget.fullText),
-              focusNode: FocusNode(),
-              cursorColor: Colors.transparent,
-              style: TextStyle(color: Colors.black54, fontSize: 23),
-              backgroundCursorColor: Colors.transparent,
-              maxLines: null,
-              dragStartBehavior: DragStartBehavior.start,
-              startOffset: (s) => {},
-              updateOffset: (o) => {},
-              draEnd: (t) {},
-              onLongPress: (s, textSelection) {
-                setState(() {
-                  _middleSubString = widget.fullText.substring(
-                      textSelection.baseOffset, textSelection.extentOffset);
-                  _startSubString =
-                      widget.fullText.substring(0, textSelection.baseOffset);
-                  _endSubString = widget.fullText.substring(
-                      textSelection.extentOffset, widget.fullText.length);
-                });
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return FractionallySizedBox(
-                        heightFactor: MediaQuery.of(context).orientation ==
-                                Orientation.portrait
-                            ? 0.5
-                            : 0.8,
-                        widthFactor: MediaQuery.of(context).orientation ==
-                                Orientation.portrait
-                            ? 0.8
-                            : 0.4,
-                        child: ShowDialogModeState().textDescriptionDialog(
-                            context, s, 'textDesciption'));
-                  },
-                );
-              }),
-        ],
+            CustomEditableText(
+                controller: CustomTextEditingController(text: text),
+                focusNode: FocusNode(),
+                cursorColor: Colors.transparent,
+                style: TextStyle(color: Colors.black54, fontSize: 23),
+                backgroundCursorColor: Colors.transparent,
+                maxLines: null,
+                dragStartBehavior: DragStartBehavior.start,
+                startOffset: (s) => {},
+                updateOffset: (o) => {},
+                draEnd: (t) {},
+                onLongPress: (s, textSelection) {
+                  if (s != ' ' && s != '' && s != '\n') {
+                    print('show');
+                    setState(() {
+                      _middleSubString = text.substring(
+                          textSelection.baseOffset, textSelection.extentOffset);
+                      _startSubString =
+                          text.substring(0, textSelection.baseOffset);
+                      _endSubString = text.substring(
+                          textSelection.extentOffset, text.length);
+                    });
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return FractionallySizedBox(
+                            heightFactor: MediaQuery.of(context).orientation ==
+                                    Orientation.portrait
+                                ? 0.5
+                                : 0.8,
+                            widthFactor: MediaQuery.of(context).orientation ==
+                                    Orientation.portrait
+                                ? 0.8
+                                : 0.4,
+                            child: ShowDialogModeState().textDescriptionDialog(
+                                context, s, 'textDesciption'));
+                      },
+                    );
+                  }
+                }),
+          ],
+        ),
       ),
     );
   }
