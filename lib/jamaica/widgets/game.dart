@@ -1,4 +1,5 @@
 import 'package:flare_flutter/flare_actor.dart';
+import 'package:maui/jamaica/widgets/game_timer.dart';
 import 'package:maui/models/quiz_session.dart';
 // import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,23 @@ class _GameState extends State<Game> {
   int _currentGame = 0;
   int _score = 0;
   int _stars = 0;
+  String timeTaken;
+  bool timeEnd = false;
+
   Navigator _navigator;
+
+  timeCallback(t) {
+    setState(() {
+      timeTaken = t;
+    });
+  }
+
+  timeEndCallback(t) {
+    setState(() {
+      timeEnd = t;
+      print("time end $t");
+    });
+  }
 
   @override
   void initState() {
@@ -79,11 +96,11 @@ class _GameState extends State<Game> {
                       ),
                     ),
                     Flexible(
-                      flex: 5,
+                        flex: 5,
                         child: Text(
-                      'In this game you have to click on the alphabets in sequence order.',
-                      style: TextStyle(fontSize: size.width * 0.023),
-                    ))
+                          'In this game you have to click on the alphabets in sequence order.',
+                          style: TextStyle(fontSize: size.width * 0.023),
+                        ))
                   ],
                 ),
                 Divider(
@@ -91,6 +108,10 @@ class _GameState extends State<Game> {
                   height: 0.0,
                 ),
                 Expanded(flex: 2, child: buildUI(size)),
+                GameTimer(
+                    time: 10,
+                    timeCallback: timeCallback,
+                    timeEndCallback: timeEndCallback),
               ],
             ),
           ],
@@ -112,14 +133,16 @@ class _GameState extends State<Game> {
                   size: size.width * 0.055,
                   color: Colors.black,
                 ),
-                Text('Close',style: TextStyle(fontSize: size.width * 0.02),),
+                Text(
+                  'Close',
+                  style: TextStyle(fontSize: size.width * 0.02),
+                ),
               ],
             ),
           ),
           Flexible(
             flex: 10,
-            child: Container(
-                ),
+            child: Container(),
           ),
           Flexible(
             flex: 3,
@@ -160,7 +183,8 @@ class _GameState extends State<Game> {
                 ),
                 Flexible(
                   flex: 2,
-                  child: Text('Game Name',style: TextStyle(fontSize: size.width * 0.02)),
+                  child: Text('Game Name',
+                      style: TextStyle(fontSize: size.width * 0.02)),
                 ),
                 // Text('Game name')
               ],
@@ -183,7 +207,7 @@ class _GameState extends State<Game> {
               _score += score;
               updateScore(_score);
               if (score > 0) _stars++;
-//              _currentGame++;
+              //  _currentGame++;
             });
 
             Navigator.push(

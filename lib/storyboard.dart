@@ -27,6 +27,7 @@ import 'package:maui/storyboards/games/sequence_the_number_game_story.dart';
 import 'package:maui/storyboards/games/basic_counting_game_story.dart';
 import 'package:maui/storyboards/games/spin_wheel_game_story.dart';
 import 'package:maui/storyboards/games/tap_wrong_game_story.dart';
+import 'package:maui/storyboards/games/tracing_alphabets_story.dart';
 import 'package:maui/storyboards/games/true_false_game_story.dart';
 import 'package:maui/storyboards/monster_game_story.dart';
 import 'package:maui/storyboards/map_reward_screen_story.dart';
@@ -52,7 +53,6 @@ import 'package:storyboard/storyboard.dart';
 
 void main() {
   runApp(StoryboardApp([
-
     RulerNumbersGameStory(),
     AudioWidgetStory(),
     BasicCountingGameStory(),
@@ -96,6 +96,7 @@ void main() {
     StoryBoard(),
     TapWrongGameStory(),
     ThemeMapStory(),
+    TracingAlphabetStory(),
     TrueFalseGameStory(),
     MapRewardsScreenStory(),
     UserProgressScreenStory(),
