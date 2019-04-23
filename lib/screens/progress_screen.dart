@@ -15,7 +15,8 @@ class ProgressScreen extends StatefulWidget {
 class _ProgressScreenState extends State<ProgressScreen> {
 
   Map<String, Performance> _performance;
-  List<User> _users;
+  List<String> _userIDs;
+  List<User> _students = [];
   bool _isLoading;
 
   @override
@@ -27,8 +28,22 @@ class _ProgressScreenState extends State<ProgressScreen> {
   void _initData() async {
     await UserRepo().getUsers().then((onValue){
       setState(() {
-        _users = onValue;
-        _isLoading = true;
+        if(onValue != null){
+          print('Getting Users............................................');
+          onValue.forEach((User user){
+            if(user.userType == UserType.student){
+              _students.add(user);
+            }
+          });
+        }
+        else{
+          print('No Users Found...........................................');
+          Center(
+            child: Container(
+              child: Text('No Students'),
+            ),
+          );
+        }
       });
     });
   }
@@ -36,38 +51,24 @@ class _ProgressScreenState extends State<ProgressScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    print('Dependencies Changed..................................................');
+    String latestUserID = AppStateContainer.of(context).classStudents?.last;
+    if(latestUserID != null){
+      queryUser(latestUserID);
+    }
   }
 
-  /*void addDummyData() {
-    Performance performance = new Performance(updates);
-    _performance.putIfAbsent(
-        randomString(10, from: 97, to: 122), () => performance);
-  }*/
-
-  /*void updates(PerformanceBuilder b) {
-    b.studentId = randomString(10, from: 97, to: 122);
-    b.gameId = randomString(10, from: 97, to: 122);
-    b.correct = true;
-    b.question = randomString(10, from: 97, to: 122);
-    b.answer = randomString(10, from: 97, to: 122);
-    b.endTime = DateTime.now();
-    b.startTime = DateTime.now();
-    b.level = 2;
-    b.score = 100;
-    b.total = 200;
-    b.sessionId = randomString(10, from: 97, to: 122);
-  }*/
-
-  /*void changeData() {
-    setState(() {
-      Performance per = new Performance(updates);
-      _performance.putIfAbsent(randomString(10, from: 97, to: 122), () => per);
+  void queryUser(String latestUserID) async {
+    await UserRepo().getUser(latestUserID).then((User user){
+      setState(() {
+        _students.add(user);
+      });
     });
-  }*/
+  }
 
   @override
   Widget build(BuildContext context) {
-    var keys = _performance.keys.toList();
+    //var keys = _performance.keys.toList();
 
     var background = Container(
       decoration: BoxDecoration(
@@ -82,9 +83,9 @@ class _ProgressScreenState extends State<ProgressScreen> {
         Expanded(
           flex: 1,
           child: ListView.builder(
-              itemCount: _users.length,
+              itemCount: _students.length,
               itemBuilder: (context, index) {
-                return buildPerformanceCard(keys, index);
+                return buildPerformanceCard(index);
               }),
         ), //RaisedButton(child: Text('Add'), onPressed: changeData)
       ],
@@ -109,7 +110,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
     );
   }
 
-  Card buildPerformanceCard(List<String> keys, int index) {
+  Card buildPerformanceCard(int index) {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       elevation: 3,
@@ -118,7 +119,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
         children: <Widget>[
           Container(
               child:
-              Expanded(flex: 1, child: buildCardLeftSection(keys, index))),
+              Expanded(flex: 1, child: buildCardLeftSection(index))),
           Container(child: Expanded(flex: 4, child: buildCardRightSection()))
         ],
       ),
@@ -137,7 +138,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
     );
   }
 
-  Column buildCardLeftSection(List<String> keys, int index) {
+  Column buildCardLeftSection(int index) {
 
     Widget imageIcon = Padding(
       padding: const EdgeInsets.all(8.0),
@@ -164,7 +165,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
             ) //Score
           ],
         ),
-        Text(_users[index].name,
+        Text(_students[index].name,
             style: TextStyle(fontSize: 20), overflow: TextOverflow.fade)
       ],
     );
