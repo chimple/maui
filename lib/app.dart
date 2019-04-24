@@ -18,6 +18,7 @@ import 'package:maui/screens/chat_screen.dart';
 import 'package:maui/screens/game_category_list_screen.dart';
 import 'package:maui/screens/game_list_view.dart';
 import 'package:maui/screens/login_screen.dart';
+import 'package:maui/screens/progress_screen.dart';
 import 'package:maui/screens/switch_screen.dart';
 import 'package:maui/screens/tab_home.dart';
 import 'package:maui/state/app_state_container.dart';
@@ -49,6 +50,7 @@ class MauiApp extends StatelessWidget {
         '/': (BuildContext context) => new SwitchScreen(),
         '/login': (BuildContext context) => new LoginScreen(),
         '/welcome': (BuildContext context) => new WelcomeScreen(),
+        '/progressScreen': (BuildContext context) => new ProgressScreen(),
         '/tab': (BuildContext context) => new Bento(),
         '/chatbot': (BuildContext context) => new ChatBotScreen(),
         '/camera': (BuildContext context) => CameraScreen(false),
