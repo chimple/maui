@@ -3,14 +3,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 
-class MakeASentence extends StatefulWidget {
+class MakeASentenceGame extends StatefulWidget {
   final List<List<String>> words;
-  const MakeASentence({Key key, this.words}) : super(key: key);
+  const MakeASentenceGame({Key key, this.words}) : super(key: key);
   @override
-  _MakeASentenceState createState() => new _MakeASentenceState();
+  _MakeASentenceGameState createState() => new _MakeASentenceGameState();
 }
 
-class _MakeASentenceState extends State<MakeASentence> {
+class _MakeASentenceGameState extends State<MakeASentenceGame> {
   int _buttonKey = 0;
   String _sentence = '';
   Map<int, String> _wordPos = Map();
