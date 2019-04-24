@@ -10,8 +10,7 @@ class StoreScreenStory extends FullScreenStory {
   @override
   List<Widget> get storyContent => [
         Scaffold(
-          body: SafeArea(
-              child: Store(BuiltMap<String, String>({'hat': 'hat1'}), list)),
+          body: SafeArea(child: Store(list)),
         )
       ];
 }

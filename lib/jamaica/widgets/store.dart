@@ -1,5 +1,6 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:maui/jamaica/models/accessories_data.dart';
 import 'package:maui/jamaica/state/state_container.dart';
 import 'package:maui/jamaica/widgets/chimp_character.dart';
@@ -7,13 +8,13 @@ import 'package:tuple/tuple.dart';
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 
 class Store extends StatefulWidget {
-  final BuiltMap<String, String> accessories;
+  // final BuiltMap<String, String> accessories;
   final Map<AccessoryCategory, List<AccessoryData>> items;
-  Store(this.accessories, this.items, {Key key}) : super(key: key);
+  Store(this.items, {Key key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return new StoreWidget();
+    return StoreWidget();
   }
 }
 
@@ -46,7 +47,7 @@ class StoreWidget extends State<Store> with SingleTickerProviderStateMixin {
     var totalAccessories =
         widget.items.values.map((v) => v.length).reduce((a, b) => a + b);
     for (int i = 0; i < totalAccessories + 1; i++) _colorStatus.add(0);
-    _tabController = new TabController(vsync: this, length: itemRange.length);
+    _tabController = TabController(vsync: this, length: itemRange.length);
     _tabController.addListener(() {
       l = _tabController..index;
       tabIndex = l.index;
@@ -60,7 +61,7 @@ class StoreWidget extends State<Store> with SingleTickerProviderStateMixin {
   }
 
   Widget _tab(String text) {
-    return new Tab(
+    return Tab(
       child: SizedBox(
         child: Image.asset(
           text,
@@ -74,8 +75,7 @@ class StoreWidget extends State<Store> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     MediaQueryData mediaQuery = MediaQuery.of(context);
-
-    return new Scaffold(
+    return Scaffold(
         body: Container(
             color: Colors.indigo[900],
             child: mediaQuery.orientation == Orientation.portrait
@@ -90,31 +90,27 @@ class StoreWidget extends State<Store> with SingleTickerProviderStateMixin {
                               borderRadius: BorderRadius.only(
                                   bottomLeft: Radius.circular(20.0),
                                   bottomRight: Radius.circular(20.0))),
-                          child: Column(
+                          child: Stack(
+                            alignment: AlignmentDirectional.bottomEnd,
                             children: <Widget>[
-                              Expanded(
-                                flex: 1,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(top: 30.0),
-                                  child: Text('Coins is $coin',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20.0,
-                                      )),
-                                ),
+                              Positioned(
+                                top: 10.0,
+                                left: 10.0,
+                                child: Text('$coin',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20.0,
+                                    )),
                               ),
-                              Expanded(
-                                flex: 7,
-                                child: ChimpCharacter(
-                                  itemName: itemName,
-                                  key: new GlobalObjectKey(itemName),
-                                ),
+                              ChimpCharacter(
+                                itemName: itemName,
+                                key: GlobalObjectKey(itemName),
                               ),
-                              Expanded(
-                                flex: 2,
-                                child: new TabBar(
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: TabBar(
                                   isScrollable: true,
-                                  indicator: new BubbleTabIndicator(
+                                  indicator: BubbleTabIndicator(
                                     indicatorHeight: 50.0,
                                     indicatorColor: Colors.red,
                                     tabBarIndicatorSize:
@@ -149,17 +145,19 @@ class StoreWidget extends State<Store> with SingleTickerProviderStateMixin {
                             children: <Widget>[
                               Padding(
                                 padding: const EdgeInsets.only(top: 30.0),
-                                child: Text('Coins is $coin',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20.0,
-                                    )),
+                                child: Text(
+                                  'Coins is $coin',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20.0,
+                                  ),
+                                ),
                               ),
                               Expanded(
                                 flex: 1,
                                 child: ChimpCharacter(
                                   itemName: itemName,
-                                  key: new GlobalObjectKey(itemName),
+                                  // key: GlobalObjectKey(itemName),
                                 ),
                               ),
                             ],
@@ -173,11 +171,11 @@ class StoreWidget extends State<Store> with SingleTickerProviderStateMixin {
                             children: <Widget>[
                               Expanded(
                                 flex: 2,
-                                child: new TabBar(
+                                child: TabBar(
                                   isScrollable: true,
                                   unselectedLabelColor: Colors.grey,
                                   labelColor: Colors.black,
-                                  indicator: new BubbleTabIndicator(
+                                  indicator: BubbleTabIndicator(
                                     indicatorHeight: 65.0,
                                     indicatorColor: Colors.red,
                                     tabBarIndicatorSize:
@@ -202,10 +200,10 @@ class StoreWidget extends State<Store> with SingleTickerProviderStateMixin {
   }
 
   Widget displayAccessories() {
-    final container = StateContainer.of(context);
+    // final container = StateContainer.of(context);
     int index = 0;
     return Container(
-        child: new TabBarView(
+        child: TabBarView(
             controller: _tabController,
             children: widget.items.keys.map((r) {
               return Container(
@@ -238,15 +236,46 @@ class StoreWidget extends State<Store> with SingleTickerProviderStateMixin {
                           setName: (String s, int n) {
                             setState(() {
                               itemName = s;
-                              if (coin <= 0)
+                              if (coin <= 0) {
                                 coin = 0;
-                              else if (_colorStatus[n] == 0) {
+                                return showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return FractionallySizedBox(
+                                          heightFactor: MediaQuery.of(context)
+                                                      .orientation ==
+                                                  Orientation.portrait
+                                              ? 0.3
+                                              : 0.8,
+                                          widthFactor: MediaQuery.of(context)
+                                                      .orientation ==
+                                                  Orientation.portrait
+                                              ? 0.7
+                                              : 0.4,
+                                          child: Card(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(20.0),
+                                              ),
+                                            ),
+                                            child: Center(
+                                                child: Text(
+                                              'Sorry Not Enough Coins',
+                                              style: TextStyle(
+                                                  fontSize: 30.0,
+                                                  color: Colors.green,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                          ));
+                                    });
+                              } else if (_colorStatus[n] == 0) {
                                 coin = coin - 100;
                               }
+
                               _colorStatus[n] = 1;
-                              container.setAccessories(BuiltMap<String, String>(
-                                  {r.accessoryCategoryName: itemName}));
-                              print(container.state.userProfile);
+                              // container.setAccessories(BuiltMap<String, String>(
+                              //     {r.accessoryCategoryName: itemName}));
+                              // print(container.state.userProfile);
                             });
                           },
                         );
@@ -259,7 +288,7 @@ class StoreWidget extends State<Store> with SingleTickerProviderStateMixin {
   }
 }
 
-class StoreAccessoryButton extends StatelessWidget {
+class StoreAccessoryButton extends StatefulWidget {
   int index;
   String imagePath;
   String name;
@@ -277,6 +306,12 @@ class StoreAccessoryButton extends StatelessWidget {
     this.colorStatus,
     this.name,
   }) : super(key: key);
+
+  @override
+  _StoreAccessoryButtonState createState() => _StoreAccessoryButtonState();
+}
+
+class _StoreAccessoryButtonState extends State<StoreAccessoryButton> {
   @override
   Widget build(BuildContext context) {
     MediaQueryData mediaQuery = MediaQuery.of(context);
@@ -285,7 +320,9 @@ class StoreAccessoryButton extends StatelessWidget {
       child: Column(children: <Widget>[
         Container(
           decoration: BoxDecoration(
-            color: colorStatus[index] == 1 ? Colors.yellow : Colors.indigo[400],
+            color: widget.colorStatus[widget.index] == 1
+                ? Colors.yellow
+                : Colors.indigo[400],
             borderRadius: BorderRadius.circular(10.0),
           ),
           height: mediaQuery.orientation == Orientation.portrait
@@ -295,18 +332,22 @@ class StoreAccessoryButton extends StatelessWidget {
               ? mediaQuery.size.width * 0.14
               : mediaQuery.size.width * 0.06,
           child: InkWell(
-            key: Key('key $index'),
-            onTap: () {
-              setName(name, index);
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Image.asset(imagePath),
-            ),
-          ),
+              key: Key('key ${widget.index}'),
+              onTap: () {
+                setState(() {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return _showDialog(
+                          context, widget.name, widget.imagePath);
+                    },
+                  );
+                });
+              },
+              child: SvgPicture.asset('${widget.imagePath}.svg')),
         ),
         Text(
-          name,
+          widget.name,
           style: TextStyle(
             fontSize: mediaQuery.orientation == Orientation.portrait
                 ? mediaQuery.size.height * 0.018
@@ -317,12 +358,12 @@ class StoreAccessoryButton extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            new Icon(
+            Icon(
               Icons.add_circle,
               color: Colors.yellow[700],
             ),
             Text(
-              coin.toString(),
+              widget.coin.toString(),
               style: TextStyle(
                 fontSize: mediaQuery.orientation == Orientation.portrait
                     ? mediaQuery.size.height * 0.018
@@ -333,6 +374,58 @@ class StoreAccessoryButton extends StatelessWidget {
           ],
         ),
       ]),
+    );
+  }
+
+  Widget _showDialog(BuildContext context, String text, String imagePath) {
+    return FractionallySizedBox(
+      heightFactor: MediaQuery.of(context).orientation == Orientation.portrait
+          ? 0.3
+          : 0.8,
+      widthFactor: MediaQuery.of(context).orientation == Orientation.portrait
+          ? 0.7
+          : 0.4,
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(20.0),
+          ),
+        ),
+        child: Center(
+          child: Container(
+              decoration:
+                  BoxDecoration(border: Border.all(color: Colors.black)),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'Do you want to purchase $text ?',
+                    style: TextStyle(
+                        fontSize: 20.0,
+                        color: Colors.green,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    child: SvgPicture.asset('${widget.imagePath}.svg'),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      RaisedButton(
+                        color: Colors.blue,
+                        elevation: 3.0,
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          widget.setName(widget.name, widget.index);
+                        },
+                        child: Text('BUY'),
+                      ),
+                    ],
+                  )
+                ],
+              )),
+        ),
+      ),
     );
   }
 }
