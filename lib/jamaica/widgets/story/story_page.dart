@@ -71,7 +71,9 @@ class StoryPageState extends State<StoryPage> {
         index: index++,
       ));
     }).toList();
-    widgets.add(QuizPage());
+    widgets.add(QuizPage(
+      gameData: story.gameDatas,
+    ));
     return new Scaffold(
       body: Column(
         children: <Widget>[

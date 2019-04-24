@@ -29,8 +29,9 @@ class QuizPage extends StatelessWidget {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => Material(
-                  child: Center(child: Game()),
+            builder: (context) => Game(
+                  quizSession:
+                      QuizSession((s) => s..gameData = gameData as ListBuilder),
                 )));
   }
 }
