@@ -74,8 +74,8 @@ class BentoBox extends StatefulWidget {
     i = 0;
     children.forEach((c) => childrenMap[c.key] = BentoChildDetail(
           child: c,
-          offset: Offset(((allCols - cols) / 4 + (i % cols)) * childWidth,
-              (qRows + (i++ ~/ cols)) * childHeight),
+          offset: Offset(((allCols - cols) / 2 + (i % cols)) * childWidth,
+              (qRows + (i++ ~/ cols)) * childHeight + 10),
         ));
   }
 
@@ -340,6 +340,7 @@ class _BentoBoxState extends State<BentoBox> {
             axis: widget.axis,
             onDragEnd: (d) => onDragEnd(d, childDetail),
             dragConfig: fixed ? DragConfig.fixed : widget.dragConfig,
+            gridFeedback:widget.grid,
             size: widget.grid == true
                 ? size + Offset(-6, 0)
                 : size + Offset(-16, -16),

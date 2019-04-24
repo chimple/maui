@@ -76,7 +76,7 @@ class _PlaceTheNumberState extends State<PlaceTheNumber> {
                             )),
                       ))
                   .toList(growable: false),
-              qRows: 2,
+              qRows: 4,
               qCols: 1,
               qChildren: answers
                   .map((a) => a.solved

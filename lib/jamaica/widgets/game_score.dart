@@ -18,7 +18,7 @@ class _GameScoreState extends State<GameScore> with TickerProviderStateMixin {
   int _starcount = 1;
   AnimationController controller;
   Animation<double> animationDance,
-      animtionCharacter,
+      animationCharacter,
       animationStar,
       animationReward;
   Duration duration;
@@ -31,7 +31,7 @@ class _GameScoreState extends State<GameScore> with TickerProviderStateMixin {
 
     controller = new AnimationController(
         duration: new Duration(seconds: 3), vsync: this);
-    animtionCharacter = new Tween(begin: 0.0, end: 1.0).animate(
+    animationCharacter = new Tween(begin: 0.0, end: 1.0).animate(
       new CurvedAnimation(
           parent: controller,
           curve: Interval(0.0, 0.3, curve: Curves.easeInOut)),
@@ -92,7 +92,7 @@ class _GameScoreState extends State<GameScore> with TickerProviderStateMixin {
                   Expanded(
                     flex: 5,
                     child: ScaleTransition(
-                      scale: animtionCharacter,
+                      scale: animationCharacter,
                       child: Container(
                         // color: Colors.teal,
                         child: FlareActor("assets/character/chimp_ik.flr",
