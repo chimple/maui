@@ -41,12 +41,18 @@ class _PlaceTheNumberState extends State<PlaceTheNumber> {
     int j = 1;
     choice = new List.generate(100, (_) => j++);
     int i = 0;
+    answers.insert(
+        0,
+        _ChoiceDetail(
+          number: value,
+          index: i++,
+        ));
+
     print("object $choice");
   }
 
   @override
   Widget build(BuildContext context) {
-    print(answers);
     return Column(
       children: <Widget>[
         Flexible(
@@ -76,8 +82,8 @@ class _PlaceTheNumberState extends State<PlaceTheNumber> {
                             )),
                       ))
                   .toList(growable: false),
-              qRows: 4,
-              qCols: 1,
+              qRows: 2,
+              qCols: 2,
               qChildren: answers
                   .map((a) => a.solved
                       ? Container(
