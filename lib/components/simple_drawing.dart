@@ -73,24 +73,31 @@ class _PainterState extends State<Painter> {
       width: double.infinity,
       height: double.infinity,
       key: Key("painting"),
-      child: RawGestureDetector(
-        behavior: HitTestBehavior.opaque,
-        gestures: <Type, GestureRecognizerFactory>{
-          ImmediateMultiDragGestureRecognizer:
-              GestureRecognizerFactoryWithHandlers<
-                  ImmediateMultiDragGestureRecognizer>(
-            () => ImmediateMultiDragGestureRecognizer(),
-            (ImmediateMultiDragGestureRecognizer instance) {
-              instance..onStart = _handleOnStart;
+      child: LayoutBuilder(builder: (context, box) {
+        return ClipRect(
+          child: RawGestureDetector(
+            behavior: HitTestBehavior.opaque,
+            gestures: <Type, GestureRecognizerFactory>{
+              ImmediateMultiDragGestureRecognizer:
+                  GestureRecognizerFactoryWithHandlers<
+                      ImmediateMultiDragGestureRecognizer>(
+                () => ImmediateMultiDragGestureRecognizer(),
+                (ImmediateMultiDragGestureRecognizer instance) {
+                  instance..onStart = _handleOnStart;
+                },
+              ),
             },
+            child: Container(
+              child: CustomPaint(
+                willChange: true,
+                painter: new _PainterPainter(
+                    widget.paintController._pathHistory,
+                    repaint: widget.paintController),
+              ),
+            ),
           ),
-        },
-        child: CustomPaint(
-          willChange: true,
-          painter: new _PainterPainter(widget.paintController._pathHistory,
-              repaint: widget.paintController),
-        ),
-      ),
+        );
+      }),
     );
   }
 }
