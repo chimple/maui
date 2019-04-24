@@ -17,7 +17,10 @@ class _GameScoreState extends State<GameScore> with TickerProviderStateMixin {
   String _animationName = "waving";
   int _starcount = 1;
   AnimationController controller;
-  Animation<double> animationDance;
+  Animation<double> animationDance,
+      animationCharacter,
+      animationStar,
+      animationReward;
   Duration duration;
   @override
   void initState() {
@@ -25,7 +28,31 @@ class _GameScoreState extends State<GameScore> with TickerProviderStateMixin {
     super.initState();
     print("animation");
     print("scores ${widget.scores}");
-    if (widget.scores != null && widget.scores <= 10) {
+
+    controller = new AnimationController(
+        duration: new Duration(seconds: 3), vsync: this);
+    animationCharacter = new Tween(begin: 0.0, end: 1.0).animate(
+      new CurvedAnimation(
+          parent: controller,
+          curve: Interval(0.0, 0.3, curve: Curves.easeInOut)),
+    );
+    animationStar = new Tween(begin: 0.0, end: 1.0).animate(
+      new CurvedAnimation(
+          parent: controller,
+          curve: Interval(0.4, 0.6, curve: Curves.easeInOut)),
+    );
+    animationReward = new Tween(begin: 0.0, end: 1.0).animate(
+      new CurvedAnimation(
+          parent: controller,
+          curve: Interval(0.6, 0.7, curve: Curves.easeInOut)),
+    );
+    controller.forward();
+    // _myZoom();
+    print("this is new ${controller.value}");
+
+    if (controller.value >= 1.0 &&
+        widget.scores != null &&
+        widget.scores <= 10) {
       setState(() {
         _animationName = "failure";
         _starcount = 3;
@@ -36,14 +63,6 @@ class _GameScoreState extends State<GameScore> with TickerProviderStateMixin {
         _starcount = 5;
       });
     }
-    controller = new AnimationController(
-        duration: new Duration(seconds: 1), vsync: this);
-    animationDance = new Tween(begin: 0.0, end: 1.0).animate(
-      new CurvedAnimation(parent: controller, curve: Curves.easeInOut),
-    );
-    controller.forward();
-    // _myZoom();
-    print("this is new ${controller.value}");
   }
 
   @override
@@ -60,89 +79,116 @@ class _GameScoreState extends State<GameScore> with TickerProviderStateMixin {
     final TextStyle textStyle = Theme.of(context).textTheme.display1;
 
     return Scaffold(
-      backgroundColor: Colors.white24,
+      backgroundColor: Colors.white12,
       body: SafeArea(
         child: Column(
           children: <Widget>[
             Expanded(
+              flex: 8,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Expanded(
-                    flex: 2,
-                    child: Container(
-                      // color: Colors.teal,
-                      child: FlareActor("assets/character/chimp_ik.flr",
-                          alignment: Alignment.center,
-                          fit: BoxFit.scaleDown,
-                          animation: _animationName),
+                    flex: 5,
+                    child: ScaleTransition(
+                      scale: animationCharacter,
+                      child: Container(
+                        // color: Colors.teal,
+                        child: FlareActor("assets/character/chimp_ik.flr",
+                            alignment: Alignment.bottomCenter,
+                            fit: BoxFit.contain,
+                            animation: _animationName),
+                      ),
                     ),
                   ),
                   Expanded(
-                    flex: 1,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                          child: widget.scores == null
-                              ? Text(
-                                  "10",
-                                  style: new TextStyle(
-                                      fontSize: 60.0,
-                                      color: Colors.orangeAccent),
-                                )
-                              : Text(
-                                  "${widget.scores}",
-                                  style: new TextStyle(
-                                      fontSize: 60.0,
-                                      color: Colors.orangeAccent),
+                    flex: 4,
+                    child: Container(
+                      // color: Colors.green,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          ScaleTransition(
+                            scale: animationStar,
+                            child: Container(
+                              child: widget.scores == null
+                                  ? Text(
+                                      "10",
+                                      style: new TextStyle(
+                                          fontSize: 60.0,
+                                          color: Colors.orangeAccent),
+                                    )
+                                  : Text(
+                                      "${widget.scores}",
+                                      style: new TextStyle(
+                                          fontSize: 60.0,
+                                          color: Colors.orangeAccent),
+                                    ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(2.0),
+                            child: Container(
+                              width: media.size.width / 2,
+                              child: ScaleTransition(
+                                scale: animationStar,
+                                child: Stars(
+                                  total: 5,
+                                  show: _starcount,
                                 ),
-                        ),
-                        Container(
-                          width: media.size.width / 2,
-                          child: ScaleTransition(
-                            scale: animationDance,
-                            child: Stars(
-                              total: 5,
-                              show: _starcount,
+                              ),
                             ),
                           ),
-                        ),
-                        RawMaterialButton(
-                          padding: EdgeInsets.all(8.0),
-                          shape: new CircleBorder(),
-                          elevation: 2.0,
-                          onPressed: () {},
-                          fillColor: Colors.white,
-                          child: Center(
-                            child: new Icon(
-                              Icons.redeem,
-                              size: 70.0,
-                              color: Colors.orangeAccent,
+                          ScaleTransition(
+                            scale: animationReward,
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 20.0),
+                              child: RawMaterialButton(
+                                padding: EdgeInsets.all(8.0),
+                                shape: new CircleBorder(),
+                                elevation: 2.0,
+                                onPressed: () {},
+                                fillColor: Colors.white,
+                                child: Center(
+                                  child: new Icon(
+                                    Icons.redeem,
+                                    size: 70.0,
+                                    color: Colors.orangeAccent,
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.all(2.0),
-                          child: Text(
-                            "REWARD",
-                            style: new TextStyle(
-                                fontSize: 15.0, color: Colors.white),
+                          ScaleTransition(
+                            scale: animationReward,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                // padding: EdgeInsets.all(2.0),
+                                child: Text(
+                                  "REWARD",
+                                  style: new TextStyle(
+                                      fontSize: 15.0, color: Colors.white),
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                        Text(
-                          "OPENED",
-                          style: new TextStyle(
-                              fontSize: 15.0, color: Colors.white),
-                        )
-                      ],
+                          ScaleTransition(
+                            scale: animationReward,
+                            child: Text(
+                              "OPENED",
+                              style: new TextStyle(
+                                  fontSize: 15.0, color: Colors.white),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ],
               ),
-              flex: 8,
             ),
             Expanded(
               child: Center(
@@ -153,6 +199,7 @@ class _GameScoreState extends State<GameScore> with TickerProviderStateMixin {
                         left: Radius.circular(30.0),
                         right: Radius.circular(30.0))),
                 child: OutlineButton(
+                    // padding: EdgeInsets.all(2.0),
                     highlightedBorderColor: Colors.red,
                     textColor: Colors.white,
                     borderSide: BorderSide(
@@ -166,9 +213,12 @@ class _GameScoreState extends State<GameScore> with TickerProviderStateMixin {
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: Text(
-                      "Continue",
-                      style: textStyle,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                      child: Text(
+                        "Continue",
+                        style: textStyle,
+                      ),
                     )),
               )),
               flex: 1,

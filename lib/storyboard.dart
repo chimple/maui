@@ -20,6 +20,7 @@ import 'package:maui/storyboards/games/memory_game_story.dart';
 import 'package:maui/storyboards/games/number_balance_game_story.dart';
 import 'package:maui/storyboards/games/order_by_size_game_story.dart';
 import 'package:maui/storyboards/games/order_it_game_story.dart';
+import 'package:maui/storyboards/games/place_number_game_story.dart';
 import 'package:maui/storyboards/games/recognize_number_game_story.dart';
 import 'package:maui/storyboards/games/reflex_game_story.dart';
 import 'package:maui/storyboards/games/rhyme_words_game_story.dart';
@@ -54,6 +55,7 @@ import 'package:storyboard/storyboard.dart';
 
 void main() {
   runApp(StoryboardApp([
+    PlaceTheNumberStory(),
     GameScoreStory(),
     CompareNumberGameStroy(),
     RulerNumbersGameStory(),
