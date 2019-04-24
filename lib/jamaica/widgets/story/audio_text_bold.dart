@@ -2,14 +2,21 @@ import 'dart:async';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:built_collection/built_collection.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:maui/jamaica/widgets/story/activity/drag_text.dart';
+import 'package:maui/jamaica/widgets/story/custom_editable.dart';
+import 'package:maui/jamaica/widgets/story/custom_editable_text.dart';
+import 'package:maui/jamaica/widgets/story/custom_text_selection.dart';
 // import 'package:maui/jamaica/widgets/story/activity/jumble_words.dart';
 import 'package:maui/jamaica/widgets/story/play_pause_button.dart';
 // import 'package:maui/jamaica/widgets/story/router.dart';
 import 'package:maui/jamaica/widgets/story/show_dialog_mode.dart';
 import 'package:maui/jamaica/widgets/story/activity/text_highlighter.dart';
 
+enum TextToSpeachType { fromAudio, fromTts, hear2Read }
 final TextStyle textStyle = TextStyle(
   color: Colors.black,
   fontSize: 23,
@@ -70,39 +77,51 @@ class _TextAudioState extends State<AudioTextBold> {
   StoryMode storyMode = StoryMode.textMode;
   List<StoryMode> listStoryMode = [];
   ScrollController _scrollController = new ScrollController();
+  FlutterTts flutterTts;
+  TextToSpeachType textToSpeachType;
+  String text;
   @override
   void initState() {
     super.initState();
+    flutterTts = FlutterTts();
     print('initState');
+    text = widget.fullText.replaceAll(RegExp(r'[\n]'), ' ');
   }
 
   @override
   void dispose() {
     audioCache?.clearCache();
     audioPlayer?.stop();
+    flutterTts.stop();
     super.dispose();
   }
 
   Future pause() async {
     print('pause');
-    await audioPlayer.pause().then((s) {
-      setState(() => isPause = true);
-      _duration = 0;
-      isDurationZero = false;
-    });
-    widget.pageSliding(widget.index);
+    if (textToSpeachType == TextToSpeachType.fromAudio) {
+      await audioPlayer.pause().then((s) {
+        setState(() => isPause = true);
+        _duration = 0;
+        isDurationZero = false;
+      });
+      widget.pageSliding(widget.index);
+    } else if (textToSpeachType == TextToSpeachType.hear2Read) {
+    } else {}
   }
 
   Future resume() async {
     // reset();
-    await audioPlayer.release();
-    play(_audioFiles[incr]).then((s) {
-      setState(() {
-        isPause = false;
+    if (textToSpeachType == TextToSpeachType.fromAudio) {
+      await audioPlayer.release();
+      play(_audioFiles[incr]).then((s) {
+        setState(() {
+          isPause = false;
+        });
       });
-    });
-    print('audio status ${audioPlayer.state}');
-    widget.pageSliding(widget.index);
+      print('audio status ${audioPlayer.state}');
+      widget.pageSliding(widget.index);
+    } else if (textToSpeachType == TextToSpeachType.hear2Read) {
+    } else {}
   }
 
   void reset() {
@@ -134,6 +153,10 @@ class _TextAudioState extends State<AudioTextBold> {
         playNext();
       }
     } catch (e) {}
+  }
+
+  speak(String text) {
+    flutterTts.speak(text);
   }
 
   playNext() async {
@@ -208,51 +231,77 @@ class _TextAudioState extends State<AudioTextBold> {
   }
 
   Future loadAudio(String text, String audio) async {
-    String string = '';
-    words = text.split(" ");
-    listOfLines?.clear();
-    _audioFiles?.clear();
-    for (int i = 0; i < words.length; i++) {
-      string = string + words[i] + ' ';
-      if (words[i].contains(RegExp('[!.]'))) {
-        listOfLines.add(string);
-        string = '';
+    if (audio != null) {
+      String string = '';
+      words = text.split(" ");
+      listOfLines?.clear();
+      _audioFiles?.clear();
+      for (int i = 0; i < words.length; i++) {
+        string = string + words[i] + ' ';
+        if (words[i].contains(RegExp('[!.]'))) {
+          listOfLines.add(string);
+          string = '';
+        }
       }
-    }
 
-    // for (int i = 0; i < listOfLines.length; i++)
-    //   listOfLines[i] = listOfLines[i] + ".";
-    String str;
-    _count = '.'.allMatches(text).length + '!'.allMatches(text).length;
-    // bool b = words[words.length - 1].contains(_regex1);
-    // print(_count);
-    // if (b) _count = _count + 1;
-    for (int i = 1; i <= _count; i++) {
-      str = audio + i.toString();
-      _audioFiles.add('$str.m4a');
-    }
+      // for (int i = 0; i < listOfLines.length; i++)
+      //   listOfLines[i] = listOfLines[i] + ".";
+      String str;
+      _count = '.'.allMatches(text).length + '!'.allMatches(text).length;
+      // bool b = words[words.length - 1].contains(_regex1);
+      // print(_count);
+      // if (b) _count = _count + 1;
+      for (int i = 1; i <= _count; i++) {
+        str = audio + i.toString();
+        _audioFiles.add('$str.m4a');
+      }
 
-    try {
-      await audioCache.loadAll(_audioFiles).then((s) {
-        lastAudioFile = _audioFiles[0];
-        play(_audioFiles[0]);
+      try {
+        await audioCache.loadAll(_audioFiles).then((s) {
+          lastAudioFile = _audioFiles[0];
+          play(_audioFiles[0]);
+          setState(() {
+            isPlaying = true;
+            isPause = false;
+            isAudioFileAvailableOrNot = false;
+            textToSpeachType = TextToSpeachType.fromAudio;
+          });
+          widget.pageSliding(widget.index);
+          if (storyMode == StoryMode.audioBoldTextMode) {}
+        }, onError: (e) {
+          setState(() {
+            isPlaying = false;
+            isPause = true;
+            isAudioFileAvailableOrNot = true;
+          });
+          showSnackbar(e.toString());
+        });
+      } catch (e) {
+        print(e);
+      }
+    } else {
+      widget.pageSliding(widget.index);
+      listOfLines.addAll(text.split(RegExp('[!.]')));
+      print(listOfLines);
+      speak(listOfLines.removeAt(0));
+      flutterTts.startHandler = () {
         setState(() {
           isPlaying = true;
           isPause = false;
-          isAudioFileAvailableOrNot = false;
+          textToSpeachType = TextToSpeachType.hear2Read;
         });
-        widget.pageSliding(widget.index);
-        if (storyMode == StoryMode.audioBoldTextMode) {}
-      }, onError: (e) {
-        setState(() {
-          isPlaying = false;
-          isPause = true;
-          isAudioFileAvailableOrNot = true;
-        });
-        showSnackbar(e.toString());
-      });
-    } catch (e) {
-      print(e);
+      };
+      flutterTts.completionHandler = () {
+        if (listOfLines.isEmpty) {
+          print('true');
+          setState(() {
+            isPlaying = false;
+            isPause = true;
+            widget.pageSliding(widget.index);
+          });
+        } else
+          speak(listOfLines?.removeAt(0));
+      };
     }
   }
 
@@ -285,181 +334,176 @@ class _TextAudioState extends State<AudioTextBold> {
     widget.onComplete();
   }
 
+  String _startSubString = '', _middleSubString = '', _endSubString = '';
   @override
   Widget build(BuildContext context) {
-    return MediaQuery.of(context).orientation == Orientation.portrait
-        ? Column(
-            children: <Widget>[
-              Expanded(
-                  flex: 4,
-                  child: Container(
-                    height: double.infinity,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        // border: Border.all(width: 2.0, color: Colors.white),
-                        borderRadius: BorderRadius.circular(20.0),
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: AssetImage('${widget.imagePath}'),
-                        )),
-                  )),
-              Expanded(
-                flex: 1,
-                child: PlayPauseButton(
-                  audioPlayer: audioPlayer,
-                  isPause: isPause,
-                  isPlaying: isPlaying,
-                  loadAudio: () => loadAudio(widget.fullText, widget.audioFile),
-                  pause: () => pause(),
-                  resume: () => resume(),
-                ),
-              ),
-              Expanded(
-                  flex: 7,
-                  child: Padding(
-                      padding: EdgeInsets.only(left: 20, right: 20),
-                      child: _buildText()))
-            ],
+    if (text != null && widget.imagePath != null)
+      return Column(
+        children: <Widget>[
+          Expanded(flex: 5, child: _buildImage()),
+          Expanded(
+            flex: 1,
+            child: PlayPauseButton(
+              audioPlayer: audioPlayer,
+              isPause: isPause,
+              isPlaying: isPlaying,
+              loadAudio: () => loadAudio(text, widget.audioFile),
+              pause: () => pause(),
+              resume: () => resume(),
+            ),
+          ),
+          Expanded(flex: 4, child: _buildText())
+        ],
+      );
+    else if (text == '') {
+      return Column(
+        children: <Widget>[
+          Expanded(child: _buildImage()),
+        ],
+      );
+    } else
+      return Column(
+        children: <Widget>[
+          Expanded(
+            flex: 9,
+            child: _buildText(),
+          ),
+          Expanded(
+            flex: 1,
+            child: PlayPauseButton(
+              audioPlayer: audioPlayer,
+              isPause: isPause,
+              isPlaying: isPlaying,
+              loadAudio: () => loadAudio(text, widget.audioFile),
+              pause: () => pause(),
+              resume: () => resume(),
+            ),
           )
-        : Stack(
-            alignment: AlignmentDirectional.topEnd,
-            children: <Widget>[
-              Column(
-                children: <Widget>[
-                  Expanded(
-                    flex: 6,
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(flex: 6, child: _buildImage()),
-                        Expanded(
-                          flex: 4,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 8, right: 8),
-                            child: SingleChildScrollView(
-                                controller: ScrollController(),
-                                child: _buildText()),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: (storyMode != StoryMode.textHighlighterMode)
-                        ? PlayPauseButton(
-                            audioPlayer: audioPlayer,
-                            isPause: isPause,
-                            isPlaying: isPlaying,
-                            loadAudio: () =>
-                                loadAudio(widget.fullText, widget.audioFile),
-                            pause: () => pause(),
-                            resume: () => resume(),
-                          )
-                        : Container(),
-                  ),
-                  Expanded(flex: 3, child: Container())
-                ],
-              ),
-              // CircleAvatar(
-              //   backgroundColor: Colors.cyanAccent,
-              //   maxRadius: 25,
-              //   child: IconButton(
-              //       icon: Icon(
-              //         (storyMode == StoryMode.textHighlighterMode ||
-              //                 storyMode == StoryMode.dragTextMode)
-              //             ? Icons.close
-              //             : Icons.navigate_next,
-              //         color: Colors.blue,
-              //         size: 25,
-              //       ),
-              //       onPressed: () {
-              //         if (storyMode == StoryMode.showDialogOnLongPressMode) {
-              //           setState(() => storyMode = StoryMode.textHighlighterMode);
-              //         } else if (storyMode == StoryMode.textHighlighterMode ||
-              //             storyMode == StoryMode.dragTextMode) {
-              //           setState(
-              //               () => storyMode = StoryMode.showDialogOnLongPressMode);
-              //         }
-              //       }),
-              // ),
-            ],
-          );
-  }
-
-  Widget _buildText() {
-    print('storymode: ${storyMode}');
-    if (storyMode == StoryMode.textMode)
-      return TextMode(
-        text: widget.fullText,
+        ],
       );
-    else if (storyMode == StoryMode.audioBoldTextMode) {
-      return RichText(
-        text: new TextSpan(
-          children: <TextSpan>[
-            new TextSpan(text: startLine, style: textStyle),
-            new TextSpan(text: start, style: textStyle),
-            new TextSpan(text: middle, style: highlightTextStyle),
-            new TextSpan(text: end, style: textStyle),
-            new TextSpan(text: endLine, style: textStyle),
-          ],
-        ),
-      );
-    } else if (storyMode == StoryMode.textHighlighterMode)
-      return TextHighlighter(
-          text: widget.fullText,
-          onComplete: (l) {
-            new Future.delayed(Duration(seconds: 1), () {
-              setState(() {
-                storyMode = StoryMode.dragTextMode;
-              });
-            });
-
-            print(l);
-          });
-    else if (storyMode == StoryMode.showDialogOnLongPressMode)
-      return ShowDialogMode(listofWords: widget.fullText.split(' '));
-    else if (storyMode == StoryMode.dragTextMode)
-      return DragText(data: widget.imageItemsAnswer);
-    else {
-      return Container();
-    }
   }
 
   Widget _buildImage() {
-    return Stack(
-      alignment: AlignmentDirectional.center,
-      children: <Widget>[
-        SizedBox(
-            width: double.infinity,
-            height: double.infinity,
-            child: Container(
-              margin: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                  border: Border.all(width: 2.0, color: Colors.orange),
-                  image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage('${widget.imagePath}'))),
-            )),
-        storyMode == StoryMode.textHighlighterMode
-            ? Text('Where georgie Porgie went in the  afternoon',
-                style: TextStyle(
-                  fontSize: 30,
-                  color: Colors.white,
-                ))
-            : Container()
-      ],
+    return Container(
+      height: double.infinity,
+      width: double.infinity,
+      decoration: BoxDecoration(
+          // border: Border.all(width: 2.0, color: Colors.white),
+          borderRadius: BorderRadius.circular(20.0),
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: AssetImage('${widget.imagePath}'),
+          )),
     );
   }
-}
 
-class TextMode extends StatelessWidget {
-  final String text;
-  TextMode({this.text});
-  @override
-  Widget build(BuildContext context) {
-    return RichText(
-      text: TextSpan(text: text, style: textStyle),
+  int colorIndex = -1;
+  Widget _text(String s, int index) {
+    return InkWell(
+      onLongPress: () {
+        setState(() {
+          colorIndex = index;
+        });
+        showDialog(
+          context: context,
+          builder: (context) {
+            return FractionallySizedBox(
+                heightFactor:
+                    MediaQuery.of(context).orientation == Orientation.portrait
+                        ? 0.5
+                        : 0.8,
+                widthFactor:
+                    MediaQuery.of(context).orientation == Orientation.portrait
+                        ? 0.8
+                        : 0.4,
+                child: ShowDialogModeState()
+                    .textDescriptionDialog(context, s, 'textDesciption'));
+          },
+        );
+      },
+      child: Text(s + ' ',
+          style: TextStyle(
+              fontSize: 23,
+              color: Colors.black54,
+              background: Paint()
+                ..color =
+                    colorIndex == index ? Colors.red : Colors.transparent)),
     );
+  }
+
+  Widget _buildText() {
+    int index = 0;
+    return Wrap(
+      children: text.split(" ").map((s) {
+        return _text(s, index++);
+      }).toList(),
+    );
+    // return Stack(
+    //   children: <Widget>[
+    //     RichText(
+    //       text: TextSpan(
+    //         children: <TextSpan>[
+    //           TextSpan(
+    //               text: _startSubString,
+    //               style: TextStyle(fontSize: 23, color: Colors.blue)),
+    //           TextSpan(
+    //               text: _middleSubString,
+    //               style: TextStyle(
+    //                   fontSize: 23,
+    //                   background: Paint()..color = Colors.red,
+    //                   color: Colors.blue)),
+    //           TextSpan(
+    //               text: _endSubString,
+    //               style: TextStyle(
+    //                 color: Colors.blue,
+    //                 fontSize: 23,
+    //               ))
+    //         ],
+    //       ),
+    //     ),
+    //     CustomEditableText(
+    //         controller: CustomTextEditingController(text: text),
+    //         focusNode: FocusNode(),
+    //         cursorColor: Colors.transparent,
+    //         style: TextStyle(color: Colors.black54, fontSize: 23),
+    //         backgroundCursorColor: Colors.transparent,
+    //         maxLines: null,
+    //         dragStartBehavior: DragStartBehavior.start,
+    //         startOffset: (s) => {},
+    //         updateOffset: (o) => {},
+    //         draEnd: (t) {},
+    //         onLongPress: (s, textSelection) {
+    // if (s != ' ' && s != '' && s != '\n') {
+    //   print('show');
+    //   setState(() {
+    //     _middleSubString = text.substring(
+    //         textSelection.baseOffset, textSelection.extentOffset);
+    //     _startSubString = text.substring(0, textSelection.baseOffset);
+    //     _endSubString =
+    //         text.substring(textSelection.extentOffset, text.length);
+    //     print('star $_startSubString,');
+    //     print('middle $_middleSubString');
+    //     print('end $_endSubString');
+    //   });
+    // showDialog(
+    //   context: context,
+    //   builder: (context) {
+    //     return FractionallySizedBox(
+    //         heightFactor: MediaQuery.of(context).orientation ==
+    //                 Orientation.portrait
+    //             ? 0.5
+    //             : 0.8,
+    //         widthFactor: MediaQuery.of(context).orientation ==
+    //                 Orientation.portrait
+    //             ? 0.8
+    //             : 0.4,
+    //         child: ShowDialogModeState().textDescriptionDialog(
+    //             context, s, 'textDesciption'));
+    //   },
+    // );
+    //           }
+    //         }),
+    //   ],
+    // );
   }
 }

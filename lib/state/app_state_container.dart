@@ -681,7 +681,7 @@ class AppStateContainerState extends State<AppStateContainer> {
     prefs.setString('userId', user.id);
     if (user != null) {
       try {
-        p2p.loggedInUser(user.id, deviceId);
+        p2p.loggedInUser(user.id, deviceId, user.userType == UserType.teacher);
       } on PlatformException {
         print('Flores: Failed loggedInUser');
       } catch (e, s) {
