@@ -1,4 +1,5 @@
 import 'package:flare_flutter/flare_actor.dart';
+import 'package:maui/jamaica/widgets/game_timer.dart';
 import 'package:maui/models/quiz_session.dart';
 // import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,23 @@ class _GameState extends State<Game> {
   int _currentGame = 0;
   int _score = 0;
   int _stars = 0;
+  String timeTaken;
+  bool timeEnd = false;
+
   Navigator _navigator;
+
+  timeCallback(t) {
+    setState(() {
+      timeTaken = t;
+    });
+  }
+
+  timeEndCallback(t) {
+    setState(() {
+      timeEnd = t;
+      print("time end $t");
+    });
+  }
 
   @override
   void initState() {
@@ -48,7 +65,7 @@ class _GameState extends State<Game> {
     MediaQueryData media = MediaQuery.of(context);
     Size size = media.size;
 
-    double upPadding =size.height * 0.05;
+    double upPadding = size.height * 0.05;
     return Scaffold(
       backgroundColor: Colors.purple,
       body: SafeArea(
@@ -70,7 +87,6 @@ class _GameState extends State<Game> {
                   flex: 37,
                   child: _navigator,
                 ),
-               
                 Row(
                   children: <Widget>[
                     Container(
@@ -96,7 +112,7 @@ class _GameState extends State<Game> {
                         ))
                   ],
                 ),
-                 Expanded(
+                Expanded(
                   flex: 1,
                   child: Container(),
                 ),
@@ -105,6 +121,10 @@ class _GameState extends State<Game> {
                   height: 0.0,
                 ),
                 Expanded(flex: 3, child: buildUI(size)),
+                GameTimer(
+                    time: 30,
+                    timeCallback: timeCallback,
+                    timeEndCallback: timeEndCallback),
               ],
             ),
           ],
@@ -197,7 +217,7 @@ class _GameState extends State<Game> {
               _score += score;
               // updateScore(_score);
               if (score > 0) _stars++;
-//              _currentGame++;
+              //  _currentGame++;
             });
 
             Navigator.push(

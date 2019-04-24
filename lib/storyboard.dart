@@ -3,6 +3,7 @@ import 'package:maui/jamaica/screens/story_screen.dart';
 import 'package:maui/storyboards/collected_item_story.dart';
 import 'package:maui/storyboards/game_score_story.dart';
 import 'package:maui/storyboards/games/bingo_game_story.dart';
+import 'package:maui/storyboards/games/clock_game_story.dart';
 import 'package:maui/storyboards/games/compare_number_game_story.dart';
 import 'package:maui/storyboards/games/counting_game_story.dart';
 import 'package:maui/storyboards/games/crossword_game_story.dart';
@@ -30,6 +31,7 @@ import 'package:maui/storyboards/games/sequence_the_number_game_story.dart';
 import 'package:maui/storyboards/games/basic_counting_game_story.dart';
 import 'package:maui/storyboards/games/spin_wheel_game_story.dart';
 import 'package:maui/storyboards/games/tap_wrong_game_story.dart';
+import 'package:maui/storyboards/games/tracing_alphabets_story.dart';
 import 'package:maui/storyboards/games/true_false_game_story.dart';
 import 'package:maui/storyboards/monster_game_story.dart';
 import 'package:maui/storyboards/map_reward_screen_story.dart';
@@ -66,6 +68,7 @@ void main() {
     BoxMatchingGameStory(),
     ChatBotStory(),
     ChatBotScreenStory(),
+    ClockGameStory(),
     CollectedItemStory(),
     CountingGameStory(),
     CrosswordGameStory(),
@@ -100,6 +103,7 @@ void main() {
     StoryBoard(),
     TapWrongGameStory(),
     ThemeMapStory(),
+    TracingAlphabetStory(),
     TrueFalseGameStory(),
     MapRewardsScreenStory(),
     UserProgressScreenStory(),
