@@ -31,58 +31,56 @@ class _TracingAlphabetGameState extends State<TracingAlphabetGame> {
   Widget build(BuildContext context) {
     MediaQueryData media = MediaQuery.of(context);
     Orientation orientation = MediaQuery.of(context).orientation;
-    return Column(
-      children: <Widget>[
-        Expanded(
-          child: Stack(
-            children: <Widget>[
-              Center(
-                child: AspectRatio(
-                  aspectRatio: 1.0,
-                  child: GridView.count(
-                    physics: new NeverScrollableScrollPhysics(),
-                    key: new Key('tracing_alphabet'),
-                    primary: true,
-                    crossAxisCount: sqrt(widget.alphabets.length).toInt(),
-                    mainAxisSpacing: 5.0,
-                    crossAxisSpacing: 5.0,
-                    // childAspectRatio: media.size.width / (media.size.height),
-                    children: widget.alphabets
-                        .map((t) => LayoutBuilder(builder:
-                                (BuildContext context,
-                                    BoxConstraints constraints) {
-                              return Container(
-                                // color: Colors.grey,
-                                child: Center(
-                                  child: Text(
-                                    t,
-                                    style: TextStyle(
-                                      fontSize:
-                                          orientation == Orientation.portrait
-                                              ? constraints.maxHeight * .7
-                                              : constraints.maxWidth * .7,
-                                      foreground: Paint()
-                                        ..strokeWidth = 2.0
-                                        ..color = Colors.black
-                                        ..style = PaintingStyle.stroke,
-                                    ),
-                                  ),
-                                ),
-                              );
-                            }))
-                        .toList(growable: false),
-                  ),
-                ),
-              ),
-              Center(
-                child:AspectRatio(
-                  aspectRatio: 1.0, 
-                child: Painter(_controller)),
-              ),
-            ],
-          ),
+    final children = <Widget>[];
+
+    children.add(Center(
+      child: AspectRatio(
+        aspectRatio: 1.0,
+        child: GridView.count(
+          physics: new NeverScrollableScrollPhysics(),
+          key: new Key('tracing_alphabet'),
+          primary: true,
+          crossAxisCount: sqrt(widget.alphabets.length).toInt(),
+          mainAxisSpacing: 5.0,
+          crossAxisSpacing: 5.0,
+          // childAspectRatio: media.size.width / (media.size.height),
+          children: widget.alphabets
+              .map((t) => LayoutBuilder(builder:
+                      (BuildContext context, BoxConstraints constraints) {
+                    return Container(
+                      // color: Colors.grey,
+                      child: Center(
+                        child: Text(
+                          t,
+                          style: TextStyle(
+                            fontSize: orientation == Orientation.portrait
+                                ? constraints.maxHeight * .7
+                                : constraints.maxWidth * .7,
+                            foreground: Paint()
+                              ..strokeWidth = 2.0
+                              ..color = Colors.black
+                              ..style = PaintingStyle.stroke,
+                          ),
+                        ),
+                      ),
+                    );
+                  }))
+              .toList(growable: false),
         ),
-      ],
+      ),
+    ));
+    children.add(Center(
+      child: AspectRatio(aspectRatio: 1.0, child: Painter(_controller)),
+    ));
+    return Center(
+      child: FittedBox(
+        fit: BoxFit.contain,
+        child: SizedBox(
+          height: 512.0,
+          width: 512.0,
+          child: Stack(children: children),
+        ),
+      ),
     );
   }
 }

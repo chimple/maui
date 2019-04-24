@@ -12,11 +12,6 @@ class TracingAlphabetStory extends FullScreenStory {
             'B',
             'C',
             'D',
-            'E',
-            'F',
-            'G',
-            'H',
-            'I',
           ]),
         )
       ];
