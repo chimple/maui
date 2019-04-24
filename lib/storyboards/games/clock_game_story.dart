@@ -10,7 +10,6 @@ class ClockGameStory extends FullScreenStory {
         Scaffold(
           body: SafeArea(
             child: ClockGame(
-              // question: 'Pin',
               hour: 10,
               minute: 50,
               choices: BuiltList<int>([
@@ -19,11 +18,6 @@ class ClockGameStory extends FullScreenStory {
                 50,
                 15
               ]),
-              // answers: BuiltList<int>([
-              //   10,
-              //   50,
-              // ]),
-              // right_or_wrong: false,
             ),
           ),
         ),
