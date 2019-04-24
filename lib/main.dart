@@ -16,8 +16,10 @@ import 'package:maui/repos/user_repo.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
+import 'package:permission/permission.dart';
 
 void main() async {
+  await Permission.requestPermissions([PermissionName.Storage]);
   SharedPreferences prefs = await SharedPreferences.getInstance();
   if (prefs.getString('deviceId') == null) {
     prefs.setString('deviceId', Uuid().v4());

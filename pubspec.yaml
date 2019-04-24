@@ -12,12 +12,11 @@ dependencies:
   native_device_orientation: ^0.0.3
   cupertino_icons: ^0.1.2
   sqflite: ^0.12.2+1
-  uuid: ^1.0.3
+  uuid: ^2.0.1
   path_provider: ^0.5.0
   tuple: ^1.0.2
   json_annotation: ^2.0.0
-  audioplayer: ^0.5.2
-  audioplayers: ^0.8.2
+  audioplayers: ^0.11.0
   percent_indicator: ^1.0.10
   tinycolor: ^1.0.2
   flutter_tts: ^0.2.4
@@ -34,14 +33,17 @@ dependencies:
       https://github.com/chimple/Flutter-Badge.git
   intl: ^0.15.7
   intl_translation: ^0.17.2
-  simple_permissions: ^0.1.9
   flutter_svg: ^0.10.3
+  permission: ^0.1.1
   image: ^2.0.4
   flutter_redurx: ^0.4.3
   built_value: ^6.3.0
   built_collection: ^4.1.0
-  flare_flutter: ^1.2.3
-  flare_dart: ^1.2.3
+  flare_flutter:
+    git:
+      url: https://github.com/chimple/Flare-Flutter.git
+      path: flare_flutter
+  flare_dart: ^1.4.0
   bubble_tab_indicator: ^0.1.4
   observable_state: ^0.3.0
   equatable: ^0.2.3
