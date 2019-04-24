@@ -75,7 +75,7 @@ class BentoBox extends StatefulWidget {
     children.forEach((c) => childrenMap[c.key] = BentoChildDetail(
           child: c,
           offset: Offset(((allCols - cols) / 2 + (i % cols)) * childWidth,
-              (qRows + (i++ ~/ cols)) * childHeight + 10),
+              (qRows + (i++ ~/ cols)) * childHeight),
         ));
   }
 
