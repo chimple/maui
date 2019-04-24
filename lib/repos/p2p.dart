@@ -33,8 +33,9 @@ Future<List<dynamic>> getConversations(
 //  return List();
 }
 
-Future<bool> loggedInUser(String userId, String deviceId) async {
-  return await Flores().loggedInUser(userId, deviceId);
+Future<bool> loggedInUser(
+    String userId, String deviceId, bool isTeacher) async {
+  return await Flores().loggedInUser(userId, deviceId, isTeacher);
 //  return true;
 }
 

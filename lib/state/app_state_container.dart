@@ -372,7 +372,8 @@ class AppStateContainerState extends State<AppStateContainer> {
     } else if (message['messageType'] == 'json') {
       final standardSerializers =
           (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
-      final obj = standardSerializers.deserialize(message['message']);
+      final obj =
+          standardSerializers.deserialize(jsonDecode(message['message']));
       if (obj is ClassInterest) {
       } else if (obj is ClassJoin) {
         if (state.loggedInUser.userType == UserType.teacher) {
@@ -681,7 +682,7 @@ class AppStateContainerState extends State<AppStateContainer> {
     prefs.setString('userId', user.id);
     if (user != null) {
       try {
-        p2p.loggedInUser(user.id, deviceId);
+        p2p.loggedInUser(user.id, deviceId, user.userType == UserType.teacher);
       } on PlatformException {
         print('Flores: Failed loggedInUser');
       } catch (e, s) {
