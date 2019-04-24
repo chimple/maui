@@ -61,9 +61,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
   void queryUser(String latestUserID) async {
     await UserRepo().getUser(latestUserID).then((User user){
       setState(() {
-        print('setState calling.........................................................');
         _students.add(user);
-        print('Added User to _students List.............................................${_students.toString()}');
       });
     });
   }
@@ -87,7 +85,6 @@ class _ProgressScreenState extends State<ProgressScreen> {
           child: ListView.builder(
               itemCount: _students.length,
               itemBuilder: (context, index) {
-                print('Building List');
                 return buildPerformanceCard(index);
               }),
         ), //RaisedButton(child: Text('Add'), onPressed: changeData)
