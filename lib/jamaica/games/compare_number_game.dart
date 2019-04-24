@@ -38,7 +38,7 @@ class _CompareNumberGameState extends State<CompareNumberGame>
     with SingleTickerProviderStateMixin {
   List<_ChoiceDetail> choiceDetails;
   _ChoiceDetail answerDetails;
-  Animation<double> _animation;
+  Animation<double> _animation, _animation1;
   AnimationController _animationController;
   List<String> dragOperator = [">", "=", "<"];
   var questionList = [];
@@ -52,17 +52,32 @@ class _CompareNumberGameState extends State<CompareNumberGame>
     answerDetails =
         _ChoiceDetail(number: widget.answer, index: 99, type: _Type.question);
     _animationController =
-        AnimationController(vsync: this, duration: Duration(seconds: 4));
+        AnimationController(vsync: this, duration: Duration(seconds: 2));
 
-    _animation = Tween<double>(begin: 1.0, end: -4.0).animate(
+    _animation = Tween<double>(begin: 1.0, end: -8.0).animate(
       new CurvedAnimation(
         parent: _animationController,
-        curve: Curves.bounceInOut,
+        curve: Curves.easeInOutBack,
       ),
     );
-    ;
+    _animation1 = Tween<double>(begin: 1.0, end: 2.0).animate(
+      new CurvedAnimation(
+        parent: _animationController,
+        curve: Curves.easeInOutBack,
+      ),
+    );
+
     _animation.addListener(() {
       setState(() {});
+    });
+    _animation1.addListener(() {
+      setState(() {});
+    });
+    _animation1.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        // _animationController
+        //     .reverse(); //reverse the animation back here if its completed
+      }
     });
 
     _animation.addStatusListener((status) {
@@ -99,10 +114,18 @@ class _CompareNumberGameState extends State<CompareNumberGame>
             key: Key("data1"),
             child: Padding(
               padding: widget.answer == '>'
-                  ? 8.0 * _animation.value >= 0
-                      ? EdgeInsets.all(8.0 * _animation.value)
-                      : EdgeInsets.all(0.0)
-                  : EdgeInsets.all(8.0),
+                  ? 8.0 * _animation.value == 8.0
+                      ? EdgeInsets.all(0.0)
+                      : 8.0 * _animation.value >= 0
+                          ? EdgeInsets.all(8.0 * _animation.value)
+                          : EdgeInsets.all(0.0)
+                  : widget.answer == '<'
+                      ? 8.0 * _animation1.value == 8.0
+                          ? EdgeInsets.all(0.0)
+                          : 8.0 * _animation1.value >= 0
+                              ? EdgeInsets.all(8.0 * _animation1.value)
+                              : EdgeInsets.all(0.0)
+                      : EdgeInsets.all(0.0),
               child: Container(
                 decoration: BoxDecoration(
                     color: Colors.blue,
@@ -120,12 +143,16 @@ class _CompareNumberGameState extends State<CompareNumberGame>
           ),
           Padding(
             key: Key('ch'),
-            padding: const EdgeInsets.all(8.0),
+            padding: answerDetails.type == _Type.answer
+                ? EdgeInsets.all(15.0)
+                : EdgeInsets.all(0.0),
             child: DragTarget<String>(
               key: Key('choice'),
               builder: (context, candidateData, rejectedData) => Container(
                     decoration: BoxDecoration(
-                        color: Colors.blue,
+                        color: answerDetails.type == _Type.answer
+                            ? Colors.blue
+                            : Colors.grey[350],
                         borderRadius: BorderRadius.all(Radius.circular(16.0))),
                     child: answerDetails.type == _Type.answer
                         ? Center(child: Text(widget.answer))
@@ -156,10 +183,18 @@ class _CompareNumberGameState extends State<CompareNumberGame>
             key: Key("data2"),
             child: Padding(
               padding: widget.answer == '<'
-                  ? 8.0 * _animation.value >= 0
-                      ? EdgeInsets.all(8.0 * _animation.value)
-                      : EdgeInsets.all(0.0)
-                  : EdgeInsets.all(8.0),
+                  ? 8.0 * _animation.value == 8.0
+                      ? EdgeInsets.all(0.0)
+                      : 8.0 * _animation.value >= 0
+                          ? EdgeInsets.all(8.0 * _animation.value)
+                          : EdgeInsets.all(0.0)
+                  : widget.answer == '>'
+                      ? 8.0 * _animation1.value == 8.0
+                          ? EdgeInsets.all(0.0)
+                          : 8.0 * _animation1.value >= 0
+                              ? EdgeInsets.all(8.0 * _animation1.value)
+                              : EdgeInsets.all(0.0)
+                      : EdgeInsets.all(0.0),
               child: Container(
                 decoration: BoxDecoration(
                     color: Colors.blue,
@@ -193,8 +228,8 @@ class _CompareNumberGameState extends State<CompareNumberGame>
               (i) => i < listWidget.length
                   ? Image.asset(
                       image,
-                      height: 30.0,
-                      width: 30.0,
+                      height: 25.0,
+                      width: 25.0,
                     )
                   : Container(),
             ),
@@ -206,8 +241,8 @@ class _CompareNumberGameState extends State<CompareNumberGame>
               (i) => i < listWidget.length - 5
                   ? Image.asset(
                       image,
-                      height: 30.0,
-                      width: 30.0,
+                      height: 25.0,
+                      width: 25.0,
                     )
                   : Container(),
             ),
