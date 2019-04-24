@@ -41,6 +41,7 @@ class CuteButtonWrapper extends StatefulWidget {
   final Axis axis;
   final DragConfig dragConfig;
   final Size size;
+  final bool gridFeedback;
 
   const CuteButtonWrapper({
     Key key,
@@ -49,6 +50,7 @@ class CuteButtonWrapper extends StatefulWidget {
     this.axis,
     this.dragConfig = DragConfig.fixed,
     this.size,
+    this.gridFeedback = false,
   }) : super(key: key);
 
   @override
@@ -110,7 +112,7 @@ class CuteButtonWrapperState extends State<CuteButtonWrapper> {
                 widget.dragConfig == DragConfig.draggableMultiPack
                     ? null
                     : Container(),
-            feedback: buildButton(context),
+            feedback:  buildButton(context),
             data: (widget.key as ValueKey<String>).value,
             onDragEnd: (d) {
               widget.onDragEnd(d);
@@ -124,8 +126,12 @@ class CuteButtonWrapperState extends State<CuteButtonWrapper> {
   Widget buildButton(BuildContext context) {
     if (widget.child.cuteButtonType == CuteButtonType.cuteButton)
       return SizedBox(
-        width: widget.size.width,
-        height: widget.size.height,
+        width: widget.gridFeedback == true
+            ? widget.size.width + 20
+            : widget.size.width,
+        height: widget.gridFeedback == true
+            ? widget.size.height + 20
+            : widget.size.height,
         child: Center(
           child: AspectRatio(
             aspectRatio: 1.0,
