@@ -14,6 +14,7 @@ class DiceGameStory extends FullScreenStory {
                 ['speaks', 'eat', 'laughs'],
                 ['nicely', 'food', 'loudly']
               ],
+              onGameOver: (_) {},
             ),
           ),
         )

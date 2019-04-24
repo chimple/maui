@@ -1,11 +1,14 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:maui/jamaica/state/game_utils.dart';
 
 class MadSentenceGame extends StatefulWidget {
   final List<List<String>> words;
   final List<String> header;
-  const MadSentenceGame({Key key, this.words, this.header}) : super(key: key);
+  final OnGameOver onGameOver;
+  const MadSentenceGame({Key key, this.words, this.header, this.onGameOver})
+      : super(key: key);
   @override
   _MadSentenceGameState createState() => new _MadSentenceGameState();
 }
@@ -13,6 +16,7 @@ class MadSentenceGame extends StatefulWidget {
 class _MadSentenceGameState extends State<MadSentenceGame> {
   int _buttonKey = 0;
   String sentence = '';
+  int score = 0;
   Map<int, String> _wordPos = Map();
 
   @override
@@ -137,6 +141,9 @@ class _MadSentenceGameState extends State<MadSentenceGame> {
                 setState(() {
                   sentence =
                       _wordPos[0] + " " + _wordPos[1] + " " + _wordPos[2];
+                  score++;
+                  Future.delayed(const Duration(milliseconds: 700),
+                      () => widget.onGameOver(score));
                 });
               },
               icon: Icon(
