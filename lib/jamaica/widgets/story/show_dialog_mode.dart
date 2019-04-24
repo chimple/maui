@@ -21,10 +21,10 @@ class ShowDialogMode extends StatefulWidget {
   ShowDialogMode({Key key, this.listofWords, this.storyMode}) : super(key: key);
 
   @override
-  ShowDialogModeState createState() => ShowDialogModeState();
+  _ShowDialogModeState createState() => _ShowDialogModeState();
 }
 
-class ShowDialogModeState extends State<ShowDialogMode> {
+class _ShowDialogModeState extends State<ShowDialogMode> {
   StoryMode storyMode = StoryMode.textHighlighterMode;
   bool highlightOnLongPress = false;
   int highlightIndex = -1;

@@ -198,11 +198,11 @@ class CustomRenderEditable extends RenderBox {
         _obscureText = obscureText {
     assert(_showCursor != null);
     assert(!_showCursor.value || cursorColor != null);
-    _tap = TapGestureRecognizer(debugOwner: this)..onTapDown = _handleTapDown;
+    // _tap = TapGestureRecognizer(debugOwner: this)..onTapDown = _handleTapDown;
     // ..onTap = _handleTap;
     _longPress = LongPressGestureRecognizer(debugOwner: this)
-      // ..onLongPressUp = () {}
-      ..onLongPress = _handleLongPress;
+      ..onLongPressUp = () {};
+    // ..onLongPress = _handleLongPress;
     _horizontalDragGestureRecognizer =
         HorizontalDragGestureRecognizer(debugOwner: this)
           ..onUpdate = (p) {
@@ -1375,15 +1375,15 @@ class CustomRenderEditable extends RenderBox {
       if (cause == CustomSelectionChangedCause.dragStart)
         _baseOffsetOnDragStart = firstWord.base.offset;
 
-      onSelectionChanged(
-        TextSelection(
-          baseOffset: firstWord.base.offset,
-          extentOffset: lastWord.extent.offset,
-          affinity: firstWord.affinity,
-        ),
-        this,
-        cause,
-      );
+      // onSelectionChanged(
+      //   TextSelection(
+      //     baseOffset: firstWord.base.offset,
+      //     extentOffset: lastWord.extent.offset,
+      //     affinity: firstWord.affinity,
+      //   ),
+      //   this,
+      //   cause,
+      // );
     }
   }
 
