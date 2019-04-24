@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/services.dart';
 
-import 'package:audioplayer/audioplayer.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/quack/text_audio.dart';
@@ -70,7 +70,7 @@ class AudioTextBoldState extends State<AudioTextBold> {
     _audioPlayerStateSubscription =
         audioPlayer.onPlayerStateChanged.listen((s) {
       if (s == AudioPlayerState.PLAYING) {
-        setState(() => duration = audioPlayer.duration);
+//        setState(() => duration = audioPlayer.duration);
       } else if (s == AudioPlayerState.STOPPED) {
         onComplete();
         setState(() {
