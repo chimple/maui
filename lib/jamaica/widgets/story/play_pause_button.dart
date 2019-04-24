@@ -21,33 +21,26 @@ class PlayPauseButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraint) {
-      return Container(
-        width: double.infinity,
-        child: storyMode != StoryMode.textHighlighterMode
-            ? InkWell(
-                onTap: !isPlaying
-                    ? () => loadAudio()
-                    : () {
-                        if (audioPlayer.state == AudioPlayerState.PAUSED ||
-                            audioPlayer.state == AudioPlayerState.COMPLETED ||
-                            audioPlayer.state == AudioPlayerState.STOPPED)
-                          resume();
-                        else if (audioPlayer.state == AudioPlayerState.PLAYING)
-                          pause();
-                      },
-                child: CircleAvatar(
-                  maxRadius: constraint.maxHeight,
-                  // backgroundColor: Colors.white,
-                  child: isPause
-                      ? Icon(
-                          Icons.play_arrow,
-                          size: constraint.maxHeight * .9,
-                        )
-                      : Icon(Icons.pause, size: constraint.maxHeight * .9),
-                ),
-              )
-            : Container(),
-      );
+      return storyMode != StoryMode.textHighlighterMode
+          ? InkWell(
+              customBorder: CircleBorder(),
+              onTap: !isPlaying
+                  ? () => loadAudio()
+                  : () {
+                      if (audioPlayer.state == AudioPlayerState.PAUSED ||
+                          audioPlayer.state == AudioPlayerState.COMPLETED ||
+                          audioPlayer.state == AudioPlayerState.STOPPED)
+                        resume();
+                      else if (audioPlayer.state == AudioPlayerState.PLAYING)
+                        pause();
+                    },
+              child: isPause
+                  ? Icon(Icons.play_arrow,
+                      size: constraint.maxHeight * .8, color: Colors.orange)
+                  : Icon(Icons.pause,
+                      size: constraint.maxHeight * .8, color: Colors.orange),
+            )
+          : Container();
     });
   }
 }

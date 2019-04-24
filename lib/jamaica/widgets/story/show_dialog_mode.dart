@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 enum StoryMode {
   activityMode,
@@ -20,13 +21,14 @@ class ShowDialogMode extends StatefulWidget {
   ShowDialogMode({Key key, this.listofWords, this.storyMode}) : super(key: key);
 
   @override
-  _ShowDialogModeState createState() => _ShowDialogModeState();
+  ShowDialogModeState createState() => ShowDialogModeState();
 }
 
-class _ShowDialogModeState extends State<ShowDialogMode> {
+class ShowDialogModeState extends State<ShowDialogMode> {
   StoryMode storyMode = StoryMode.textHighlighterMode;
   bool highlightOnLongPress = false;
   int highlightIndex = -1;
+  FlutterTts flutterTts = new FlutterTts();
 
   @override
   Widget build(BuildContext context) {
@@ -88,38 +90,44 @@ class _ShowDialogModeState extends State<ShowDialogMode> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Align(
-              alignment: AlignmentDirectional.topEnd,
-              child: new IconButton(
-                  icon: new Icon(Icons.volume_up),
-                  iconSize: mediaQuery.size.height * 0.07,
-                  color: Colors.black,
-                  onPressed: () {}),
-            ),
-            Column(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Text(
-                  text,
-                  style: TextStyle(
-                      fontSize: mediaQuery.size.height * 0.05,
-                      color: Colors.green),
-                ),
-                Image.asset('assets/stories/images/$text.jpg',
-                    height: mediaQuery.orientation == Orientation.portrait
-                        ? mediaQuery.size.height * 0.2
-                        : mediaQuery.size.height * 0.3),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Text(
-                    textDesciption + '$text',
-                    style: TextStyle(
-                        fontSize: mediaQuery.orientation == Orientation.portrait
-                            ? mediaQuery.size.height * 0.02
-                            : mediaQuery.size.height * 0.03,
-                        color: Colors.black),
-                  ),
-                )
+                new IconButton(
+                    icon: new Icon(Icons.close),
+                    iconSize: mediaQuery.size.height * 0.07,
+                    color: Colors.black,
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    }),
+                new IconButton(
+                    icon: new Icon(Icons.volume_up),
+                    iconSize: mediaQuery.size.height * 0.07,
+                    color: Colors.black,
+                    onPressed: () {
+                      flutterTts.speak(text);
+                    }),
               ],
+            ),
+            Text(
+              text,
+              style: TextStyle(
+                  fontSize: mediaQuery.size.height * 0.05, color: Colors.green),
+            ),
+            Image.asset('assets/stories/images/$text.jpg',
+                height: mediaQuery.orientation == Orientation.portrait
+                    ? mediaQuery.size.height * 0.2
+                    : mediaQuery.size.height * 0.3),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Text(
+                textDesciption + '$text',
+                style: TextStyle(
+                    fontSize: mediaQuery.orientation == Orientation.portrait
+                        ? mediaQuery.size.height * 0.02
+                        : mediaQuery.size.height * 0.03,
+                    color: Colors.black),
+              ),
             )
           ],
         ),

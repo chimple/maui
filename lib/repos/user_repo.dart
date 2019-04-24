@@ -73,6 +73,13 @@ class UserRepo {
   }
 
   Future<User> insertLocalUser(User user) async {
+    //TODO temporarily setting any user beginning with t as teacher
+    if (user.name.startsWith('t')) {
+      user.userType = UserType.teacher;
+    }
+    else{
+      user.userType =UserType.student;
+    }
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final deviceId = prefs.getString('deviceId');
     final loggedInUserId = prefs.getString('userId');

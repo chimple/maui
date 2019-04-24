@@ -340,6 +340,7 @@ class _BentoBoxState extends State<BentoBox> {
             axis: widget.axis,
             onDragEnd: (d) => onDragEnd(d, childDetail),
             dragConfig: fixed ? DragConfig.fixed : widget.dragConfig,
+            gridFeedback:widget.grid,
             size: widget.grid == true
                 ? size + Offset(-6, 0)
                 : size + Offset(-16, -16),

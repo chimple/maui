@@ -30,8 +30,10 @@ class _ChoiceDetail {
 class JumbleWords extends StatefulWidget {
   final BuiltList choices;
   final BuiltList answers;
+  final Function onComplete;
   final OnGameOver onGameOver;
-  const JumbleWords({Key key, this.answers, this.choices, this.onGameOver})
+  const JumbleWords(
+      {Key key, this.answers, this.choices, this.onGameOver, this.onComplete})
       : super(key: key);
 
   @override
@@ -48,6 +50,7 @@ class _JumbleWordsState extends State<JumbleWords> {
   List<List<String>> addToBox = [];
   int complete, score = 0;
   List<bool> _colorStatus = [];
+  double textSize;
   @override
   void initState() {
     super.initState();
@@ -79,6 +82,7 @@ class _JumbleWordsState extends State<JumbleWords> {
             if (--complete == 0) {
               print('game over');
               widget.onGameOver(score);
+              widget.onComplete();
             }
             // print('on accept ${widget.choices.indexOf(a)}, $answerDetails');
           }
@@ -90,13 +94,12 @@ class _JumbleWordsState extends State<JumbleWords> {
             child: Text(
               s,
               style: textStyle(
-                  color: !c ? Colors.red[50] : Colors.red, fSize: textSize),
+                  color: !c ? Colors.white : Colors.red, fSize: textSize),
             ),
           );
         });
   }
 
-  double textSize;
   @override
   Widget build(BuildContext context) {
     textSize = MediaQuery.of(context).orientation == Orientation.portrait
@@ -151,8 +154,5 @@ class _FlowDelegate extends FlowDelegate {
   }
 
   @override
-  bool shouldRepaint(FlowDelegate oldDelegate) {
-    // TODO: implement shouldRepaint
-    return true;
-  }
+  bool shouldRepaint(FlowDelegate oldDelegate) => true;
 }

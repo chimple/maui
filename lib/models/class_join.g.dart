@@ -61,7 +61,7 @@ class _$ClassJoin extends ClassJoin {
   @override
   final String studentId;
 
-  factory _$ClassJoin([void updates(ClassJoinBuilder b)]) =>
+  factory _$ClassJoin([void Function(ClassJoinBuilder) updates]) =>
       (new ClassJoinBuilder()..update(updates)).build();
 
   _$ClassJoin._({this.sessionId, this.studentId}) : super._() {
@@ -74,7 +74,7 @@ class _$ClassJoin extends ClassJoin {
   }
 
   @override
-  ClassJoin rebuild(void updates(ClassJoinBuilder b)) =>
+  ClassJoin rebuild(void Function(ClassJoinBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -133,7 +133,7 @@ class ClassJoinBuilder implements Builder<ClassJoin, ClassJoinBuilder> {
   }
 
   @override
-  void update(void updates(ClassJoinBuilder b)) {
+  void update(void Function(ClassJoinBuilder) updates) {
     if (updates != null) updates(this);
   }
 

@@ -8,15 +8,7 @@ class LessonDao {
   Future<Lesson> getLesson(int id, {Database db}) async {
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps = await db.query(Lesson.table,
-        columns: [
-          Lesson.idCol,
-          Lesson.titleCol,
-          Lesson.conceptIdCol,
-          Lesson.seqCol,
-          Lesson.hasOrderCol
-        ],
-        where: "${Lesson.idCol} = ?",
-        whereArgs: [id]);
+        columns: Lesson.allCols, where: "${Lesson.idCol} = ?", whereArgs: [id]);
     if (maps.length > 0) {
       return new Lesson.fromMap(maps.first);
     }
@@ -26,13 +18,7 @@ class LessonDao {
   Future<Lesson> getLessonBySeq(int seq, {Database db}) async {
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps = await db.query(Lesson.table,
-        columns: [
-          Lesson.idCol,
-          Lesson.titleCol,
-          Lesson.conceptIdCol,
-          Lesson.seqCol,
-          Lesson.hasOrderCol
-        ],
+        columns: Lesson.allCols,
         where: "${Lesson.seqCol} = ?",
         whereArgs: [seq]);
     if (maps.length > 0) {
@@ -49,13 +35,7 @@ class LessonDao {
     List whereArgs = [seq];
     whereArgs.addAll(conceptIds);
     List<Map> maps = await db.query(Lesson.table,
-        columns: [
-          Lesson.idCol,
-          Lesson.titleCol,
-          Lesson.conceptIdCol,
-          Lesson.seqCol,
-          Lesson.hasOrderCol
-        ],
+        columns: Lesson.allCols,
         where:
             "${Lesson.seqCol} <= ? AND ${Lesson.conceptIdCol} IN ($inClause)",
         whereArgs: whereArgs);
@@ -66,13 +46,7 @@ class LessonDao {
     db = db ?? await new AppDatabase().getDb();
     List<Map> maps = await db.query(
       Lesson.table,
-      columns: [
-        Lesson.idCol,
-        Lesson.titleCol,
-        Lesson.conceptIdCol,
-        Lesson.seqCol,
-        Lesson.hasOrderCol
-      ],
+      columns: Lesson.allCols,
     );
     return maps.map((el) => new Lesson.fromMap(el)).toList();
   }
@@ -81,15 +55,20 @@ class LessonDao {
     db = db ?? await new AppDatabase().getDb();
     List whereArgs = [hasOrder];
     List<Map> maps = await db.query(Lesson.table,
-        columns: [
-          Lesson.idCol,
-          Lesson.titleCol,
-          Lesson.conceptIdCol,
-          Lesson.seqCol,
-          Lesson.hasOrderCol
-        ],
+        columns: Lesson.allCols,
         where: "${Lesson.hasOrderCol} = ?",
         whereArgs: whereArgs);
+    return maps.map((el) => new Lesson.fromMap(el)).toList();
+  }
+
+  Future<List<Lesson>> getLessonsByTopic(TopicType topic, {Database db}) async {
+    db = db ?? await new AppDatabase().getDb();
+    List whereArgs = [topic.index];
+    List<Map> maps = await db.query(Lesson.table,
+        columns: Lesson.allCols,
+        where: "${Lesson.topicCol} = ?",
+        whereArgs: whereArgs,
+        orderBy: Lesson.seqCol);
     return maps.map((el) => new Lesson.fromMap(el)).toList();
   }
 

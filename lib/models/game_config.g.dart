@@ -68,7 +68,7 @@ class _$GameConfig extends GameConfig {
   @override
   final int levels;
 
-  factory _$GameConfig([void updates(GameConfigBuilder b)]) =>
+  factory _$GameConfig([void Function(GameConfigBuilder) updates]) =>
       (new GameConfigBuilder()..update(updates)).build();
 
   _$GameConfig._({this.name, this.image, this.levels}) : super._() {
@@ -84,7 +84,7 @@ class _$GameConfig extends GameConfig {
   }
 
   @override
-  GameConfig rebuild(void updates(GameConfigBuilder b)) =>
+  GameConfig rebuild(void Function(GameConfigBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -151,7 +151,7 @@ class GameConfigBuilder implements Builder<GameConfig, GameConfigBuilder> {
   }
 
   @override
-  void update(void updates(GameConfigBuilder b)) {
+  void update(void Function(GameConfigBuilder) updates) {
     if (updates != null) updates(this);
   }
 

@@ -13,6 +13,7 @@ class ActivityScreen extends StatefulWidget {
 class _ActivityScreenState extends State<ActivityScreen> {
   PageController _pageController;
   int pageIndex = 0;
+  bool _isEnable = false;
   @override
   void initState() {
     super.initState();
@@ -22,71 +23,80 @@ class _ActivityScreenState extends State<ActivityScreen> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        floatingActionButton: ActivityButton(
-          icon: Icons.arrow_forward,
-          string: "Next",
-          onTap: (index) {
-            _pageController.nextPage(
-                curve: Curves.easeIn, duration: Duration(milliseconds: 500));
-          },
-          pageIndex: pageIndex,
-        ),
         body: Column(
-          children: <Widget>[
-            SizedBox(
-              height: 90,
-              child: Container(
-                color: Colors.orange,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    IconButton(
-                        icon: Icon(
-                          Icons.close,
-                          color: Colors.white,
-                          size: 35,
-                        ),
-                        onPressed: () => Navigator.of(context).pop()),
-                    Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.0),
-                          border: Border.all(color: Colors.white, width: 2.0)),
-                      child: Row(
-                        children: <Widget>[
-                          Text("15",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 20)),
-                          Icon(Icons.star, color: Colors.yellow)
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
+      children: <Widget>[
+        SizedBox(
+          height: 90,
+          child: Container(
+            color: Colors.orange,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                IconButton(
+                    icon: Icon(
+                      Icons.close,
+                      color: Colors.white,
+                      size: 35,
+                    ),
+                    onPressed: () => Navigator.of(context).pop()),
+                Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                      border: Border.all(color: Colors.white, width: 2.0)),
+                  child: Row(
+                    children: <Widget>[
+                      Text("15",
+                          style: TextStyle(color: Colors.white, fontSize: 20)),
+                      Icon(Icons.star, color: Colors.yellow)
+                    ],
+                  ),
+                )
+              ],
             ),
-            Expanded(
-              flex: 1,
-              child: PageView(
-                physics: NeverScrollableScrollPhysics(),
-                controller: _pageController,
-                onPageChanged: (index) {
-                  pageIndex = index;
+          ),
+        ),
+        Expanded(
+          flex: 1,
+          child: PageView(
+            scrollDirection: Axis.vertical,
+            physics: NeverScrollableScrollPhysics(),
+            controller: _pageController,
+            onPageChanged: (index) {
+              pageIndex = index;
+            },
+            children: <Widget>[
+              TextHighlighter(onComplete: (s) {
+                setState(() => _isEnable = true);
+              }),
+              DragText(
+                onComplete: (s) {
+                  setState(() => _isEnable = true);
                 },
-                children: <Widget>[
-                  TextHighlighter(),
-                  DragText(),
-                  JumbleWords(
-                    answers: BuiltList<String>(
-                        ["He", 'Like', 'to', 'tease', 'people']),
-                    choices: BuiltList<String>(
-                        ["He", 'Like', 'to', 'tease', 'people']),
-                    onGameOver: (_) {},
-                  )
-                ],
+                data: BuiltList([
+                  "tiger",
+                  "cloud",
+                  "building",
+                  "tree",
+                  "hospital",
+                  "building",
+                  "tree",
+                  "hospital"
+                ]),
               ),
-            )
-          ],
-        ));
+              JumbleWords(
+                  answers: BuiltList<String>(
+                      ["He", 'Like', 'to', 'tease', 'people']),
+                  choices: BuiltList<String>(
+                      ["He", 'Like', 'to', 'tease', 'people']),
+                  onGameOver: (_) {},
+                  onComplete: () {
+                    setState(() => _isEnable = true);
+                  })
+            ],
+          ),
+        )
+      ],
+    ));
   }
 }

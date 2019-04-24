@@ -1,7 +1,11 @@
+import 'dart:convert';
+
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redurx/flutter_redurx.dart';
 import 'package:maui/actions/add_progress.dart';
+import 'package:maui/db/entity/chapter.dart';
 import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/db/entity/quiz.dart';
 import 'package:maui/loca.dart';
@@ -28,7 +32,7 @@ class QuizNavigator extends StatefulWidget {
 
 class QuizNavigatorState extends State<QuizNavigator> {
   bool _isLoading = true;
-  List<QuackCard> _quizzes;
+  Chapter _chapter;
   Map<String, List<QuizItem>> _quizItemMap = {};
   Map<String, List<QuizItem>> _answersMap = {};
   Map<String, List<QuizItem>> _startChoicesMap = {};
@@ -42,9 +46,12 @@ class QuizNavigatorState extends State<QuizNavigator> {
   }
 
   void _initData() async {
-    _quizzes = await CollectionRepo()
-        .getKnowledgeAndQuizCardsInCollection(widget.cardId, CardType.question);
-    if (_quizzes.first?.type == CardType.knowledge) mode = NavigatorMode.result;
+//    _quizzes = await CollectionRepo()
+//        .getKnowledgeAndQuizCardsInCollection(widget.cardId, CardType.question);
+    final json =
+        await rootBundle.loadString('assets/topic/${widget.cardId}.json');
+    _chapter = Chapter.fromJson(jsonDecode(json) as Map<String, dynamic>);
+    mode = NavigatorMode.result;
     setState(() => _isLoading = false);
   }
 
@@ -57,10 +64,11 @@ class QuizNavigatorState extends State<QuizNavigator> {
         child: new CircularProgressIndicator(),
       );
     }
-    return _currentPageIndex >= _quizzes.length
+    return _currentPageIndex >=
+            _chapter.quizzes.length + _chapter.knowledges.length
         ? Scaffold(
             body: QuizResult(
-            quizzes: _quizzes,
+            quizzes: _chapter.quizzes,
             quizItemMap: _quizItemMap,
             answersMap: _answersMap,
             startChoicesMap: _startChoicesMap,
@@ -69,38 +77,65 @@ class QuizNavigatorState extends State<QuizNavigator> {
         : Navigator(
             onGenerateRoute: (RouteSettings settings) => CupertinoPageRoute(
                   builder: (BuildContext context) {
-                    final card = _quizzes[_currentPageIndex];
+//                    final card = _quizzes[_currentPageIndex];
                     return Scaffold(
                       body: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: <Widget>[
                           Expanded(
-                            child: card.type == CardType.knowledge
+                            child: _currentPageIndex <
+                                    _chapter.knowledges.length
                                 ? KnowledgeDetail(
-                                    card: card,
+                                    card:
+                                        _chapter.knowledges[_currentPageIndex],
                                     parentCardId: widget.cardId,
                                   )
                                 : QuizCardDetail(
-                                    card: card,
-                                    answers: _answersMap[card.id],
-                                    startChoices: _startChoicesMap[card.id],
-                                    endChoices: _endChoicesMap[card.id],
+                                    quiz: _chapter.quizzes[_currentPageIndex -
+                                        _chapter.knowledges.length],
+                                    answers: _answersMap[_chapter
+                                        .quizzes[_currentPageIndex -
+                                            _chapter.knowledges.length]
+                                        .id],
+                                    startChoices: _startChoicesMap[_chapter
+                                        .quizzes[_currentPageIndex -
+                                            _chapter.knowledges.length]
+                                        .id],
+                                    endChoices: _endChoicesMap[_chapter
+                                        .quizzes[_currentPageIndex -
+                                            _chapter.knowledges.length]
+                                        .id],
                                     parentCardId: widget.cardId,
                                     canProceed: (
                                         {List<QuizItem> quizItems,
                                         List<QuizItem> answers,
                                         List<QuizItem> startChoices,
                                         List<QuizItem> endChoices}) {
-                                      if (card.option == 'open') {
+                                      if (_chapter
+                                              .quizzes[_currentPageIndex -
+                                                  _chapter.knowledges.length]
+                                              .type ==
+                                          QuizType.open) {
                                         mode = NavigatorMode.result;
                                         goToNext(context);
                                       } else {
                                         if (quizItems != null) {
-                                          _quizItemMap[card.id] = quizItems;
-                                          _answersMap[card.id] = answers;
-                                          _startChoicesMap[card.id] =
-                                              startChoices;
-                                          _endChoicesMap[card.id] = endChoices;
+                                          _quizItemMap[_chapter
+                                              .quizzes[_currentPageIndex -
+                                                  _chapter.knowledges.length]
+                                              .id] = quizItems;
+                                          _answersMap[_chapter
+                                              .quizzes[_currentPageIndex -
+                                                  _chapter.knowledges.length]
+                                              .id] = answers;
+                                          _startChoicesMap[_chapter
+                                              .quizzes[_currentPageIndex -
+                                                  _chapter.knowledges.length]
+                                              .id] = startChoices;
+                                          _endChoicesMap[_chapter
+                                              .quizzes[_currentPageIndex -
+                                                  _chapter.knowledges.length]
+                                              .id] = endChoices;
                                         }
                                         setState(() {
                                           mode = NavigatorMode.checkable;
@@ -110,7 +145,12 @@ class QuizNavigatorState extends State<QuizNavigator> {
                                     resultMode: mode == NavigatorMode.result,
                                   ),
                           ),
-                          card.option == 'open'
+                          _currentPageIndex > _chapter.knowledges.length &&
+                                  _chapter
+                                          .quizzes[_currentPageIndex -
+                                              _chapter.knowledges.length]
+                                          .type ==
+                                      QuizType.open
                               ? Container()
                               : Padding(
                                   padding: const EdgeInsets.all(32.0),
@@ -125,7 +165,8 @@ class QuizNavigatorState extends State<QuizNavigator> {
                                       mode == NavigatorMode.result
                                           ? Loca.of(context).next
                                           : Loca.of(context).check,
-                                      style: TextStyle(color: Colors.white, fontSize: 32.0),
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 32.0),
                                     ),
                                   ),
                                 ),
@@ -153,17 +194,16 @@ class QuizNavigatorState extends State<QuizNavigator> {
   void goToNext(BuildContext context) {
     setState(() {
       _currentPageIndex++;
-      mode = _currentPageIndex < _quizzes.length &&
-              _quizzes[_currentPageIndex].type == CardType.knowledge
+      mode = _currentPageIndex < _chapter.knowledges.length
           ? NavigatorMode.result
           : NavigatorMode.disabled;
     });
-    Provider.dispatch<RootState>(
-        context,
-        AddProgress(
-            cardId: _quizzes[_currentPageIndex].id,
-            parentCardId: widget.cardId,
-            index: _currentPageIndex + 1));
+//    Provider.dispatch<RootState>(
+//        context,
+//        AddProgress(
+//            cardId: _quizzes[_currentPageIndex].id,
+//            parentCardId: widget.cardId,
+//            index: _currentPageIndex + 1));
 
     Navigator.of(context).pushReplacementNamed('/current_quiz');
   }

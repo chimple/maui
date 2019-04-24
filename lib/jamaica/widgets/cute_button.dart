@@ -41,6 +41,7 @@ class CuteButtonWrapper extends StatefulWidget {
   final Axis axis;
   final DragConfig dragConfig;
   final Size size;
+  final bool gridFeedback;
 
   const CuteButtonWrapper({
     Key key,
@@ -49,6 +50,7 @@ class CuteButtonWrapper extends StatefulWidget {
     this.axis,
     this.dragConfig = DragConfig.fixed,
     this.size,
+    this.gridFeedback = false,
   }) : super(key: key);
 
   @override
@@ -110,7 +112,7 @@ class CuteButtonWrapperState extends State<CuteButtonWrapper> {
                 widget.dragConfig == DragConfig.draggableMultiPack
                     ? null
                     : Container(),
-            feedback: buildFeedback(context),
+            feedback:  buildButton(context),
             data: (widget.key as ValueKey<String>).value,
             onDragEnd: (d) {
               widget.onDragEnd(d);
@@ -124,75 +126,12 @@ class CuteButtonWrapperState extends State<CuteButtonWrapper> {
   Widget buildButton(BuildContext context) {
     if (widget.child.cuteButtonType == CuteButtonType.cuteButton)
       return SizedBox(
-        width: widget.size.width,
-        height: widget.size.height,
-        child: Center(
-          child: AspectRatio(
-            aspectRatio: 1.0,
-            child: RaisedButton(
-              onPressed: () {
-                if (widget.child.onPressed != null &&
-                    buttonStatus == _ButtonStatus.down)
-                  setState(() {
-                    buttonStatus = _ButtonStatus.downToUp;
-                    reaction = widget.child.onPressed();
-                  });
-              },
-              elevation: 8.0,
-              color: Colors.blue,
-              disabledColor: Colors.blue,
-              textColor: Colors.white,
-              disabledTextColor: Colors.white,
-              shape: new RoundedRectangleBorder(
-                  borderRadius:
-                      const BorderRadius.all(const Radius.circular(16.0))),
-              child: Stack(
-                children: <Widget>[
-                  buttonStatus != _ButtonStatus.up
-                      ? widget.child.child
-                      : Container(),
-                  AnimatedPositioned(
-                    top: (buttonStatus == _ButtonStatus.up ||
-                            buttonStatus == _ButtonStatus.downToUp)
-                        ? 0.0
-                        : widget.size.height,
-                    left: 0.0,
-                    right: 0.0,
-                    bottom: (buttonStatus == _ButtonStatus.up ||
-                            buttonStatus == _ButtonStatus.downToUp)
-                        ? 0.0
-                        : -widget.size.height,
-                    duration: Duration(milliseconds: 250),
-                    child: FlareActor(
-                      "assets/character/button.flr",
-                      alignment: Alignment.center,
-                      fit: BoxFit.contain,
-                      animation: buttonStatus == _ButtonStatus.up
-                          ? _reactionMap[reaction]
-                          : 'dummy',
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-        ),
-      );
-    else if (widget.child.cuteButtonType == CuteButtonType.text)
-      return Center(
-        child: Container(
-          child: widget.child.child,
-        ),
-      );
-    else
-      return Container();
-  }
-
-  buildFeedback(BuildContext context) {
-    if (widget.child.cuteButtonType == CuteButtonType.cuteButton)
-      return SizedBox(
-        width: widget.size.width + 20,
-        height: widget.size.height + 20,
+        width: widget.gridFeedback == true
+            ? widget.size.width + 20
+            : widget.size.width,
+        height: widget.gridFeedback == true
+            ? widget.size.height + 20
+            : widget.size.height,
         child: Center(
           child: AspectRatio(
             aspectRatio: 1.0,

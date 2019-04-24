@@ -47,13 +47,17 @@ class _GameState extends State<Game> {
     print("......controll comming in game");
     MediaQueryData media = MediaQuery.of(context);
     Size size = media.size;
+
+    double upPadding =size.height * 0.05;
     return Scaffold(
       backgroundColor: Colors.purple,
       body: SafeArea(
         child: Stack(
           children: <Widget>[
             Container(
-              color: Colors.indigo,
+              // height: 1000,
+              // width: 1000,
+              color: Colors.white,
               child: FlareActor("assets/hud/bg.flr",
                   alignment: Alignment.center,
                   fit: BoxFit.cover,
@@ -63,9 +67,10 @@ class _GameState extends State<Game> {
               verticalDirection: VerticalDirection.up,
               children: <Widget>[
                 Expanded(
-                  flex: 27,
+                  flex: 37,
                   child: _navigator,
                 ),
+               
                 Row(
                   children: <Widget>[
                     Container(
@@ -80,18 +85,26 @@ class _GameState extends State<Game> {
                       ),
                     ),
                     Flexible(
-                      flex: 5,
+                      flex: 2,
+                      child: Container(),
+                    ),
+                    Flexible(
+                        flex: 50,
                         child: Text(
-                      'In this game you have to click on the alphabets in sequence order.',
-                      style: TextStyle(fontSize: size.width * 0.023),
-                    ))
+                          'In this game you have to click on the alphabets in sequence order.',
+                          style: Theme.of(context).textTheme.headline,
+                        ))
                   ],
+                ),
+                 Expanded(
+                  flex: 1,
+                  child: Container(),
                 ),
                 Divider(
                   color: Colors.black,
                   height: 0.0,
                 ),
-                Expanded(flex: 2, child: buildUI(size)),
+                Expanded(flex: 3, child: buildUI(size)),
               ],
             ),
           ],
@@ -108,34 +121,37 @@ class _GameState extends State<Game> {
             flex: 1,
             child: Column(
               children: <Widget>[
-                Icon(
-                  Icons.close,
-                  size: size.width * 0.055,
-                  color: Colors.black,
+                Padding(
+                  padding: const EdgeInsets.all(1.0),
+                  child: Icon(
+                    Icons.close,
+                    size: size.width * 0.095,
+                    color: Colors.black,
+                  ),
                 ),
-                Text('Close',style: TextStyle(fontSize: size.width * 0.02),),
               ],
             ),
           ),
           Flexible(
             flex: 10,
-            child: Container(
-                ),
+            child: Container(),
           ),
           Flexible(
-            flex: 3,
+            flex: 7,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Flexible(
-                  flex: 1,
                   child: Stack(
                     children: <Widget>[
-                      Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(15))),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 10.0, 0, 10.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15))),
+                        ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -144,14 +160,16 @@ class _GameState extends State<Game> {
                             flex: 2,
                             child: Text(
                               '$_stars',
-                              style: TextStyle(fontSize: size.width * 0.027),
+                              style: TextStyle(fontSize: size.width * 0.05),
                             ),
                           ),
                           Flexible(
                             flex: 7,
-                            child: Stars(
-                              total: 5,
-                              show: _stars,
+                            child: Center(
+                              child: Stars(
+                                total: 5,
+                                show: _stars,
+                              ),
                             ),
                           ),
                         ],
@@ -159,11 +177,6 @@ class _GameState extends State<Game> {
                     ],
                   ),
                 ),
-                Flexible(
-                  flex: 2,
-                  child: Text('Game Name',style: TextStyle(fontSize: size.width * 0.02)),
-                ),
-                // Text('Game name')
               ],
             ),
           ),

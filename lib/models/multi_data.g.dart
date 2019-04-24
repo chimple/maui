@@ -106,7 +106,7 @@ class _$MultiData extends MultiData {
   @override
   final BuiltList<String> answers;
 
-  factory _$MultiData([void updates(MultiDataBuilder b)]) =>
+  factory _$MultiData([void Function(MultiDataBuilder) updates]) =>
       (new MultiDataBuilder()..update(updates)).build();
 
   _$MultiData._(
@@ -121,7 +121,7 @@ class _$MultiData extends MultiData {
   }
 
   @override
-  MultiData rebuild(void updates(MultiDataBuilder b)) =>
+  MultiData rebuild(void Function(MultiDataBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -210,7 +210,7 @@ class MultiDataBuilder
   }
 
   @override
-  void update(void updates(MultiDataBuilder b)) {
+  void update(void Function(MultiDataBuilder) updates) {
     if (updates != null) updates(this);
   }
 

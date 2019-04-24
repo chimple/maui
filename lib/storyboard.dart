@@ -3,6 +3,7 @@ import 'package:maui/jamaica/screens/story_screen.dart';
 import 'package:maui/storyboards/collected_item_story.dart';
 import 'package:maui/storyboards/game_score_story.dart';
 import 'package:maui/storyboards/games/bingo_game_story.dart';
+import 'package:maui/storyboards/games/compare_number_game_story.dart';
 import 'package:maui/storyboards/games/counting_game_story.dart';
 import 'package:maui/storyboards/games/crossword_game_story.dart';
 import 'package:maui/storyboards/games/dice_game_story.dart';
@@ -32,7 +33,6 @@ import 'package:maui/storyboards/games/tap_wrong_game_story.dart';
 import 'package:maui/storyboards/games/true_false_game_story.dart';
 import 'package:maui/storyboards/monster_game_story.dart';
 import 'package:maui/storyboards/map_reward_screen_story.dart';
-import 'package:maui/storyboards/screens/loggin_as.dart';
 import 'package:maui/storyboards/user_progress_screen_story.dart';
 import 'package:maui/storyboards/widgets/audio_widget_story.dart';
 import 'package:maui/storyboards/widgets/bento_box_story.dart';
@@ -56,11 +56,13 @@ void main() {
   runApp(StoryboardApp([
     PlaceTheNumberStory(),
     GameScoreStory(),
+    CompareNumberGameStroy(),
     RulerNumbersGameStory(),
     AudioWidgetStory(),
     BasicCountingGameStory(),
     BentoBoxStory(),
     BingoGameStory(),
+    NumberBalanceGameStory(),
     BoxMatchingGameStory(),
     ChatBotStory(),
     ChatBotScreenStory(),
@@ -70,7 +72,6 @@ void main() {
     CuteButtonStory(),
     DiceGameStory(),
     DotNumberStory(),
-    NumberBalanceGameStory(),
     FillInTheBlanksGameStory(),
     FindWordGameStory(),
     FingerGameStory(),
@@ -102,6 +103,5 @@ void main() {
     TrueFalseGameStory(),
     MapRewardsScreenStory(),
     UserProgressScreenStory(),
-    LoginAsStory()
   ]));
 }
