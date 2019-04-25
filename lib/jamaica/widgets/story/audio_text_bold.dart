@@ -2,19 +2,11 @@ import 'dart:async';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:built_collection/built_collection.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:maui/jamaica/widgets/story/activity/drag_text.dart';
-import 'package:maui/jamaica/widgets/story/custom_editable.dart';
-import 'package:maui/jamaica/widgets/story/custom_editable_text.dart';
-import 'package:maui/jamaica/widgets/story/custom_text_selection.dart';
-// import 'package:maui/jamaica/widgets/story/activity/jumble_words.dart';
 import 'package:maui/jamaica/widgets/story/play_pause_button.dart';
-// import 'package:maui/jamaica/widgets/story/router.dart';
 import 'package:maui/jamaica/widgets/story/show_dialog_mode.dart';
-import 'package:maui/jamaica/widgets/story/activity/text_highlighter.dart';
 import 'package:maui/jamaica/widgets/tts/tts_line_by_line.dart';
 
 enum TextToSpeachType { fromAudio, fromTts, hear2Read, tts }
