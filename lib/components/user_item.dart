@@ -15,7 +15,7 @@ class LoginUserItem extends StatelessWidget {
     return new Center(
         child: new InkWell(
             onTap: () => AppStateContainer.of(context).setLoggedInUser(user),
-            child: new UserItem(user: user)));
+            child: user != null ? new UserItem(user: user): Container()));
   }
 }
 
@@ -27,12 +27,18 @@ class UserItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return new Container(
-        width: 120.0,
-        height: 120.0,
-        decoration: new BoxDecoration(
-            shape: BoxShape.circle,
-            image: new DecorationImage(
-                image: new FileImage(new File(user.image)), fit: BoxFit.fill)));
+    //print('UserItem Building............................................................${user.toString()}');
+    if(user.image != null){
+      return new Container(
+          width: 120.0,
+          height: 120.0,
+          decoration: new BoxDecoration(
+              shape: BoxShape.circle,
+              image: new DecorationImage(
+                  image: new FileImage(new File(user.image)), fit: BoxFit.fill)));
+    }
+    else{
+      return Container();
+    }
   }
 }

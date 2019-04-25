@@ -319,7 +319,6 @@ class _LoginScreenState extends State<LoginScreen>
           itemBuilder: (_, index) {
             return GestureDetector(
                 onTap: () async {
-                  print("Login As Student..!!");
                   await AppStateContainer.of(context)
                       .setLoggedInUser(existingUsers[index]);
                   if (existingUsers[index].userType == UserType.student) {

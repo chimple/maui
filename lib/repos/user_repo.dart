@@ -82,7 +82,7 @@ class UserRepo {
     }
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final deviceId = prefs.getString('deviceId');
-    final loggedInUserId = prefs.getString('userId');
+    //final loggedInUserId = prefs.getString('userId');
     user.deviceId = deviceId;
     var config = File(user.image);
     var contents = await config.readAsBytes();

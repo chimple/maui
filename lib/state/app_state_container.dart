@@ -96,11 +96,11 @@ class AppStateContainerState extends State<AppStateContainer> {
   // teacher objects
   List<ClassSession> classSessions;
   ClassSession myClassSession;
-  List<String> classStudents;
+  List<String> classStudents = [];
   Map<String, Performance> performances;
   Set<String> quizStudents;
   QuizSession quizSession;
-  Map<QuizSession, StatusEnum> quizSessions;
+  Map<QuizSession, StatusEnum> quizSessions = new Map();
   Map<String, Performance> quizPerformances;
 
   @override
@@ -415,9 +415,11 @@ class AppStateContainerState extends State<AppStateContainer> {
           });
         }
       } else if (obj is QuizJoin) {
-        if (state.loggedInUser.userType == UserType.teacher &&
+        if (state.loggedInUser.userType == UserType.student &&
             quizSession.sessionId == obj.sessionId) {
-          quizStudents.add(obj.studentId);
+          setState(() {
+            quizStudents.add(obj.studentId);
+          });
         }
       } else if (obj is QuizSession) {
         //notify UI that quiz is there
@@ -455,8 +457,7 @@ class AppStateContainerState extends State<AppStateContainer> {
   }
 
   createQuizSession(QuizSession quizSession) async {
-    if (state.loggedInUser.userType == UserType.teacher &&
-        quizSession == null) {
+    if (state.loggedInUser.userType == UserType.teacher) {
       setState(() {
         quizSessions[quizSession] = StatusEnum.create;
         quizSession = quizSession;
@@ -505,7 +506,7 @@ class AppStateContainerState extends State<AppStateContainer> {
   }
 
   joinQuizSession(QuizSession quizSession) async {
-    if (quizSession == null) {
+    if (quizSession != null) {
       QuizJoin quizJoin = QuizJoin((q) => q
         ..sessionId = quizSession.sessionId
         ..studentId = state.loggedInUser.id);
@@ -676,7 +677,7 @@ class AppStateContainerState extends State<AppStateContainer> {
     );
   }
 
-  setLoggedInUser(User user) async {
+  Future<void> setLoggedInUser(User user) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final deviceId = prefs.getString('deviceId');
     prefs.setString('userId', user.id);
