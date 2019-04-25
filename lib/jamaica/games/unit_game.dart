@@ -23,7 +23,7 @@ class _ChoiceDetail {
 }
 
 class UnitGame extends StatefulWidget {
-  final Map<String, int> question;
+  final int question;
   final OnGameOver onGameOver;
 
   const UnitGame({
@@ -33,19 +33,24 @@ class UnitGame extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _UnitGameGameState createState() => _UnitGameGameState();
+  _UnitGameState createState() => _UnitGameState();
 }
 
-class _UnitGameGameState extends State<UnitGame> {
+class _UnitGameState extends State<UnitGame> {
   List<_ChoiceDetail> choiceDetails = [];
   List<_ChoiceDetail> answerDetails = [];
+  Map<String, int> data = {};
   int score = 5;
   String displayText = '';
 
   @override
   void initState() {
     super.initState();
-    widget.question.forEach((c, d) {
+    data['H'] = widget.question ~/ 100;
+    data['T'] = (widget.question ~/ 10) % 10;
+    data['U'] = widget.question % 10;
+
+    data.forEach((c, d) {
       displayText += '$d';
       answerDetails.add(_ChoiceDetail(choice: d, position: c));
       choiceDetails.add(_ChoiceDetail(choice: d, position: c));

@@ -8,12 +8,7 @@ class UnitGameStory extends FullScreenStory {
         Scaffold(
           body: SafeArea(
             child: UnitGame(
-              question: {
-                // have to follow same order while adding Hundreds,Tens & Units
-                'H': 1,
-                'T': 6,
-                'U': 5,
-              },
+              question: 165,
               onGameOver: (_) {},
             ),
           ),
@@ -21,11 +16,7 @@ class UnitGameStory extends FullScreenStory {
         Scaffold(
           body: SafeArea(
             child: UnitGame(
-              question: {
-                'H': 9,
-                'T': 0,
-                'U': 9,
-              },
+              question: 909,
               onGameOver: (_) {},
             ),
           ),
