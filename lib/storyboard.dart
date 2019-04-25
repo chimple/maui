@@ -33,6 +33,7 @@ import 'package:maui/storyboards/games/spin_wheel_game_story.dart';
 import 'package:maui/storyboards/games/tap_wrong_game_story.dart';
 import 'package:maui/storyboards/games/tracing_alphabets_story.dart';
 import 'package:maui/storyboards/games/true_false_game_story.dart';
+import 'package:maui/storyboards/games/unit_game_story.dart';
 import 'package:maui/storyboards/monster_game_story.dart';
 import 'package:maui/storyboards/map_reward_screen_story.dart';
 import 'package:maui/storyboards/user_progress_screen_story.dart';
@@ -106,6 +107,7 @@ void main() {
     TracingAlphabetStory(),
     TrueFalseGameStory(),
     MapRewardsScreenStory(),
+    UnitGameStory(),
     UserProgressScreenStory(),
   ]));
 }
