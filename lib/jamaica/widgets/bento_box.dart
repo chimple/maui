@@ -333,28 +333,30 @@ class _BentoBoxState extends State<BentoBox> {
   }
 
   Widget buildChild(Size size, BentoChildDetail childDetail, bool fixed) {
-    print("this is the size $size");
-    return childDetail.child is CuteButton
-        ? CuteButtonWrapper(
-            key: childDetail.child.key,
-            axis: widget.axis,
-            onDragEnd: (d) => onDragEnd(d, childDetail),
-            dragConfig: fixed ? DragConfig.fixed : widget.dragConfig,
-            gridFeedback:widget.grid,
-            size: widget.grid == true
-                ? size + Offset(-6, 0)
-                : size + Offset(-16, -16),
-            child: childDetail.child,
-          )
-        : SizedBox(
-            width: widget.grid == true ? size.height + 30 : size.width - 16,
-            height: widget.grid == true ? size.height + 30 : size.height - 16,
-            child: Center(
-              child: AspectRatio(
-                aspectRatio: 1.0,
-                child: childDetail.child,
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: childDetail.child is CuteButton
+          ? CuteButtonWrapper(
+              key: childDetail.child.key,
+              axis: widget.axis,
+              onDragEnd: (d) => onDragEnd(d, childDetail),
+              dragConfig: fixed ? DragConfig.fixed : widget.dragConfig,
+              gridFeedback: widget.grid,
+              size: widget.grid == true
+                  ? size + Offset(-6, 0)
+                  : size + Offset(-16, -16),
+              child: childDetail.child,
+            )
+          : SizedBox(
+              width: widget.grid == true ? size.height + 30 : size.width - 16,
+              height: widget.grid == true ? size.height + 30 : size.height - 16,
+              child: Center(
+                child: AspectRatio(
+                  aspectRatio: 1.0,
+                  child: childDetail.child,
+                ),
               ),
             ),
-          );
+    );
   }
 }
