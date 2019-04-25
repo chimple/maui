@@ -35,6 +35,14 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(UserProfile.serializer)
       ..add(WordWithImage.serializer)
       ..addBuilderFactory(
+          const FullType(BuiltList, const [
+            const FullType(BuiltList, const [const FullType(WordWithImage)])
+          ]),
+          () => new ListBuilder<BuiltList<WordWithImage>>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(String)]),
+          () => new ListBuilder<String>())
+      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(GameData)]),
           () => new ListBuilder<GameData>())
       ..addBuilderFactory(
@@ -75,12 +83,6 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(Student)]),
           () => new ListBuilder<Student>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(WordWithImage)]),
-          () => new ListBuilder<WordWithImage>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => new ListBuilder<String>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(int)]),
           () => new ListBuilder<int>())

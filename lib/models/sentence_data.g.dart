@@ -26,8 +26,9 @@ class _$SentenceDataSerializer implements StructuredSerializer<SentenceData> {
           specifiedType: const FullType(String)),
       'wordWithImages',
       serializers.serialize(object.wordWithImages,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(WordWithImage)])),
+          specifiedType: const FullType(BuiltList, const [
+            const FullType(BuiltList, const [const FullType(WordWithImage)])
+          ])),
       'headers',
       serializers.serialize(object.headers,
           specifiedType:
@@ -54,9 +55,9 @@ class _$SentenceDataSerializer implements StructuredSerializer<SentenceData> {
           break;
         case 'wordWithImages':
           result.wordWithImages.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(WordWithImage)]))
-              as BuiltList);
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(BuiltList, const [const FullType(WordWithImage)])
+              ])) as BuiltList);
           break;
         case 'headers':
           result.headers.replace(serializers.deserialize(value,
@@ -124,7 +125,7 @@ class _$SentenceData extends SentenceData {
   @override
   final String gameId;
   @override
-  final BuiltList<WordWithImage> wordWithImages;
+  final BuiltList<BuiltList<WordWithImage>> wordWithImages;
   @override
   final BuiltList<String> headers;
 
@@ -184,10 +185,10 @@ class SentenceDataBuilder
   String get gameId => _$this._gameId;
   set gameId(String gameId) => _$this._gameId = gameId;
 
-  ListBuilder<WordWithImage> _wordWithImages;
-  ListBuilder<WordWithImage> get wordWithImages =>
-      _$this._wordWithImages ??= new ListBuilder<WordWithImage>();
-  set wordWithImages(ListBuilder<WordWithImage> wordWithImages) =>
+  ListBuilder<BuiltList<WordWithImage>> _wordWithImages;
+  ListBuilder<BuiltList<WordWithImage>> get wordWithImages =>
+      _$this._wordWithImages ??= new ListBuilder<BuiltList<WordWithImage>>();
+  set wordWithImages(ListBuilder<BuiltList<WordWithImage>> wordWithImages) =>
       _$this._wordWithImages = wordWithImages;
 
   ListBuilder<String> _headers;
