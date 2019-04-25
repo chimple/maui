@@ -39,22 +39,38 @@ class UnitGame extends StatefulWidget {
 class _UnitGameState extends State<UnitGame> {
   List<_ChoiceDetail> choiceDetails = [];
   List<_ChoiceDetail> answerDetails = [];
-  Map<String, int> data = {};
   int score = 5;
   String displayText = '';
 
   @override
   void initState() {
     super.initState();
-    data['H'] = widget.question ~/ 100;
-    data['T'] = (widget.question ~/ 10) % 10;
-    data['U'] = widget.question % 10;
+    displayText = widget.question.toString();
+    int i = 0;
+    int j = displayText.length - 1;
+    String position = '';
+    while (i < 3) {
+      switch (i) {
+        case 0:
+          position = 'U';
+          break;
+        case 1:
+          position = 'T';
+          break;
+        case 2:
+          position = 'H';
+          break;
+        default:
+      }
 
-    data.forEach((c, d) {
-      displayText += '$d';
-      answerDetails.add(_ChoiceDetail(choice: d, position: c));
-      choiceDetails.add(_ChoiceDetail(choice: d, position: c));
-    });
+      int choice = j < 0 ? -1 : int.parse(displayText[j]);
+      answerDetails.add(_ChoiceDetail(choice: choice, position: position));
+      choiceDetails.add(_ChoiceDetail(choice: choice, position: position));
+      j--;
+      i++;
+    }
+    answerDetails = answerDetails.reversed.toList();
+    choiceDetails = choiceDetails.reversed.toList();
   }
 
   Widget _gridView(rows, cols, children) {
@@ -140,14 +156,17 @@ class _UnitGameState extends State<UnitGame> {
         ));
   }
 
-  Widget _draggable(String position, double height) {
+  Widget _draggable(var item, double height) {
     return Padding(
       padding: EdgeInsets.only(top: height * .2),
-      child: Draggable(
-        data: position,
-        maxSimultaneousDrags: 1,
-        child: positionCard(position, height * .68),
-        feedback: positionCard(position, height * .68),
+      child: Opacity(
+        opacity: item.choice == -1 ? 0.5 : 1,
+        child: Draggable(
+          data: item.position.toString(),
+          maxSimultaneousDrags: item.choice == -1 ? 0 : 1,
+          child: positionCard(item.position, height * .68),
+          feedback: positionCard(item.position, height * .68),
+        ),
       ),
     );
   }
@@ -216,8 +235,7 @@ class _UnitGameState extends State<UnitGame> {
                           .map((f) => Padding(
                               padding: EdgeInsets.symmetric(
                                   horizontal: constraints.maxWidth * .02),
-                              child: _draggable(
-                                  f.position, constraints.maxHeight / 2)))
+                              child: _draggable(f, constraints.maxHeight / 2)))
                           .toList()),
                 ],
               );

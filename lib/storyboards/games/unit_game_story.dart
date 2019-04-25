@@ -8,7 +8,7 @@ class UnitGameStory extends FullScreenStory {
         Scaffold(
           body: SafeArea(
             child: UnitGame(
-              question: 165,
+              question: 65,
               onGameOver: (_) {},
             ),
           ),
@@ -17,6 +17,14 @@ class UnitGameStory extends FullScreenStory {
           body: SafeArea(
             child: UnitGame(
               question: 909,
+              onGameOver: (_) {},
+            ),
+          ),
+        ),
+        Scaffold(
+          body: SafeArea(
+            child: UnitGame(
+              question: 9,
               onGameOver: (_) {},
             ),
           ),
