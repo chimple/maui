@@ -1,6 +1,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:maui/jamaica/state/game_utils.dart';
 
 class MadSentenceGame extends StatefulWidget {
@@ -22,10 +23,6 @@ class _MadSentenceGameState extends State<MadSentenceGame> {
   @override
   void initState() {
     super.initState();
-    initializeSentence();
-  }
-
-  initializeSentence() {
     for (int i = 0; i < widget.words.length; i++) {
       _wordPos[i] = widget.words[i][0];
     }
@@ -35,50 +32,54 @@ class _MadSentenceGameState extends State<MadSentenceGame> {
     final buttonConfig = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.all(10.0),
-      child: Column(
-        children: <Widget>[
-          Text(
-            widget.header[button],
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.red,
-              fontSize: 40.0,
-            ),
-          ),
-          CupertinoPicker(
-            looping: true,
-            // magnification: 1.5,
-            backgroundColor: Colors.white,
-            diameterRatio: 1.5,
-            itemExtent: buttonConfig.height * 0.15,
-            onSelectedItemChanged: (i) {
-              _wordPos[button] = widget.words[button][i];
-            },
-            children: words.map((w) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  // Image.asset("assets/masking/pattern_02.png"),
-                  IconButton(
-                    icon: Icon(Icons.face),
-                    color: Colors.blue,
-                    iconSize: 50,
-                    onPressed: () {},
-                  ),
-                  Text(
-                    w,
-                    style: TextStyle(
-                      color: Colors.orangeAccent,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20.0,
-                    ),
-                  ),
-                ],
-              );
-            }).toList(growable: false),
-          ),
-        ],
+      // child: Container(
+      //   height: buttonConfig.height * 0.25,
+      //   width:  buttonConfig.height * 0.25,
+      //   child: Column(
+      //     children: <Widget>[
+      //       Text(
+      //         widget.header[button],
+      //         style: TextStyle(
+      //           fontWeight: FontWeight.bold,
+      //           color: Colors.red,
+      //           fontSize: 40.0,
+      //         ),
+      //       ),
+      child: CupertinoPicker(
+        looping: true,
+        // magnification: 1.5,
+        backgroundColor: Colors.lightGreenAccent,
+        diameterRatio: 1.5,
+        itemExtent: buttonConfig.height * 0.15,
+        onSelectedItemChanged: (i) {
+          _wordPos[button] = widget.words[button][i];
+        },
+        children: words.map((w) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              // Image.asset("assets/masking/pattern_02.png"),
+              IconButton(
+                icon: Icon(Icons.face),
+                color: Colors.orangeAccent,
+                iconSize: 50,
+                onPressed: () {},
+              ),
+              Text(
+                w,
+                style: TextStyle(
+                  color: Colors.orangeAccent,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20.0,
+                ),
+              ),
+            ],
+          );
+        }).toList(growable: false),
       ),
+      //     ],
+      //   ),
+      // ),
     );
   }
 
@@ -109,7 +110,7 @@ class _MadSentenceGameState extends State<MadSentenceGame> {
                 textStyle: TextStyle(
                     fontSize: 32.0,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white),
+                    color: Colors.orangeAccent),
                 textAlign: TextAlign.start,
                 alignment: AlignmentDirectional.topStart,
               ),
@@ -142,6 +143,7 @@ class _MadSentenceGameState extends State<MadSentenceGame> {
                   sentence =
                       _wordPos[0] + " " + _wordPos[1] + " " + _wordPos[2];
                   score++;
+                  FlutterTts().speak(sentence);
                   Future.delayed(const Duration(milliseconds: 700),
                       () => widget.onGameOver(score));
                 });
