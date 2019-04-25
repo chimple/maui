@@ -14,6 +14,7 @@ import 'package:maui/storyboards/games/finger_game_story.dart';
 import 'package:maui/storyboards/games/game_list_story.dart';
 import 'package:maui/storyboards/games/jumbled_words_game_story.dart';
 import 'package:maui/storyboards/games/box_matching_game_story.dart';
+import 'package:maui/storyboards/games/mad_sentence_game_story.dart';
 import 'package:maui/storyboards/games/match_the_shape_game_story.dart';
 import 'package:maui/storyboards/games/match_with_image_game_story.dart';
 import 'package:maui/storyboards/games/math_op_game_story.dart';
@@ -64,6 +65,7 @@ void main() {
     BasicCountingGameStory(),
     BentoBoxStory(),
     BingoGameStory(),
+    MadSentenceGameStory(),
     NumberBalanceGameStory(),
     BoxMatchingGameStory(),
     ChatBotStory(),
