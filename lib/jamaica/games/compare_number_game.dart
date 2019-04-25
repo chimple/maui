@@ -38,7 +38,7 @@ class _CompareNumberGameState extends State<CompareNumberGame>
     with SingleTickerProviderStateMixin {
   List<_ChoiceDetail> choiceDetails;
   _ChoiceDetail answerDetails;
-  Animation<double> _animation, _animation1;
+  Animation<double> _animationBig, _animationSmall;
   AnimationController _animationController;
   List<String> dragOperator = [">", "=", "<"];
   var questionList = [];
@@ -54,33 +54,33 @@ class _CompareNumberGameState extends State<CompareNumberGame>
     _animationController =
         AnimationController(vsync: this, duration: Duration(seconds: 2));
 
-    _animation = Tween<double>(begin: 1.0, end: -8.0).animate(
+    _animationBig = Tween<double>(begin: 1.0, end: -8.0).animate(
       new CurvedAnimation(
         parent: _animationController,
         curve: Curves.easeInOutBack,
       ),
     );
-    _animation1 = Tween<double>(begin: 1.0, end: 2.0).animate(
+    _animationSmall = Tween<double>(begin: 1.0, end: 2.0).animate(
       new CurvedAnimation(
         parent: _animationController,
         curve: Curves.easeInOutBack,
       ),
     );
 
-    _animation.addListener(() {
+    _animationBig.addListener(() {
       setState(() {});
     });
-    _animation1.addListener(() {
+    _animationSmall.addListener(() {
       setState(() {});
     });
-    _animation1.addStatusListener((status) {
+    _animationSmall.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         // _animationController
         //     .reverse(); //reverse the animation back here if its completed
       }
     });
 
-    _animation.addStatusListener((status) {
+    _animationBig.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         // _animationController
         //     .reverse(); //reverse the animation back here if its completed
@@ -114,16 +114,16 @@ class _CompareNumberGameState extends State<CompareNumberGame>
             key: Key("data1"),
             child: Padding(
               padding: widget.answer == '>'
-                  ? 8.0 * _animation.value == 8.0
+                  ? 8.0 * _animationBig.value == 8.0
                       ? EdgeInsets.all(0.0)
-                      : 8.0 * _animation.value >= 0
-                          ? EdgeInsets.all(8.0 * _animation.value)
+                      : 8.0 * _animationBig.value >= 0
+                          ? EdgeInsets.all(8.0 * _animationBig.value)
                           : EdgeInsets.all(0.0)
                   : widget.answer == '<'
-                      ? 8.0 * _animation1.value == 8.0
+                      ? 8.0 * _animationSmall.value == 8.0
                           ? EdgeInsets.all(0.0)
-                          : 8.0 * _animation1.value >= 0
-                              ? EdgeInsets.all(8.0 * _animation1.value)
+                          : 8.0 * _animationSmall.value >= 0
+                              ? EdgeInsets.all(8.0 * _animationSmall.value)
                               : EdgeInsets.all(0.0)
                       : EdgeInsets.all(0.0),
               child: Container(
@@ -183,16 +183,16 @@ class _CompareNumberGameState extends State<CompareNumberGame>
             key: Key("data2"),
             child: Padding(
               padding: widget.answer == '<'
-                  ? 8.0 * _animation.value == 8.0
+                  ? 8.0 * _animationBig.value == 8.0
                       ? EdgeInsets.all(0.0)
-                      : 8.0 * _animation.value >= 0
-                          ? EdgeInsets.all(8.0 * _animation.value)
+                      : 8.0 * _animationBig.value >= 0
+                          ? EdgeInsets.all(8.0 * _animationBig.value)
                           : EdgeInsets.all(0.0)
                   : widget.answer == '>'
-                      ? 8.0 * _animation1.value == 8.0
+                      ? 8.0 * _animationSmall.value == 8.0
                           ? EdgeInsets.all(0.0)
-                          : 8.0 * _animation1.value >= 0
-                              ? EdgeInsets.all(8.0 * _animation1.value)
+                          : 8.0 * _animationSmall.value >= 0
+                              ? EdgeInsets.all(8.0 * _animationSmall.value)
                               : EdgeInsets.all(0.0)
                       : EdgeInsets.all(0.0),
               child: Container(
