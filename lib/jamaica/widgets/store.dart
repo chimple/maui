@@ -238,11 +238,7 @@ class StoreWidget extends State<Store> with SingleTickerProviderStateMixin {
                           name: f.accessoryName,
                           toggleItem: (s) {
                             setState(() {
-                              if (itemNames.contains(s)) {
-                                itemNames.add(s);
-                              } else {
-                                itemNames.remove(s);
-                              }
+                              itemNames.add(s);
                             });
                           },
                           score: score,
@@ -371,7 +367,6 @@ class _StoreAccessoryButtonState extends State<StoreAccessoryButton> {
                                   context, widget.name, widget.imagePath);
                             },
                           );
-                          // Navigator.of(context).pop();
                         });
                       } else {
                         _toggleItem(widget.name);
@@ -483,10 +478,6 @@ class _StoreAccessoryButtonState extends State<StoreAccessoryButton> {
   }
 
   void _toggleItem(String item) {
-    if (widget.itemNames.contains(item)) {
-      widget.itemNames.remove(item);
-    } else {
-      widget.itemNames.add(item);
-    }
+    widget.itemNames.add(item);
   }
 }
