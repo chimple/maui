@@ -49,9 +49,9 @@ class _MadSentenceGameState extends State<MadSentenceGame> {
             CupertinoPicker(
           looping: true,
           // magnification: 1.5,
-          backgroundColor: Colors.lightGreenAccent,
+          backgroundColor: Colors.blueGrey,
           diameterRatio: 1.5,
-          itemExtent: buttonConfig.height * 0.15,
+          itemExtent: buttonConfig.height * 0.10,
           onSelectedItemChanged: (i) {
             _wordPos[button] = widget.sentenceData.wordWithImages[button][i];
           },
