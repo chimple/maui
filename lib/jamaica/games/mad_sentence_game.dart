@@ -17,6 +17,7 @@ class MadSentenceGame extends StatefulWidget {
 
 class _MadSentenceGameState extends State<MadSentenceGame> {
   int _buttonKey = 0;
+  int _wordNum = 0;
   String sentence = '';
   int score = 0;
   Map<int, WordWithImage> _wordPos = Map();
@@ -85,13 +86,7 @@ class _MadSentenceGameState extends State<MadSentenceGame> {
         Flexible(
           flex: 2,
           child: FadeAnimatedTextKit(
-            text: [
-              _wordPos[0].word +
-                  " " +
-                  _wordPos[1].word +
-                  " " +
-                  _wordPos[2].word,
-            ],
+            text: [sentence],
             textStyle: TextStyle(
                 fontSize: 32.0,
                 fontWeight: FontWeight.bold,
@@ -115,11 +110,10 @@ class _MadSentenceGameState extends State<MadSentenceGame> {
           backgroundColor: Colors.orangeAccent,
           onPressed: () {
             setState(() {
-              sentence = _wordPos[0].word +
-                  " " +
-                  _wordPos[1].word +
-                  " " +
-                  _wordPos[2].word;
+              widget.sentenceData.wordWithImages.forEach((f) {
+                sentence = sentence + " " + _wordPos[_wordNum++].word;
+              });
+
               score++;
               FlutterTts().speak(sentence);
               Future.delayed(const Duration(milliseconds: 700),
