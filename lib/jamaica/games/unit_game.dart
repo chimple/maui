@@ -45,7 +45,6 @@ class _UnitGameGameState extends State<UnitGame> {
   @override
   void initState() {
     super.initState();
-    // WidgetsBinding.instance.addPostFrameCallback(_afterLayout);
     widget.question.forEach((c, d) {
       displayText += '$d';
       answerDetails.add(_ChoiceDetail(choice: d, position: c));
