@@ -25,7 +25,6 @@ class StoryPageState extends State<StoryPage> {
   bool _isLoading = true;
   bool _isPlaying = false;
   PageController pageController = PageController();
-  List<StoryMode> _storyMode = [];
   int incr = 0;
 
   @override
@@ -41,8 +40,7 @@ class StoryPageState extends State<StoryPage> {
     final standardSerializers =
         (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
     story = standardSerializers.deserialize(jsonDecode(json));
-    for (int i = 0; i < story.pages.length; i++)
-      _storyMode.add(StoryMode.textMode);
+
     setState(() {
       _isLoading = false;
     });
@@ -64,9 +62,9 @@ class StoryPageState extends State<StoryPage> {
         imagePath: data.imagePath,
         audioFile: data.audioPath,
         fullText: data.text,
-        onComplete: () => incr++,
-        pageSliding: (index) => setState(() {
-              _isPlaying = !_isPlaying;
+        // onComplete: () => incr++,
+        pageSliding: (status) => setState(() {
+              _isPlaying = status;
             }),
         index: index++,
       ));

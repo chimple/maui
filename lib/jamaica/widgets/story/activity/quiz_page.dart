@@ -30,8 +30,7 @@ class QuizPage extends StatelessWidget {
         context,
         MaterialPageRoute(
             builder: (context) => Game(
-                  quizSession:
-                      QuizSession((s) => s..gameData = gameData as ListBuilder),
-                )));
+                quizSession:
+                    QuizSession((s) => s..gameData = ListBuilder(gameData)))));
   }
 }
