@@ -1,14 +1,15 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:maui/jamaica/state/game_utils.dart';
+import 'package:maui/models/sentence_data.dart';
 
 class MadSentenceGame extends StatefulWidget {
-  final List<List<String>> words;
-  final List<String> header;
+  final SentenceData sentenceData;
   final OnGameOver onGameOver;
-  const MadSentenceGame({Key key, this.words, this.header, this.onGameOver})
+  const MadSentenceGame({Key key, this.sentenceData, this.onGameOver})
       : super(key: key);
   @override
   _MadSentenceGameState createState() => new _MadSentenceGameState();
@@ -18,147 +19,122 @@ class _MadSentenceGameState extends State<MadSentenceGame> {
   int _buttonKey = 0;
   String sentence = '';
   int score = 0;
-  Map<int, String> _wordPos = Map();
+  Map<int, WordWithImage> _wordPos = Map();
 
   @override
   void initState() {
     super.initState();
-    for (int i = 0; i < widget.words.length; i++) {
-      _wordPos[i] = widget.words[i][0];
+    for (int i = 0; i < widget.sentenceData.wordWithImages.length; i++) {
+      _wordPos[i] = widget.sentenceData.wordWithImages[i][0];
     }
   }
 
-  Widget _scrollTiles(BuildContext context, List<String> words, int button) {
+  Widget _scrollTiles(
+      BuildContext context, BuiltList<WordWithImage> words, int button) {
     final buttonConfig = MediaQuery.of(context).size;
     return Padding(
-      padding: const EdgeInsets.all(10.0),
-      // child: Container(
-      //   height: buttonConfig.height * 0.25,
-      //   width:  buttonConfig.height * 0.25,
-      //   child: Column(
-      //     children: <Widget>[
-      //       Text(
-      //         widget.header[button],
-      //         style: TextStyle(
-      //           fontWeight: FontWeight.bold,
-      //           color: Colors.red,
-      //           fontSize: 40.0,
-      //         ),
-      //       ),
-      child: CupertinoPicker(
-        looping: true,
-        // magnification: 1.5,
-        backgroundColor: Colors.lightGreenAccent,
-        diameterRatio: 1.5,
-        itemExtent: buttonConfig.height * 0.15,
-        onSelectedItemChanged: (i) {
-          _wordPos[button] = widget.words[button][i];
-        },
-        children: words.map((w) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              // Image.asset("assets/masking/pattern_02.png"),
-              IconButton(
-                icon: Icon(Icons.face),
-                color: Colors.orangeAccent,
-                iconSize: 50,
-                onPressed: () {},
-              ),
-              Text(
-                w,
-                style: TextStyle(
-                  color: Colors.orangeAccent,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20.0,
+        padding: const EdgeInsets.all(10.0),
+        child:
+            // Flex(
+            //   direction: Axis.vertical,
+            //   children: <Widget>[
+            //     Text(
+            //       widget.header[button],
+            //       style: TextStyle(
+            //         fontWeight: FontWeight.bold,
+            //         color: Colors.red,
+            //         fontSize: 40.0,
+            //       ),
+            //     ),
+            CupertinoPicker(
+          looping: true,
+          // magnification: 1.5,
+          backgroundColor: Colors.lightGreenAccent,
+          diameterRatio: 1.5,
+          itemExtent: buttonConfig.height * 0.15,
+          onSelectedItemChanged: (i) {
+            _wordPos[button] = widget.sentenceData.wordWithImages[button][i];
+          },
+          children: words.map((w) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Image.asset(w.image),
+                Text(
+                  w.word,
+                  style: TextStyle(
+                    color: Colors.orangeAccent,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20.0,
+                  ),
                 ),
-              ),
-            ],
-          );
-        }).toList(growable: false),
-      ),
-      //     ],
-      //   ),
-      // ),
-    );
+              ],
+            );
+          }).toList(growable: false),
+        )
+        //     ],
+        //   ),
+        );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage(
-                    'assets/background_image/New-Blue-Background.jpg'),
-                fit: BoxFit.fill),
+        Flexible(
+          flex: 2,
+          child: FadeAnimatedTextKit(
+            text: [
+              _wordPos[0].word +
+                  " " +
+                  _wordPos[1].word +
+                  " " +
+                  _wordPos[2].word,
+            ],
+            textStyle: TextStyle(
+                fontSize: 32.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.orangeAccent),
+            textAlign: TextAlign.start,
+            alignment: AlignmentDirectional.topStart,
           ),
         ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Flexible(
-              flex: 2,
-              child: FadeAnimatedTextKit(
-                // isRepeatingAnimation: false,
-                text: [
-                  _wordPos[0],
-                  _wordPos[0] + " " + _wordPos[1],
-                  _wordPos[0] + " " + _wordPos[1] + " " + _wordPos[2]
-                ],
-                textStyle: TextStyle(
-                    fontSize: 32.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.orangeAccent),
-                textAlign: TextAlign.start,
-                alignment: AlignmentDirectional.topStart,
-              ),
-              // child: Container(
-              //   child: Text(
-              //     _sentence,
-              //     style: TextStyle(
-              //       color: Colors.white,
-              //       fontWeight: FontWeight.bold,
-              //       fontSize: 50.0,
-              //     ),
-              //   ),
-              // ),
-            ),
-            Flexible(
-              flex: 2,
-              child: GridView.count(
-                shrinkWrap: true,
-                mainAxisSpacing: 5.0,
-                crossAxisCount: 3,
-                children: widget.words.map((s) {
-                  return _scrollTiles(context, s, _buttonKey++);
-                }).toList(growable: false),
-              ),
-            ),
-            FloatingActionButton.extended(
-              backgroundColor: Colors.orangeAccent,
-              onPressed: () {
-                setState(() {
-                  sentence =
-                      _wordPos[0] + " " + _wordPos[1] + " " + _wordPos[2];
-                  score++;
-                  FlutterTts().speak(sentence);
-                  Future.delayed(const Duration(milliseconds: 700),
-                      () => widget.onGameOver(score));
-                });
-              },
-              icon: Icon(
-                Icons.done,
-                size: 40.0,
-              ),
-              label: Text(
-                "Done",
-                style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
-              ),
-            ),
-          ],
-        )
+        Flexible(
+          flex: 2,
+          child: GridView.count(
+            shrinkWrap: true,
+            mainAxisSpacing: 5.0,
+            crossAxisCount: 3,
+            children: widget.sentenceData.wordWithImages.map((s) {
+              return _scrollTiles(context, s, _buttonKey++);
+            }).toList(growable: false),
+          ),
+        ),
+        FloatingActionButton.extended(
+          backgroundColor: Colors.orangeAccent,
+          onPressed: () {
+            setState(() {
+              sentence = _wordPos[0].word +
+                  " " +
+                  _wordPos[1].word +
+                  " " +
+                  _wordPos[2].word;
+              score++;
+              FlutterTts().speak(sentence);
+              Future.delayed(const Duration(milliseconds: 700),
+                  () => widget.onGameOver(score));
+            });
+          },
+          icon: Icon(
+            Icons.done,
+            size: 40.0,
+          ),
+          label: Text(
+            "Done",
+            style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
+          ),
+        ),
       ],
     );
   }
