@@ -10,7 +10,7 @@ abstract class SentenceData
   @override
   String get gameId;
 
-  BuiltList<WordWithImage> get wordWithImages;
+  BuiltList<BuiltList<WordWithImage>> get wordWithImages;
   BuiltList<String> get headers;
 
   SentenceData._();
