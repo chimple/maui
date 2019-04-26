@@ -41,6 +41,8 @@ class _UnitGameState extends State<UnitGame> {
   List<_ChoiceDetail> answerDetails = [];
   int score = 5;
   String displayText = '';
+  double unitBoxWidth = 0.0;
+  double otherBoxWidth = 0.0;
 
   @override
   void initState() {
@@ -106,6 +108,7 @@ class _UnitGameState extends State<UnitGame> {
   Widget positionCard(String data, double height) {
     int rows;
     int cols;
+    double width;
     List<Widget> children = [];
     int i = 0;
     Widget circle = Padding(
@@ -121,6 +124,7 @@ class _UnitGameState extends State<UnitGame> {
       case 'H':
         rows = 10;
         cols = 10;
+        width = otherBoxWidth;
         while (i < 100) {
           children.add(circle);
           i++;
@@ -129,6 +133,7 @@ class _UnitGameState extends State<UnitGame> {
       case 'T':
         rows = 1;
         cols = 10;
+        width = otherBoxWidth;
         height /= 10;
         while (i < 10) {
           children.add(circle);
@@ -138,6 +143,8 @@ class _UnitGameState extends State<UnitGame> {
       case 'U':
         rows = 1;
         cols = 1;
+        width = unitBoxWidth;
+
         height /= 10;
         children.add(circle);
         break;
@@ -149,6 +156,7 @@ class _UnitGameState extends State<UnitGame> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         child: Container(
           height: height,
+          width: width,
           margin: EdgeInsets.symmetric(horizontal: height * .02, vertical: 10),
           child: Center(
             child: _gridView(rows, cols, children),
@@ -219,6 +227,9 @@ class _UnitGameState extends State<UnitGame> {
             padding: EdgeInsets.only(top: 10),
             child: LayoutBuilder(
                 builder: (BuildContext context, BoxConstraints constraints) {
+              double boxWidth = constraints.maxWidth * 0.88;
+              unitBoxWidth = boxWidth * .11;
+              otherBoxWidth = boxWidth * .42;
               return Table(
                 columnWidths: {2: FractionColumnWidth(.15)},
                 defaultVerticalAlignment: TableCellVerticalAlignment.middle,
