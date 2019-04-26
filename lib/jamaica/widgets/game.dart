@@ -32,7 +32,7 @@ class _GameState extends State<Game> {
   int _score = 0;
   int _stars = 0;
   String timeTaken;
-  int index = 0;
+  int gameIndex = 0;
   bool gameTimer = true;
   bool timeEnd = false;
 
@@ -44,19 +44,13 @@ class _GameState extends State<Game> {
     });
   }
 
-  onGameOver1(t) {
-    setState(() {
-      print("manu is in gakme over $t");
-    });
-  }
-
   timeEndCallback(t) {
     setState(() {
-      if (index + 1 == widget.quizSession.gameData.length) {
+      if (gameIndex + 1 == widget.quizSession.gameData.length) {
         gameTimer = false;
       }
       timeEnd = t;
-      ++index;
+      ++gameIndex;
       timeEnd = false;
     });
   }
@@ -76,7 +70,7 @@ class _GameState extends State<Game> {
     _navigator = Navigator(
       onGenerateRoute: (settings) => SlideUpRoute(
             widgetBuilder: (context) =>
-                _buildGame(context, index, widget.updateScore),
+                _buildGame(context, gameIndex, widget.updateScore),
           ),
     );
 
@@ -238,6 +232,7 @@ class _GameState extends State<Game> {
             setState(() {
               _score += score;
               timeEnd = false;
+              ++gameIndex;
               // updateScore(_score);
               if (score > 0) _stars++;
               //  _currentGame++;
