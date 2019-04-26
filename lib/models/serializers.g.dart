@@ -27,11 +27,21 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(QuizSession.serializer)
       ..add(QuizUpdate.serializer)
       ..add(Score.serializer)
+      ..add(SentenceData.serializer)
       ..add(StatusEnum.serializer)
       ..add(Stories.serializer)
       ..add(StoryConfig.serializer)
       ..add(Student.serializer)
       ..add(UserProfile.serializer)
+      ..add(WordWithImage.serializer)
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [
+            const FullType(BuiltList, const [const FullType(WordWithImage)])
+          ]),
+          () => new ListBuilder<BuiltList<WordWithImage>>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(String)]),
+          () => new ListBuilder<String>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(GameData)]),
           () => new ListBuilder<GameData>())

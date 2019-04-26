@@ -32,20 +32,22 @@ class BentoBox extends StatefulWidget {
   final CalculateLayout calculateLayout;
   final Axis axis;
   final DragConfig dragConfig;
+  final bool grid;
 
-  const BentoBox({
-    Key key,
-    this.cols,
-    this.rows,
-    this.children,
-    this.calculateLayout = calculateVerticalLayout,
-    this.axis,
-    this.dragConfig = DragConfig.fixed,
-    this.frontChildren,
-    this.qChildren,
-    this.qCols = 0,
-    this.qRows = 0,
-  }) : super(key: key);
+  const BentoBox(
+      {Key key,
+      this.cols,
+      this.rows,
+      this.children,
+      this.calculateLayout = calculateVerticalLayout,
+      this.axis,
+      this.dragConfig = DragConfig.fixed,
+      this.frontChildren,
+      this.qChildren,
+      this.qCols = 0,
+      this.qRows = 0,
+      this.grid = false})
+      : super(key: key);
 
   @override
   _BentoBoxState createState() => _BentoBoxState();
@@ -332,19 +334,22 @@ class _BentoBoxState extends State<BentoBox> {
 
   Widget buildChild(Size size, BentoChildDetail childDetail, bool fixed) {
     return Padding(
-      padding: EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(10.0),
       child: childDetail.child is CuteButton
           ? CuteButtonWrapper(
               key: childDetail.child.key,
               axis: widget.axis,
               onDragEnd: (d) => onDragEnd(d, childDetail),
               dragConfig: fixed ? DragConfig.fixed : widget.dragConfig,
-              size: size + Offset(-16.0, -16.0),
+              gridFeedback: widget.grid,
+              size: widget.grid == true
+                  ? size + Offset(-6, 0)
+                  : size + Offset(-16, -16),
               child: childDetail.child,
             )
           : SizedBox(
-              width: size.width - 16.0,
-              height: size.height - 16.0,
+              width: widget.grid == true ? size.height + 30 : size.width - 16,
+              height: widget.grid == true ? size.height + 30 : size.height - 16,
               child: Center(
                 child: AspectRatio(
                   aspectRatio: 1.0,

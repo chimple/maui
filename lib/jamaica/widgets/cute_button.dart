@@ -41,15 +41,17 @@ class CuteButtonWrapper extends StatefulWidget {
   final Axis axis;
   final DragConfig dragConfig;
   final Size size;
+  final bool gridFeedback;
 
-  const CuteButtonWrapper({
-    Key key,
-    this.child,
-    this.onDragEnd,
-    this.axis,
-    this.dragConfig = DragConfig.fixed,
-    this.size,
-  }) : super(key: key);
+  const CuteButtonWrapper(
+      {Key key,
+      this.child,
+      this.onDragEnd,
+      this.axis,
+      this.dragConfig = DragConfig.fixed,
+      this.size,
+      this.gridFeedback = false})
+      : super(key: key);
 
   @override
   CuteButtonWrapperState createState() {
@@ -102,15 +104,15 @@ class CuteButtonWrapperState extends State<CuteButtonWrapper> {
       });
     }
     return widget.dragConfig == DragConfig.fixed
-        ? buildButton(context)
+        ? buildButton(context, false)
         : Draggable(
             axis: widget.axis,
-            child: buildButton(context),
+            child: buildButton(context, false),
             childWhenDragging:
                 widget.dragConfig == DragConfig.draggableMultiPack
                     ? null
                     : Container(),
-            feedback: buildButton(context),
+            feedback: buildButton(context, widget.gridFeedback),
             data: (widget.key as ValueKey<String>).value,
             onDragEnd: (d) {
               widget.onDragEnd(d);
@@ -121,11 +123,14 @@ class CuteButtonWrapperState extends State<CuteButtonWrapper> {
             });
   }
 
-  Widget buildButton(BuildContext context) {
+  Widget buildButton(BuildContext context, bool gridFeedback) {
+    print("object is Bool ${widget.gridFeedback}");
     if (widget.child.cuteButtonType == CuteButtonType.cuteButton)
       return SizedBox(
-        width: widget.size.width,
-        height: widget.size.height,
+        width:
+            gridFeedback == true ? widget.size.width + 50 : widget.size.width,
+        height:
+            gridFeedback == true ? widget.size.height + 50 : widget.size.height,
         child: Center(
           child: AspectRatio(
             aspectRatio: 1.0,

@@ -77,6 +77,9 @@ class UserRepo {
     if (user.name.startsWith('t')) {
       user.userType = UserType.teacher;
     }
+    else{
+      user.userType =UserType.student;
+    }
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final deviceId = prefs.getString('deviceId');
     final loggedInUserId = prefs.getString('userId');
