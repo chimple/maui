@@ -42,10 +42,6 @@ class GameListState extends State<GameList>
     setState(() => isLoading = true);
     data = [];
     userData = AppState.loading().userProfile.lessons;
-    userData = new BuiltMap<String, int>({
-      'P': 99,
-    });
-
     data.add(await LessonRepo().getLessonsByTopic(TopicType.math));
     data.add(await LessonRepo().getLessonsByTopic(TopicType.reading));
     double scrollOffset = _calcCurrentLessonIndex(data[0]) * (width * .7) / 2.1;
