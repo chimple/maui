@@ -14,8 +14,14 @@ typedef UpdateQuizScore(int score);
 class Game extends StatefulWidget {
   final QuizSession quizSession;
   final UpdateCoins updateCoins;
+  final OnGameOver onGameOver;
   final UpdateQuizScore updateScore;
-  const Game({Key key, this.quizSession, this.updateCoins, this.updateScore})
+  const Game(
+      {Key key,
+      this.quizSession,
+      this.updateCoins,
+      this.onGameOver,
+      this.updateScore})
       : super(key: key);
   @override
   _GameState createState() => _GameState();
@@ -26,6 +32,8 @@ class _GameState extends State<Game> {
   int _score = 0;
   int _stars = 0;
   String timeTaken;
+  int index = 0;
+  bool gameTimer = true;
   bool timeEnd = false;
 
   Navigator _navigator;
@@ -36,22 +44,26 @@ class _GameState extends State<Game> {
     });
   }
 
+  onGameOver1(t) {
+    setState(() {
+      print("manu is in gakme over $t");
+    });
+  }
+
   timeEndCallback(t) {
     setState(() {
+      if (index + 1 == widget.quizSession.gameData.length) {
+        gameTimer = false;
+      }
       timeEnd = t;
-      print("time end $t");
+      ++index;
+      timeEnd = false;
     });
   }
 
   @override
   void initState() {
     super.initState();
-    _navigator = Navigator(
-      onGenerateRoute: (settings) => SlideUpRoute(
-            widgetBuilder: (context) =>
-                _buildGame(context, 0, widget.updateScore),
-          ),
-    );
   }
 
   @override
@@ -61,7 +73,13 @@ class _GameState extends State<Game> {
 
   @override
   Widget build(BuildContext context) {
-    print("......controll comming in game");
+    _navigator = Navigator(
+      onGenerateRoute: (settings) => SlideUpRoute(
+            widgetBuilder: (context) =>
+                _buildGame(context, index, widget.updateScore),
+          ),
+    );
+
     MediaQueryData media = MediaQuery.of(context);
     Size size = media.size;
 
@@ -121,10 +139,13 @@ class _GameState extends State<Game> {
                   height: 0.0,
                 ),
                 Expanded(flex: 3, child: buildUI(size)),
-                GameTimer(
-                    time: 30,
-                    timeCallback: timeCallback,
-                    timeEndCallback: timeEndCallback),
+                gameTimer
+                    ? GameTimer(
+                        time: 30,
+                        onGameOver: widget.onGameOver,
+                        timeCallback: timeCallback,
+                        timeEndCallback: timeEndCallback)
+                    : Container()
               ],
             ),
           ],
@@ -205,16 +226,18 @@ class _GameState extends State<Game> {
     );
   }
 
-  Widget _buildGame(BuildContext context, int index, updateScore) {
+  Widget _buildGame(BuildContext context, index, updateScore) {
     print("lets check the values ..is  $index");
+    print('lets check the tim end $timeEnd');
+
     if (index < widget.quizSession.gameData.length) {
       return buildGame(
           gameData: widget.quizSession.gameData[index],
           onGameOver: (score) {
             print("in side clicking or not lets check $index");
-
             setState(() {
               _score += score;
+              timeEnd = false;
               // updateScore(_score);
               if (score > 0) _stars++;
               //  _currentGame++;
