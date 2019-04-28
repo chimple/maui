@@ -9,7 +9,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:maui/db/dao/unit_dao.dart';
 import 'package:maui/db/dao/user_dao.dart';
 import 'package:maui/db/entity/user.dart';
-import 'package:maui/repos/game_data.dart';
+import 'package:maui/repos/game_data_repo.dart';
 import 'package:maui/db/dao/lesson_dao.dart';
 import 'package:maui/db/dao/lesson_unit_dao.dart';
 import 'package:path/path.dart';
