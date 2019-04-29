@@ -80,9 +80,11 @@ class TextToSpeechState extends State<TextToSpeech> {
     String platformVersion;
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
-      platformVersion = await GetVersion.platformVersion;
-      print(platformVersion);
-      version = int.parse(platformVersion.split(" ")[1]).floor();
+       platformVersion = await GetVersion.platformVersion;
+      print(platformVersion.split(" "));
+      var s = platformVersion.split(" ")[1];
+      s = s.substring(0, 1);
+      version = int.parse(s).floor();
       print(version);
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
