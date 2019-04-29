@@ -18,9 +18,8 @@ class MadSentenceGame extends StatefulWidget {
 class _MadSentenceGameState extends State<MadSentenceGame> {
   int _buttonKey = 0;
   int _wordNum = 0;
-
-  String sentence = '';
   int score = 0;
+  String sentence = '';
   Map<int, WordWithImage> _wordPos = Map();
 
   @override
@@ -118,7 +117,6 @@ class _MadSentenceGameState extends State<MadSentenceGame> {
               widget.sentenceData.wordWithImages.forEach((f) {
                 sentence = sentence + " " + _wordPos[_wordNum++].word;
               });
-
               score++;
               FlutterTts().speak(sentence);
               Future.delayed(const Duration(milliseconds: 700),
