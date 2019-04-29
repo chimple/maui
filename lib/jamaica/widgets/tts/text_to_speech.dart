@@ -55,7 +55,7 @@ class TextToSpeechState extends State<TextToSpeech> {
   int version = 0;
   List<String> words;
   final regExp1 = RegExp('[\n]');
-  final _regex1 = RegExp('[!.,"-:|?–]');
+  final regExp2 = RegExp('[!.,"-:|?–]');
   String temp = '';
   @override
   void initState() {
@@ -93,16 +93,16 @@ class TextToSpeechState extends State<TextToSpeech> {
   }
 
   stringFormat() {
+    words = List<String>();
+    listOfLines = List<String>();
     text = widget.fullText.replaceAll(regExp1, ' ');
-    if (!text.substring(text.length - 1, text.length).contains(RegExp('[.]'))) {
+    if (!text.substring(text.length - 1, text.length).contains(regExp2)) {
       text = text + '.';
     }
-    words = List<String>();
     var string = '';
-    listOfLines = List<String>();
     words = text.split(" ");
     for (var i = 0; i < words.length; i++) {
-      if (words[i].substring(0, 1).contains(_regex1)) {
+      if (words[i].substring(0, 1).contains(regExp2)) {
         words.removeAt(i);
         break;
       }
@@ -110,11 +110,12 @@ class TextToSpeechState extends State<TextToSpeech> {
     temp = words.join(' ');
     for (var i = 0; i < words.length; i++) {
       string = string + words[i] + ' ';
-      if (words[i].contains(RegExp('[,.|!:;"]'))) {
+      if (words[i].contains(regExp2)) {
         listOfLines.add(string);
         string = '';
       }
     }
+    setState(() {});
   }
 
   initTts() {
