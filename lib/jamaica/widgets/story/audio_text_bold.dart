@@ -9,7 +9,7 @@ import 'package:maui/jamaica/widgets/story/play_pause_button.dart';
 import 'package:maui/jamaica/widgets/story/show_dialog_mode.dart';
 import 'package:maui/jamaica/widgets/tts/text_to_speech.dart';
 
-enum TextToSpeachType { fromAudio, fromTts, hear2Read, tts }
+enum TextToSpeechType { fromAudio, fromTts, hear2Read, tts }
 final TextStyle textStyle = TextStyle(
   color: Colors.black,
   fontSize: 23,
@@ -61,7 +61,7 @@ class _AudioTextBold extends State<AudioTextBold> {
   List<String> temp = [];
   ScrollController _scrollController = new ScrollController();
   FlutterTts flutterTts;
-  TextToSpeachType textToSpeachType;
+  TextToSpeechType textToSpeachType;
   String text;
   @override
   void initState() {
@@ -80,19 +80,19 @@ class _AudioTextBold extends State<AudioTextBold> {
 
   Future pause() async {
     print('pause');
-    if (textToSpeachType == TextToSpeachType.fromAudio) {
+    if (textToSpeachType == TextToSpeechType.fromAudio) {
       await audioPlayer.pause().then((s) {
         setState(() => isPause = true);
         _duration = 0;
         isDurationZero = false;
       });
-    } else if (textToSpeachType == TextToSpeachType.hear2Read) {
+    } else if (textToSpeachType == TextToSpeechType.hear2Read) {
     } else {}
   }
 
   Future resume() async {
     // reset();
-    if (textToSpeachType == TextToSpeachType.fromAudio) {
+    if (textToSpeachType == TextToSpeechType.fromAudio) {
       await audioPlayer.release();
       play(_audioFiles[incr]).then((s) {
         setState(() {
@@ -100,7 +100,7 @@ class _AudioTextBold extends State<AudioTextBold> {
         });
       });
       print('audio status ${audioPlayer.state}');
-    } else if (textToSpeachType == TextToSpeachType.hear2Read) {
+    } else if (textToSpeachType == TextToSpeechType.hear2Read) {
     } else {}
   }
 
@@ -243,7 +243,7 @@ class _AudioTextBold extends State<AudioTextBold> {
             isPlaying = true;
             isPause = false;
             isAudioFileAvailableOrNot = false;
-            textToSpeachType = TextToSpeachType.fromAudio;
+            textToSpeachType = TextToSpeechType.fromAudio;
           });
         }, onError: (e) {
           setState(() {
@@ -264,7 +264,7 @@ class _AudioTextBold extends State<AudioTextBold> {
         setState(() {
           isPlaying = true;
           isPause = false;
-          textToSpeachType = TextToSpeachType.hear2Read;
+          textToSpeachType = TextToSpeechType.hear2Read;
         });
       };
       flutterTts.completionHandler = () {

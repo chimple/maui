@@ -56,8 +56,8 @@ class TextToSpeechState extends State<TextToSpeech> {
     super.initState();
     flutterTts = FlutterTts();
     flutterTts.setSpeechRate(widget.setSpeechRate);
-    text = widget.fullText.replaceAll(RegExp('[\n]'), ' ').trim();
-    if (!text.substring(text.length).contains(RegExp('[.]'))) {
+    text = widget.fullText.replaceAll(RegExp('[\n]'), ' ');
+    if (!text.substring(text.length - 1, text.length).contains(RegExp('[.]'))) {
       text = text + '.';
     }
     WidgetsBinding.instance.addPostFrameCallback((_) => reset());

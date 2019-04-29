@@ -4,7 +4,7 @@ import 'package:maui/jamaica/widgets/story/audio_text_bold.dart';
 
 class PlayPauseButton extends StatelessWidget {
   final bool isPlaying;
-  final TextToSpeachType textToSpeachType;
+  final TextToSpeechType textToSpeachType;
   final bool isPause;
   final VoidCallback loadAudio;
   final AudioPlayer audioPlayer;
@@ -13,7 +13,7 @@ class PlayPauseButton extends StatelessWidget {
   final VoidCallback speak;
   PlayPauseButton(
       {this.isPlaying,
-      this.textToSpeachType = TextToSpeachType.fromAudio,
+      this.textToSpeachType = TextToSpeechType.fromAudio,
       this.isPause,
       this.loadAudio,
       this.audioPlayer,
@@ -23,7 +23,7 @@ class PlayPauseButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraint) {
-      if (textToSpeachType == TextToSpeachType.fromAudio) {
+      if (textToSpeachType == TextToSpeechType.fromAudio) {
         return InkWell(
           customBorder: CircleBorder(),
           onTap: !isPlaying
