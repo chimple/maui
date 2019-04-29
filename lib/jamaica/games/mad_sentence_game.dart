@@ -18,6 +18,7 @@ class MadSentenceGame extends StatefulWidget {
 class _MadSentenceGameState extends State<MadSentenceGame> {
   int _buttonKey = 0;
   int _wordNum = 0;
+
   String sentence = '';
   int score = 0;
   Map<int, WordWithImage> _wordPos = Map();
@@ -34,25 +35,14 @@ class _MadSentenceGameState extends State<MadSentenceGame> {
       BuildContext context, BuiltList<WordWithImage> words, int button) {
     final buttonConfig = MediaQuery.of(context).size;
     return Padding(
-        padding: const EdgeInsets.all(10.0),
-        child:
-            // Flex(
-            //   direction: Axis.vertical,
-            //   children: <Widget>[
-            //     Text(
-            //       widget.header[button],
-            //       style: TextStyle(
-            //         fontWeight: FontWeight.bold,
-            //         color: Colors.red,
-            //         fontSize: 40.0,
-            //       ),
-            //     ),
-            CupertinoPicker(
+      padding: const EdgeInsets.all(10.0),
+      child: Container(
+        child: CupertinoPicker(
           looping: true,
-          // magnification: 1.5,
-          backgroundColor: Colors.blueGrey,
-          diameterRatio: 1.5,
-          itemExtent: buttonConfig.height * 0.10,
+          // magnification: 1.3,
+          backgroundColor: Colors.black87,
+          diameterRatio: 2.0,
+          itemExtent: buttonConfig.height * 0.1,
           onSelectedItemChanged: (i) {
             _wordPos[button] = widget.sentenceData.wordWithImages[button][i];
           },
@@ -64,7 +54,7 @@ class _MadSentenceGameState extends State<MadSentenceGame> {
                 Text(
                   w.word,
                   style: TextStyle(
-                    color: Colors.orangeAccent,
+                    color: Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: 20.0,
                   ),
@@ -72,10 +62,9 @@ class _MadSentenceGameState extends State<MadSentenceGame> {
               ],
             );
           }).toList(growable: false),
-        )
-        //     ],
-        //   ),
-        );
+        ),
+      ),
+    );
   }
 
   @override
@@ -95,15 +84,31 @@ class _MadSentenceGameState extends State<MadSentenceGame> {
             alignment: AlignmentDirectional.topStart,
           ),
         ),
-        Flexible(
+        Expanded(
           flex: 2,
-          child: GridView.count(
-            shrinkWrap: true,
-            mainAxisSpacing: 5.0,
-            crossAxisCount: 3,
-            children: widget.sentenceData.wordWithImages.map((s) {
-              return _scrollTiles(context, s, _buttonKey++);
-            }).toList(growable: false),
+          child: Container(
+            color: Colors.purpleAccent,
+            child: GridView.count(
+              shrinkWrap: true,
+              mainAxisSpacing: 5.0,
+              crossAxisCount: 3,
+              children: widget.sentenceData.wordWithImages.map((s) {
+                return Column(
+                  children: <Widget>[
+                    _buttonKey < widget.sentenceData.wordWithImages.length
+                        ? Text(widget.sentenceData.headers[_buttonKey],
+                            style: TextStyle(
+                                fontSize: 32.0,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.orangeAccent))
+                        : Text(""),
+                    Expanded(
+                      child: _scrollTiles(context, s, _buttonKey++),
+                    ),
+                  ],
+                );
+              }).toList(growable: false),
+            ),
           ),
         ),
         FloatingActionButton.extended(
