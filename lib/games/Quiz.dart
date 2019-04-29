@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:maui/games/single_game.dart';
-import 'package:maui/repos/game_data.dart';
+import 'package:maui/repos/game_data_repo.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/components/flash_card.dart';
 import 'package:maui/components/shaker.dart';

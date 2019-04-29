@@ -1,9 +1,13 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:core';
 import 'dart:math';
+import 'package:built_value/standard_json_plugin.dart';
 import 'package:flutter/services.dart';
 import 'package:maui/db/entity/lesson_unit.dart';
 import 'package:maui/db/entity/lesson.dart';
+import 'package:maui/models/game_data.dart';
+import 'package:maui/models/serializers.dart';
 import 'package:tuple/tuple.dart';
 import 'concept_repo.dart';
 import 'game_category_repo.dart';
@@ -13,6 +17,109 @@ import 'unit_repo.dart';
 import 'package:maui/loca.dart';
 
 enum Category { letter, number }
+
+Future<List<GameData>> fetchGameData(Lesson lesson, {int numData = 5}) async {
+  if (lesson.data != null) {
+    final standardSerializers =
+        (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
+    final gameString = await rootBundle.loadString(lesson.data);
+    final json = jsonDecode(gameString);
+    List<GameData> gameData = standardSerializers.deserialize(json);
+    gameData..shuffle();
+    return gameData.take(numData);
+  } else {
+    switch (lesson.conceptId ?? ConceptType.dummy) {
+      case ConceptType.dummy:
+        break;
+      case ConceptType.upperCaseLetter:
+        break;
+      case ConceptType.upperCaseToLowerCase:
+        break;
+      case ConceptType.lowerCaseLetterToWord:
+        break;
+      case ConceptType.syllableToWord:
+        break;
+      case ConceptType.upperCaseLetterToWord:
+        break;
+      case ConceptType.lowerCaseLetter:
+        break;
+      case ConceptType.singleDigitAdditionWithoutCarryover:
+        break;
+      case ConceptType.singleDigitAdditionWithCarryover:
+        break;
+      case ConceptType.doubleDigitAdditionWithoutCarryover:
+        break;
+      case ConceptType.doubleDigitAdditionWithCarryover:
+        break;
+      case ConceptType.tripleDigitAdditionWithoutCarryover:
+        break;
+      case ConceptType.tripleDigitAdditionWithCarryover:
+        break;
+      case ConceptType.singleDigitSubtractionWithoutBorrow:
+        break;
+      case ConceptType.singleDigitSubtractionWithBorrow:
+        break;
+      case ConceptType.doubleDigitSubtractionWithoutBorrow:
+        break;
+      case ConceptType.doubleDigitSubtractionWithBorrow:
+        break;
+      case ConceptType.tripleDigitSubtractionWithoutBorrow:
+        break;
+      case ConceptType.tripleDigitSubtractionWithBorrow:
+        break;
+      case ConceptType.singleDigitMultiplication:
+        break;
+      case ConceptType.singleDigitWithDoubleDigitMultiplication:
+        break;
+      case ConceptType.doubleDigitMultiplication:
+        break;
+      case ConceptType.tables1:
+        break;
+      case ConceptType.tables2:
+        break;
+      case ConceptType.tables3:
+        break;
+      case ConceptType.tables4:
+        break;
+      case ConceptType.tables5:
+        break;
+      case ConceptType.tables6:
+        break;
+      case ConceptType.tables7:
+        break;
+      case ConceptType.tables8:
+        break;
+      case ConceptType.tables9:
+        break;
+      case ConceptType.tables10:
+        break;
+      case ConceptType.number1:
+        break;
+      case ConceptType.number2:
+        break;
+      case ConceptType.number3:
+        break;
+      case ConceptType.number4:
+        break;
+      case ConceptType.number5:
+        break;
+      case ConceptType.number6:
+        break;
+      case ConceptType.number7:
+        break;
+      case ConceptType.number8:
+        break;
+      case ConceptType.number9:
+        break;
+      case ConceptType.number10:
+        break;
+      case ConceptType.numbers0to9:
+        break;
+      case ConceptType.numbers0to99:
+        break;
+    }
+  }
+}
 
 Future<List<String>> fetchSerialData(int lessonId) async {
   var lessonUnits =

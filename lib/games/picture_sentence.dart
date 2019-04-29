@@ -2,7 +2,7 @@ import 'dart:math';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:maui/games/single_game.dart';
-import 'package:maui/repos/game_data.dart';
+import 'package:maui/repos/game_data_repo.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/components/flash_card.dart';
 import 'package:maui/components/shaker.dart';
@@ -153,9 +153,9 @@ class PictureSentenceState extends State<PictureSentence> {
 
     print('height is $_height');
     print('width is $_width');
-    print('blankSpaceWidth/ 23  ${blankSpaceWidth/ 23}');
+    print('blankSpaceWidth/ 23  ${blankSpaceWidth / 23}');
 
-    print("$sentence   (length = ${sentence.length-6})");
+    print("$sentence   (length = ${sentence.length - 6})");
     print("Split >>>>>>>$eachWord");
 
     int listElement1 = eachWord.indexOf("1_");
