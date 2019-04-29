@@ -24,7 +24,6 @@ class StoryPageState extends State<StoryPage> {
   StoryConfig story;
   bool _isLoading = true;
   bool _isPlaying = false;
-  bool isPause = false;
   PageController pageController = PageController();
   int incr = 0;
   List<FlutterTextToSpeech> _keys = List<FlutterTextToSpeech>();
@@ -117,7 +116,7 @@ class StoryPageState extends State<StoryPage> {
                 PageView(
                   onPageChanged: (i) {
                     setState(() {
-                      isPause = false;
+                      _isPlaying = false;
                     });
                     _currentPageIndex = i;
                   },
@@ -128,17 +127,18 @@ class StoryPageState extends State<StoryPage> {
                   children: widgets,
                 ),
                 IconButton(
-                  icon: !isPause ? Icon(Icons.play_arrow) : Icon(Icons.pause),
+                  icon:
+                      !_isPlaying ? Icon(Icons.play_arrow) : Icon(Icons.pause),
                   onPressed: () {
-                    if (!isPause) {
+                    if (!_isPlaying) {
                       _keys[_currentPageIndex].speak();
                       setState(() {
-                        isPause = true;
+                        _isPlaying = true;
                       });
                     } else {
                       _keys[_currentPageIndex].pause();
                       setState(() {
-                        isPause = false;
+                        _isPlaying = false;
                       });
                     }
                   },
