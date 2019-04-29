@@ -19,7 +19,7 @@ dependencies:
   audioplayers: ^0.11.0
   percent_indicator: ^1.0.10
   tinycolor: ^1.0.2
-  flutter_tts: ^0.2.4
+  # flutter_tts: ^0.2.4
   fluttery:
     git:
       https://github.com/chimple/fluttery.git
@@ -52,6 +52,8 @@ dependencies:
     path: ../tahiti
   flores:
     path: ../flores
+  flutter_tts:
+    git: https://github.com/satish754ss/flutter_tts
 dev_dependencies:
   test: 1.6.1
   flutter_test:
@@ -63,6 +65,7 @@ dev_dependencies:
   built_value_generator: ^6.3.0
   json_serializable: ^2.0.0
   flutter_markdown: ^0.2.0
+  get_version: ^0.1.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
