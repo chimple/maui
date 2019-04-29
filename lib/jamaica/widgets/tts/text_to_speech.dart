@@ -5,6 +5,8 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:get_version/get_version.dart';
 import 'package:flutter/services.dart';
 
+enum TtsState { PLAYING, PAUSE }
+
 class FlutterTextToSpeech {
   GlobalKey<TextToSpeechState> textToSpeech;
 
@@ -25,10 +27,13 @@ class TextToSpeech extends StatefulWidget {
   final Function(String) onLongPress;
   final Function(String) onDoubleTap;
   final double setSpeechRate;
+
+  final Function(TtsState) playingStatus;
   final int index;
   final FlutterTextToSpeech keys;
   TextToSpeech(
       {@required this.keys,
+      this.playingStatus,
       @required this.fullText,
       this.onDoubleTap,
       this.setSpeechRate = .78,
@@ -180,7 +185,10 @@ class TextToSpeechState extends State<TextToSpeech> {
   }
 
   Future<dynamic> pause() => flutterTts.stop().then((s) {
-        if (s == 1) {}
+        if (s == 1) {
+          if (widget.playingStatus != null)
+            widget.playingStatus(TtsState.PAUSE);
+        }
       });
 
   Future<dynamic> speak() async {
@@ -189,10 +197,12 @@ class TextToSpeechState extends State<TextToSpeech> {
   }
 
   Future<dynamic> _speak(String text) => flutterTts.speak(text).then((s) {
-        if (version < 8) {
-          highlight();
-        } else {
-          setState(() {});
+        if (s == 1) {
+          if (version < 8) {
+            highlight();
+          } else {}
+          if (widget.playingStatus != null)
+            widget.playingStatus(TtsState.PLAYING);
         }
       });
 
