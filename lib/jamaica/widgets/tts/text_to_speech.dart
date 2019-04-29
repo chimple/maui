@@ -45,24 +45,27 @@ class TextToSpeech extends StatefulWidget {
 }
 
 class TextToSpeechState extends State<TextToSpeech> {
-  bool isPlaying = true;
+  bool isPlaying = false;
   List<String> listOfLines = [];
-  int incr = 0, version = 0, currentIndex = 0;
+  int incr = 0;
+
   FlutterTts flutterTts;
-  String startText = '', middleText = '', endText = '', holdText, text;
+  String text;
+  String startText = '', middleText = '', endText = '';
+  int version = 0;
   List<String> words;
+  final regExp1 = RegExp('[\n]');
+  final _regex1 = RegExp('[!.,"-:|?–]');
+  String temp = '';
   @override
   void initState() {
     super.initState();
     flutterTts = FlutterTts();
     flutterTts.setSpeechRate(widget.setSpeechRate);
-    text = widget.fullText.replaceAll(RegExp('[\n]'), ' ');
-    if (!text.substring(text.length - 1, text.length).contains(RegExp('[.]'))) {
-      text = text + '.';
-    }
-    WidgetsBinding.instance.addPostFrameCallback((_) => reset());
+    stringFormat();
     initTts();
     getVersion();
+    WidgetsBinding.instance.addPostFrameCallback((_) => reset());
   }
 
   reset() {
@@ -70,15 +73,13 @@ class TextToSpeechState extends State<TextToSpeech> {
     setState(() {
       startText = '';
       middleText = '';
-      endText = text;
-      holdText = text;
+      endText = temp;
       incr = 0;
     });
   }
 
   getVersion() async {
     String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       platformVersion = await GetVersion.platformVersion;
       print(platformVersion.split(" "));
@@ -91,27 +92,41 @@ class TextToSpeechState extends State<TextToSpeech> {
     }
   }
 
-  initTts() {
+  stringFormat() {
+    text = widget.fullText.replaceAll(regExp1, ' ');
+    if (!text.substring(text.length - 1, text.length).contains(RegExp('[.]'))) {
+      text = text + '.';
+    }
     words = List<String>();
     var string = '';
     listOfLines = List<String>();
     words = text.split(" ");
     for (var i = 0; i < words.length; i++) {
+      if (words[i].substring(0, 1).contains(_regex1)) {
+        words.removeAt(i);
+        break;
+      }
+    }
+    temp = words.join(' ');
+    for (var i = 0; i < words.length; i++) {
       string = string + words[i] + ' ';
-      if (words[i].contains(RegExp('[.,|!]'))) {
+      if (words[i].contains(RegExp('[,.|!:;"]'))) {
         listOfLines.add(string);
         string = '';
       }
     }
+  }
+
+  initTts() {
     flutterTts.completionHandler = () {
       if (incr == listOfLines.length - 1) {
         setState(() {
           incr = 0;
-          startText = text;
+          startText = '';
           middleText = '';
-          endText = '';
+          endText = temp;
           widget.onComplete();
-          initTts();
+          words = temp.split(" ");
         });
       } else {
         if (version < 8) {
@@ -122,18 +137,15 @@ class TextToSpeechState extends State<TextToSpeech> {
       if (words.isEmpty) {
         setState(() {
           reset();
-          endText = holdText;
+          endText = temp;
           widget.onComplete();
-          initTts();
+          words = temp.split(" ");
         });
       }
     };
 
     flutterTts.onRangeStart = (start, end) {
-      highlightApi26(start, end);
-    };
-    flutterTts.errorHandler = (e) {
-      print(e);
+      if (version >= 8) highlightApi26(start, end);
     };
   }
 
@@ -154,58 +166,53 @@ class TextToSpeechState extends State<TextToSpeech> {
     setState(() {
       startText = startText + middleText;
       middleText = '';
-      middleText = words.removeAt(0) + " ";
+      middleText = words.removeAt(0) + ' ';
       endText = '';
       endText = words.join(" ");
     });
   }
 
-  @override
-  void dispose() {
-    flutterTts.stop();
-    super.dispose();
+  skipWord() {
+    setState(() {
+      startText = startText + words.removeAt(0) + ' ';
+    });
   }
 
-  Future<dynamic> pause() => mounted
-      ? flutterTts.stop().then((s) {
-          if (s == 1) {}
-        })
-      : () {};
+  Future<dynamic> pause() => flutterTts.stop().then((s) {
+        if (s == 1) {}
+      });
 
   Future<dynamic> speak() async {
     final middle = version >= 8 ? words.join(' ') : listOfLines[incr];
     return await _speak(middle);
   }
 
-  Future<dynamic> _speak(String text) => mounted
-      ? flutterTts.speak(text).then((s) {
-          if (version < 8) {
-            highlight();
-          } else {
-            setState(() {});
-          }
-        })
-      : () {};
+  Future<dynamic> _speak(String text) => flutterTts.speak(text).then((s) {
+        if (version < 8) {
+          highlight();
+        } else {
+          setState(() {});
+        }
+      });
 
   onComplete() => setState(() {
         incr = 0;
       });
 
-  int colorIndex = -1;
   @override
   Widget build(BuildContext context) {
     var index = 0;
     var space = ' ';
     final children = <Widget>[];
-    // final textSpanChildren = <TextSpan>[];
     Widget _text(String data, String space) {
       return InkWell(
-        onDoubleTap:
-            widget.onDoubleTap != null ? () => widget.onDoubleTap(data) : null,
         onTap: widget.onTap != null ? () => widget.onTap(data) : null,
         onLongPress:
             widget.onLongPress != null ? () => widget.onLongPress(data) : null,
-        child: Text(data + space, style: widget.textStyle),
+        child: Text(
+          data + space,
+          style: TextStyle(fontSize: 23),
+        ),
       );
     }
 
@@ -222,20 +229,12 @@ class TextToSpeechState extends State<TextToSpeech> {
         index++;
         if (index == middleText.split(" ").length) space = '';
         children.add(InkWell(
-          onDoubleTap:
-              widget.onDoubleTap != null ? () => widget.onDoubleTap(s) : null,
           onTap: widget.onTap != null ? () => widget.onTap(s) : null,
           onLongPress:
               widget.onLongPress != null ? () => widget.onLongPress(s) : null,
           child: Text(
             s + space,
-            style: TextStyle(
-                wordSpacing: widget.textStyle.wordSpacing,
-                background: widget.textStyle.background,
-                letterSpacing: widget.textStyle.letterSpacing,
-                fontFamily: widget.textStyle.fontFamily,
-                fontSize: widget.textStyle.fontSize,
-                color: widget.highLightColor),
+            style: TextStyle(fontSize: 23, color: Colors.red),
           ),
         ));
       }).toList();
@@ -256,6 +255,12 @@ class TextToSpeechState extends State<TextToSpeech> {
     }
 
     return _buildText();
+  }
+
+  @override
+  void dispose() {
+    flutterTts.stop();
+    super.dispose();
   }
 }
 
