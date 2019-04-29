@@ -80,7 +80,7 @@ class TextToSpeechState extends State<TextToSpeech> {
     String platformVersion;
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
-       platformVersion = await GetVersion.platformVersion;
+      platformVersion = await GetVersion.platformVersion;
       print(platformVersion.split(" "));
       var s = platformVersion.split(" ")[1];
       s = s.substring(0, 1);
@@ -128,10 +128,10 @@ class TextToSpeechState extends State<TextToSpeech> {
         });
       }
     };
-    if (version >= 8)
-      flutterTts.ttsOnRangeStart((start, end) {
-        highlightApi26(start, end);
-      });
+
+    flutterTts.ttsOnRangeStart((start, end) {
+      if (version >= 8) highlightApi26(start, end);
+    });
     flutterTts.errorHandler = (e) {
       print(e);
     };
