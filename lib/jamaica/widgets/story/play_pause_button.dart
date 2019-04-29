@@ -13,7 +13,7 @@ class PlayPauseButton extends StatelessWidget {
   final VoidCallback speak;
   PlayPauseButton(
       {this.isPlaying,
-      this.textToSpeachType = TextToSpeechType.fromAudio,
+      this.textToSpeachType = TextToSpeechType.audio,
       this.isPause,
       this.loadAudio,
       this.audioPlayer,
@@ -23,7 +23,7 @@ class PlayPauseButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraint) {
-      if (textToSpeachType == TextToSpeechType.fromAudio) {
+      if (textToSpeachType == TextToSpeechType.audio) {
         return InkWell(
           customBorder: CircleBorder(),
           onTap: !isPlaying

@@ -9,7 +9,11 @@ import 'package:maui/jamaica/widgets/story/play_pause_button.dart';
 import 'package:maui/jamaica/widgets/story/show_dialog_mode.dart';
 import 'package:maui/jamaica/widgets/tts/text_to_speech.dart';
 
-enum TextToSpeechType { fromAudio, fromTts, hear2Read, tts }
+enum TextToSpeechType {
+  audio,
+  tts,
+  hear2Read,
+}
 final TextStyle textStyle = TextStyle(
   color: Colors.black,
   fontSize: 23,
@@ -80,7 +84,7 @@ class _AudioTextBold extends State<AudioTextBold> {
 
   Future pause() async {
     print('pause');
-    if (textToSpeachType == TextToSpeechType.fromAudio) {
+    if (textToSpeachType == TextToSpeechType.audio) {
       await audioPlayer.pause().then((s) {
         setState(() => isPause = true);
         _duration = 0;
@@ -92,7 +96,7 @@ class _AudioTextBold extends State<AudioTextBold> {
 
   Future resume() async {
     // reset();
-    if (textToSpeachType == TextToSpeechType.fromAudio) {
+    if (textToSpeachType == TextToSpeechType.audio) {
       await audioPlayer.release();
       play(_audioFiles[incr]).then((s) {
         setState(() {
@@ -243,7 +247,7 @@ class _AudioTextBold extends State<AudioTextBold> {
             isPlaying = true;
             isPause = false;
             isAudioFileAvailableOrNot = false;
-            textToSpeachType = TextToSpeechType.fromAudio;
+            textToSpeachType = TextToSpeechType.audio;
           });
         }, onError: (e) {
           setState(() {
