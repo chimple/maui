@@ -129,9 +129,9 @@ class TextToSpeechState extends State<TextToSpeech> {
       }
     };
 
-    flutterTts.ttsOnRangeStart((start, end) {
+    flutterTts.onRangeStart = (start, end) {
       if (version >= 8) highlightApi26(start, end);
-    });
+    };
     flutterTts.errorHandler = (e) {
       print(e);
     };
