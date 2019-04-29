@@ -4,7 +4,7 @@ import 'package:maui/games/single_game.dart';
 import 'package:maui/state/button_state_container.dart';
 import 'package:tuple/tuple.dart';
 import '../components/drawing.dart';
-import 'package:maui/repos/game_data.dart';
+import 'package:maui/repos/game_data_repo.dart';
 import '../components/SecondScreen.dart';
 import 'dart:math';
 import 'package:maui/components/flash_card.dart';
@@ -69,13 +69,12 @@ class DrawScreen extends State<Drawing> {
   void initState() {
     super.initState();
     _initBoard();
-    
   }
 
   void _initBoard() async {
     // navVal=0;
     setState(() => _isLoading = true);
-    
+
     print('score data manuuuuuuuuuu : ${widget.gameConfig.gameData}');
     if (widget.gameConfig.gameData != null) {
       fromJsonMap(widget.gameConfig.gameData);
@@ -175,8 +174,8 @@ class DrawScreen extends State<Drawing> {
               print("the data of image is....");
               return new Flex(direction: Axis.vertical, children: <Widget>[
                 new LimitedBox(
-                //   maxHeight: maxHeight,
-                // maxWidth: maxWidth,
+                  //   maxHeight: maxHeight,
+                  // maxWidth: maxWidth,
                   child: new Container(
                       padding: EdgeInsets.all(2.0),
                       child: Center(
@@ -446,13 +445,12 @@ class DrawScreen extends State<Drawing> {
                       new LimitedBox(
                         // flex: 2,
                         child: new Container(
-                          padding: EdgeInsets.only(top: 3.0,left: 3.0),
+                            padding: EdgeInsets.only(top: 3.0, left: 3.0),
                             child: UnitButton(
                               text: '$questionImg',
                               primary: true,
                               unitMode: UnitMode.image,
-                            )
-                            ),
+                            )),
                       ),
                       new FittedBox(
                           child: new Container(

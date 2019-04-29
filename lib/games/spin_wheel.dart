@@ -7,7 +7,7 @@ import 'package:fluttery/gestures.dart';
 import 'package:maui/components/shaker.dart';
 import 'package:maui/db/entity/unit.dart';
 import 'package:maui/games/single_game.dart';
-import 'package:maui/repos/game_data.dart';
+import 'package:maui/repos/game_data_repo.dart';
 import 'package:maui/repos/unit_repo.dart';
 import '../components/spins.dart';
 import 'package:maui/loca.dart';
@@ -349,6 +349,7 @@ class _SpinWheelState extends State<SpinWheel> with TickerProviderStateMixin {
       compareTheangle4();
     else if (_dataSize == 2) compareTheangle2();
   }
+
   // code optimizing
   void _comparisonOfAngle(int size, List<double> _lowerAngle,
       List<double> _uperAngle, List<bool> _sliceBool) {
