@@ -142,17 +142,20 @@ class StoryPageState extends State<StoryPage> {
                   scrollDirection: Axis.vertical,
                   children: widgets,
                 ),
-                IconButton(
-                  icon:
-                      !_isPlaying ? Icon(Icons.play_arrow) : Icon(Icons.pause),
-                  onPressed: () {
-                    if (!_isPlaying) {
-                      _keys[_currentPageIndex].speak();
-                    } else {
-                      _keys[_currentPageIndex].pause();
-                    }
-                  },
-                ),
+                _currentPageIndex != story.pages.length
+                    ? IconButton(
+                        icon: !_isPlaying
+                            ? Icon(Icons.play_arrow)
+                            : Icon(Icons.pause),
+                        onPressed: () {
+                          if (!_isPlaying) {
+                            _keys[_currentPageIndex].speak();
+                          } else {
+                            _keys[_currentPageIndex].pause();
+                          }
+                        },
+                      )
+                    : Container(),
               ],
             ),
           )

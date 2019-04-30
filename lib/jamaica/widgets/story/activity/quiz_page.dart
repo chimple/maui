@@ -2,6 +2,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:maui/jamaica/widgets/game.dart';
 import 'package:maui/models/game_data.dart';
+import 'package:maui/models/multi_data.dart';
 import 'package:maui/models/quiz_session.dart';
 
 class QuizPage extends StatelessWidget {
@@ -26,13 +27,15 @@ class QuizPage extends StatelessWidget {
   }
 
   _startQuiz(BuildContext context) {
-    Navigator.push(
+    Navigator.pushReplacement(
         context,
         MaterialPageRoute(
             builder: (context) => Game(
-                quizSession: QuizSession((s) => s
-                  ..gameData = ListBuilder(gameData)
+                updateCoins: (coins) => print(coins),
+                quizSession: QuizSession((b) => b
+                  ..gameId = 'MultipleChoiceGame'
                   ..level = 1
-                  ..sessionId = '1'))));
+                  ..sessionId = '1'
+                  ..gameData.addAll(gameData)))));
   }
 }
