@@ -47,8 +47,7 @@ class TextToSpeech extends StatefulWidget {
   TextToSpeechState createState() => new TextToSpeechState();
 }
 
-class TextToSpeechState extends State<TextToSpeech>
-    with AutomaticKeepAliveClientMixin<TextToSpeech> {
+class TextToSpeechState extends State<TextToSpeech> {
   bool isPlaying = false;
   List<String> listOfLines = [];
   int incr = 0;
@@ -292,9 +291,6 @@ class TextToSpeechState extends State<TextToSpeech>
     super.dispose();
   }
 
-  @override
-  // TODO: implement wantKeepAlive
-  bool get wantKeepAlive => false;
 }
 
 Map<int, int> get sdkIntValue {
