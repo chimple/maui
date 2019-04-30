@@ -1,9 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_tts/flutter_tts.dart';
-// import 'package:get_version/get_version.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 enum TtsState { PLAYING, PAUSE }
 
@@ -114,7 +113,7 @@ class TextToSpeechState extends State<TextToSpeech> {
     temp = words.join(' ');
     for (var i = 0; i < words.length; i++) {
       string = string + words[i] + ' ';
-      if (words[i].contains(RegExp('[.,|]'))) {
+      if (words[i].contains(RegExp('[.,|?]'))) {
         listOfLines.add(string);
         string = '';
       }
@@ -130,8 +129,9 @@ class TextToSpeechState extends State<TextToSpeech> {
           startText = '';
           middleText = '';
           endText = temp;
-          widget.onComplete();
           words = temp.split(" ");
+          widget.playingStatus(TtsState.PAUSE);
+          widget.onComplete();
         });
       } else {
         if (version < 8) {
@@ -143,8 +143,9 @@ class TextToSpeechState extends State<TextToSpeech> {
         setState(() {
           reset();
           endText = temp;
-          widget.onComplete();
           words = temp.split(" ");
+          widget.playingStatus(TtsState.PAUSE);
+          widget.onComplete();
         });
       }
     };
