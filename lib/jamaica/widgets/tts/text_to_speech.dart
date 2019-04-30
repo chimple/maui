@@ -225,7 +225,7 @@ class TextToSpeechState extends State<TextToSpeech>
             widget.onLongPress != null ? () => widget.onLongPress(data) : null,
         child: Text(
           data + space,
-          style: TextStyle(fontSize: 23),
+          style: widget.textStyle
         ),
       );
     }
@@ -248,7 +248,12 @@ class TextToSpeechState extends State<TextToSpeech>
               widget.onLongPress != null ? () => widget.onLongPress(s) : null,
           child: Text(
             s + space,
-            style: TextStyle(fontSize: 23, color: Colors.red),
+            style: TextStyle(
+              background: widget.textStyle.background,
+              backgroundColor: widget.textStyle.backgroundColor,
+              fontFamily: widget.textStyle.fontFamily,
+              decoration: widget.textStyle.decoration,
+              fontSize: widget.textStyle.fontSize, color: widget.highLightColor),
           ),
         ));
       }).toList();
@@ -263,8 +268,11 @@ class TextToSpeechState extends State<TextToSpeech>
     space = ' ';
     index = 0;
     Widget _buildText() {
-      return Wrap(
-        children: children,
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Wrap(
+          children: children,
+        ),
       );
     }
 
