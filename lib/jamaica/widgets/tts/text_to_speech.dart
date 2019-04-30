@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:get_version/get_version.dart';
+// import 'package:get_version/get_version.dart';
 import 'package:flutter/services.dart';
 
 enum TtsState { PLAYING, PAUSE }
@@ -27,7 +27,6 @@ class TextToSpeech extends StatefulWidget {
   final Function(String) onLongPress;
   final Function(String) onDoubleTap;
   final double setSpeechRate;
-
   final Function(TtsState) playingStatus;
   final int index;
   final FlutterTextToSpeech keys;
@@ -57,7 +56,7 @@ class TextToSpeechState extends State<TextToSpeech> {
   FlutterTts flutterTts;
   String text;
   String startText = '', middleText = '', endText = '';
-  int version = 0;
+  int version = 7;
   List<String> words;
   final regExp1 = RegExp('[\n]');
   final regExp2 = RegExp('[!.,"-:|?–]');
@@ -86,11 +85,11 @@ class TextToSpeechState extends State<TextToSpeech> {
   getVersion() async {
     String platformVersion;
     try {
-      platformVersion = await GetVersion.platformVersion;
-      print(platformVersion.split(" "));
-      var s = platformVersion.split(" ")[1];
-      s = s.substring(0, 1);
-      version = int.parse(s).floor();
+      // platformVersion = await GetVersion.platformVersion;
+      // print(platformVersion.split(" "));
+      // var s = platformVersion.split(" ")[1];
+      // s = s.substring(0, 1);
+      // version = int.parse(s).floor();
       print(version);
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';

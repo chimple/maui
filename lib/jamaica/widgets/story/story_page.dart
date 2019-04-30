@@ -62,6 +62,22 @@ class StoryPageState extends State<StoryPage> {
     final widgets = <Widget>[];
     story.pages.map((data) {
       widgets.add(AudioTextBold(
+        playingStatus: (status) {
+          if (status == TtsState.PLAYING) {
+            setState(() {
+              _isPlaying = true;
+            });
+          } else if (status == TtsState.PAUSE) {
+            setState(() {
+              _isPlaying = false;
+            });
+          }
+        },
+        onComplete: () {
+          setState(() {
+            _isPlaying = false;
+          });
+        },
         imagePath: data.imagePath,
         audioFile: data.audioPath,
         fullText: data.text,
@@ -132,14 +148,8 @@ class StoryPageState extends State<StoryPage> {
                   onPressed: () {
                     if (!_isPlaying) {
                       _keys[_currentPageIndex].speak();
-                      setState(() {
-                        _isPlaying = true;
-                      });
                     } else {
                       _keys[_currentPageIndex].pause();
-                      setState(() {
-                        _isPlaying = false;
-                      });
                     }
                   },
                 ),

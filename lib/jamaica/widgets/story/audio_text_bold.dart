@@ -33,9 +33,11 @@ class AudioTextBold extends StatefulWidget {
   final String imagePath;
   final Function(String) onLongPress;
   final FlutterTextToSpeech keys;
+  final Function(TtsState) playingStatus;
   AudioTextBold(
       {this.keys,
       this.onLongPress,
+      this.playingStatus,
       this.onComplete,
       @required this.fullText,
       this.pageSliding,
@@ -311,6 +313,7 @@ class _AudioTextBold extends State<AudioTextBold> {
     widget.onComplete();
   }
 
+  TtsState ttsState = TtsState.PAUSE;
   @override
   Widget build(BuildContext context) {
     if (text != null && widget.imagePath != null)
@@ -320,26 +323,35 @@ class _AudioTextBold extends State<AudioTextBold> {
           Expanded(
               flex: 4,
               child: TextToSpeech(
+                playingStatus: (s) {
+                  widget.playingStatus(s);
+                  ttsState = s;
+                },
+                onComplete: () => widget.onComplete(),
                 fullText: widget.fullText,
                 keys: widget.keys,
-                onLongPress: (s) async {
-                  await showDialog(
-                    context: context,
-                    builder: (context) {
-                      return FractionallySizedBox(
-                          heightFactor: MediaQuery.of(context).orientation ==
-                                  Orientation.portrait
-                              ? 0.5
-                              : 0.8,
-                          widthFactor: MediaQuery.of(context).orientation ==
-                                  Orientation.portrait
-                              ? 0.8
-                              : 0.4,
-                          child: textDescriptionDialog(
-                              context, s, 'textDesciption'));
-                    },
-                  );
-                },
+                onLongPress: (ttsState == TtsState.PAUSE)
+                    ? (s) async {
+                        await showDialog(
+                          context: context,
+                          builder: (context) {
+                            return FractionallySizedBox(
+                                heightFactor:
+                                    MediaQuery.of(context).orientation ==
+                                            Orientation.portrait
+                                        ? 0.5
+                                        : 0.8,
+                                widthFactor:
+                                    MediaQuery.of(context).orientation ==
+                                            Orientation.portrait
+                                        ? 0.8
+                                        : 0.4,
+                                child: textDescriptionDialog(
+                                    context, s, 'textDesciption'));
+                          },
+                        );
+                      }
+                    : null,
               ))
         ],
       );
@@ -357,6 +369,8 @@ class _AudioTextBold extends State<AudioTextBold> {
               child: Padding(
                 padding: const EdgeInsets.only(top: 15),
                 child: TextToSpeech(
+                  playingStatus: (status) => widget.playingStatus(status),
+                  onComplete: () => widget.onComplete(),
                   fullText: widget.fullText,
                   keys: widget.keys,
                   onLongPress: (s) async {
