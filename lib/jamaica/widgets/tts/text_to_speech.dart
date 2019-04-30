@@ -4,7 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
-enum TtsState { PLAYING, PAUSE }
+enum TtsState { PLAYING, PAUSE, STOPPED }
 
 class FlutterTextToSpeech {
   GlobalKey<TextToSpeechState> textToSpeech;
@@ -47,11 +47,12 @@ class TextToSpeech extends StatefulWidget {
   TextToSpeechState createState() => new TextToSpeechState();
 }
 
-class TextToSpeechState extends State<TextToSpeech> {
+class TextToSpeechState extends State<TextToSpeech>
+    with AutomaticKeepAliveClientMixin<TextToSpeech> {
   bool isPlaying = false;
   List<String> listOfLines = [];
   int incr = 0;
-
+  bool isLoading = false;
   FlutterTts flutterTts;
   String text;
   String startText = '', middleText = '', endText = '';
@@ -68,7 +69,8 @@ class TextToSpeechState extends State<TextToSpeech> {
     stringFormat();
     initTts();
     getVersion();
-    WidgetsBinding.instance.addPostFrameCallback((_) => reset());
+    reset();
+    // WidgetsBinding.instance.addPostFrameCallback((_) => reset());
   }
 
   reset() {
@@ -78,6 +80,7 @@ class TextToSpeechState extends State<TextToSpeech> {
       middleText = '';
       endText = temp;
       incr = 0;
+      isLoading = true;
     });
   }
 
@@ -130,7 +133,7 @@ class TextToSpeechState extends State<TextToSpeech> {
           middleText = '';
           endText = temp;
           words = temp.split(" ");
-          widget.playingStatus(TtsState.PAUSE);
+          widget.playingStatus(TtsState.STOPPED);
           widget.onComplete();
         });
       } else {
@@ -144,7 +147,7 @@ class TextToSpeechState extends State<TextToSpeech> {
           reset();
           endText = temp;
           words = temp.split(" ");
-          widget.playingStatus(TtsState.PAUSE);
+          widget.playingStatus(TtsState.STOPPED);
           widget.onComplete();
         });
       }
@@ -266,6 +269,13 @@ class TextToSpeechState extends State<TextToSpeech> {
     }
 
     return _buildText();
+    return Center(
+      child: SizedBox(
+        height: 40,
+        width: 40,
+        child: CircularProgressIndicator(),
+      ),
+    );
   }
 
   @override
@@ -273,6 +283,10 @@ class TextToSpeechState extends State<TextToSpeech> {
     flutterTts.stop();
     super.dispose();
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => false;
 }
 
 Map<int, int> get sdkIntValue {

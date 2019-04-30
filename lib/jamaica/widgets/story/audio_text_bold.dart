@@ -324,7 +324,6 @@ class _AudioTextBold extends State<AudioTextBold> {
               flex: 4,
               child: TextToSpeech(
                 playingStatus: (s) {
-                  print('statue $s');
                   setState(() {
                     ttsState = s;
                   });

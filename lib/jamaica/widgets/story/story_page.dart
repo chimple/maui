@@ -130,11 +130,12 @@ class StoryPageState extends State<StoryPage> {
             child: Stack(
               children: <Widget>[
                 PageView(
+                  controller: PageController(),
                   onPageChanged: (i) {
                     setState(() {
                       _isPlaying = false;
+                      _currentPageIndex = i;
                     });
-                    _currentPageIndex = i;
                   },
                   physics: !_isPlaying
                       ? ScrollPhysics()

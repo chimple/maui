@@ -2,7 +2,6 @@ import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:maui/jamaica/widgets/game.dart';
 import 'package:maui/models/game_data.dart';
-import 'package:maui/models/multi_data.dart';
 import 'package:maui/models/quiz_session.dart';
 
 class QuizPage extends StatelessWidget {
