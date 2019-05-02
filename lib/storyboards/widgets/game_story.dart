@@ -334,8 +334,18 @@ class GameStory extends FullScreenStory {
               MultiData((g) => g
                 ..gameId = 'JumbleWordsGame'
                 ..question = 'He Like to tease people'
-                ..answers.addAll(['He', 'Like', 'to', 'tease', 'people'])),
-            ])),
+                ..answers.addAll(['He', 'Like', 'to', 'tease', 'people']))
+                ,
+            ])..gameId = "MultipleChoiceGame"
+                ..level = 1
+                ..sessionId = '2'
+                ..gameData.addAll([
+                  MultiData((g) => g
+                    ..gameId = 'MultipleChoiceGame'
+                    ..question ='The largest land animal is _________________?'
+                    ..answers.addAll(['African Bush Elephant',])
+                    ..choices.addAll(['Lion', 'Whale', 'Panther']))
+                ])),
         ),
       ];
 }
