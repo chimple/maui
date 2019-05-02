@@ -9,7 +9,7 @@ abstract class ImageLabelData
     implements Built<ImageLabelData, ImageLabelDataBuilder>, GameData {
   @override
   String get gameId;
-
+  String get imageName;
   BuiltList<ImageItemDetail> get imageItemDetails;
   ImageLabelData._();
   factory ImageLabelData([updates(ImageLabelDataBuilder b)]) = _$ImageLabelData;

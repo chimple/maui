@@ -25,6 +25,9 @@ class _$ImageLabelDataSerializer
       'gameId',
       serializers.serialize(object.gameId,
           specifiedType: const FullType(String)),
+      'imageName',
+      serializers.serialize(object.imageName,
+          specifiedType: const FullType(String)),
       'imageItemDetails',
       serializers.serialize(object.imageItemDetails,
           specifiedType: const FullType(
@@ -47,6 +50,10 @@ class _$ImageLabelDataSerializer
       switch (key) {
         case 'gameId':
           result.gameId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'imageName':
+          result.imageName = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'imageItemDetails':
@@ -133,14 +140,20 @@ class _$ImageLabelData extends ImageLabelData {
   @override
   final String gameId;
   @override
+  final String imageName;
+  @override
   final BuiltList<ImageItemDetail> imageItemDetails;
 
   factory _$ImageLabelData([void Function(ImageLabelDataBuilder) updates]) =>
       (new ImageLabelDataBuilder()..update(updates)).build();
 
-  _$ImageLabelData._({this.gameId, this.imageItemDetails}) : super._() {
+  _$ImageLabelData._({this.gameId, this.imageName, this.imageItemDetails})
+      : super._() {
     if (gameId == null) {
       throw new BuiltValueNullFieldError('ImageLabelData', 'gameId');
+    }
+    if (imageName == null) {
+      throw new BuiltValueNullFieldError('ImageLabelData', 'imageName');
     }
     if (imageItemDetails == null) {
       throw new BuiltValueNullFieldError('ImageLabelData', 'imageItemDetails');
@@ -160,18 +173,21 @@ class _$ImageLabelData extends ImageLabelData {
     if (identical(other, this)) return true;
     return other is ImageLabelData &&
         gameId == other.gameId &&
+        imageName == other.imageName &&
         imageItemDetails == other.imageItemDetails;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, gameId.hashCode), imageItemDetails.hashCode));
+    return $jf($jc($jc($jc(0, gameId.hashCode), imageName.hashCode),
+        imageItemDetails.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('ImageLabelData')
           ..add('gameId', gameId)
+          ..add('imageName', imageName)
           ..add('imageItemDetails', imageItemDetails))
         .toString();
   }
@@ -185,6 +201,10 @@ class ImageLabelDataBuilder
   String get gameId => _$this._gameId;
   set gameId(String gameId) => _$this._gameId = gameId;
 
+  String _imageName;
+  String get imageName => _$this._imageName;
+  set imageName(String imageName) => _$this._imageName = imageName;
+
   ListBuilder<ImageItemDetail> _imageItemDetails;
   ListBuilder<ImageItemDetail> get imageItemDetails =>
       _$this._imageItemDetails ??= new ListBuilder<ImageItemDetail>();
@@ -196,6 +216,7 @@ class ImageLabelDataBuilder
   ImageLabelDataBuilder get _$this {
     if (_$v != null) {
       _gameId = _$v.gameId;
+      _imageName = _$v.imageName;
       _imageItemDetails = _$v.imageItemDetails?.toBuilder();
       _$v = null;
     }
@@ -221,7 +242,9 @@ class ImageLabelDataBuilder
     try {
       _$result = _$v ??
           new _$ImageLabelData._(
-              gameId: gameId, imageItemDetails: imageItemDetails.build());
+              gameId: gameId,
+              imageName: imageName,
+              imageItemDetails: imageItemDetails.build());
     } catch (_) {
       String _$failedField;
       try {
