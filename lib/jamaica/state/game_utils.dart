@@ -26,6 +26,7 @@ import 'package:maui/models/image_label_data.dart';
 import 'package:maui/models/math_op_data.dart';
 import 'package:maui/models/multi_data.dart';
 import 'package:maui/models/num_multi_data.dart';
+import 'package:maui/storyboards/games/multiple_choice_game.dart';
 
 typedef void OnGameOver(int score);
 
@@ -207,6 +208,15 @@ Widget buildGame({GameData gameData, OnGameOver onGameOver}) {
       final gd = gameData as ImageLabelData;
 //      return GuessImage(
 //          onGameOver: onGameOver, imageItemDetails: gd.imageItemDetails);
+      break;
+      case 'MultipleChoiceGame':
+      final gd=gameData as MultiData;
+      return MultipleChoiceGame(
+        question: gd.question,
+        answers: gd.answers,
+        choices: gd.choices,
+        onGameOver: onGameOver,
+      );
       break;
   }
   return Container();
