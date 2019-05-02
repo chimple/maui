@@ -27,7 +27,7 @@ class MadSentenceGameStory extends FullScreenStory {
         ..word = ''
         ..image = ''),
       WordWithImage((w) => w
-        ..word = 'Speaks'
+        ..word = 'speaks'
         ..image = 'assets/masking/pattern_04.png'),
       WordWithImage((w) => w
         ..word = 'eat'

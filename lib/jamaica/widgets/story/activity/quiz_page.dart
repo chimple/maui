@@ -12,9 +12,17 @@ class QuizPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: RaisedButton(
-        onPressed: () => _startQuiz(context),
-        child: Text('Start'),
+      floatingActionButton: SizedBox(
+        width: 120,
+        height: 50,
+        child: RaisedButton(
+          onPressed: () => _startQuiz(context),
+          color: Colors.blue,
+          child: Text('Start',style:Theme.of(context).textTheme.display1),
+        shape: RoundedRectangleBorder(
+          borderRadius: const BorderRadius.all(const Radius.circular(10))
+        ),
+        ),
       ),
       body: Center(
         child: Text(
@@ -26,12 +34,15 @@ class QuizPage extends StatelessWidget {
   }
 
   _startQuiz(BuildContext context) {
-    Navigator.push(
+    Navigator.pushReplacement(
         context,
         MaterialPageRoute(
             builder: (context) => Game(
-                  quizSession:
-                      QuizSession((s) => s..gameData = gameData as ListBuilder),
-                )));
+                updateCoins: (coins) => print(coins),
+                quizSession: QuizSession((b) => b
+                  ..gameId = 'MultipleChoiceGame'
+                  ..level = 1
+                  ..sessionId = '1'
+                  ..gameData.addAll(gameData)))));
   }
 }

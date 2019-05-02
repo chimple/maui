@@ -1,27 +1,18 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:maui/repos/game_data_repo.dart';
-import 'package:tuple/tuple.dart';
-import 'package:maui/components/gameaudio.dart';
+import 'package:maui/jamaica/state/game_utils.dart';
 
 class TapHome extends StatefulWidget {
-  Function onScore;
-  Function onProgress;
-  Function onEnd;
-  int iteration;
-  int gameCategoryId;
-  bool isRotated;
+  final String answer;
+  final List<String> choices;
+  final OnGameOver onGameOver;
 
-  TapHome(
-      {key,
-      this.onScore,
-      this.onProgress,
-      this.onEnd,
-      this.iteration,
-      this.gameCategoryId,
-      this.isRotated = false})
-      : super(key: key);
+  TapHome({
+    key,
+    this.answer,
+    this.choices,
+    this.onGameOver,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => new _TapState();
@@ -36,7 +27,6 @@ class _TapState extends State<TapHome> with TickerProviderStateMixin {
   bool _isLoading = true;
   List<String> _option;
   String _answer;
-  Tuple2<String, List<String>> _gameData;
   double _status = 1.0;
 
   @override
@@ -62,7 +52,7 @@ class _TapState extends State<TapHome> with TickerProviderStateMixin {
         });
         new Future.delayed(const Duration(milliseconds: 1000), () {
           print('calling onEnd');
-          widget.onEnd();
+          widget.onGameOver(1);
         });
       }
     });
@@ -72,7 +62,6 @@ class _TapState extends State<TapHome> with TickerProviderStateMixin {
         print("count $count");
         _animTimerController.forward(from: 0.0);
         if (count > 3) {
-          widget.onProgress(1.0);
           setState(() {
             _status = 0.0;
           });
@@ -96,10 +85,9 @@ class _TapState extends State<TapHome> with TickerProviderStateMixin {
     _status = 1.0;
     setState(() => _isLoading = true);
     _animation = new Tween(begin: 0.0, end: 15.0).animate(_animationController);
-    _gameData = await fetchSequenceDataForCategory(widget.gameCategoryId, 7);
-    _option = _gameData.item2;
-    _answer = _gameData.item1;
-    print("data is coming $_gameData");
+    _option = widget.choices;
+    _answer = widget.answer;
+    print("data is coming $_option");
     _myAnim1();
     setState(() => _isLoading = false);
   }
@@ -128,8 +116,7 @@ class _TapState extends State<TapHome> with TickerProviderStateMixin {
   void _clickText() {
     if (_answer == _option[_animationTimer.value]) {
       _animTimerController.stop();
-      widget.onScore(4);
-      widget.onProgress(1.0);
+      widget.onGameOver(1);
       setState(() {
         score = score + 4;
         _status = 0.0;
@@ -137,9 +124,7 @@ class _TapState extends State<TapHome> with TickerProviderStateMixin {
 
       _screenController.forward(from: 0.0);
     } else {
-      if (score > 0) {
-        widget.onScore(-1);
-      }
+      if (score > 0) {}
       setState(() {
         count = count + 1;
         score = score > 0 ? score - 1 : score;
@@ -148,7 +133,6 @@ class _TapState extends State<TapHome> with TickerProviderStateMixin {
       new Future.delayed(const Duration(milliseconds: 1000), () {
         _animationController.stop();
         if (count == 4) {
-          widget.onProgress(1.0);
           setState(() {
             _status = 0.0;
           });
@@ -156,16 +140,6 @@ class _TapState extends State<TapHome> with TickerProviderStateMixin {
         }
         _animTimerController.forward(from: 0.0);
       });
-    }
-  }
-
-  @override
-  void didUpdateWidget(TapHome oldWidget) {
-    print(oldWidget.iteration);
-    print(widget.iteration);
-    if (widget.iteration != oldWidget.iteration) {
-      _initBoard();
-      print(_gameData);
     }
   }
 

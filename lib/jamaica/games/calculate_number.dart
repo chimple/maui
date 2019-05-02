@@ -1,30 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:maui/jamaica/state/game_utils.dart';
 import 'dart:async';
-import 'package:maui/repos/game_data_repo.dart';
 import 'package:tuple/tuple.dart';
 import 'package:maui/components/shaker.dart';
-import 'dart:math';
 import 'package:maui/components/flash_card.dart';
-import 'package:maui/components/responsive_grid_view.dart';
-import 'package:maui/components/unit_button.dart';
-import 'package:maui/games/single_game.dart';
 
 class CalculateTheNumbers extends StatefulWidget {
-  Function onScore;
-  Function onProgress;
-  Function onEnd;
-  int iteration;
-  int gameCategoryId;
-  bool isRotated;
+  final int first;
+  final int second;
+  final String op;
+  final int answer;
+  final OnGameOver onGameOver;
 
   CalculateTheNumbers(
-      {key,
-      this.onScore,
-      this.onProgress,
-      this.onEnd,
-      this.iteration,
-      this.gameCategoryId,
-      this.isRotated = false})
+      {key, this.first, this.second, this.op, this.answer, this.onGameOver})
       : super(key: key);
   @override
   State<StatefulWidget> createState() => new _CalculateTheNumbersState();
@@ -105,12 +94,11 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
   void _initBoard() async {
     setState(() => _isLoading = true);
     _numbers = _allNumbers.sublist(0, _size * (_size + 1));
-    _data = await fetchMathData(widget.gameCategoryId);
     print(_data);
-    _num1 = _data.item1;
-    _num2 = _data.item3;
-    _result = _data.item4;
-    _operator = _data.item2;
+    _num1 = widget.first;
+    _num2 = widget.second;
+    _result = widget.answer;
+    _operator = widget.op;
     _scoreCount = 0;
     setState(() => _isLoading = false);
     _outputList.clear();
@@ -251,13 +239,6 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
       return out;
   }
 
-  @override
-  void didUpdateWidget(CalculateTheNumbers oldWidget) {
-    if (widget.iteration != oldWidget.iteration) {
-      _initBoard();
-    }
-  }
-
   void _myAnim() {
     _animationShake.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
@@ -323,14 +304,12 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
       print('nikkk         $_gettingResult   $_finalResult  $_scoreCount');
       if (_scoreCount == 0) {
         print("nikkk   ");
-        widget.onScore(4);
-        widget.onProgress(1.0);
         setState(() {
           _score = _score + 4;
         });
         _scoreCount = 1;
         new Future.delayed(const Duration(milliseconds: 1000), () {
-          widget.onEnd();
+          widget.onGameOver(1);
         });
       }
       return true;
@@ -365,11 +344,6 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                 switch (_operator) {
                   case '+':
                     if (_j1 > 0) {
-                      // print("coming to the double digit..");
-                      // print('initial _i value... $_i');
-                      // print('initial j value... $_j1');
-                      // print('_num1List first digit....${_num1List[_i]}');
-                      // print('_num2List first digit....${_num2List[_i]}');
                       setState(() {
                         _outputList[_i] = _removeZero(
                                 int.parse(_addText(text, _outputList[_i])))
@@ -377,10 +351,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                         _outputList[_i] = _removeText(text, _outputList[_i]);
                         _flag[_i] = _rigltClick(text, _outputList[_i],
                             (_num1List[_i] + _num2List[_i] + cf[_i]));
-                        //  print('printing flag value....${_flag[_i]}');
                       });
-                      // print('first output....${_outputList[_i]}');
-                      // print('complete list...${_outputList}');
+
                       if (text == '✔') {
                         print('hloo nikk pp');
                         if (_rigltClick(text, _outputList[_i],
@@ -397,8 +369,6 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                               _outputList[_i] =
                                   (int.parse(_outputList[_i]) % 10).toString();
                               cf[_i + 1] = 1;
-                              //    print(
-                              //     'printing _outputList+1 value ....$_outputList[_i+1]');
                               _preValue = _outputList[_i] + _preValue;
                             });
                           } else {
@@ -409,7 +379,6 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                         }
                         if (_carry[_i] == 1) {
                           setState(() {
-                            //    print('printing _i increment....');
                             _i++;
                             _j1--;
                             new Future.delayed(
@@ -421,7 +390,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                           });
                         } else {
                           if (_score > 0) {
-                            widget.onScore(-1);
+                            // widget.onScore(-1);
                           }
 
                           setState(() {
@@ -448,9 +417,6 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                           _wrong = 0;
                         });
                       }
-                      // print('printing final value....$_preValue');
-                      // print(' at end _i value $_i');
-                      // print(' at end j value $_j1');
                     }
                     if ((cf[calCount(_result) - 1] == 1 &&
                             _options == 'singleDigit') ||
@@ -461,13 +427,9 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                         (cf[calCount(_result) - 1] == 1 &&
                             _options == 'doubleDigit' &&
                             (_num1digit2 + _num2digit2 + 1) >= 10)) {
-                      // print(
-                      //     "coming to check final carry is there or not...$_options");
                       setState(() {
-                        //  print('printing _i value in _carryFlag function...$_i');
                         _outputList[_i] = '1';
                         cf[calCount(_result) - 1] = 0;
-                        //   print('printing output list...$_outputList');
                         _preValue = _outputList[_i] + _preValue;
                         _flag[_i] = true;
                         _s[_i] = true;
@@ -559,7 +521,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                           });
                         } else {
                           if (_score > 0) {
-                            widget.onScore(-1);
+                            // widget.onScore(-1);
                           }
                           setState(() {
                             _score = _score > 0 ? _score - 1 : _score;
@@ -619,7 +581,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                         }
                       } else {
                         if (_score > 0) {
-                          widget.onScore(-1);
+                          // widget.onScore(-1);
                         }
                         setState(() {
                           _score = _score > 0 ? _score - 1 : _score;
@@ -724,16 +686,6 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
         child: new CircularProgressIndicator(),
       );
     }
-//    if (_isShowingFlashCard) {
-//      return new FlashCard(
-//          text: _result.toString(),
-//          onChecked: () {
-//            setState(() {
-//              _isShowingFlashCard = false;
-//              _initBoard();
-//            });
-//          });
-//    }
     switch (_options) {
       case 'singleDigit':
         return new LayoutBuilder(builder: (context, constraints) {
@@ -754,7 +706,6 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                     }));
           }
           return new Container(
-            //  color: new Color(0xFFff80ab),
             child: new Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
@@ -1809,9 +1760,6 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                         left: constraints.maxWidth > constraints.maxHeight
                             ? constraints.maxWidth * 0.25
                             : constraints.maxWidth * 0.1,
-//                        bottom: constraints.maxWidth > constraints.maxHeight
-//                            ? constraints.maxHeight * 0.06
-//                            : constraints.maxWidth * 0.07,
                         top: constraints.maxWidth > constraints.maxHeight
                             ? constraints.maxHeight * 0.06
                             : constraints.maxWidth * 0.05),
@@ -1820,9 +1768,6 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                             constraints.maxWidth, 'tripleDigit')),
                   ),
                 ),
-                // new Container(
-                //   child: displayTable(constraints.maxHeight,constraints.maxWidth, 'tripleDigit'),
-                // )
               ],
             ),
           );
@@ -1862,9 +1807,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         duration: new Duration(milliseconds: 250), vsync: this);
     animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
       ..addStatusListener((state) {
-        // print("$state:${animation.value}");
         if (state == AnimationStatus.dismissed) {
-          //  print('dismissed');
           if (!widget.text.isEmpty) {
             setState(() => _displayText = widget.text);
             controller.forward();
@@ -1875,21 +1818,15 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     controller.forward();
   }
 
-  // @override
-  // void dispose() {
-  //   controller.dispose();
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   void didUpdateWidget(MyButton oldWidget) {
     super.didUpdateWidget(oldWidget);
-    // if (oldWidget.text.isEmpty && widget.text.isNotEmpty) {
-    //   _displayText = widget.text;
-    //   controller.forward();
-    // } else if (oldWidget.text != widget.text) {
-    //   controller.reverse();
-    // }
   }
 
   @override
@@ -1930,20 +1867,8 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                                   ? widget.height * 0.045
                                   : widget.width * 0.02,
                           fontWeight: FontWeight.bold)),
-                )))
-        // )
-        );
+                ))));
   }
-//   Widget build(BuildContext context) {
-// //    print("_MyButtonState.build");
-//     return new ScaleTransition(
-//         scale: animation,
-//         child: new UnitButton(
-//           onPress: widget.onPress,
-//           text: _displayText,
-//           unitMode: UnitMode.text,
-//         ));
-//   }
 }
 
 class BlinkAnimation extends AnimatedWidget {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:maui/jamaica/screens/story_screen.dart';
 import 'package:maui/storyboards/collected_item_story.dart';
 import 'package:maui/storyboards/game_score_story.dart';
 import 'package:maui/storyboards/games/bingo_game_story.dart';
+import 'package:maui/storyboards/games/calculate_number_story.dart';
 import 'package:maui/storyboards/games/clock_game_story.dart';
 import 'package:maui/storyboards/games/compare_number_game_story.dart';
 import 'package:maui/storyboards/games/counting_game_story.dart';
@@ -19,6 +19,7 @@ import 'package:maui/storyboards/games/match_the_shape_game_story.dart';
 import 'package:maui/storyboards/games/match_with_image_game_story.dart';
 import 'package:maui/storyboards/games/math_op_game_story.dart';
 import 'package:maui/storyboards/games/memory_game_story.dart';
+import 'package:maui/storyboards/games/multiple_choice_game.dart';
 import 'package:maui/storyboards/games/number_balance_game_story.dart';
 import 'package:maui/storyboards/games/order_by_size_game_story.dart';
 import 'package:maui/storyboards/games/order_it_game_story.dart';
@@ -31,6 +32,7 @@ import 'package:maui/storyboards/games/sequence_alphabet_game_story.dart';
 import 'package:maui/storyboards/games/sequence_the_number_game_story.dart';
 import 'package:maui/storyboards/games/basic_counting_game_story.dart';
 import 'package:maui/storyboards/games/spin_wheel_game_story.dart';
+import 'package:maui/storyboards/games/tap_home_story.dart';
 import 'package:maui/storyboards/games/tap_wrong_game_story.dart';
 import 'package:maui/storyboards/games/tracing_alphabets_story.dart';
 import 'package:maui/storyboards/games/true_false_game_story.dart';
@@ -45,9 +47,9 @@ import 'package:maui/storyboards/widgets/chat_bot_story.dart';
 import 'package:maui/storyboards/widgets/cute_button_story.dart';
 import 'package:maui/storyboards/widgets/dot_number_story.dart';
 import 'package:maui/storyboards/games/game_level_story.dart';
-import 'package:maui/storyboards/games/score_screen_story.dart';
 import 'package:maui/storyboards/theme_map_story.dart';
 import 'package:maui/storyboards/widgets/game_story.dart';
+import 'package:maui/storyboards/widgets/multiple_choice_game_story.dart';
 import 'package:maui/storyboards/widgets/score_story.dart';
 import 'package:maui/storyboards/widgets/select_student_screen_story.dart';
 import 'package:maui/storyboards/widgets/select_teacher_screen_story.dart';
@@ -58,6 +60,8 @@ import 'package:storyboard/storyboard.dart';
 
 void main() {
   runApp(StoryboardApp([
+    TapHomeStory(),
+    CalculateTheNumberStory(),
     PlaceTheNumberStory(),
     GameScoreStory(),
     CompareNumberGameStroy(),
@@ -66,13 +70,12 @@ void main() {
     BasicCountingGameStory(),
     BentoBoxStory(),
     BingoGameStory(),
-    MadSentenceGameStory(),
-    NumberBalanceGameStory(),
     BoxMatchingGameStory(),
-    ChatBotStory(),
     ChatBotScreenStory(),
+    ChatBotStory(),
     ClockGameStory(),
     CollectedItemStory(),
+    CompareNumberGameStroy(),
     CountingGameStory(),
     CrosswordGameStory(),
     CuteButtonStory(),
@@ -81,35 +84,41 @@ void main() {
     FillInTheBlanksGameStory(),
     FindWordGameStory(),
     FingerGameStory(),
-    GameStory(),
     GameLevelStory(),
     GameListStory(),
+    GameScoreStory(),
+    GameStory(),
     JumbledWordsGameStory(),
+    MadSentenceGameStory(),
+    MapRewardsScreenStory(),
     MatchTheShapeGameStory(),
     MatchWithImageGameStory(),
     MathOpGameStory(),
     MemoryGameStory(),
     MonsterGameStory(),
+    NumberBalanceGameStory(),
     OrderBySizeGameStory(),
     OrderItGameStory(),
+    PlaceTheNumberStory(),
     RecognizeNumberGameStory(),
     ReflexGameStory(),
     RhymeWordsGameStory(),
-    SelectTeacherScreenStory(),
+    RulerNumbersGameStory(),
+    ScoreStory(),
     SelectStudentScreenStory(),
+    SelectTeacherScreenStory(),
     SequenceAlphabetGameStory(),
     SequenceTheNumberGameStory(),
     SlideUpRouteStory(),
     SpinWheelGameStory(),
     StoreScreenStory(),
-    ScoreStory(),
     StoryBoard(),
     TapWrongGameStory(),
     ThemeMapStory(),
     TracingAlphabetStory(),
     TrueFalseGameStory(),
-    MapRewardsScreenStory(),
     UnitGameStory(),
     UserProgressScreenStory(),
+    MultipleChoiceGameStory(),
   ]));
 }

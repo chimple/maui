@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 import 'dart:async' show Future;
 import 'dart:convert';
 import '../components/shaker.dart';
-import 'package:maui/repos/game_data.dart';
+import 'package:maui/repos/game_data_repo.dart';
 import 'package:maui/loca.dart';
 import 'package:maui/components/gameaudio.dart';
 
