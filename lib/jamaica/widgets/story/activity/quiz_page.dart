@@ -16,9 +16,10 @@ class QuizPage extends StatelessWidget {
         width: 120,
         height: 50,
         child: RaisedButton(
+          
           onPressed: () => _startQuiz(context),
           color: Colors.blue,
-          child: Text('Start'),
+          child: Text('Start',style:Theme.of(context).textTheme.display1),
         shape: RoundedRectangleBorder(
           borderRadius: const BorderRadius.all(const Radius.circular(10))
         ),
