@@ -12,9 +12,17 @@ class QuizPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: RaisedButton(
-        onPressed: () => _startQuiz(context),
-        child: Text('Start'),
+      floatingActionButton: SizedBox(
+        width: 120,
+        height: 50,
+        child: RaisedButton(
+          onPressed: () => _startQuiz(context),
+          color: Colors.blue,
+          child: Text('Start'),
+        shape: RoundedRectangleBorder(
+          borderRadius: const BorderRadius.all(const Radius.circular(10))
+        ),
+        ),
       ),
       body: Center(
         child: Text(
