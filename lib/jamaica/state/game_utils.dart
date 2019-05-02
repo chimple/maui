@@ -22,6 +22,7 @@ import 'package:maui/jamaica/games/true_false_game.dart';
 import 'package:maui/jamaica/widgets/story/activity/jumble_words.dart';
 import 'package:maui/models/crossword_data.dart';
 import 'package:maui/models/game_data.dart';
+import 'package:maui/models/image_label_data.dart';
 import 'package:maui/models/math_op_data.dart';
 import 'package:maui/models/multi_data.dart';
 import 'package:maui/models/num_multi_data.dart';
@@ -201,6 +202,11 @@ Widget buildGame({GameData gameData, OnGameOver onGameOver}) {
         choices: gd.choices,
         answers: gd.answers,
       );
+      break;
+    case 'GuessImage':
+      final gd = gameData as ImageLabelData;
+//      return GuessImage(
+//          onGameOver: onGameOver, imageItemDetails: gd.imageItemDetails);
       break;
   }
   return Container();

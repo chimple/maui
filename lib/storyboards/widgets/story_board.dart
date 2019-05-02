@@ -5,11 +5,19 @@ import 'package:maui/jamaica/screens/story_screen.dart';
 import 'package:maui/jamaica/widgets/story/activity/jumble_words.dart';
 import 'package:maui/jamaica/widgets/story/activity/text_highlighter.dart';
 import 'package:maui/jamaica/widgets/story/show_dialog_mode.dart';
+import 'package:maui/jamaica/widgets/story/story_page.dart';
 import 'package:storyboard/storyboard.dart';
 
 class StoryBoard extends FullScreenStory {
   @override
   List<Widget> get storyContent => [
+        Scaffold(
+          body: SafeArea(
+            child: StoryPage(
+              storyId: '24752',
+            ),
+          ),
+        ),
         Scaffold(
           body: SafeArea(
             child: StoryScreen(),
