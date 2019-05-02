@@ -4,10 +4,12 @@ import 'package:maui/storyboards/collected_item_story.dart';
 import 'package:maui/storyboards/game_score_story.dart';
 import 'package:maui/storyboards/games/bingo_game_story.dart';
 import 'package:maui/storyboards/games/compare_number_game_story.dart';
+import 'package:maui/storyboards/games/connect_dots_game_story.dart';
 import 'package:maui/storyboards/games/counting_game_story.dart';
 import 'package:maui/storyboards/games/crossword_game_story.dart';
 import 'package:maui/storyboards/games/dice_game_story.dart';
 import 'package:maui/storyboards/games/fill_in_the_blanks_story.dart';
+import 'package:maui/storyboards/games/fill_number_game_story.dart';
 import 'package:maui/storyboards/games/find_word_game_story.dart';
 import 'package:maui/storyboards/games/finger_game_story.dart';
 import 'package:maui/storyboards/games/game_list_story.dart';
@@ -53,6 +55,8 @@ import 'package:storyboard/storyboard.dart';
 
 void main() {
   runApp(StoryboardApp([
+    ConnectDotGameStroy(),
+    FillNumberGameStroy(),
     GameScoreStory(),
     CompareNumberGameStroy(),
     RulerNumbersGameStory(),
