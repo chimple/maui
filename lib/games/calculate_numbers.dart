@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:maui/repos/game_data.dart';
+import 'package:maui/repos/game_data_repo.dart';
 import 'package:tuple/tuple.dart';
 import 'package:maui/components/shaker.dart';
 import 'dart:math';

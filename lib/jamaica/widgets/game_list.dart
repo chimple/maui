@@ -3,10 +3,16 @@ import 'dart:math';
 import 'package:built_collection/built_collection.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
+import 'package:maui/db/entity/lesson.dart';
+import 'package:maui/jamaica/widgets/game.dart';
+import 'package:maui/jamaica/widgets/slide_up_route.dart';
 import 'package:maui/loca.dart';
 import 'package:maui/models/game_config.dart';
 import 'package:maui/models/game_status.dart';
 import 'package:maui/jamaica/screens/game_level.dart';
+import 'package:maui/models/quiz_session.dart';
+import 'package:maui/repos/game_data_repo.dart';
+import 'package:maui/repos/lesson_repo.dart';
 
 enum _ButtonStatus { active, disabled }
 
@@ -38,11 +44,22 @@ class GameListState extends State<GameList>
     _tabController = new TabController(vsync: this, length: 3);
   }
 
-  void _onTap(GameConfig gameConfig) {
-    setState(() {
-      gameToOpen = gameConfig.name;
-      this.gameConfig = gameConfig;
-    });
+  void _onTap(GameConfig gameConfig) async {
+//    setState(() {
+//      gameToOpen = gameConfig.name;
+//      this.gameConfig = gameConfig;
+//    });
+    final lesson = await LessonRepo().getLesson(1);
+    final gameData = await fetchGameData(lesson);
+    Navigator.of(context).push(SlideUpRoute(
+      widgetBuilder: (context) => Game(
+            quizSession: QuizSession((b) => b
+              ..sessionId = 'A'
+              ..gameId = 'B'
+              ..level = 1
+              ..gameData.addAll(gameData)),
+          ),
+    ));
   }
 
   void _flareCallback(String animationNme) {

@@ -3,6 +3,7 @@ import 'package:maui/jamaica/screens/story_screen.dart';
 import 'package:maui/storyboards/collected_item_story.dart';
 import 'package:maui/storyboards/game_score_story.dart';
 import 'package:maui/storyboards/games/bingo_game_story.dart';
+import 'package:maui/storyboards/games/clock_game_story.dart';
 import 'package:maui/storyboards/games/compare_number_game_story.dart';
 import 'package:maui/storyboards/games/counting_game_story.dart';
 import 'package:maui/storyboards/games/crossword_game_story.dart';
@@ -13,6 +14,7 @@ import 'package:maui/storyboards/games/finger_game_story.dart';
 import 'package:maui/storyboards/games/game_list_story.dart';
 import 'package:maui/storyboards/games/jumbled_words_game_story.dart';
 import 'package:maui/storyboards/games/box_matching_game_story.dart';
+import 'package:maui/storyboards/games/mad_sentence_game_story.dart';
 import 'package:maui/storyboards/games/match_the_shape_game_story.dart';
 import 'package:maui/storyboards/games/match_with_image_game_story.dart';
 import 'package:maui/storyboards/games/math_op_game_story.dart';
@@ -30,8 +32,10 @@ import 'package:maui/storyboards/games/sequence_the_number_game_story.dart';
 import 'package:maui/storyboards/games/basic_counting_game_story.dart';
 import 'package:maui/storyboards/games/spin_wheel_game_story.dart';
 import 'package:maui/storyboards/games/tap_wrong_game_story.dart';
+import 'package:maui/storyboards/games/tracing_alphabets_story.dart';
 import 'package:maui/storyboards/games/true_false_game_story.dart';
 import 'package:maui/storyboards/screens/progress_screen.dart';
+import 'package:maui/storyboards/games/unit_game_story.dart';
 import 'package:maui/storyboards/monster_game_story.dart';
 import 'package:maui/storyboards/map_reward_screen_story.dart';
 import 'package:maui/storyboards/user_progress_screen_story.dart';
@@ -55,19 +59,16 @@ import 'package:storyboard/storyboard.dart';
 
 void main() {
   runApp(StoryboardApp([
-    PlaceTheNumberStory(),
-    GameScoreStory(),
-    CompareNumberGameStroy(),
-    RulerNumbersGameStory(),
     AudioWidgetStory(),
     BasicCountingGameStory(),
     BentoBoxStory(),
     BingoGameStory(),
-    NumberBalanceGameStory(),
     BoxMatchingGameStory(),
-    ChatBotStory(),
     ChatBotScreenStory(),
+    ChatBotStory(),
+    ClockGameStory(),
     CollectedItemStory(),
+    CompareNumberGameStroy(),
     CountingGameStory(),
     CrosswordGameStory(),
     CuteButtonStory(),
@@ -76,34 +77,41 @@ void main() {
     FillInTheBlanksGameStory(),
     FindWordGameStory(),
     FingerGameStory(),
-    GameStory(),
     GameLevelStory(),
     GameListStory(),
+    GameScoreStory(),
+    GameStory(),
     JumbledWordsGameStory(),
+    MadSentenceGameStory(),
+    MapRewardsScreenStory(),
     MatchTheShapeGameStory(),
     MatchWithImageGameStory(),
     MathOpGameStory(),
     MemoryGameStory(),
     MonsterGameStory(),
+    NumberBalanceGameStory(),
     OrderBySizeGameStory(),
     OrderItGameStory(),
     ProgressScreenStory(),
+    PlaceTheNumberStory(),
     RecognizeNumberGameStory(),
     ReflexGameStory(),
     RhymeWordsGameStory(),
-    SelectTeacherScreenStory(),
+    RulerNumbersGameStory(),
+    ScoreStory(),
     SelectStudentScreenStory(),
+    SelectTeacherScreenStory(),
     SequenceAlphabetGameStory(),
     SequenceTheNumberGameStory(),
     SlideUpRouteStory(),
     SpinWheelGameStory(),
     StoreScreenStory(),
-    ScoreStory(),
     StoryBoard(),
     TapWrongGameStory(),
     ThemeMapStory(),
+    TracingAlphabetStory(),
     TrueFalseGameStory(),
-    MapRewardsScreenStory(),
+    UnitGameStory(),
     UserProgressScreenStory(),
   ]));
 }

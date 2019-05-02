@@ -11,7 +11,7 @@ class PlaceTheNumberStory extends FullScreenStory {
           body: SafeArea(
             child: PlaceTheNumber(
               onGameOver: (_) {},
-              answer: 5,
+              answer: 55,
             ),
           ),
         ),

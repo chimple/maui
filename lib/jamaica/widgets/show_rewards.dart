@@ -16,11 +16,13 @@ class ShowRewards extends StatefulWidget {
 
 class _ShowRewardsState extends State<ShowRewards>
     with SingleTickerProviderStateMixin {
-  PageController pageController = new PageController();
   List<Tuple4<String, String, int, int>> itemRange =
       List<Tuple4<String, String, int, int>>();
-
   int _itemCount = 0;
+  TabController _tabController;
+  List<Tab> tabs;
+  var tabIndex;
+  var l;
   int itemCrossAxisCount = 4;
   List<int> colorStatus = [];
   List<String> categoryList = [];
@@ -28,7 +30,6 @@ class _ShowRewardsState extends State<ShowRewards>
   List<String> dummyList = [];
   String highlightedItem;
   int flag = 0;
-  var currentPageValue = 0.0;
 
   @override
   void initState() {
@@ -39,10 +40,6 @@ class _ShowRewardsState extends State<ShowRewards>
       _itemCount += (l.length / itemCrossAxisCount).ceil();
       categoryList.add(e.categoryName);
     });
-    print(widget.items);
-    // var totalRewards =
-    //     widget.rewardList.values.map((v) => v.length).reduce((a, b) => a + b);
-
     widget.items.forEach((k, v) {
       colorStatus.add(v);
       dummyList.add(k);
@@ -52,15 +49,19 @@ class _ShowRewardsState extends State<ShowRewards>
         rewardImageList.add(dummyList[i]);
       }
     }
+    _tabController = TabController(vsync: this, length: itemRange.length)
+      ..addListener(() {
+        l = _tabController..index;
+        tabIndex = l.index;
+      });
     print('imagelist is $rewardImageList');
     print('color Status is  is $colorStatus');
-
     highlightedItem = itemRange.first.item1;
   }
 
   @override
   void dispose() {
-    pageController.dispose();
+    _tabController.dispose();
     super.dispose();
   }
 
@@ -87,10 +88,9 @@ class _ShowRewardsState extends State<ShowRewards>
           ),
           Expanded(
             flex: 70,
-            child: PageView(
-              controller: pageController,
+            child: TabBarView(
+              controller: _tabController,
               physics: NeverScrollableScrollPhysics(),
-              scrollDirection: Axis.vertical,
               children: widget.rewardList.keys.map((d) {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -172,37 +172,26 @@ class _ShowRewardsState extends State<ShowRewards>
               }).toList(growable: false),
             ),
           ),
-          Expanded(flex: 12, child: mainCategoryList()),
-        ],
-      ),
-    );
-  }
-
-  Widget mainCategoryList() {
-    int index = 0;
-    return Padding(
-      padding: EdgeInsets.only(top: 12.0),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.orange[300],
-          borderRadius: BorderRadius.only(
-              topRight: Radius.circular(20.0), topLeft: Radius.circular(20.0)),
-        ),
-        child: Stack(
-          children: <Widget>[
-            Positioned(
-              child: ListView(
-                physics: AlwaysScrollableScrollPhysics(),
-                padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
-                scrollDirection: Axis.horizontal,
-                children: itemRange.map((f) {
+          Expanded(
+            flex: 12,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.orange[300],
+                borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(30.0),
+                    topLeft: Radius.circular(30.0)),
+              ),
+              child: TabBar(
+                isScrollable: true,
+                tabs: itemRange.map((f) {
                   return buildIndexItem(context, f.item1, f.item2,
                       f.item1 == highlightedItem, index++);
                 }).toList(growable: false),
+                controller: _tabController,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -266,41 +255,29 @@ class _ShowRewardsState extends State<ShowRewards>
 
   Widget buildIndexItem(BuildContext context, String text, String imagePath,
       bool enabled, int index) {
-    return Padding(
+    return Tab(
+        child: Padding(
       padding: EdgeInsets.only(right: 20.0, left: 20.0),
-      child: InkWell(
-        onTap: () {
-          print('index is $index');
-          pageController.animateToPage(index,
-              duration: Duration(milliseconds: 500), curve: Curves.easeIn);
-          setState(() {
-            flag = index;
-          });
-        },
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            Expanded(
-              flex: 8,
-              child: Image.asset(
-                imagePath,
-                color: flag == index ? Colors.red : null,
-                package: 'tahiti',
-              ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Expanded(
+            flex: 5,
+            child: Image.asset(
+              imagePath,
+              color: flag == index ? Colors.red : null,
+              package: 'tahiti',
             ),
-            Padding(
-              padding: EdgeInsets.only(top: 10.0),
+          ),
+          Expanded(
+            flex: 5,
+            child: Text(
+              text,
+              style: TextStyle(color: flag == index ? Colors.red : null),
             ),
-            Expanded(
-              flex: 2,
-              child: Text(
-                text,
-                style: TextStyle(color: flag == index ? Colors.red : null),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
-    );
+    ));
   }
 }
