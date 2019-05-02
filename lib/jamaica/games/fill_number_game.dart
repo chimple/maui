@@ -21,11 +21,7 @@ class FillNumberGame extends StatefulWidget {
 enum Status { active, draggable, dragtarget, first }
 enum ShakeCell { right, inActive }
 
-class FillNumberGameState extends State<FillNumberGame>
-    with TickerProviderStateMixin {
-  Animation growingAnimation;
-  Animation animation;
-  AnimationController controller;
+class FillNumberGameState extends State<FillNumberGame> {
   var sumOfClickValue = 0,
       sublistNumberSum = 0,
       k = 0,
@@ -86,25 +82,6 @@ class FillNumberGameState extends State<FillNumberGame>
     }
     displayAns = sublistNumberSum;
     subListset.removeRange(0, subListset.length);
-
-    controller =
-        AnimationController(duration: const Duration(seconds: 6), vsync: this);
-    // growingAnimation = Tween(begin: 10.0, end: 100.0)
-    //     .animate(CurvedAnimation(parent: controller, curve: Curves.easeIn));
-    Tween myTween = new Tween<double>(begin: 1.0, end: 1.0);
-    animation = myTween.animate(controller)
-      // animation = Tween(begin: 0, end: 1.0).animate(CurvedAnimation(
-      //   parent: controller,
-      //   curve: Curves.easeIn,
-      // ))
-      ..addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          controller.reverse();
-        }
-        if (status == AnimationStatus.dismissed) {
-          // Navigator.pop(context);
-        }
-      });
   }
 
   @override
@@ -330,7 +307,6 @@ class FillNumberGameState extends State<FillNumberGame>
             print("helllo this letters$k");
             if (_letters[subListNumber] == null) {
               setState(() {
-                controller.forward();
                 k = 0;
                 displayAns = 0;
                 addClickValue = nulstring;
@@ -651,10 +627,9 @@ class FillNumberGameState extends State<FillNumberGame>
     List<Offset> listOffsets = offsets1 + offsets2 + offsets3 + offsets4;
 
     for (int i = 0, j = listOffsets.length - 1; i < letters.length; j--, i++) {
-      tiles.add(AnimatedPositioned(
+      tiles.add(Positioned(
         left: listOffsets[j].dx,
         top: listOffsets[j].dy,
-        duration: Duration(milliseconds: 500),
         child: _buildItem(i, letters[i], _statuses[i], shakeCells[i],
             listOffsets[j], _visibleflag[i], maxHeight, maxWidth, listOffsets),
       ));
