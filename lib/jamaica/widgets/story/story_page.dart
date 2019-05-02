@@ -129,19 +129,22 @@ class StoryPageState extends State<StoryPage> {
           Expanded(
             child: Stack(
               children: <Widget>[
-                PageView(
-                  controller: PageController(),
-                  onPageChanged: (i) {
-                    setState(() {
-                      _isPlaying = false;
-                      _currentPageIndex = i;
-                    });
-                  },
-                  physics: !_isPlaying
-                      ? ScrollPhysics()
-                      : NeverScrollableScrollPhysics(),
-                  scrollDirection: Axis.vertical,
-                  children: widgets,
+                Scrollable(
+                  viewportBuilder: (c,k){
+                  return PageView(
+                    controller: PageController(),
+                    onPageChanged: (i) {
+                      setState(() {
+                        _isPlaying = false;
+                        _currentPageIndex = i;
+                      });
+                    },
+                    physics: !_isPlaying
+                        ?ClampingScrollPhysics ()
+                        : NeverScrollableScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    children: widgets,
+                  );}
                 ),
                 _currentPageIndex != story.pages.length
                     ? IconButton(
