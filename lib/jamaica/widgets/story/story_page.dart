@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:built_value/standard_json_plugin.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:maui/jamaica/widgets/story/activity/quiz_page.dart';
 import 'package:maui/jamaica/widgets/story/audio_text_bold.dart';
 import 'package:maui/jamaica/widgets/tts/text_to_speech.dart';
@@ -97,7 +99,16 @@ class StoryPageState extends State<StoryPage> {
           SizedBox(
             height: 90,
             child: Container(
-              color: Colors.orange,
+              decoration: BoxDecoration(
+                boxShadow: [BoxShadow(
+                  offset: Offset.zero,
+                  blurRadius: 4.0,
+                  color: Colors.grey
+                )],
+                 color: Colors.orange,
+               
+              ),
+             
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

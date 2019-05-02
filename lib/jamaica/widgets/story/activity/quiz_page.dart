@@ -16,7 +16,6 @@ class QuizPage extends StatelessWidget {
         width: 120,
         height: 50,
         child: RaisedButton(
-          
           onPressed: () => _startQuiz(context),
           color: Colors.blue,
           child: Text('Start',style:Theme.of(context).textTheme.display1),
