@@ -55,8 +55,8 @@ import 'package:storyboard/storyboard.dart';
 
 void main() {
   runApp(StoryboardApp([
-    ConnectDotGameStroy(),
-    FillNumberGameStroy(),
+    ConnectDotGameStory(),
+    FillNumberGameStory(),
     GameScoreStory(),
     CompareNumberGameStroy(),
     RulerNumbersGameStory(),
