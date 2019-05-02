@@ -39,15 +39,15 @@ class _CasinoState extends State<Casino> {
       BuildContext context, List<String> scrollingData, int buttonNumber) {
     var rndm = new Random();
     var random = rndm.nextInt(5);
-
+    final buttonConfig = MediaQuery.of(context).size;
     return Container(
-      height: 130.0,
-      width: 80.0,
+      height: buttonConfig.height * 0.18,
+      width: buttonConfig.width * 0.15,
       child: CupertinoPicker(
         scrollController: FixedExtentScrollController(initialItem: random),
         looping: true,
-        diameterRatio: 1.0,
-        itemExtent: 100.0,
+        diameterRatio: 2.0,
+        itemExtent: buttonConfig.height * 0.08,
         backgroundColor: Color(0xFF734052),
         onSelectedItemChanged: (index) {
           _wordPos[buttonNumber] = scrollingData[index];
