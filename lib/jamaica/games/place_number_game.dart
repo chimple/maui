@@ -65,50 +65,47 @@ class _PlaceTheNumberState extends State<PlaceTheNumber> {
         ),
         Flexible(
           flex: 9,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: BentoBox(
-              grid: true,
-              dragConfig: DragConfig.draggableMultiPack,
-              rows: 10,
-              cols: 10,
-              children: choice
-                  .map((c) => CuteButton(
-                        key: Key(c.toString()),
-                        child: FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: Text(
-                              "$c",
-                            )),
+          child: BentoBox(
+            grid: true,
+            dragConfig: DragConfig.draggableMultiPack,
+            rows: 10,
+            cols: 10,
+            children: choice
+                .map((c) => CuteButton(
+                      key: Key(c.toString()),
+                      child: FittedBox(
+                          fit: BoxFit.fill,
+                          child: Text(
+                            "$c",
+                          )),
+                    ))
+                .toList(growable: false),
+            qRows: 2,
+            qCols: 2,
+            qChildren: answers
+                .map((a) => a.solved
+                    ? Container(
+                        color: Colors.green,
+                        key: Key('answer_${a.index}'),
+                        child: Center(child: Text(a.number.toString())),
+                      )
+                    : DragTarget<String>(
+                        key: Key('answer_${a.index}'),
+                        builder: (context, candidateData, rejectedData) =>
+                            Container(
+                              // height: 200.0,
+                              decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(16.0))),
+                            ),
+                        onWillAccept: (data) => data == a.number.toString(),
+                        onAccept: (data) {
+                          setState(() => a.solved = true);
+                          widget.onGameOver(1);
+                        },
                       ))
-                  .toList(growable: false),
-              qRows: 2,
-              qCols: 2,
-              qChildren: answers
-                  .map((a) => a.solved
-                      ? Container(
-                          color: Colors.green,
-                          key: Key('answer_${a.index}'),
-                          child: Center(child: Text(a.number.toString())),
-                        )
-                      : DragTarget<String>(
-                          key: Key('answer_${a.index}'),
-                          builder: (context, candidateData, rejectedData) =>
-                              Container(
-                                // height: 200.0,
-                                decoration: BoxDecoration(
-                                    color: Colors.red,
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(16.0))),
-                              ),
-                          onWillAccept: (data) => data == a.number.toString(),
-                          onAccept: (data) {
-                            setState(() => a.solved = true);
-                            widget.onGameOver(1);
-                          },
-                        ))
-                  .toList(growable: false),
-            ),
+                .toList(growable: false),
           ),
         )
       ],

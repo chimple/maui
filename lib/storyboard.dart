@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:maui/jamaica/screens/story_screen.dart';
 import 'package:maui/storyboards/collected_item_story.dart';
 import 'package:maui/storyboards/game_score_story.dart';
 import 'package:maui/storyboards/games/bingo_game_story.dart';
+import 'package:maui/storyboards/games/calculate_number_story.dart';
 import 'package:maui/storyboards/games/clock_game_story.dart';
 import 'package:maui/storyboards/games/compare_number_game_story.dart';
 import 'package:maui/storyboards/games/counting_game_story.dart';
@@ -31,6 +31,7 @@ import 'package:maui/storyboards/games/sequence_alphabet_game_story.dart';
 import 'package:maui/storyboards/games/sequence_the_number_game_story.dart';
 import 'package:maui/storyboards/games/basic_counting_game_story.dart';
 import 'package:maui/storyboards/games/spin_wheel_game_story.dart';
+import 'package:maui/storyboards/games/tap_home_story.dart';
 import 'package:maui/storyboards/games/tap_wrong_game_story.dart';
 import 'package:maui/storyboards/games/tracing_alphabets_story.dart';
 import 'package:maui/storyboards/games/true_false_game_story.dart';
@@ -45,7 +46,6 @@ import 'package:maui/storyboards/widgets/chat_bot_story.dart';
 import 'package:maui/storyboards/widgets/cute_button_story.dart';
 import 'package:maui/storyboards/widgets/dot_number_story.dart';
 import 'package:maui/storyboards/games/game_level_story.dart';
-import 'package:maui/storyboards/games/score_screen_story.dart';
 import 'package:maui/storyboards/theme_map_story.dart';
 import 'package:maui/storyboards/widgets/game_story.dart';
 import 'package:maui/storyboards/widgets/score_story.dart';
@@ -58,6 +58,12 @@ import 'package:storyboard/storyboard.dart';
 
 void main() {
   runApp(StoryboardApp([
+    TapHomeStory(),
+    CalculateTheNumberStory(),
+    PlaceTheNumberStory(),
+    GameScoreStory(),
+    CompareNumberGameStroy(),
+    RulerNumbersGameStory(),
     AudioWidgetStory(),
     BasicCountingGameStory(),
     BentoBoxStory(),
