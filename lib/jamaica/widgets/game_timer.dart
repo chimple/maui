@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:maui/jamaica/state/game_utils.dart';
 
 class GameTimer extends StatefulWidget {
   int time;
   Function(bool) timeEndCallback;
+  final OnGameOver onGameOver;
   Function(String) timeCallback;
-  GameTimer({Key key, this.time, this.timeCallback, this.timeEndCallback})
+  GameTimer(
+      {Key key,
+      this.time,
+      this.timeCallback,
+      this.onGameOver,
+      this.timeEndCallback})
       : super(key: key);
   @override
   GameTimerState createState() => GameTimerState();
@@ -22,6 +29,16 @@ class GameTimerState extends State<GameTimer> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     animationController = AnimationController(
         vsync: this, duration: Duration(seconds: widget.time));
     animationController.reverse(
@@ -29,15 +46,12 @@ class GameTimerState extends State<GameTimer> with TickerProviderStateMixin {
             animationController.value == 0.0 ? 1.0 : animationController.value);
     animationController.addStatusListener((status) {
       if (animationController.value == 0.0) {
+        print("the values iss....");
         setState(() {
           widget.timeEndCallback(true);
         });
       }
     });
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         Container(
