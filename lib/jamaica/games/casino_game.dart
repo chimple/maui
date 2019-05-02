@@ -6,16 +6,16 @@ import 'package:maui/components/responsive_grid_view.dart';
 import 'dart:async';
 import 'package:maui/jamaica/state/game_utils.dart';
 
-class Casino extends StatefulWidget {
+class CasinoGame extends StatefulWidget {
   final List<List<String>> letters;
   final OnGameOver onGameOver;
-  Casino({key, this.letters, this.onGameOver}) : super(key: key);
+  CasinoGame({key, this.letters, this.onGameOver}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _CasinoState();
+  State<StatefulWidget> createState() => _CasinoGameState();
 }
 
-class _CasinoState extends State<Casino> {
+class _CasinoGameState extends State<CasinoGame> {
   String givenWord = "";
   String word = "";
   Map<int, String> _wordPos = Map();

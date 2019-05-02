@@ -7,7 +7,7 @@ class CasinoGameStory extends FullScreenStory {
   List<Widget> get storyContent => [
         Scaffold(
           body: SafeArea(
-            child: Casino(
+            child: CasinoGame(
               letters: [
                 ['A', 'B', 'C', 'D'],
                 ['N', 'O', 'P', 'Q'],
@@ -19,7 +19,7 @@ class CasinoGameStory extends FullScreenStory {
         ),
         Scaffold(
           body: SafeArea(
-            child: Casino(
+            child: CasinoGame(
               letters: [
                 ['O', 'P', 'Q', 'R'],
                 ['R', 'S', 'T', 'U'],
@@ -34,7 +34,7 @@ class CasinoGameStory extends FullScreenStory {
         ),
         Scaffold(
           body: SafeArea(
-            child: Casino(
+            child: CasinoGame(
               letters: [
                 ['A', 'B', 'C', 'D'],
                 ['P', 'Q', 'R', 'S'],
@@ -48,7 +48,7 @@ class CasinoGameStory extends FullScreenStory {
         ),
         Scaffold(
           body: SafeArea(
-            child: Casino(
+            child: CasinoGame(
               letters: [
                 ['T', 'U', 'V', 'W'],
                 ['I', 'J', 'K', 'L'],
