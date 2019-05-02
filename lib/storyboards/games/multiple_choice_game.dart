@@ -92,10 +92,12 @@ class _MultipleChoiceGameState extends State<MultipleChoiceGame> {
                     child: Text(c.choice),
                     reaction: c.reaction,
                     onPressed: () {
-                      if (_count++ == _complete) {
+                      print(c.choice);
+                      if (widget.answers.contains(c.choice)) {
+                        _count++;
+                        if (_count== _complete) {
                           widget.onGameOver(_count);
                         }
-                      if (widget.answers.contains(c.choice)) {
                         return Reaction.success;
                       } else {
                         return Reaction.failure;
