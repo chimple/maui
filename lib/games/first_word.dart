@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
-import 'package:maui/repos/game_data.dart';
+import 'package:maui/repos/game_data_repo.dart';
 import 'package:tuple/tuple.dart';
 import 'dart:async';
 import 'package:maui/games/single_game.dart';

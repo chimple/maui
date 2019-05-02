@@ -5,6 +5,10 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:maui/db/entity/lesson.dart';
 import 'package:maui/jamaica/models/app_state.dart';
+import 'package:maui/jamaica/widgets/game.dart';
+import 'package:maui/jamaica/widgets/slide_up_route.dart';
+import 'package:maui/models/quiz_session.dart';
+import 'package:maui/repos/game_data_repo.dart';
 import 'package:maui/repos/lesson_repo.dart';
 
 enum _ButtonStatus { active, disabled }
@@ -72,10 +76,21 @@ class GameListState extends State<GameList>
       return i;
   }
 
-  void _onTap(String title) {
-    setState(() {
-      gameToOpen = title;
-    });
+  void _onTap(String title) async {
+//    setState(() {
+//      gameToOpen = title;
+//    });
+    final lesson = await LessonRepo().getLesson(1);
+    final gameData = await fetchGameData(lesson);
+    Navigator.of(context).push(SlideUpRoute(
+      widgetBuilder: (context) => Game(
+            quizSession: QuizSession((b) => b
+              ..sessionId = 'A'
+              ..gameId = 'B'
+              ..level = 1
+              ..gameData.addAll(gameData)),
+          ),
+    ));
   }
 
   void _flareCallback(String animationNme) {
