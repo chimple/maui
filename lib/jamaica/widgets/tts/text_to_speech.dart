@@ -210,7 +210,7 @@ class TextToSpeechState extends State<TextToSpeech> {
       });
 
   Future<dynamic> speak() async {
-    if (incr == 0 || listOfLines.isEmpty) {
+    if (incr == 0 || listOfLines.isEmpty || words.isEmpty) {
       stringFormat();
       setState(() {});
     }
