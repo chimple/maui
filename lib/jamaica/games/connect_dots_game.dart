@@ -7,8 +7,8 @@ import 'package:maui/components/Shaker.dart';
 
 class ConnectDotGame extends StatefulWidget {
   final OnGameOver onGameOver;
-  final List<String> otherData;
-  final List<String> serialData;
+  final List<int> otherData;
+  final List<int> serialData;
   const ConnectDotGame({key, this.onGameOver, this.otherData, this.serialData})
       : super(key: key);
   @override
@@ -31,13 +31,13 @@ class ConnectDotGameState extends State<ConnectDotGame> {
   var range;
   var rand;
   var code;
-  List<String> numbers = [];
-  List<String> storingAnsData = [];
-  List<String> _shuffledLetters = [];
-  List<String> _letters;
-  List<String> _todnumber = [];
+  List<int> numbers = [];
+  List<int> storingAnsData = [];
+  List<int> _shuffledLetters = [];
+  List<int> _letters;
+  List<int> _todnumber = [];
   List<Status> _statuses;
-  List<String> _letterex = [];
+  List<int> _letterex = [];
   List<int> tempindex = [];
   int lastclick;
   List<Offset> _pointssend = <Offset>[];
@@ -181,7 +181,7 @@ class ConnectDotGameState extends State<ConnectDotGame> {
     }
   }
 
-  Widget _buildItem(int index, String text, Status status, ShakeCell tile,
+  Widget _buildItem(int index, int text, Status status, ShakeCell tile,
       Offset offset, bool vflag, double maxHeight, double maxWidth) {
     // return Text(text);
     return new MyButton(
@@ -535,7 +535,7 @@ class MyButton extends StatefulWidget {
       this.onwill})
       : super(key: key);
 
-  final String text;
+  final int text;
   int index;
   Status status;
   ShakeCell tile;
@@ -571,7 +571,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
       ..addStatusListener((state) {
         if (state == AnimationStatus.dismissed) {
-          if (widget.text.isNotEmpty) {
+          if (widget.text == null) {
             controller.forward();
           }
         }
@@ -642,7 +642,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                                   ? Colors.blue
                                   : Colors.white,
                               onPressed: () => {},
-                              child: Text(widget.text,
+                              child: Text("${widget.text}",
                                   style: new TextStyle(
                                       fontSize: widget.maxWidth / 4)),
                               shape: new RoundedRectangleBorder(
@@ -681,7 +681,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                         color:
                             widget.vflag == true ? Colors.blue : Colors.white,
                         onPressed: () => {},
-                        child: Text(widget.text,
+                        child: Text("${widget.text}",
                             style:
                                 new TextStyle(fontSize: widget.maxWidth / 4)),
                         shape: new RoundedRectangleBorder(

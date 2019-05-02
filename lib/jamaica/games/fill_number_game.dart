@@ -489,7 +489,7 @@ class FillNumberGameState extends State<FillNumberGame> {
                           ),
                         ))),
                 Container(
-                  height: constraints.maxHeight - 270.0,
+                  height: constraints.maxHeight,
                   child: Stack(children: [
                     //                  new Container(
                     //   child: _buildpoint(_pointssend, Colors.blue, xstart, ystart),
@@ -641,7 +641,7 @@ class FillNumberGameState extends State<FillNumberGame> {
         child: _buildpoint(_pointssend, Colors.blue, xstart, ystart),
       ),
       new Padding(
-        padding: EdgeInsets.symmetric(horizontal: hPadding),
+        padding: EdgeInsets.symmetric( vertical: vPadding,horizontal: hPadding),
         child: Stack(children: tiles),
       )
     ]);

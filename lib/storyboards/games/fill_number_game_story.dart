@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:maui/jamaica/games/fill_number_game.dart';
 import 'package:storyboard/storyboard.dart';
 
-class FillNumberGameStroy extends FullScreenStory {
+class FillNumberGameStory extends FullScreenStory {
   @override
   List<Widget> get storyContent => [
         Scaffold(
