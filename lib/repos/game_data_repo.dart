@@ -2,11 +2,13 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
 import 'dart:math';
+import 'package:built_collection/built_collection.dart';
 import 'package:built_value/standard_json_plugin.dart';
 import 'package:flutter/services.dart';
 import 'package:maui/db/entity/lesson_unit.dart';
 import 'package:maui/db/entity/lesson.dart';
 import 'package:maui/models/game_data.dart';
+import 'package:maui/models/multi_data.dart';
 import 'package:maui/models/serializers.dart';
 import 'package:tuple/tuple.dart';
 import 'concept_repo.dart';
@@ -17,6 +19,139 @@ import 'unit_repo.dart';
 import 'package:maui/loca.dart';
 
 enum Category { letter, number }
+
+enum GameType {
+  BasicCountingGame,
+  BingoGame,
+  BoxMatchingGame,
+  CompareNumberGame,
+  CountingGame,
+  CrosswordGame,
+  DiceGame,
+  FillInTheBlanksGame,
+  FindWordGame,
+  FingerGame,
+  JumbledWordsGame,
+  MadSentenceGame,
+  MatchTheShapeGame,
+  MatchWithImageGame,
+  MathOpGame,
+  MemoryGame,
+  NumberBalanceGame,
+  OrderBySizeGame,
+  OrderItGame,
+  RecognizeNumberGame,
+  ReflexGame,
+  RhymeWordsGame,
+  RulerGame,
+  SequenceAlphabetGame,
+  SequenceTheNumberGame,
+  SpinWheelGame,
+  TapWrongGame,
+  TracingAlphabetGame,
+  TrueFalseGame,
+  UnitGame
+}
+
+Map<ConceptType, List<GameType>> conceptGames = {
+  ConceptType.upperCaseLetter: [
+    GameType.BingoGame,
+    GameType.BoxMatchingGame,
+    GameType.MemoryGame,
+    GameType.SpinWheelGame,
+    GameType.TracingAlphabetGame,
+    GameType.TrueFalseGame,
+    GameType.JumbledWordsGame
+  ],
+  ConceptType.upperCaseToLowerCase: [
+    GameType.BingoGame,
+    GameType.BoxMatchingGame,
+    GameType.MemoryGame,
+    GameType.SpinWheelGame,
+    GameType.TracingAlphabetGame,
+    GameType.TrueFalseGame,
+    GameType.JumbledWordsGame
+  ],
+  ConceptType.lowerCaseLetterToWord: [
+    GameType.BingoGame,
+    GameType.MemoryGame,
+    GameType.TracingAlphabetGame,
+    GameType.TrueFalseGame,
+    GameType.FindWordGame,
+    GameType.JumbledWordsGame,
+    GameType.MatchWithImageGame,
+    GameType.SequenceAlphabetGame,
+    GameType.TapWrongGame,
+  ],
+  ConceptType.syllableToWord: [
+    GameType.BingoGame,
+    GameType.MemoryGame,
+    GameType.TracingAlphabetGame,
+    GameType.TrueFalseGame,
+    GameType.FindWordGame,
+    GameType.JumbledWordsGame,
+    GameType.MatchWithImageGame,
+    GameType.SequenceAlphabetGame,
+    GameType.TapWrongGame,
+  ],
+  ConceptType.upperCaseLetterToWord: [
+    GameType.BingoGame,
+    GameType.MemoryGame,
+    GameType.TracingAlphabetGame,
+    GameType.TrueFalseGame,
+    GameType.FindWordGame,
+    GameType.JumbledWordsGame,
+    GameType.MatchWithImageGame,
+    GameType.SequenceAlphabetGame,
+    GameType.TapWrongGame,
+  ],
+  ConceptType.lowerCaseLetter: [
+    GameType.BingoGame,
+    GameType.BoxMatchingGame,
+    GameType.MemoryGame,
+    GameType.SpinWheelGame,
+    GameType.TracingAlphabetGame,
+    GameType.TrueFalseGame,
+    GameType.JumbledWordsGame
+  ],
+  ConceptType.singleDigitAdditionWithoutCarryover: [],
+  ConceptType.singleDigitAdditionWithCarryover: [],
+  ConceptType.doubleDigitAdditionWithoutCarryover: [],
+  ConceptType.doubleDigitAdditionWithCarryover: [],
+  ConceptType.tripleDigitAdditionWithoutCarryover: [],
+  ConceptType.tripleDigitAdditionWithCarryover: [],
+  ConceptType.singleDigitSubtractionWithoutBorrow: [],
+  ConceptType.singleDigitSubtractionWithBorrow: [],
+  ConceptType.doubleDigitSubtractionWithoutBorrow: [],
+  ConceptType.doubleDigitSubtractionWithBorrow: [],
+  ConceptType.tripleDigitSubtractionWithoutBorrow: [],
+  ConceptType.tripleDigitSubtractionWithBorrow: [],
+  ConceptType.singleDigitMultiplication: [],
+  ConceptType.singleDigitWithDoubleDigitMultiplication: [],
+  ConceptType.doubleDigitMultiplication: [],
+  ConceptType.tables1: [],
+  ConceptType.tables2: [],
+  ConceptType.tables3: [],
+  ConceptType.tables4: [],
+  ConceptType.tables5: [],
+  ConceptType.tables6: [],
+  ConceptType.tables7: [],
+  ConceptType.tables8: [],
+  ConceptType.tables9: [],
+  ConceptType.tables10: [],
+  ConceptType.number1: [],
+  ConceptType.number2: [],
+  ConceptType.number3: [],
+  ConceptType.number4: [],
+  ConceptType.number5: [],
+  ConceptType.number6: [],
+  ConceptType.number7: [],
+  ConceptType.number8: [],
+  ConceptType.number9: [],
+  ConceptType.number10: [],
+  ConceptType.numbers0to9: [],
+  ConceptType.numbers0to99: [],
+};
 
 Future<List<GameData>> fetchGameData(Lesson lesson, {int numData = 5}) async {
   if (lesson.data != null) {
@@ -32,16 +167,24 @@ Future<List<GameData>> fetchGameData(Lesson lesson, {int numData = 5}) async {
       case ConceptType.dummy:
         break;
       case ConceptType.upperCaseLetter:
-        break;
       case ConceptType.upperCaseToLowerCase:
-        break;
       case ConceptType.lowerCaseLetterToWord:
-        break;
       case ConceptType.syllableToWord:
-        break;
       case ConceptType.upperCaseLetterToWord:
-        break;
       case ConceptType.lowerCaseLetter:
+        List<GameData> returnData = [];
+        for (int i = 0; i < numData; i++) {
+          final data = await fetchMultipleChoiceData(lesson.id, 3);
+          GameData gameData = MultiData((b) => b
+            ..gameId = 'JumbledWordsGame'
+            ..answers.add(data.item1)
+            ..choices.update((b) => b
+              ..addAll(data.item3)
+              ..add(data.item2)
+              ..shuffle()));
+          returnData.add(gameData);
+        }
+        return returnData;
         break;
       case ConceptType.singleDigitAdditionWithoutCarryover:
         break;
@@ -174,9 +317,7 @@ Future<Map<String, String>> fetchPairData(int lessonId, int maxData) async {
   //TODO: cut across areaId to get concept->word
   return new Map<String, String>.fromIterable(
       lessonUnits.sublist(0, min(maxData, lessonUnits.length)),
-      key: (e) => (lesson.conceptId == 3 || lesson.conceptId == 5)
-          ? e.objectUnitId
-          : e.subjectUnitId,
+      key: (e) => e.subjectUnitId,
       value: (e) => (e.objectUnitId != null && e.objectUnitId.isNotEmpty)
           ? e.objectUnitId
           : e.subjectUnitId);
@@ -657,27 +798,16 @@ Future<Tuple3<String, String, List<String>>> fetchMultipleChoiceData(
   String question;
   String answer;
   List<String> choices;
-  if (lesson.conceptId == 3 || lesson.conceptId == 5) {
-    question = lessonUnits[0].objectUnitId;
-    answer = lessonUnits[0].objectUnitId;
-    choices = lessonUnits
-        .where((l) => l.objectUnitId != answer)
-        .take(maxChoices)
-        .map((l) => l.objectUnitId)
-        .toList(growable: false);
-  } else {
-    question = lessonUnits[0].subjectUnitId;
-    answer = (lessonUnits[0].objectUnitId?.length ?? 0) > 0
-        ? lessonUnits[0].objectUnitId
-        : lessonUnits[0].subjectUnitId;
-    choices = lessonUnits
-        .where((l) => l.subjectUnitId != question)
-        .take(maxChoices)
-        .map((l) => (l.objectUnitId?.length ?? 0) > 0
-            ? l.objectUnitId
-            : l.subjectUnitId)
-        .toList(growable: false);
-  }
+  question = lessonUnits[0].subjectUnitId;
+  answer = (lessonUnits[0].objectUnitId?.length ?? 0) > 0
+      ? lessonUnits[0].objectUnitId
+      : lessonUnits[0].subjectUnitId;
+  choices = lessonUnits
+      .where((l) => l.subjectUnitId != question)
+      .take(maxChoices)
+      .map((l) =>
+          (l.objectUnitId?.length ?? 0) > 0 ? l.objectUnitId : l.subjectUnitId)
+      .toList(growable: false);
   return new Tuple3(question, answer, choices);
 }
 
