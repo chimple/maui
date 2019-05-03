@@ -207,16 +207,15 @@ Widget buildGame({GameData gameData, OnGameOver onGameOver}) {
       break;
     case 'GuessImage':
       final gd = gameData as ImageLabelData;
-    return GuessImage(
+      return GuessImage(
         onGameOver: onGameOver,
         imageItemDetails: gd.imageItemDetails,
         imageName: gd.imageName,
-        gameId: gd.gameId,
       );
 
       break;
-      case 'MultipleChoiceGame':
-      final gd=gameData as MultiData;
+    case 'MultipleChoiceGame':
+      final gd = gameData as MultiData;
       return MultipleChoiceGame(
         question: gd.question,
         answers: gd.answers,

@@ -120,7 +120,7 @@ flutter:
     - assets/home_screen_icons/
     - assets/topic/
     - assets/topic/asb/
-    - assets/hospital.jpg
+    
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

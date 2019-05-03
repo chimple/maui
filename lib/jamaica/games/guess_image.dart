@@ -4,17 +4,12 @@ import 'package:maui/jamaica/state/game_utils.dart';
 import 'package:maui/models/image_label_data.dart';
 
 class GuessImage extends StatefulWidget {
-  final String gameId;
   final String imageName;
   final OnGameOver onGameOver;
   final BuiltList<ImageItemDetail> imageItemDetails;
 
   const GuessImage(
-      {Key key,
-      this.gameId,
-      this.imageName,
-      this.imageItemDetails,
-      this.onGameOver})
+      {Key key, this.imageName, this.imageItemDetails, this.onGameOver})
       : super(key: key);
   @override
   _GuessImageState createState() => _GuessImageState();
