@@ -34,7 +34,7 @@ class QuizPage extends StatelessWidget {
   }
 
   _startQuiz(BuildContext context) {
-    Navigator.push(
+    Navigator.pushReplacement(
         context,
         MaterialPageRoute(
             builder: (context) => Game(
