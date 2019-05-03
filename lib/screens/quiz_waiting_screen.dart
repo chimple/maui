@@ -7,7 +7,7 @@ import 'package:maui/jamaica/widgets/slide_up_route.dart';
 import 'package:maui/models/quiz_session.dart';
 import 'package:maui/models/quiz_update.dart';
 import 'package:maui/repos/user_repo.dart';
-import 'package:maui/screens/quiz_performance.dart';
+import 'package:maui/screens/quiz_performance_screen.dart';
 import 'package:maui/state/app_state_container.dart';
 
 class QuizWaitingScreen extends StatefulWidget {
@@ -20,7 +20,7 @@ class QuizWaitingScreen extends StatefulWidget {
 
 class _QuizWaitingScreenState extends State<QuizWaitingScreen> {
   List<User> _joinedStudents = [];
-  bool isTeacher = false;
+  bool _isTeacher = false;
 
   @override
   void initState() {
@@ -31,15 +31,14 @@ class _QuizWaitingScreenState extends State<QuizWaitingScreen> {
   void didChangeDependencies() {
     AppStateContainer.of(context).state.loggedInUser.userType ==
             UserType.teacher
-        ? isTeacher = true
-        : isTeacher = false;
+        ? _isTeacher = true
+        : _isTeacher = false;
     if (AppStateContainer.of(context).quizStudents.length != 0) {
       AppStateContainer.of(context).quizStudents.forEach((String studentID) {
         queryUser(studentID);
       });
     }
-    if (!isTeacher) {
-      //Check StatusEnum, if StatusEnum.start, then Start Quiz
+    if (!_isTeacher) {
       AppStateContainer.of(context)
           .quizSessions
           .forEach((quizSession, quizStatus) {
@@ -100,7 +99,7 @@ class _QuizWaitingScreenState extends State<QuizWaitingScreen> {
         leading: new IconButton(
             icon: new Icon(Icons.arrow_back),
             onPressed: () {
-              if (isTeacher) {
+              if (_isTeacher) {
                 Navigator.of(context).pop();
                 AppStateContainer.of(context).endQuizSession();
               } else {
@@ -144,13 +143,13 @@ class _QuizWaitingScreenState extends State<QuizWaitingScreen> {
                 })
             : Container(child: CircularProgressIndicator()),
       ),
-      floatingActionButton: isTeacher
+      floatingActionButton: _isTeacher
           ? RaisedButton(
               onPressed: () async {
                 await AppStateContainer.of(context)
                     .startQuizSession(widget.quizSession)
                     .then((_) {
-                  if (isTeacher) {
+                  if (_isTeacher) {
                     Navigator.of(context).push(MaterialPageRoute<Null>(
                         builder: (BuildContext context) =>
                             QuizPerformanceScreen()));
