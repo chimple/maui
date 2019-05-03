@@ -58,6 +58,8 @@ import 'package:maui/storyboards/widgets/story_board.dart';
 import 'package:maui/storyboards/widgets/store_screen_story.dart';
 import 'package:storyboard/storyboard.dart';
 
+import 'storyboards/widgets/guess_image_story.dart';
+
 void main() {
   runApp(StoryboardApp([
     TapHomeStory(),
@@ -88,6 +90,7 @@ void main() {
     GameListStory(),
     GameScoreStory(),
     GameStory(),
+    GuessImageStory(),
     JumbledWordsGameStory(),
     MadSentenceGameStory(),
     MapRewardsScreenStory(),

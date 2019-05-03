@@ -8,6 +8,7 @@ import 'package:maui/jamaica/games/dice_game.dart';
 import 'package:maui/jamaica/games/fill_in_the_blanks_game.dart';
 import 'package:maui/jamaica/games/find_word_game.dart';
 import 'package:maui/jamaica/games/finger_game.dart';
+import 'package:maui/jamaica/games/guess_image.dart';
 import 'package:maui/jamaica/games/jumbled_words_game.dart';
 import 'package:maui/jamaica/games/match_the_shape_game.dart';
 import 'package:maui/jamaica/games/match_with_image_game.dart';
@@ -206,8 +207,13 @@ Widget buildGame({GameData gameData, OnGameOver onGameOver}) {
       break;
     case 'GuessImage':
       final gd = gameData as ImageLabelData;
-//      return GuessImage(
-//          onGameOver: onGameOver, imageItemDetails: gd.imageItemDetails);
+    return GuessImage(
+        onGameOver: onGameOver,
+        imageItemDetails: gd.imageItemDetails,
+        imageName: gd.imageName,
+        gameId: gd.gameId,
+      );
+
       break;
       case 'MultipleChoiceGame':
       final gd=gameData as MultiData;
