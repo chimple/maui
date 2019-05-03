@@ -1,168 +1,99 @@
 import 'dart:async';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:maui/games/single_game.dart';
-import 'package:maui/repos/game_data_repo.dart';
+import 'package:maui/jamaica/state/game_utils.dart';
 import 'package:maui/components/responsive_grid_view.dart';
-import 'package:tuple/tuple.dart';
 import 'package:maui/components/Shaker.dart';
 
-import '../components/unit_button.dart';
-import 'package:maui/state/app_state_container.dart';
-import 'package:maui/state/app_state.dart';
-import 'package:maui/state/button_state_container.dart';
-import 'package:maui/components/gameaudio.dart';
-
-class Connectdots extends StatefulWidget {
-  Function onScore;
-  Function onProgress;
-  Function onEnd;
-  int iteration;
-  int gameCategoryId;
-  bool isRotated;
-
-  Connectdots(
-      {key,
-      this.onScore,
-      this.onProgress,
-      this.onEnd,
-      this.iteration,
-      this.gameCategoryId,
-      this.isRotated = false})
+class ConnectDotGame extends StatefulWidget {
+  final OnGameOver onGameOver;
+  final List<int> otherData;
+  final List<int> serialData;
+  const ConnectDotGame({key, this.onGameOver, this.otherData, this.serialData})
       : super(key: key);
   @override
-  State<StatefulWidget> createState() => new ConnectdotsState();
+  State<StatefulWidget> createState() => new ConnectDotGameState();
 }
 
-enum Status { Active, Visible, Disappear, Draggable, Dragtarget, First }
-enum ShakeCell { Right, InActive, Dance, CurveRow }
+enum Status { active, visible, disappear, draggable, first, dragtarget }
+enum ShakeCell { right, inActive, dance, curveRow }
 
-class ConnectdotsState extends State<Connectdots> {
-  var i = 0;
-
-  //var count=0;
+class ConnectDotGameState extends State<ConnectDotGame> {
   List<bool> _visibleflag = [];
-
-  final int _size = 4;
+  final _size = 4;
   static int size = 4;
-  var j = size;
   var n = size;
-  var m = size;
-  var k = 0;
-  var count1 = 0;
-  //var count2=0;
-  var count3 = 0;
-  var count6 = 0;
-  var count4 = 0;
-  //var count5=0;
+  var rowExtracting = 0;
+  var rowFlowDisplay = 0;
+  var colFlowDisplay = 0;
+  var colExtracting = 0;
   bool start = false;
-  var count0 = 0;
-  int totalgame = 2;
-  var r;
+  var range;
   var rand;
   var code;
-  List<String> numbers = [];
-  List<String> forAns = [];
-
-  List<String> _shuffledLetters = [];
-
-  List _copyAns = [];
-
-  List<String> _letters;
-
-  List<String> _todnumber = [];
+  List<int> numbers = [];
+  List<int> storingAnsData = [];
+  List<int> _shuffledLetters = [];
+  List<int> _letters;
+  List<int> _todnumber = [];
   List<Status> _statuses;
-  List<String> _letterex = [];
+  List<int> _letterex = [];
   List<int> tempindex = [];
-  bool _isLoading = true;
-  var z = 0;
-  int tries = 0;
   int lastclick;
   List<Offset> _pointssend = <Offset>[];
-  Tuple2<List<String>, List<String>> consecutive;
   var temp = 0;
-
-  List<ShakeCell> _ShakeCells = [];
+  List<ShakeCell> shakeCells = [];
   @override
   void initState() {
     super.initState();
     print("hello this should come first...");
-    _initBoard();
-  }
-
-  void _initBoard() async {
-    print("data is seecond");
-    print("itratin is ....::...${widget.iteration}");
-
-    setState(() => _isLoading = true);
-    consecutive = await fetchConsecutiveData(widget.gameCategoryId, 7, 9);
-    print("hello this is the data od gamecategory ${widget.gameCategoryId}");
-
-    print("this data is coming from fetchng ${consecutive.item1}");
-
-    consecutive.item1.forEach((e) {
-      _copyAns.add(e);
-    });
-
     var rnge = new Random();
     for (var i = 0; i < 1; i++) {
       rand = rnge.nextInt(2);
     }
     if (rand == 1) {
-      consecutive.item1.forEach((e) {
+      widget.serialData.forEach((e) {
         numbers.add(e);
       });
-      consecutive.item2.forEach((v) {
+      widget.otherData.forEach((v) {
         numbers.add(v);
       });
     } else {
-      consecutive.item2.forEach((e) {
+      widget.otherData.forEach((e) {
         numbers.add(e);
       });
-      consecutive.item1.forEach((v) {
+      widget.serialData.forEach((v) {
         numbers.add(v);
       });
     }
-    print("suffle data is in my numbers is $numbers");
-
-    print("sorted numbers are $numbers ");
 
     for (var i = 0; i < numbers.length; i += _size * _size) {
       _shuffledLetters
           .addAll(numbers.skip(i).take(_size * _size).toList(growable: true));
     }
-    _statuses = numbers.map((a) => Status.Draggable).toList(growable: false);
-    _ShakeCells =
-        numbers.map((a) => ShakeCell.InActive).toList(growable: false);
+    _statuses = numbers.map((a) => Status.draggable).toList(growable: false);
+    shakeCells = numbers.map((a) => ShakeCell.inActive).toList(growable: false);
 
     print(_shuffledLetters);
 
-    var todnumbers = new List.generate(m, (_) => new List(n));
+    var todnumbers = new List.generate(n, (_) => new List(n));
     for (var i = 0; i < size; i++) {
       for (var j = 0; j < size; j++) {
-        count3 = j + 1 + count1;
-
-        //  count3= count2+j+1+count1;
+        rowFlowDisplay = j + 1 + rowExtracting;
         print("print something in forloop");
-        _shuffledLetters.sublist(count1, count3).forEach((e) {
+        _shuffledLetters.sublist(rowExtracting, rowFlowDisplay).forEach((e) {
           todnumbers[i][j] = e;
         });
 
         print("value of 2d is each time $todnumbers");
       }
-      count1 = count3;
+      rowExtracting = rowFlowDisplay;
     }
     for (var i = 1; i < size; i++) {
       if (i % 2 != 0) {
         Iterable letdo = todnumbers[i].reversed;
         var fReverse = letdo.toList();
-
-        print("value of 2d is $todnumbers");
-
-        print("RRRRRR $fReverse");
         todnumbers[i].setRange(0, size, fReverse.map((e) => e));
-        print("value o ooppps$todnumbers");
       }
     }
 
@@ -172,39 +103,30 @@ class ConnectdotsState extends State<Connectdots> {
       });
     });
 
-    print("2d value is in my oops is$_todnumber");
-
-    var todcolnumbers = new List.generate(m, (_) => new List(n));
+    var todcolnumbers = new List.generate(n, (_) => new List(n));
     for (var i = 0; i < size; i++) {
       if (i % 2 != 0) {
-        print("this treacing $count6");
-        print("this treacing 2count$count4");
-
         for (var j = size - 1; j >= 0; j--) {
-          count6 = 1 + count4;
-
-          print("this jjjj is $j");
-
-          _shuffledLetters.sublist(count4, count6).forEach((e) {
+          colFlowDisplay = 1 + colExtracting;
+          _shuffledLetters.sublist(colExtracting, colFlowDisplay).forEach((e) {
             todcolnumbers[j][i] = e;
           });
 
-          print("value of 2d is cols each time $todcolnumbers");
-          count4 = count6;
+          colExtracting = colFlowDisplay;
         }
       } else {
         for (var j = 0; j < size; j++) {
-          count6 = j + 1 + count4;
+          colFlowDisplay = j + 1 + colExtracting;
           // count6= count2+j+1+count4;
           print("print something in forloop");
-          _shuffledLetters.sublist(count4, count6).forEach((e) {
+          _shuffledLetters.sublist(colExtracting, colFlowDisplay).forEach((e) {
             todcolnumbers[j][i] = e;
           });
 
           print("value of 2d is cols each time $todcolnumbers");
         }
       }
-      count4 = count6;
+      colExtracting = colFlowDisplay;
     }
 
     todcolnumbers.forEach((e) {
@@ -215,14 +137,13 @@ class ConnectdotsState extends State<Connectdots> {
 
     var rng = new Random();
     for (var i = 0; i < 1; i++) {
-      r = rng.nextInt(4);
+      range = rng.nextInt(4);
     }
-    if (r == 4) {
-      r = r - 1;
+    if (range == 4) {
+      range = range - 1;
     }
-    print("hello sir $r");
 
-    switch (r) {
+    switch (range) {
       case 0:
         {
           _letters = _todnumber;
@@ -230,9 +151,9 @@ class ConnectdotsState extends State<Connectdots> {
         break;
       case 1:
         {
-          Iterable _number4 = _todnumber.reversed;
-          var fruitsInReverset = _number4.toList();
-          _letters = fruitsInReverset;
+          Iterable iterableNumberReverse = _todnumber.reversed;
+          var reverseData = iterableNumberReverse.toList();
+          _letters = reverseData;
         }
         break;
 
@@ -243,36 +164,26 @@ class ConnectdotsState extends State<Connectdots> {
         break;
       case 3:
         {
-          Iterable _number4 = _letterex.reversed;
-          var fruitsInReverset = _number4.toList();
-          _letters = fruitsInReverset;
+          Iterable iterableNumberReverse = _letterex.reversed;
+          var reverseData = iterableNumberReverse.toList();
+          _letters = reverseData;
         }
         break;
     }
-    _ShakeCells =
-        _letters.map((a) => ShakeCell.InActive).toList(growable: false);
+    shakeCells =
+        _letters.map((a) => ShakeCell.inActive).toList(growable: false);
 
-    _statuses = _letters.map((a) => Status.Draggable).toList(growable: false);
+    _statuses = _letters.map((a) => Status.draggable).toList(growable: false);
     _visibleflag = _letters.map((a) => false).toList(growable: false);
     code = rng.nextInt(499) + rng.nextInt(500);
     while (code < 100) {
       code = rng.nextInt(499) + rng.nextInt(500);
     }
-    setState(() => _isLoading = false);
   }
 
-  @override
-  void didUpdateWidget(Connectdots oldWidget) {
-    print("object...iterartion in connect dots");
-    print(oldWidget.iteration);
-    print(widget.iteration);
-    if (widget.iteration != oldWidget.iteration) {
-      _initBoard();
-    }
-  }
-
-  Widget _buildItem(int index, String text, Status status, ShakeCell tile,
-      Offset offset, bool vflag) {
+  Widget _buildItem(int index, int text, Status status, ShakeCell tile,
+      Offset offset, bool vflag, double maxHeight, double maxWidth) {
+    // return Text(text);
     return new MyButton(
         key: new ValueKey<int>(index),
         text: text,
@@ -282,21 +193,23 @@ class ConnectdotsState extends State<Connectdots> {
         offset: offset,
         vflag: vflag,
         code: code,
+        maxHeight: maxHeight,
+        maxWidth: maxWidth,
         onStart: () {
           if (!start) {
             setState(() {
               print('nikkkkkkkkkkkkkk');
               temp = index;
               start = true;
-              forAns.add(text);
+              storingAnsData.add(text);
               tempindex.add(index);
               _pointssend.add(offset);
               lastclick = index;
               _visibleflag[index] = true;
-              _statuses[index] = Status.First;
+              _statuses[index] = Status.first;
               for (var i = 0; i < _letters.length; i++) {
-                if (_statuses[i] == Status.Draggable && index != i) {
-                  _statuses[i] = Status.Dragtarget;
+                if (_statuses[i] == Status.draggable && index != i) {
+                  _statuses[i] = Status.dragtarget;
                 }
               }
             });
@@ -323,12 +236,12 @@ class ConnectdotsState extends State<Connectdots> {
                 (index == lastclick - 1 && x != lastclick) ||
                 (index == lastclick + _size) ||
                 (index == lastclick - _size)) {
-              _statuses[temp] = Status.Dragtarget;
+              _statuses[temp] = Status.dragtarget;
               setState(() {
                 lastclick = index;
-                forAns.add(text);
+                storingAnsData.add(text);
                 tempindex.add(index);
-                _statuses[tempindex[0]] = Status.Dragtarget;
+                _statuses[tempindex[0]] = Status.dragtarget;
                 _pointssend.add(offset);
                 _visibleflag[index] = true;
               });
@@ -342,7 +255,7 @@ class ConnectdotsState extends State<Connectdots> {
               setState(() {
                 _visibleflag[tempindex.last] = false;
                 tempindex.removeLast();
-                forAns.removeLast();
+                storingAnsData.removeLast();
                 _pointssend.removeLast();
 
                 //  temp.removeLast();
@@ -354,78 +267,13 @@ class ConnectdotsState extends State<Connectdots> {
           } else
             return true;
         },
-        //         if (status == Status.Active) {
-        //           if(text==_copyAns[i])
-        //           {
-
-        //             setState(() {
-        //                 _pointssend.add(offset);
-        //               _statuses[index] = Status.Visible;
-        //               widget.onScore(1);count0++;
-        //                       widget.onProgress((count0) / (_copyAns.length-1));
-
-        //             });
-        //             print("length is${_copyAns.length}");
-
-        //           i++;
-        //               print("hey this onend$i");
-
-        //            if(i==_copyAns.length)
-        //             {
-        //                 k=0;
-        //                 count0=count0-1;
-
-        //   count1=0;
-
-        //   count3=0;
-        //   count6=0;
-        //   count4=0;
-        //  //count5=0;
-        //  _pointssend.removeRange(0, _pointssend.length);
-        //  _todnumber.removeRange(0, _todnumber.length);
-        //               _letters.removeRange(0, _letters.length);
-
-        //                _letterex.removeRange(0, _letterex.length);
-        //                numbers.removeRange(0, numbers.length);
-
-        //  _shuffledLetters.removeRange(0, _shuffledLetters.length);
-
-        //                new Future.delayed(const Duration(milliseconds: 250),
-        //                           () {
-
-        //                         widget.onEnd();
-
-        //                       });
-        //             }
-
-        //           }
-        //           else{
-        //               setState(() {
-        //              _ShakeCells[index] = ShakeCell.Right;
-        //              print("hello shake cell list$_ShakeCells");
-        //                new Future.delayed(const Duration(milliseconds: 400), () {
-        //                 setState(() {
-        //                    widget.onScore(-1);
-
-        //                   _ShakeCells[index] = ShakeCell.InActive;
-        //                 });
-        //               });
-
-        //             });
-        //           }
-        //         }
-
         onCancel: (v, g) {
-          print("object both value we have to checking ....$forAns.....::");
-          print(
-              "object both value we have to checking ....${consecutive.item1}.....::");
           int flag = 0;
           setState(() {
             start = false;
-            if (forAns.length == consecutive.item1.length) {
-              for (int i = 0; i < forAns.length; i++) {
-                print("object.....:::.${forAns[i]}");
-                if (forAns[i] == consecutive.item1[i]) {
+            if (storingAnsData.length == widget.serialData.length) {
+              for (int i = 0; i < storingAnsData.length; i++) {
+                if (storingAnsData[i] == widget.serialData[i]) {
                 } else {
                   //  tries += 5;
                   flag = 1;
@@ -439,17 +287,14 @@ class ConnectdotsState extends State<Connectdots> {
             print('flaggggggggggggg     $flag');
             if (flag == 0) {
               print('on  endddd  ');
-              widget.onScore(20);
+              widget.onGameOver(20);
 
               setState(() {
-                widget.onProgress(1.0);
-
-                count1 = 0;
-                forAns = [];
-                count3 = 0;
-                count6 = 0;
-                count4 = 0;
-                //count5=0;
+                rowExtracting = 0;
+                storingAnsData = [];
+                rowFlowDisplay = 0;
+                colFlowDisplay = 0;
+                colExtracting = 0;
                 _pointssend.removeRange(0, _pointssend.length);
                 _todnumber.removeRange(0, _todnumber.length);
                 _letters.removeRange(0, _letters.length);
@@ -461,28 +306,25 @@ class ConnectdotsState extends State<Connectdots> {
 
                 new Future.delayed(const Duration(milliseconds: 250), () {
                   start = false;
-                  widget.onEnd();
                 });
               });
             }
             if (flag == 1) {
-              widget.onScore(-1);
+              widget.onGameOver(-1);
               print("object....shanking thing is...:$_visibleflag");
               setState(() {
-                forAns = [];
+                storingAnsData = [];
 
                 for (var i = 0; i < _visibleflag.length; i++)
-                  _visibleflag[i] == true
-                      ? _ShakeCells[i] = ShakeCell.Right
-                      : i;
+                  _visibleflag[i] == true ? shakeCells[i] = ShakeCell.right : i;
               });
               new Future.delayed(const Duration(milliseconds: 800), () {
                 setState(() {
-                  _ShakeCells = _letters
-                      .map((a) => ShakeCell.InActive)
+                  shakeCells = _letters
+                      .map((a) => ShakeCell.inActive)
                       .toList(growable: false);
                   _statuses = _letters
-                      .map((a) => Status.Draggable)
+                      .map((a) => Status.draggable)
                       .toList(growable: false);
                   _visibleflag =
                       _letters.map((a) => false).toList(growable: false);
@@ -490,26 +332,6 @@ class ConnectdotsState extends State<Connectdots> {
                 });
               });
             }
-
-            //     new Future.delayed(const Duration(milliseconds: 800), () {
-            //   setState(() {
-            //     _ShakeCells = _letters
-            //         .map((a) => ShakeCell.InActive)
-            //         .toList(growable: false);
-            //     _statuses = _letters
-            //         .map((a) => Status.Draggable)
-            //         .toList(growable: false);
-            //     _visibleflag =
-            //         _letters.map((a) => false).toList(growable: false);
-            //   });
-            // }); // _ShakeCells = _letters
-            //     .map((a) => ShakeCell.InActive)
-            //     .toList(growable: false);
-            // _statuses = _letters
-            //     .map((a) => Status.Draggable)
-            //     .toList(growable: false);
-            // _visibleflag =
-            //     _letters.map((a) => false).toList(growable: false);
           });
         });
   }
@@ -522,13 +344,6 @@ class ConnectdotsState extends State<Connectdots> {
     MediaQueryData media = MediaQuery.of(context);
     print("hello data coming or not in widgets is $_letters");
 
-    if (_isLoading) {
-      return new SizedBox(
-        width: 20.0,
-        height: 20.0,
-        child: new CircularProgressIndicator(),
-      );
-    }
     print("how head to head is working");
     var j = 0;
 
@@ -541,89 +356,74 @@ class ConnectdotsState extends State<Connectdots> {
       double maxHeight = (constraints.maxHeight - vPadding * 2) / (_size + 1);
 
       final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
-      print(
-          "object horizantal padding....:$hPadding.....vpadding : ..$vPadding");
-      print("object button padding ......:$buttonPadding");
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
-
-      double fullwidthofscreen = _size * (maxWidth + buttonPadding + hPadding);
-      print(
-          "object full screen width is ......:$fullwidthofscreen..........=${media.size.height}");
-      double buttonarea = maxWidth * maxHeight;
-      print("object....buttonarea .......:$buttonarea");
-      UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
-
-      AppState state = AppStateContainer.of(context).state;
-      final buttonConfig = ButtonStateContainer.of(context).buttonConfig;
-      double fullwidth = (_size * buttonConfig.width) + (_size * buttonPadding);
+      // UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
+      // UnitButton.saveButtonSize(context, 1, maxWidth, maxHeight);
+      // final buttonConfig = ButtonStateContainer.of(context).buttonConfig;
+      double fullwidth = (_size * maxWidth) + (_size * buttonPadding);
       double removeallpaddingh = constraints.maxWidth - fullwidth;
       double startpointx = removeallpaddingh / 2;
       double removeallpaddingv = constraints.maxHeight - fullwidth;
       double startpointy = removeallpaddingv / 2;
-
-      double yaxis = startpointy + (buttonConfig.height / 2);
-
-      double xaxis = startpointx + (buttonConfig.width / 2);
-
-      print("object..x axis start point is in.....:$xaxis.........$yaxis");
-      print(
-          ".....maxheight of button...:$maxHeight........max height is :...$vPadding");
-      print("object....:xaxis ..:$xaxis.......y axis...:$yaxis");
+      double yaxis = startpointy + (maxHeight / 2);
+      double xaxis = startpointx + (maxWidth / 2);
       Offset startpoint = new Offset(xaxis, yaxis);
 
-      List<Offset> offsets1 = calculateOffsets(
-          buttonPadding, startpoint, _size, buttonConfig.width);
-      yaxis = yaxis + buttonConfig.width + buttonPadding;
-      double y1 = yaxis;
-
+      List<Offset> offsets1 =
+          calculateOffsets(buttonPadding, startpoint, _size, maxWidth);
+      yaxis = yaxis + maxWidth + buttonPadding;
       xaxis = xaxis;
-      double x1 = xaxis;
       double ystart = yaxis;
       double xstart =
           (xaxis + xaxis + (maxWidth / 1.4)) - (hPadding + buttonPadding);
-      print("object....:xaxis ..:$xaxis.......y axis...:$yaxis");
+
       startpoint = new Offset(xaxis, yaxis);
-      List<Offset> offsets2 = calculateOffsets(
-          buttonPadding, startpoint, _size, buttonConfig.width);
-
-      yaxis = yaxis + buttonConfig.width + buttonPadding;
-
+      List<Offset> offsets2 =
+          calculateOffsets(buttonPadding, startpoint, _size, maxWidth);
+      yaxis = yaxis + maxWidth + buttonPadding;
       xaxis = xaxis;
       print("object....:xaxis ..:$xaxis.......y axis...:$yaxis");
       startpoint = new Offset(xaxis, yaxis);
-      List<Offset> offsets3 = calculateOffsets(
-          buttonPadding, startpoint, _size, buttonConfig.width);
-      yaxis = yaxis + buttonConfig.width + buttonPadding;
+      List<Offset> offsets3 =
+          calculateOffsets(buttonPadding, startpoint, _size, maxWidth);
+      yaxis = yaxis + maxWidth + buttonPadding;
       xaxis = xaxis;
       print("object....:xaxis ..:$xaxis.......y axis...:$yaxis");
       startpoint = new Offset(xaxis, yaxis);
-      List<Offset> offsets4 = calculateOffsets(
-          buttonPadding, startpoint, _size, buttonConfig.width);
+      List<Offset> offsets4 =
+          calculateOffsets(buttonPadding, startpoint, _size, maxWidth);
 
       List<Offset> offsets = offsets1 + offsets2 + offsets3 + offsets4;
-      // print("object....startpointaxis is.....$startpointx");
-      // print("object button height ....:${state.buttonHeight}.. button width.....:${state.buttonWidth}");
       var coloris = Theme.of(context).primaryColor;
-      return new Stack(children: [
-        new Container(
-          child: _buildpoint(_pointssend, coloris, xstart, ystart),
-        ),
-        new Padding(
-            padding:
-                EdgeInsets.symmetric(vertical: vPadding, horizontal: hPadding),
-            child: new ResponsiveGridView(
-              rows: _size,
-              cols: _size,
-              //    maxAspectRatio: 1.0,
-              children: _letters
-                  .map((e) => new Padding(
-                      padding: EdgeInsets.all(buttonPadding),
-                      child: _buildItem(j, e, _statuses[j], _ShakeCells[j],
-                          offsets[j], _visibleflag[j++])))
-                  .toList(growable: false),
-            )),
-      ]);
+      return Container(
+        child: new Stack(children: [
+          new Container(
+            child: _buildpoint(_pointssend, coloris, xstart, ystart),
+          ),
+          new Padding(
+              padding: EdgeInsets.symmetric(
+                  vertical: vPadding, horizontal: hPadding),
+              child: new ResponsiveGridView(
+                rows: _size,
+                cols: _size,
+                //    maxAspectRatio: 1.0,
+                children: _letters
+                    .map((e) => new Padding(
+                        padding: EdgeInsets.all(buttonPadding),
+                        child: _buildItem(
+                            j,
+                            e,
+                            _statuses[j],
+                            shakeCells[j],
+                            offsets[j],
+                            _visibleflag[j++],
+                            maxHeight,
+                            maxWidth)))
+                    .toList(growable: false),
+              )),
+        ]),
+      );
     });
   }
 
@@ -704,7 +504,6 @@ class SignaturePainter extends CustomPainter {
   //  var size1 =Size(683.0,345.0);
 
   void paint(Canvas canvas, Size size) {
-    var flag = 0;
     print("hello canvas is ....${size.height}");
     var paint = new Paint()
       ..color = coloris
@@ -712,10 +511,6 @@ class SignaturePainter extends CustomPainter {
       ..strokeWidth = 5.0;
 
     for (int i = 0; i < points.length - 1; i++) {
-      print("object....i values varying from 0th position......$i");
-      print("object......points offsets is......$points");
-      print("object.....points.....::${points[points.length - 1]}");
-
       canvas.drawLine(points[i], points[i + 1], paint);
     }
   }
@@ -733,16 +528,20 @@ class MyButton extends StatefulWidget {
       this.offset,
       this.code,
       this.vflag,
+      this.maxHeight,
+      this.maxWidth,
       this.onStart,
       this.onCancel,
       this.onwill})
       : super(key: key);
 
-  final String text;
+  final int text;
   int index;
   Status status;
   ShakeCell tile;
   final Offset offset;
+  final double maxWidth;
+  final double maxHeight;
   final DraggableCanceledCallback onCancel;
   final DragTargetWillAccept onwill;
   final VoidCallback onStart;
@@ -756,13 +555,13 @@ class MyButton extends StatefulWidget {
 class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   AnimationController controller, controller1;
   Animation<double> animationRight, animation, animationWrong, animationDance;
-  String _displayText;
+
   Velocity v;
   Offset o;
   initState() {
     super.initState();
     print("_MyButtonState.initState: ${widget.text}");
-    _displayText = widget.text;
+
     controller1 = new AnimationController(
         duration: new Duration(milliseconds: 20), vsync: this);
     controller = new AnimationController(
@@ -772,8 +571,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
     animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
       ..addStatusListener((state) {
         if (state == AnimationStatus.dismissed) {
-          if (!widget.text.isEmpty) {
-            setState(() => _displayText = widget.text);
+          if (widget.text == null) {
             controller.forward();
           }
         }
@@ -795,14 +593,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   }
 
   @override
-  void didUpdateWidget(MyButton oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.text != widget.text) {
-      controller.reverse();
-    }
-  }
-
-  @override
   void dispose() {
     controller.dispose();
     controller1.dispose();
@@ -811,21 +601,20 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    print('99999999999999   ${widget.status}');
     return new Shake(
         animation:
-            widget.tile == ShakeCell.Right ? animationWrong : animationRight,
+            widget.tile == ShakeCell.right ? animationWrong : animationRight,
         child: new ScaleTransition(
             scale: animationRight,
-            child: widget.status == Status.Dragtarget
+            child: widget.status == Status.dragtarget
                 ? new DragTarget(
-                    onAccept: (int d) => (widget.tile == ShakeCell.Right ||
-                            widget.status == Status.First)
+                    onAccept: (int d) => (widget.tile == ShakeCell.right ||
+                            widget.status == Status.first)
                         ? {}
                         : widget.onCancel(v, o),
                     onWillAccept: (int data) =>
-                        (widget.tile == ShakeCell.Right ||
-                                widget.status == Status.First)
+                        (widget.tile == ShakeCell.right ||
+                                widget.status == Status.first)
                             ? {}
                             : widget.onwill(data),
                     builder: (
@@ -835,31 +624,82 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                     ) {
                       return new Material(
                           elevation: widget.vflag == true ? 10.0 : 0.0,
-                          color: Colors.transparent,
-                          child: new UnitButton(
-                            highlighted: widget.vflag,
-                            text: _displayText,
-                            onPress: () => {},
-                            unitMode: UnitMode.text,
-                            showHelp: false,
-                          ));
+                          shape: new RoundedRectangleBorder(
+                              side: new BorderSide(
+                                  color: Colors.blueAccent,
+                                  width: widget.maxWidth * 0.0075),
+                              borderRadius: new BorderRadius.all(
+                                  new Radius.circular(16.0))),
+                          // color:
+                          //     widget.vflag == true ? Colors.blue : Colors.white,
+                          child: SizedBox(
+                            height: widget.maxWidth,
+                            width: widget.maxWidth,
+                            child: RaisedButton(
+                              splashColor: Theme.of(context).primaryColor,
+                              highlightColor: Theme.of(context).primaryColor,
+                              color: widget.vflag == true
+                                  ? Colors.blue
+                                  : Colors.white,
+                              onPressed: () => {},
+                              child: Text("${widget.text}",
+                                  style: new TextStyle(
+                                      fontSize: widget.maxWidth / 4)),
+                              shape: new RoundedRectangleBorder(
+                                  side: new BorderSide(
+                                      color: Colors.blueAccent,
+                                      width: widget.maxWidth * 0.0075),
+                                  borderRadius: new BorderRadius.all(
+                                      new Radius.circular(16.0))),
+                            ),
+                          )
+                          //     new UnitButton(
+                          //   highlighted: widget.vflag,
+                          //   text: _displayText,
+                          //   onPress: () => {},
+                          //   unitMode: UnitMode.text,
+                          //   showHelp: false,
+                          // )
+                          );
                     })
                 : new Draggable(
                     onDragStarted: () =>
-                        widget.tile == ShakeCell.Right ? {} : widget.onStart(),
+                        widget.tile == ShakeCell.right ? {} : widget.onStart(),
                     onDraggableCanceled: (v, g) =>
-                        widget.tile == ShakeCell.Right
+                        widget.tile == ShakeCell.right
                             ? {}
                             : widget.onCancel(v, g),
                     data: widget.code,
                     feedback: new Container(),
                     maxSimultaneousDrags: 1,
-                    child: new UnitButton(
-                      highlighted: widget.vflag,
-                      text: _displayText,
-                      onPress: () => {},
-                      unitMode: UnitMode.text,
-                      showHelp: false,
-                    ))));
+                    child: SizedBox(
+                      height: widget.maxWidth,
+                      width: widget.maxWidth,
+                      child: RaisedButton(
+                        splashColor: Theme.of(context).primaryColor,
+                        highlightColor: Theme.of(context).primaryColor,
+                        color:
+                            widget.vflag == true ? Colors.blue : Colors.white,
+                        onPressed: () => {},
+                        child: Text("${widget.text}",
+                            style:
+                                new TextStyle(fontSize: widget.maxWidth / 4)),
+                        shape: new RoundedRectangleBorder(
+                            side: new BorderSide(
+                                color: Colors.blueAccent,
+                                width: widget.maxWidth * 0.0075),
+                            borderRadius: new BorderRadius.all(
+                                new Radius.circular(16.0))),
+                      ),
+                    )
+
+                    //     new UnitButton(
+                    //   highlighted: widget.vflag,
+                    //   text: _displayText,
+                    //   onPress: () => {},
+                    //   unitMode: UnitMode.text,
+                    //   showHelp: false,
+                    // ),
+                    )));
   }
 }

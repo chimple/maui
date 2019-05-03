@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:maui/components/unit_button.dart';
 import 'dart:async';
 import 'package:maui/games/single_game.dart';
-import 'package:maui/repos/game_data.dart';
+import 'package:maui/repos/game_data_repo.dart';
 import 'package:tuple/tuple.dart';
 import 'package:maui/components/flash_card.dart';
 import 'package:maui/components/shaker.dart';

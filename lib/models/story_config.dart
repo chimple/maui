@@ -33,20 +33,6 @@ abstract class Page implements Built<Page, PageBuilder> {
   static Serializer<Page> get serializer => _$pageSerializer;
 }
 
-abstract class ImageItemDetail
-    implements Built<ImageItemDetail, ImageItemDetailBuilder> {
-  String get itemName;
-  String get x;
-  String get y;
-  String get height;
-  String get width;
-  ImageItemDetail._();
-  factory ImageItemDetail([updates(ImageItemDetailBuilder b)]) =
-      _$ImageItemDetail;
-  static Serializer<ImageItemDetail> get serializer =>
-      _$imageItemDetailSerializer;
-}
-
 abstract class Stories implements Built<Stories, StoriesBuilder> {
   BuiltList<StoryConfig> get stories;
 

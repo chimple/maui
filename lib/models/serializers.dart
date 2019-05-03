@@ -11,6 +11,7 @@ import 'package:maui/models/class_students.dart';
 import 'package:maui/models/crossword_data.dart';
 import 'package:maui/models/game_config.dart';
 import 'package:maui/models/game_data.dart';
+import 'package:maui/models/image_label_data.dart';
 import 'package:maui/models/quiz_update.dart';
 import 'package:maui/models/game_status.dart';
 import 'package:maui/models/math_op_data.dart';
@@ -42,6 +43,7 @@ part 'serializers.g.dart';
   GameConfig,
   GameData,
   GameStatus,
+  ImageLabelData,
   MathOpData,
   MultiData,
   NumMultiData,
