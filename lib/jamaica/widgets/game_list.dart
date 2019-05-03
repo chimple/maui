@@ -23,13 +23,11 @@ class GameList extends StatefulWidget {
 class GameListState extends State<GameList>
     with SingleTickerProviderStateMixin {
   String gameToOpen = '';
-
   bool isComplete = false;
   TabController _tabController;
   bool isLoading = true;
   List<List<Lesson>> data;
   BuiltMap<String, int> userData;
-
   ScrollController _scrollController;
   double width;
 
@@ -76,45 +74,32 @@ class GameListState extends State<GameList>
       return i;
   }
 
-  void _onTap(String title) async {
-//    setState(() {
-//      gameToOpen = title;
-//    });
-    final lesson = await LessonRepo().getLesson(1);
-    final gameData = await fetchGameData(lesson);
-    Navigator.of(context).push(SlideUpRoute(
-      widgetBuilder: (context) => Game(
-            quizSession: QuizSession((b) => b
-              ..sessionId = 'A'
-              ..gameId = 'B'
-              ..level = 1
-              ..gameData.addAll(gameData)),
-          ),
-    ));
+  void _onTap(String title) {
+    setState(() {
+      gameToOpen = title;
+    });
   }
 
-  void _flareCallback(String animationNme) {
+  void _flareCallback(String animationNme) async {
     setState(() {
       isComplete = true;
     });
-
-    // List gamelevel = [];
-    // for (int i = 1; i <= gameConfig.levels; i++) {
-    //   gamelevel.add(i);
-    // }
-
-    // showDialog(
-    //     context: context,
-    //     builder: (BuildContext context) {
-    //       return GameLevel(
-    //         gameName: gameToOpen,
-    //         levelList: gamelevel,
-    //         gameImage: gameConfig.image,
-    //       );
-    //     }).then((onValue) => setState(() {
-    //       gameToOpen = '';
-    //       isComplete = false;
-    //     }));
+    final lesson = await LessonRepo().getLesson(1);
+    final gameData = await fetchGameData(lesson);
+    Navigator.of(context)
+        .push(SlideUpRoute(
+          widgetBuilder: (context) => Game(
+                quizSession: QuizSession((b) => b
+                  ..sessionId = 'A'
+                  ..gameId = 'B'
+                  ..level = 1
+                  ..gameData.addAll(gameData)),
+              ),
+        ))
+        .then((onValue) => setState(() {
+              gameToOpen = '';
+              isComplete = false;
+            }));
   }
 
   @override
@@ -124,26 +109,40 @@ class GameListState extends State<GameList>
     super.dispose();
   }
 
+  bool _shouldLock(int index, String title, String previousTitle) {
+    if (index == 1) {
+      return false;
+    } else if (userData[previousTitle] == 99) {
+      return false;
+    }
+    return !userData.containsKey(title);
+  }
+
   Widget tabBarView(data, MediaQueryData media, bool _isPortrait) {
     final List<Lesson> temp = data;
+    String previousTitle = '';
+    int i = 0;
     return ListView(
       shrinkWrap: true,
       controller: _scrollController,
-      children: temp
-          .map((t) => FractionallySizedBox(
-              widthFactor: .7,
-              child: GameButton(
-                title: t.title,
-                progress: userData.containsKey(t.title) ? userData[t.title] : 0,
-                locked: !userData.containsKey(t.title),
-                onTap: _onTap,
-                flareCallback: _flareCallback,
-                animationFlag: t.title == gameToOpen,
-                buttonStatus: gameToOpen != ''
-                    ? _ButtonStatus.disabled
-                    : _ButtonStatus.active,
-              )))
-          .toList(growable: false),
+      children: temp.map((t) {
+        i++;
+        Widget widget = FractionallySizedBox(
+            widthFactor: .7,
+            child: GameButton(
+              title: t.title,
+              progress: userData.containsKey(t.title) ? userData[t.title] : 0,
+              locked: _shouldLock(i, t.title, previousTitle),
+              onTap: _onTap,
+              flareCallback: _flareCallback,
+              animationFlag: t.title == gameToOpen,
+              buttonStatus: gameToOpen != ''
+                  ? _ButtonStatus.disabled
+                  : _ButtonStatus.active,
+            ));
+        previousTitle = t.title;
+        return widget;
+      }).toList(growable: false),
     );
   }
 
@@ -303,6 +302,7 @@ class GameButton extends StatelessWidget {
                           ),
                           LinearProgressIndicator(
                             value: progress / 99,
+                            backgroundColor: Colors.grey[400],
                           ),
                           Divider(
                             color: Colors.transparent,
