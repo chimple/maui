@@ -21,10 +21,10 @@ class _QuestionDetail {
 class FillInTheBlanksGame extends StatefulWidget {
   final String question;
   final BuiltList<String> choices;
-  final OnGameOver onGameOver;
+  final OnGameUpdate onGameUpdate;
 
   const FillInTheBlanksGame(
-      {Key key, this.onGameOver, this.question, this.choices})
+      {Key key, this.onGameUpdate, this.question, this.choices})
       : super(key: key);
 
   @override
@@ -95,7 +95,11 @@ class _FillInTheBlanksGameState extends State<FillInTheBlanksGame> {
                                   setState(() {
                                     score++;
                                     if (--complete == 0)
-                                      widget.onGameOver(score);
+                                      widget.onGameUpdate(
+                                          score: score,
+                                          max: score,
+                                          gameOver: true,
+                                          star: true);
                                     f.reaction = Reaction.success;
                                     f.appear = true;
                                   });

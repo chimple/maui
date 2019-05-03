@@ -17,9 +17,9 @@ class _ChoiceDetail {
 class FingerGame extends StatefulWidget {
   final int answer;
   final BuiltList<int> choices;
-  final OnGameOver onGameOver;
+  final OnGameUpdate onGameUpdate;
 
-  const FingerGame({Key key, this.answer, this.choices, this.onGameOver})
+  const FingerGame({Key key, this.answer, this.choices, this.onGameUpdate})
       : super(key: key);
 
   @override
@@ -69,7 +69,11 @@ class _FingerGameState extends State<FingerGame> {
                           score++;
                           if (c.number == widget.answer) {
                             c.reaction = Reaction.success;
-                            widget.onGameOver(score);
+                            widget.onGameUpdate(
+                                score: score,
+                                max: score,
+                                gameOver: true,
+                                star: true);
                           } else {
                             if (score > 0) score--;
                             c.reaction = Reaction.failure;

@@ -17,9 +17,9 @@ class _ChoiceDetail {
 
 class SequenceAlphabetGame extends StatefulWidget {
   final BuiltList<String> answers;
-  final OnGameOver onGameOver;
+  final OnGameUpdate onGameUpdate;
 
-  const SequenceAlphabetGame({Key key, this.answers, this.onGameOver})
+  const SequenceAlphabetGame({Key key, this.answers, this.onGameUpdate})
       : super(key: key);
 
   @override
@@ -92,8 +92,11 @@ class _SequenceAlphabetGameState extends State<SequenceAlphabetGame> {
                               print("success....");
                               Future.delayed(
                                   const Duration(milliseconds: 1000),
-                                  () =>
-                                      setState(() => widget.onGameOver(score)));
+                                  () => setState(() => widget.onGameUpdate(
+                                      score: score,
+                                      max: score,
+                                      gameOver: true,
+                                      star: true)));
                             } else {
                               score--;
                               _endList = [];

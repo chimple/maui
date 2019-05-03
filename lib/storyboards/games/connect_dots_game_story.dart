@@ -10,10 +10,18 @@ class ConnectDotGameStory extends FullScreenStory {
         Scaffold(
           body: SafeArea(
               child: ConnectDotGame(
-                serialData: [1,2,3,4,5,6,7,],
-                otherData: [10,10,10,10,10,10,10,101,10,10,10],
-                onGameOver: (_) {},
-              )),
+            serialData: [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+            ],
+            otherData: [10, 10, 10, 10, 10, 10, 10, 101, 10, 10, 10],
+            onGameUpdate: ({int score, int max, bool gameOver, bool star}) {},
+          )),
         ),
       ];
 }

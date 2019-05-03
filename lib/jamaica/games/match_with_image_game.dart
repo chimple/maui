@@ -21,10 +21,10 @@ class MatchWithImageGame extends StatefulWidget {
   final BuiltList<String> images;
   final BuiltList<String> answers;
   final BuiltList<String> choices;
-  final OnGameOver onGameOver;
+  final OnGameUpdate onGameUpdate;
 
   const MatchWithImageGame(
-      {Key key, this.images, this.answers, this.choices, this.onGameOver})
+      {Key key, this.images, this.answers, this.choices, this.onGameUpdate})
       : super(key: key);
 
   @override
@@ -88,7 +88,12 @@ class _MatchWithImageGameState extends State<MatchWithImageGame> {
                             choiceDetails
                                 .firstWhere((c) => c.choice == a.choice)
                                 .appear = false;
-                            if (--complete == 0) widget.onGameOver(score);
+                            if (--complete == 0)
+                              widget.onGameUpdate(
+                                  score: score,
+                                  max: score,
+                                  gameOver: true,
+                                  star: true);
                           } else
                             score--;
                         }),

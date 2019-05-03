@@ -8,7 +8,7 @@ class CalculateTheNumberStory extends FullScreenStory {
         Scaffold(
           body: SafeArea(
             child: CalculateTheNumbers(
-              onGameOver: (_) {},
+              onGameUpdate: ({int score, int max, bool gameOver, bool star}) {},
               first: 11,
               second: 5,
               op: '+',
@@ -19,7 +19,7 @@ class CalculateTheNumberStory extends FullScreenStory {
         Scaffold(
           body: SafeArea(
             child: CalculateTheNumbers(
-              onGameOver: (_) {},
+              onGameUpdate: ({int score, int max, bool gameOver, bool star}) {},
               first: 3,
               second: 5,
               op: '+',

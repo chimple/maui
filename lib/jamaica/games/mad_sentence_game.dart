@@ -8,8 +8,8 @@ import 'package:maui/models/sentence_data.dart';
 
 class MadSentenceGame extends StatefulWidget {
   final SentenceData sentenceData;
-  final OnGameOver onGameOver;
-  const MadSentenceGame({Key key, this.sentenceData, this.onGameOver})
+  final OnGameUpdate onGameUpdate;
+  const MadSentenceGame({Key key, this.sentenceData, this.onGameUpdate})
       : super(key: key);
   @override
   _MadSentenceGameState createState() => new _MadSentenceGameState();
@@ -119,8 +119,10 @@ class _MadSentenceGameState extends State<MadSentenceGame> {
               });
               score++;
               FlutterTts().speak(sentence);
-              Future.delayed(const Duration(milliseconds: 700),
-                  () => widget.onGameOver(score));
+              Future.delayed(
+                  const Duration(milliseconds: 700),
+                  () => widget.onGameUpdate(
+                      score: score, max: score, gameOver: true, star: true));
             });
           },
           icon: Icon(

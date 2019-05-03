@@ -24,9 +24,10 @@ class TablesGame extends StatefulWidget {
   final int question1;
   final int question2;
   final int answer;
-  final OnGameOver onGameOver;
+  final OnGameUpdate onGameOver;
 
-  const TablesGame({Key key, this.question1,this.question2, this.answer, this.onGameOver})
+  const TablesGame(
+      {Key key, this.question1, this.question2, this.answer, this.onGameOver})
       : super(key: key);
 
   @override
@@ -72,7 +73,7 @@ class TablesGameState extends State<TablesGame> {
                     flex: 10,
                     child: Text(
                       '${widget.question1} X ${widget.question2}',
-                      style: TextStyle(fontSize: size.width*0.16),
+                      style: TextStyle(fontSize: size.width * 0.16),
                     ),
                   ),
                   Flexible(
@@ -82,20 +83,18 @@ class TablesGameState extends State<TablesGame> {
                   Flexible(
                     flex: 10,
                     child: Container(
-                      height: size.width*0.37 * 0.6,
-                      width: size.width*0.37,
+                      height: size.width * 0.37 * 0.6,
+                      width: size.width * 0.37,
                       decoration: new BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(
-                            color: Colors.purple,
-                            width: 7.0
-                          ),
-                          borderRadius: new BorderRadius.all(const Radius.circular(20.0)),
-                          ),
+                        color: Colors.white,
+                        border: Border.all(color: Colors.purple, width: 7.0),
+                        borderRadius:
+                            new BorderRadius.all(const Radius.circular(20.0)),
+                      ),
                       child: Center(
                         child: Text(
                           '$_result',
-                          style: TextStyle(fontSize: size.width*0.16),
+                          style: TextStyle(fontSize: size.width * 0.16),
                         ),
                       ),
                     ),
@@ -125,7 +124,7 @@ class TablesGameState extends State<TablesGame> {
                             print('its correct');
                             widget.onGameOver(2);
                             return Reaction.success;
-                          }else{
+                          } else {
                             return Reaction.failure;
                           }
                         } else {
