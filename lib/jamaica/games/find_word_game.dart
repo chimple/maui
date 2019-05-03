@@ -17,10 +17,10 @@ class FindWordGame extends StatefulWidget {
   final String image;
   final BuiltList<String> answer;
   final BuiltList<String> choices;
-  final OnGameOver onGameOver;
+  final OnGameUpdate onGameUpdate;
 
   const FindWordGame(
-      {Key key, this.image, this.answer, this.choices, this.onGameOver})
+      {Key key, this.image, this.answer, this.choices, this.onGameUpdate})
       : super(key: key);
 
   @override
@@ -63,14 +63,19 @@ class _FindWordGameState extends State<FindWordGame> {
                       reaction: c.reaction,
                       child: Center(child: Text(c.letter)),
                       onPressed: () {
-                        widget.onGameOver(1);
+                        widget.onGameUpdate(
+                            score: 1, max: 1, gameOver: true, star: true);
                         if (c.letter == widget.answer[word.length]) {
                           setState(() {
                             score++;
                             c.reaction = Reaction.success;
                             word.add(c.letter);
                             if (word.length == widget.answer.length)
-                              widget.onGameOver(score);
+                              widget.onGameUpdate(
+                                  score: score,
+                                  max: score,
+                                  gameOver: true,
+                                  star: true);
                           });
                         } else {
                           if (score > 0) score--;

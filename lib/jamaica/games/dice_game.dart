@@ -28,9 +28,9 @@ enum _Type { choice, question, answer }
 
 class DiceGame extends StatefulWidget {
   final BuiltList<int> choices;
-  final OnGameOver onGameOver;
+  final OnGameUpdate onGameUpdate;
 
-  const DiceGame({Key key, this.choices, this.onGameOver}) : super(key: key);
+  const DiceGame({Key key, this.choices, this.onGameUpdate}) : super(key: key);
 
   @override
   _DiceGameState createState() => _DiceGameState();
@@ -185,7 +185,7 @@ class _DiceGameState extends State<DiceGame>
         existingData1.add(choiceDetail[i].number);
     }
     if (existingData1.length <= 1) {
-      widget.onGameOver(2);
+      widget.onGameUpdate(score: 2, max: 2, gameOver: true, star: true);
       print("game over");
     }
   }
@@ -235,7 +235,11 @@ class _DiceGameState extends State<DiceGame>
                             }
                             if (gameEnd) {
                               setState(() {
-                                widget.onGameOver(2);
+                                widget.onGameUpdate(
+                                    score: 2,
+                                    max: 2,
+                                    gameOver: true,
+                                    star: true);
                               });
                             }
                           });

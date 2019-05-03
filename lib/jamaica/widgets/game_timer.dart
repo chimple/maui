@@ -4,13 +4,13 @@ import 'package:maui/jamaica/state/game_utils.dart';
 class GameTimer extends StatefulWidget {
   int time;
   Function(bool) timeEndCallback;
-  final OnGameOver onGameOver;
+  final OnGameUpdate onGameUpdate;
   Function(String) timeCallback;
   GameTimer(
       {Key key,
       this.time,
       this.timeCallback,
-      this.onGameOver,
+      this.onGameUpdate,
       this.timeEndCallback})
       : super(key: key);
   @override

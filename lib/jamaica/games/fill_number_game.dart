@@ -6,13 +6,13 @@ import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/components/Shaker.dart';
 
 class FillNumberGame extends StatefulWidget {
-  final OnGameOver onGameOver;
+  final OnGameUpdate onGameUpdate;
   final List<int> serialData;
 
   const FillNumberGame({
     key,
     this.serialData,
-    this.onGameOver,
+    this.onGameUpdate,
   }) : super(key: key);
   @override
   State<StatefulWidget> createState() => new FillNumberGameState();
@@ -322,7 +322,8 @@ class FillNumberGameState extends State<FillNumberGame> {
               });
               // new Future.delayed(const Duration(milliseconds: 250), () {
               start = false;
-              widget.onGameOver(10);
+              widget.onGameUpdate(
+                  score: 10, max: 10, gameOver: true, star: true);
               scorCount = scorCount;
               _pointssend.removeRange(0, _pointssend.length);
               // });

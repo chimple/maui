@@ -9,7 +9,7 @@ class UnitGameStory extends FullScreenStory {
           body: SafeArea(
             child: UnitGame(
               question: 65,
-              onGameOver: (_) {},
+              onGameUpdate: ({int score, int max, bool gameOver, bool star}) {},
             ),
           ),
         ),
@@ -17,7 +17,7 @@ class UnitGameStory extends FullScreenStory {
           body: SafeArea(
             child: UnitGame(
               question: 909,
-              onGameOver: (_) {},
+              onGameUpdate: ({int score, int max, bool gameOver, bool star}) {},
             ),
           ),
         ),
@@ -25,7 +25,7 @@ class UnitGameStory extends FullScreenStory {
           body: SafeArea(
             child: UnitGame(
               question: 9,
-              onGameOver: (_) {},
+              onGameUpdate: ({int score, int max, bool gameOver, bool star}) {},
             ),
           ),
         )

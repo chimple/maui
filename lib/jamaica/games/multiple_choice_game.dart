@@ -20,9 +20,9 @@ class MultipleChoiceGame extends StatefulWidget {
   final String question;
   final BuiltList<String> choices;
   final BuiltList<String> answers;
-  final OnGameOver onGameOver;
+  // final OnGameUpdate onGameUpdate;
   MultipleChoiceGame(
-      {Key key, this.answers, this.choices, this.question, this.onGameOver})
+      {Key key, this.answers, this.choices, this.question})
       : super(key: key);
   @override
   _MultipleChoiceGameState createState() => new _MultipleChoiceGameState();
@@ -87,7 +87,7 @@ class _MultipleChoiceGameState extends State<MultipleChoiceGame> {
                           if (c.appear) {
                             _count++;
                             print('game over');
-                            if (_count == _complete) widget.onGameOver(2);
+                            // if (_count == _complete) widget.onGameOver(2);
                           }
                         });
                         return Reaction.success;

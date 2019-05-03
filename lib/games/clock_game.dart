@@ -30,7 +30,7 @@ class ClockGame extends StatefulWidget {
   final int minute;
 
   final BuiltList<int> choices;
-  final OnGameOver onGameOver;
+  final OnGameUpdate onGameOver;
 
   const ClockGame(
       {Key key, this.choices, this.hour, this.minute, this.onGameOver})

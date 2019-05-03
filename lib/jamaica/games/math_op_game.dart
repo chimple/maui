@@ -25,10 +25,15 @@ class MathOpGame extends StatefulWidget {
   final int second;
   final String op;
   final int answer;
-  final OnGameOver onGameOver;
+  final OnGameUpdate onGameUpdate;
 
   const MathOpGame(
-      {Key key, this.first, this.second, this.op, this.answer, this.onGameOver})
+      {Key key,
+      this.first,
+      this.second,
+      this.op,
+      this.answer,
+      this.onGameUpdate})
       : super(key: key);
 
   @override
@@ -131,7 +136,11 @@ class _MathOpGameState extends State<MathOpGame> {
                               score++;
                               print("this my score$score");
                               if (--complete == 0) a.solved = true;
-                              widget.onGameOver(score);
+                              widget.onGameUpdate(
+                                  score: score,
+                                  max: score,
+                                  gameOver: true,
+                                  star: true);
                             } else
                               score--;
                             print("this my decrement score $score");
