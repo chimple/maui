@@ -75,8 +75,8 @@ Widget buildGame({GameData gameData, OnGameOver onGameOver}) {
     case 'DiceGame':
       final gd = gameData as NumMultiData;
       return DiceGame(
-        question: gd.answers[0],
-        answerPosition: gd.choices.indexOf(gd.answers[0]),
+        // question: gd.answers[0],
+        // answerPosition: gd.choices.indexOf(gd.answers[0]),
         choices: gd.choices,
         onGameOver: onGameOver,
       );
