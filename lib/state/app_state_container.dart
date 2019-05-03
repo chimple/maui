@@ -60,7 +60,7 @@ class AppStateContainer extends StatefulWidget {
 
   static AppStateContainerState of(BuildContext context) {
     return (context.inheritFromWidgetOfExactType(_InheritedAppStateContainer)
-            as _InheritedAppStateContainer)
+    as _InheritedAppStateContainer)
         ?.data;
   }
 
@@ -96,11 +96,11 @@ class AppStateContainerState extends State<AppStateContainer> {
   // teacher objects
   List<ClassSession> classSessions;
   ClassSession myClassSession;
-  List<String> classStudents;
+  List<String> classStudents = [];
   Map<String, Performance> performances;
-  Set<String> quizStudents;
+  Set<String> quizStudents = new Set();
   QuizSession quizSession;
-  Map<QuizSession, StatusEnum> quizSessions;
+  Map<QuizSession, StatusEnum> quizSessions = new Map();
   Map<String, Performance> quizPerformances;
 
   @override
@@ -124,7 +124,7 @@ class AppStateContainerState extends State<AppStateContainer> {
     }
     _initAudioPlayer();
     var initializationSettingsAndroid =
-        new AndroidInitializationSettings('app_icon');
+    new AndroidInitializationSettings('app_icon');
     var initializationSettingsIOS = new IOSInitializationSettings();
     var initializationSettings = new InitializationSettings(
         initializationSettingsAndroid, initializationSettingsIOS);
@@ -243,11 +243,11 @@ class AppStateContainerState extends State<AppStateContainer> {
   void display(BuildContext context, String fileName) {
     if (isShowingFlashCard) {
       showDialog(
-              context: context,
-              child: new FractionallySizedBox(
-                  heightFactor: 0.5,
-                  widthFactor: 0.8,
-                  child: new FlashCard(text: fileName)))
+          context: context,
+          child: new FractionallySizedBox(
+              heightFactor: 0.5,
+              widthFactor: 0.8,
+              child: new FlashCard(text: fileName)))
           .whenComplete(() {
         isShowingFlashCard = true;
       });
@@ -268,7 +268,7 @@ class AppStateContainerState extends State<AppStateContainer> {
     } else {
       try {
         msgs =
-            await p2p.getConversations(state.loggedInUser.id, friendId, 'chat');
+        await p2p.getConversations(state.loggedInUser.id, friendId, 'chat');
       } on PlatformException {
         print('Failed getting messages');
       } catch (e, s) {
@@ -371,20 +371,22 @@ class AppStateContainerState extends State<AppStateContainer> {
       }
     } else if (message['messageType'] == 'json') {
       final standardSerializers =
-          (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
+      (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
       final obj =
-          standardSerializers.deserialize(jsonDecode(message['message']));
+      standardSerializers.deserialize(jsonDecode(message['message']));
       if (obj is ClassInterest) {
       } else if (obj is ClassJoin) {
         if (state.loggedInUser.userType == UserType.teacher) {
-          classStudents.add(obj.studentId);
+          setState(() {
+            classStudents.add(obj.studentId);
+          });
         }
       } else if (obj is ClassSession) {
         setState(() {
           switch (obj.status) {
             case StatusEnum.start:
               final i =
-                  classSessions.indexWhere((c) => c.sessionId == obj.sessionId);
+              classSessions.indexWhere((c) => c.sessionId == obj.sessionId);
               if (i > -1) {
                 classSessions[i] = obj;
               } else {
@@ -393,7 +395,7 @@ class AppStateContainerState extends State<AppStateContainer> {
               break;
             case StatusEnum.progress:
               final i =
-                  classSessions.indexWhere((c) => c.sessionId == obj.sessionId);
+              classSessions.indexWhere((c) => c.sessionId == obj.sessionId);
               if (i > -1) {
                 classSessions[i] = obj;
               } else {
@@ -415,9 +417,10 @@ class AppStateContainerState extends State<AppStateContainer> {
           });
         }
       } else if (obj is QuizJoin) {
-        if (state.loggedInUser.userType == UserType.teacher &&
-            quizSession.sessionId == obj.sessionId) {
-          quizStudents.add(obj.studentId);
+        if (quizSession.sessionId == obj.sessionId) { //state.loggedInUser.userType == UserType.student &&
+          setState(() {
+            quizStudents.add(obj.studentId);
+          });
         }
       } else if (obj is QuizSession) {
         //notify UI that quiz is there
@@ -454,22 +457,21 @@ class AppStateContainerState extends State<AppStateContainer> {
     }
   }
 
-  createQuizSession(QuizSession quizSession) async {
-    if (state.loggedInUser.userType == UserType.teacher &&
-        quizSession == null) {
+  Future<void> createQuizSession(QuizSession quizSession) async {
+    if (state.loggedInUser.userType == UserType.teacher) {
       setState(() {
         quizSessions[quizSession] = StatusEnum.create;
-        quizSession = quizSession;
+        this.quizSession = quizSession;
       });
       final standardSerializers =
-          (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
+      (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
       String message = jsonEncode(standardSerializers.serialize(quizSession));
       await p2p.addGroupMessage(
           state.loggedInUser.id, '0', 'json', message, true, '');
     }
   }
 
-  startQuizSession(QuizSession quizSession) async {
+  Future<void> startQuizSession(QuizSession quizSession) async {
     if (state.loggedInUser.userType == UserType.teacher &&
         quizSession != null) {
       QuizUpdate quizUpdate = QuizUpdate((q) => q
@@ -479,7 +481,7 @@ class AppStateContainerState extends State<AppStateContainer> {
         quizSessions[quizSession] = StatusEnum.start;
       });
       final standardSerializers =
-          (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
+      (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
       String message = jsonEncode(standardSerializers.serialize(quizUpdate));
       await p2p.addGroupMessage(
           state.loggedInUser.id, '0', 'json', message, true, '');
@@ -497,15 +499,15 @@ class AppStateContainerState extends State<AppStateContainer> {
         quizSession = null;
       });
       final standardSerializers =
-          (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
+      (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
       String message = jsonEncode(standardSerializers.serialize(quizUpdate));
       await p2p.addGroupMessage(
           state.loggedInUser.id, '0', 'json', message, true, '');
     }
   }
 
-  joinQuizSession(QuizSession quizSession) async {
-    if (quizSession == null) {
+  Future<void> joinQuizSession(QuizSession quizSession) async {
+    if (quizSession != null) {
       QuizJoin quizJoin = QuizJoin((q) => q
         ..sessionId = quizSession.sessionId
         ..studentId = state.loggedInUser.id);
@@ -513,7 +515,7 @@ class AppStateContainerState extends State<AppStateContainer> {
         quizSession = quizSession;
       });
       final standardSerializers =
-          (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
+      (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
       String message = jsonEncode(standardSerializers.serialize(quizJoin));
       await p2p.addGroupMessage(
           state.loggedInUser.id, '0', 'json', message, true, '');
@@ -530,9 +532,9 @@ class AppStateContainerState extends State<AppStateContainer> {
           ..status = StatusEnum.start);
       });
       final standardSerializers =
-          (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
+      (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
       String message =
-          jsonEncode(standardSerializers.serialize(myClassSession));
+      jsonEncode(standardSerializers.serialize(myClassSession));
       await p2p.addGroupMessage(
           state.loggedInUser.id, '0', 'json', message, true, '');
     }
@@ -553,7 +555,7 @@ class AppStateContainerState extends State<AppStateContainer> {
         ..sessionId = classSession.sessionId
         ..studentId = state.loggedInUser.id);
       final standardSerializers =
-          (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
+      (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
       String message = jsonEncode(standardSerializers.serialize(classJoin));
       await p2p.addGroupMessage(
           state.loggedInUser.id, '0', 'json', message, true, '');
@@ -638,7 +640,7 @@ class AppStateContainerState extends State<AppStateContainer> {
           question = _toQuiz[_currentQuizUnit].objectUnitId;
           _expectedAnswer = question;
           List<LessonUnit> lessonUnits =
-              List.from(_lessonUnits, growable: false)..shuffle();
+          List.from(_lessonUnits, growable: false)..shuffle();
           choices = lessonUnits
               .where((l) => l.objectUnitId != _expectedAnswer)
               .take(3)
@@ -650,12 +652,12 @@ class AppStateContainerState extends State<AppStateContainer> {
               : _toQuiz[_currentQuizUnit].subjectUnitId;
           _expectedAnswer = _toQuiz[_currentQuizUnit].subjectUnitId;
           List<LessonUnit> lessonUnits =
-              List.from(_lessonUnits, growable: false)..shuffle();
+          List.from(_lessonUnits, growable: false)..shuffle();
           choices = lessonUnits
               .where((l) => l.subjectUnitId != _expectedAnswer)
               .take(3)
               .map((l) =>
-                  l.objectUnitId?.length > 0 ? l.objectUnitId : l.subjectUnitId)
+          l.objectUnitId?.length > 0 ? l.objectUnitId : l.subjectUnitId)
               .toList();
         }
         choices.insert(new Random().nextInt(choices.length), _expectedAnswer);
@@ -663,7 +665,7 @@ class AppStateContainerState extends State<AppStateContainer> {
           'userId': User.botId,
           'message': question,
           'choices':
-              choices.map((c) => '$imagePrefix$c').toList(growable: false)
+          choices.map((c) => '$imagePrefix$c').toList(growable: false)
         };
     }
   }
@@ -676,7 +678,7 @@ class AppStateContainerState extends State<AppStateContainer> {
     );
   }
 
-  setLoggedInUser(User user) async {
+  Future<void> setLoggedInUser(User user) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final deviceId = prefs.getString('deviceId');
     prefs.setString('userId', user.id);
