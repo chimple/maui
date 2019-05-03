@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:maui/jamaica/games/wordgrid_game.dart';
+import 'package:maui/jamaica/games/word_grid_game.dart';
 import 'package:storyboard/storyboard.dart';
 
 class WordGridGameStory extends FullScreenStory {

@@ -22,16 +22,16 @@ enum ShakeCell { shake, inactive }
 class WordGridGameState extends State<WordGridGame> {
   int _size;
   String words = '';
-  List<Status> _statuses;
-  List<String> newletters = [];
+  List<Status> _status;
+  List<String> finalLetter = [];
   List<String> temp = [];
-  List<int> tempindex = [];
-  List<bool> _visibleflag = [];
-  bool stopdrag = false;
+  List<int> tempIndex = [];
+  List<bool> _visibleFlag = [];
+  bool stopDrag = false;
   int code;
-  int lastclick;
+  int lastClick;
   int tries = 0;
-  List<Offset> _pointssend = <Offset>[];
+  List<Offset> _pointsSend = <Offset>[];
   List<ShakeCell> _shakeCells = [];
   bool _isLoading = true;
 
@@ -45,9 +45,7 @@ class WordGridGameState extends State<WordGridGame> {
     setState(() => _isLoading = true);
     List<double> cdlist = [];
     List<int> cdletters = [];
-
     _size = sqrt(widget.answer.length + widget.choice.length).toInt();
-
     widget.answer.forEach((e) {
       words = words + e;
     });
@@ -132,22 +130,22 @@ class WordGridGameState extends State<WordGridGame> {
         if (cdletters.length != widget.answer.length) eflag = 1;
       }
     }
-    newletters = [];
-    newletters.length = widget.answer.length + widget.choice.length;
+    finalLetter = [];
+    finalLetter.length = widget.answer.length + widget.choice.length;
     for (var i = 0; i < cdletters.length; i++) {
-      newletters[cdletters[i]] = widget.answer[i];
+      finalLetter[cdletters[i]] = widget.answer[i];
     }
-    for (var i = 0, j = 0; i < newletters.length; i++) {
-      if (newletters[i] == null) {
-        newletters[i] = widget.choice[j];
+    for (var i = 0, j = 0; i < finalLetter.length; i++) {
+      if (finalLetter[i] == null) {
+        finalLetter[i] = widget.choice[j];
         j++;
       }
     }
-    _statuses = [];
-    _statuses = newletters.map((a) => Status.draggable).toList(growable: false);
-    _visibleflag = newletters.map((a) => false).toList(growable: false);
+    _status = [];
+    _status = finalLetter.map((a) => Status.draggable).toList(growable: false);
+    _visibleFlag = finalLetter.map((a) => false).toList(growable: false);
     _shakeCells =
-        newletters.map((a) => ShakeCell.inactive).toList(growable: false);
+        finalLetter.map((a) => ShakeCell.inactive).toList(growable: false);
     code = rng.nextInt(499) + rng.nextInt(500);
     while (code < 100) {
       code = rng.nextInt(499) + rng.nextInt(500);
@@ -168,60 +166,60 @@ class WordGridGameState extends State<WordGridGame> {
         maxHeight: maxHeight,
         maxWidth: maxWidth,
         onStart: () {
-          if (!stopdrag) {
+          if (!stopDrag) {
             setState(() {
-              stopdrag = true;
+              stopDrag = true;
               temp.add(text);
-              tempindex.add(index);
-              _pointssend.add(offset);
-              lastclick = index;
-              _visibleflag[index] = true;
-              _statuses[index] = Status.first;
-              for (var i = 0; i < newletters.length; i++) {
-                if (_statuses[i] == Status.draggable && index != i) {
-                  _statuses[i] = Status.dragTarget;
+              tempIndex.add(index);
+              _pointsSend.add(offset);
+              lastClick = index;
+              _visibleFlag[index] = true;
+              _status[index] = Status.first;
+              for (var i = 0; i < finalLetter.length; i++) {
+                if (_status[i] == Status.draggable && index != i) {
+                  _status[i] = Status.dragTarget;
                 }
               }
             });
           }
         },
         onwill: (data) {
-          if (data == code && _visibleflag[index] == false) {
+          if (data == code && _visibleFlag[index] == false) {
             var x, y;
-            if (lastclick == _size ||
-                lastclick == _size + _size ||
-                lastclick == _size + _size + _size) {
-              x = lastclick;
-            } else if (lastclick == _size - 1 ||
-                lastclick == _size + _size - 1 ||
-                lastclick == _size + _size + _size - 1) {
-              y = lastclick;
+            if (lastClick == _size ||
+                lastClick == _size + _size ||
+                lastClick == _size + _size + _size) {
+              x = lastClick;
+            } else if (lastClick == _size - 1 ||
+                lastClick == _size + _size - 1 ||
+                lastClick == _size + _size + _size - 1) {
+              y = lastClick;
             }
 
-            if ((index == lastclick + 1 && y != lastclick) ||
-                (index == lastclick - 1 && x != lastclick) ||
-                (index == lastclick + _size) ||
-                (index == lastclick - _size)) {
-              _statuses[tempindex[0]] = Status.dragTarget;
+            if ((index == lastClick + 1 && y != lastClick) ||
+                (index == lastClick - 1 && x != lastClick) ||
+                (index == lastClick + _size) ||
+                (index == lastClick - _size)) {
+              _status[tempIndex[0]] = Status.dragTarget;
               setState(() {
-                lastclick = index;
+                lastClick = index;
                 temp.add(text);
-                tempindex.add(index);
-                _pointssend.add(offset);
-                _visibleflag[index] = true;
+                tempIndex.add(index);
+                _pointsSend.add(offset);
+                _visibleFlag[index] = true;
               });
               return true;
             }
           } else if (data == code &&
-              _visibleflag[index] == true &&
-              tempindex.length > 1) {
-            if (index == tempindex[tempindex.length - 2]) {
+              _visibleFlag[index] == true &&
+              tempIndex.length > 1) {
+            if (index == tempIndex[tempIndex.length - 2]) {
               setState(() {
-                _visibleflag[tempindex.last] = false;
-                tempindex.removeLast();
+                _visibleFlag[tempIndex.last] = false;
+                tempIndex.removeLast();
                 temp.removeLast();
-                _pointssend.removeLast();
-                lastclick = tempindex.last;
+                _pointsSend.removeLast();
+                lastClick = tempIndex.last;
               });
               return true;
             } else
@@ -230,7 +228,7 @@ class WordGridGameState extends State<WordGridGame> {
           return false;
         },
         onCancel: (v, g) {
-          lastclick = -1;
+          lastClick = -1;
           int flag = 0;
           if (widget.answer.length == temp.length) {
             for (var i = 0; i < temp.length; i++) {
@@ -244,25 +242,25 @@ class WordGridGameState extends State<WordGridGame> {
           }
           if (flag == 1) {
             temp = [];
-            tempindex = [];
+            tempIndex = [];
             tries += 4;
             setState(() {
-              for (var i = 0; i < _visibleflag.length; i++)
-                _visibleflag[i] == true ? _shakeCells[i] = ShakeCell.shake : i;
+              for (var i = 0; i < _visibleFlag.length; i++)
+                _visibleFlag[i] == true ? _shakeCells[i] = ShakeCell.shake : i;
               //  widget.onScore(-4);
             });
             new Future.delayed(const Duration(milliseconds: 800), () {
               setState(() {
-                stopdrag = false;
-                _pointssend = [];
-                _shakeCells = newletters
+                stopDrag = false;
+                _pointsSend = [];
+                _shakeCells = finalLetter
                     .map((a) => ShakeCell.inactive)
                     .toList(growable: false);
-                _statuses = newletters
+                _status = finalLetter
                     .map((a) => Status.draggable)
                     .toList(growable: false);
-                _visibleflag =
-                    newletters.map((a) => false).toList(growable: false);
+                _visibleFlag =
+                    finalLetter.map((a) => false).toList(growable: false);
               });
             });
           } else
@@ -319,13 +317,11 @@ class WordGridGameState extends State<WordGridGame> {
           calculateOffsets(buttonPadding, startpoint, _size, maxWidth);
       yaxis = yaxis + maxWidth + buttonPadding;
       xaxis = xaxis;
-      print("object....:xaxis ..:$xaxis.......y axis...:$yaxis");
       startpoint = new Offset(xaxis, yaxis);
       List<Offset> offsets3 =
           calculateOffsets(buttonPadding, startpoint, _size, maxWidth);
       yaxis = yaxis + maxWidth + buttonPadding;
       xaxis = xaxis;
-      print("object....:xaxis ..:$xaxis.......y axis...:$yaxis");
       startpoint = new Offset(xaxis, yaxis);
       List<Offset> offsets4 =
           calculateOffsets(buttonPadding, startpoint, _size, maxWidth);
@@ -335,7 +331,7 @@ class WordGridGameState extends State<WordGridGame> {
       return Container(
         child: new Stack(children: [
           new Container(
-            child: _buildpoint(_pointssend, coloris, xstart, ystart),
+            child: _buildpoint(_pointsSend, coloris, xstart, ystart),
           ),
           new Padding(
               padding: EdgeInsets.symmetric(
@@ -344,16 +340,16 @@ class WordGridGameState extends State<WordGridGame> {
                 rows: _size,
                 cols: _size,
                 // maxAspectRatio: 1.0,
-                children: newletters
+                children: finalLetter
                     .map((e) => new Padding(
                         padding: EdgeInsets.all(buttonPadding),
                         child: _buildItem(
                             j,
                             e,
-                            _statuses[j],
+                            _status[j],
                             _shakeCells[j],
                             offsets[j],
-                            _visibleflag[j++],
+                            _visibleFlag[j++],
                             maxHeight,
                             maxWidth)))
                     .toList(growable: false),
@@ -467,7 +463,7 @@ class MyButton extends StatefulWidget {
       : super(key: key);
 
   final String text;
-  int index;
+  final int index;
   final Status status;
   final ShakeCell tile;
   final Offset offset;
@@ -485,9 +481,9 @@ class MyButton extends StatefulWidget {
 
 class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
   AnimationController controller, controller1;
-  Animation<double> animationRight, animation, animationWrong;
-  Velocity v;
-  Offset o;
+  Animation<double> animation, animationWrong;
+  Velocity velocity;
+  Offset offset;
 
   @override
   initState() {
@@ -496,8 +492,6 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
         duration: new Duration(milliseconds: 20), vsync: this);
     controller = new AnimationController(
         duration: new Duration(milliseconds: 250), vsync: this);
-    animationRight =
-        new CurvedAnimation(parent: controller, curve: Curves.decelerate);
     animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn);
 
     controller.forward();
@@ -532,7 +526,7 @@ class _MyButtonState extends State<MyButton> with TickerProviderStateMixin {
                 onAccept: (int d) => (widget.tile == ShakeCell.shake ||
                         widget.status == Status.first)
                     ? {}
-                    : widget.onCancel(v, o),
+                    : widget.onCancel(velocity, offset),
                 onWillAccept: (int data) => (widget.tile == ShakeCell.shake ||
                         widget.status == Status.first)
                     ? {}
