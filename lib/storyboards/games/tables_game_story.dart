@@ -10,11 +10,9 @@ class TablesGameStory extends FullScreenStory {
         Scaffold(
           body: SafeArea(
             child: TablesGame(
-              question: BuiltList<int>([
-                1,
-                2
-              ]),
-              answers: 2,
+              question1: 1,
+              question2: 2, 
+              answer: 2,
             ),
           ),
         ),

@@ -1,4 +1,3 @@
-import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:maui/jamaica/state/game_utils.dart';
 import 'package:maui/jamaica/widgets/bento_box.dart';
@@ -22,11 +21,12 @@ class _ChoiceDetail {
 }
 
 class TablesGame extends StatefulWidget {
-  final BuiltList<int> question;
-  final int answers;
+  final int question1;
+  final int question2;
+  final int answer;
   final OnGameOver onGameOver;
 
-  const TablesGame({Key key, this.question, this.answers, this.onGameOver})
+  const TablesGame({Key key, this.question1,this.question2, this.answer, this.onGameOver})
       : super(key: key);
 
   @override
@@ -71,7 +71,7 @@ class TablesGameState extends State<TablesGame> {
                   Flexible(
                     flex: 10,
                     child: Text(
-                      '${widget.question.elementAt(0)} X ${widget.question.elementAt(1)}',
+                      '${widget.question1} X ${widget.question2}',
                       style: TextStyle(fontSize: size.width*0.16),
                     ),
                   ),
@@ -121,8 +121,9 @@ class TablesGameState extends State<TablesGame> {
                             _result = _result.substring(0, _result.length - 1);
                           });
                         } else if (e == '✔') {
-                          if (int.parse(_result) == widget.answers) {
-                            print('its!!! correct');
+                          if (int.parse(_result) == widget.answer) {
+                            print('its correct');
+                            widget.onGameOver(2);
                             return Reaction.success;
                           }else{
                             return Reaction.failure;
