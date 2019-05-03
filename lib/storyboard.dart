@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:maui/storyboards/collected_item_story.dart';
 import 'package:maui/storyboards/game_score_story.dart';
 import 'package:maui/storyboards/games/bingo_game_story.dart';
+import 'package:maui/storyboards/games/casino_game_story.dart';
 import 'package:maui/storyboards/games/calculate_number_story.dart';
 import 'package:maui/storyboards/games/clock_game_story.dart';
 import 'package:maui/storyboards/games/compare_number_game_story.dart';
@@ -66,6 +67,9 @@ void main() {
     BasicCountingGameStory(),
     BentoBoxStory(),
     BingoGameStory(),
+    MadSentenceGameStory(),
+    CasinoGameStory(),
+    NumberBalanceGameStory(),
     BoxMatchingGameStory(),
     CalculateTheNumberStory(),
     ChatBotScreenStory(),
