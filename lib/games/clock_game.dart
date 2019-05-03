@@ -1,4 +1,4 @@
-// import 'dart:async';
+import 'dart:async';
 import 'dart:math';
 
 import 'package:built_collection/built_collection.dart';
@@ -68,7 +68,7 @@ class ClockGameState extends State<ClockGame> {
           child: BentoBox(
             dragConfig: DragConfig.draggableBounceBack,
             qCols: 3,
-            qRows: 2,
+            qRows: 1,
             qChildren: <Widget>[
               hourAppear
                   ? CuteButton(
@@ -175,12 +175,15 @@ class Clock extends StatefulWidget {
 
   final int hours;
   final int minutes;
+  final Duration updateDuration;
 
-  Clock({
-    this.circleColor = Colors.black,
-    this.hours,
-    this.minutes,
-  });
+  Clock(
+      {this.circleColor = Colors.black,
+      this.hours,
+      this.minutes,
+      this.updateDuration = const Duration(
+        milliseconds: 5,
+      )});
 
   @override
   State<StatefulWidget> createState() {
@@ -192,6 +195,9 @@ class _Clock extends State<Clock> {
   DateTime dateTime;
   String hours;
   String minutes;
+  Timer _timer;
+  int tempHour;
+  int tempMinute;
 
   @override
   void initState() {
@@ -199,7 +205,34 @@ class _Clock extends State<Clock> {
     hours = (widget.hours < 10) ? '0${widget.hours}' : '${widget.hours}';
     minutes =
         (widget.minutes < 10) ? '0${widget.minutes}' : '${widget.minutes}';
+
     dateTime = DateTime.parse("1969-07-20 $hours:$minutes:00");
+
+    tempHour = widget.hours == 0 ? 10 : widget.hours - 2;
+    tempMinute = widget.minutes;
+    this._timer = new Timer.periodic(widget.updateDuration, setTime);
+  }
+
+  void setTime(Timer timer) {
+    tempMinute++;
+    if (tempMinute > 59) {
+      tempMinute = 0;
+      tempHour++;
+      if (tempHour > 11) {
+        tempHour = 0;
+      }
+    }
+
+    if (tempHour == widget.hours && tempMinute == widget.minutes) {
+      _timer.cancel();
+    }
+
+    print(tempMinute);
+    setState(() {
+      hours = (tempHour < 10) ? '0$tempHour' : '$tempHour';
+      minutes = (tempMinute < 10) ? '0$tempMinute' : '$tempMinute';
+      dateTime = DateTime.parse("1969-07-20 $hours:$minutes:00");
+    });
   }
 
   @override

@@ -3,13 +3,17 @@ import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
-import 'package:maui/jamaica/widgets/story/activity/drag_text.dart';
-// import 'package:maui/jamaica/widgets/story/activity/jumble_words.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:maui/jamaica/widgets/story/play_pause_button.dart';
-// import 'package:maui/jamaica/widgets/story/router.dart';
 import 'package:maui/jamaica/widgets/story/show_dialog_mode.dart';
-import 'package:maui/jamaica/widgets/story/activity/text_highlighter.dart';
+import 'package:maui/jamaica/widgets/tts/text_to_speech.dart';
 
+enum TextToSpeechType {
+  audio,
+  tts,
+  hear2Read,
+}
 final TextStyle textStyle = TextStyle(
   color: Colors.black,
   fontSize: 23,
@@ -24,32 +28,26 @@ final TextStyle highlightTextStyle = TextStyle(
 class AudioTextBold extends StatefulWidget {
   final String fullText;
   final Function pageSliding;
-  final Function(int, StoryMode) storyModeCallback;
   final VoidCallback onComplete;
   final String audioFile;
-  final StoryMode storyMode;
   final String imagePath;
-  final imageItemsPosition;
-  final BuiltList<String> imageItemsAnswer;
-  final int index;
+  final Function(String) onLongPress;
+  final FlutterTextToSpeech keys;
+  final Function(TtsState) playingStatus;
   AudioTextBold(
-      {Key key,
-      this.storyMode,
-      this.imageItemsPosition,
+      {this.keys,
+      this.onLongPress,
+      this.playingStatus,
       this.onComplete,
       @required this.fullText,
       this.pageSliding,
       @required this.audioFile,
-      @required this.imagePath,
-      this.storyModeCallback,
-      this.imageItemsAnswer,
-      this.index})
-      : super(key: key);
+      @required this.imagePath});
   @override
-  _TextAudioState createState() => new _TextAudioState();
+  _AudioTextBold createState() => new _AudioTextBold();
 }
 
-class _TextAudioState extends State<AudioTextBold> {
+class _AudioTextBold extends State<AudioTextBold> {
   int duration;
   set _duration(int d) => duration = d;
   int get durationText => duration != null ? duration : 0;
@@ -67,13 +65,15 @@ class _TextAudioState extends State<AudioTextBold> {
   final _regex1 = RegExp('[!?,|]');
   int numOfChar, charTime, incr = 0, _count;
   List<String> temp = [];
-  StoryMode storyMode = StoryMode.textMode;
-  List<StoryMode> listStoryMode = [];
   ScrollController _scrollController = new ScrollController();
+  FlutterTts flutterTts;
+  TextToSpeechType textToSpeachType;
+  String text;
   @override
   void initState() {
     super.initState();
-    print('initState');
+    flutterTts = FlutterTts();
+    text = widget.fullText; //.replaceAll(RegExp(r'[\n]'), ' ');
   }
 
   @override
@@ -85,24 +85,28 @@ class _TextAudioState extends State<AudioTextBold> {
 
   Future pause() async {
     print('pause');
-    await audioPlayer.pause().then((s) {
-      setState(() => isPause = true);
-      _duration = 0;
-      isDurationZero = false;
-    });
-    widget.pageSliding(widget.index);
+    if (textToSpeachType == TextToSpeechType.audio) {
+      await audioPlayer.pause().then((s) {
+        setState(() => isPause = true);
+        _duration = 0;
+        isDurationZero = false;
+      });
+    } else if (textToSpeachType == TextToSpeechType.hear2Read) {
+    } else {}
   }
 
   Future resume() async {
     // reset();
-    await audioPlayer.release();
-    play(_audioFiles[incr]).then((s) {
-      setState(() {
-        isPause = false;
+    if (textToSpeachType == TextToSpeechType.audio) {
+      await audioPlayer.release();
+      play(_audioFiles[incr]).then((s) {
+        setState(() {
+          isPause = false;
+        });
       });
-    });
-    print('audio status ${audioPlayer.state}');
-    widget.pageSliding(widget.index);
+      print('audio status ${audioPlayer.state}');
+    } else if (textToSpeachType == TextToSpeechType.hear2Read) {
+    } else {}
   }
 
   void reset() {
@@ -126,7 +130,6 @@ class _TextAudioState extends State<AudioTextBold> {
         if (durationText > 0 && !isDurationZero) {
           reset();
           looper(listOfLines[incr], durationText);
-          storyMode = StoryMode.audioBoldTextMode;
           isDurationZero = true;
         }
       };
@@ -232,27 +235,48 @@ class _TextAudioState extends State<AudioTextBold> {
       _audioFiles.add('$str.m4a');
     }
 
-    try {
-      await audioCache.loadAll(_audioFiles).then((s) {
-        lastAudioFile = _audioFiles[0];
-        play(_audioFiles[0]);
+      try {
+        await audioCache.loadAll(_audioFiles).then((s) {
+          lastAudioFile = _audioFiles[0];
+          play(_audioFiles[0]);
+          setState(() {
+            isPlaying = true;
+            isPause = false;
+            isAudioFileAvailableOrNot = false;
+            textToSpeachType = TextToSpeechType.audio;
+          });
+        }, onError: (e) {
+          setState(() {
+            isPlaying = false;
+            isPause = true;
+            isAudioFileAvailableOrNot = true;
+          });
+          showSnackbar(e.toString());
+        });
+      } catch (e) {
+        print(e);
+      }
+    } else {
+      listOfLines.addAll(text.split(RegExp('[!.]')));
+      print(listOfLines);
+      speak(listOfLines.removeAt(0));
+      flutterTts.startHandler = () {
         setState(() {
           isPlaying = true;
           isPause = false;
-          isAudioFileAvailableOrNot = false;
+          textToSpeachType = TextToSpeechType.hear2Read;
         });
-        widget.pageSliding(widget.index);
-        if (storyMode == StoryMode.audioBoldTextMode) {}
-      }, onError: (e) {
-        setState(() {
-          isPlaying = false;
-          isPause = true;
-          isAudioFileAvailableOrNot = true;
-        });
-        showSnackbar(e.toString());
-      });
-    } catch (e) {
-      print(e);
+      };
+      flutterTts.completionHandler = () {
+        if (listOfLines.isEmpty) {
+          print('true');
+          setState(() {
+            isPlaying = false;
+            isPause = true;
+          });
+        } else
+          speak(listOfLines?.removeAt(0));
+      };
     }
   }
 
@@ -279,187 +303,170 @@ class _TextAudioState extends State<AudioTextBold> {
       duration = 0;
       isDurationZero = false;
       endLine = '';
-      storyMode = StoryMode.showDialogOnLongPressMode;
     });
-    widget.pageSliding(widget.index);
     widget.onComplete();
   }
 
+  TtsState ttsState = TtsState.PAUSE;
   @override
   Widget build(BuildContext context) {
-    return MediaQuery.of(context).orientation == Orientation.portrait
-        ? Column(
-            children: <Widget>[
-              Expanded(
-                  flex: 4,
-                  child: Container(
-                    height: double.infinity,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        // border: Border.all(width: 2.0, color: Colors.white),
-                        borderRadius: BorderRadius.circular(20.0),
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: AssetImage('${widget.imagePath}'),
-                        )),
-                  )),
-              Expanded(
-                flex: 1,
-                child: PlayPauseButton(
-                  audioPlayer: audioPlayer,
-                  isPause: isPause,
-                  isPlaying: isPlaying,
-                  loadAudio: () => loadAudio(widget.fullText, widget.audioFile),
-                  pause: () => pause(),
-                  resume: () => resume(),
+    if (text != null && widget.imagePath != null)
+      return Column(
+        children: <Widget>[
+          Expanded(flex: 5, child: _buildImage()),
+          Expanded(
+              flex: 4,
+              child: TextToSpeech(
+                playingStatus: (s) {
+                  setState(() {
+                    ttsState = s;
+                  });
+                  widget.playingStatus(s);
+                },
+                onComplete: () => widget.onComplete(),
+                fullText: widget.fullText,
+                keys: widget.keys,
+                onLongPress: (ttsState == TtsState.PAUSE)
+                    ? (s) async {
+                        await showDialog(
+                          context: context,
+                          builder: (context) {
+                            return FractionallySizedBox(
+                                heightFactor:
+                                    MediaQuery.of(context).orientation ==
+                                            Orientation.portrait
+                                        ? 0.5
+                                        : 0.8,
+                                widthFactor:
+                                    MediaQuery.of(context).orientation ==
+                                            Orientation.portrait
+                                        ? 0.8
+                                        : 0.4,
+                                child: textDescriptionDialog(
+                                    context, s, 'textDesciption'));
+                          },
+                        );
+                      }
+                    : null,
+              ))
+        ],
+      );
+    else if (text == '') {
+      return Column(
+        children: <Widget>[
+          Expanded(child: _buildImage()),
+        ],
+      );
+    } else
+      return Column(
+        children: <Widget>[
+          Expanded(
+              flex: 9,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 15),
+                child: TextToSpeech(
+                  playingStatus: (status) => widget.playingStatus(status),
+                  onComplete: () => widget.onComplete(),
+                  fullText: widget.fullText,
+                  keys: widget.keys,
+                  onLongPress: (s) async {
+                    await showDialog(
+                      context: context,
+                      builder: (context) {
+                        return FractionallySizedBox(
+                            heightFactor: MediaQuery.of(context).orientation ==
+                                    Orientation.portrait
+                                ? 0.5
+                                : 0.8,
+                            widthFactor: MediaQuery.of(context).orientation ==
+                                    Orientation.portrait
+                                ? 0.8
+                                : 0.4,
+                            child: textDescriptionDialog(
+                                context, s, 'textDesciption'));
+                      },
+                    );
+                  },
                 ),
-              ),
-              Expanded(
-                  flex: 7,
-                  child: Padding(
-                      padding: EdgeInsets.only(left: 20, right: 20),
-                      child: _buildText()))
-            ],
-          )
-        : Stack(
-            alignment: AlignmentDirectional.topEnd,
-            children: <Widget>[
-              Column(
-                children: <Widget>[
-                  Expanded(
-                    flex: 6,
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(flex: 6, child: _buildImage()),
-                        Expanded(
-                          flex: 4,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 8, right: 8),
-                            child: SingleChildScrollView(
-                                controller: ScrollController(),
-                                child: _buildText()),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: (storyMode != StoryMode.textHighlighterMode)
-                        ? PlayPauseButton(
-                            audioPlayer: audioPlayer,
-                            isPause: isPause,
-                            isPlaying: isPlaying,
-                            loadAudio: () =>
-                                loadAudio(widget.fullText, widget.audioFile),
-                            pause: () => pause(),
-                            resume: () => resume(),
-                          )
-                        : Container(),
-                  ),
-                  Expanded(flex: 3, child: Container())
-                ],
-              ),
-              // CircleAvatar(
-              //   backgroundColor: Colors.cyanAccent,
-              //   maxRadius: 25,
-              //   child: IconButton(
-              //       icon: Icon(
-              //         (storyMode == StoryMode.textHighlighterMode ||
-              //                 storyMode == StoryMode.dragTextMode)
-              //             ? Icons.close
-              //             : Icons.navigate_next,
-              //         color: Colors.blue,
-              //         size: 25,
-              //       ),
-              //       onPressed: () {
-              //         if (storyMode == StoryMode.showDialogOnLongPressMode) {
-              //           setState(() => storyMode = StoryMode.textHighlighterMode);
-              //         } else if (storyMode == StoryMode.textHighlighterMode ||
-              //             storyMode == StoryMode.dragTextMode) {
-              //           setState(
-              //               () => storyMode = StoryMode.showDialogOnLongPressMode);
-              //         }
-              //       }),
-              // ),
-            ],
-          );
-  }
-
-  Widget _buildText() {
-    print('storymode: ${storyMode}');
-    if (storyMode == StoryMode.textMode)
-      return TextMode(
-        text: widget.fullText,
+              )),
+        ],
       );
-    else if (storyMode == StoryMode.audioBoldTextMode) {
-      return RichText(
-        text: new TextSpan(
-          children: <TextSpan>[
-            new TextSpan(text: startLine, style: textStyle),
-            new TextSpan(text: start, style: textStyle),
-            new TextSpan(text: middle, style: highlightTextStyle),
-            new TextSpan(text: end, style: textStyle),
-            new TextSpan(text: endLine, style: textStyle),
-          ],
-        ),
-      );
-    } else if (storyMode == StoryMode.textHighlighterMode)
-      return TextHighlighter(
-          text: widget.fullText,
-          onComplete: (l) {
-            new Future.delayed(Duration(seconds: 1), () {
-              setState(() {
-                storyMode = StoryMode.dragTextMode;
-              });
-            });
-
-            print(l);
-          });
-    else if (storyMode == StoryMode.showDialogOnLongPressMode)
-      return ShowDialogMode(listofWords: widget.fullText.split(' '));
-    else if (storyMode == StoryMode.dragTextMode)
-      return DragText(data: widget.imageItemsAnswer);
-    else {
-      return Container();
-    }
   }
 
   Widget _buildImage() {
-    return Stack(
-      alignment: AlignmentDirectional.center,
-      children: <Widget>[
-        SizedBox(
-            width: double.infinity,
-            height: double.infinity,
-            child: Container(
-              margin: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                  border: Border.all(width: 2.0, color: Colors.orange),
-                  image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage('${widget.imagePath}'))),
-            )),
-        storyMode == StoryMode.textHighlighterMode
-            ? Text('Where georgie Porgie went in the  afternoon',
-                style: TextStyle(
-                  fontSize: 30,
-                  color: Colors.white,
-                ))
-            : Container()
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        height: double.infinity,
+        width: double.infinity,
+        decoration: BoxDecoration(
+            image: DecorationImage(
+          fit: BoxFit.cover,
+          image: AssetImage('${widget.imagePath}'),
+        )),
+      ),
     );
   }
+
+  int colorIndex = -1;
 }
 
-class TextMode extends StatelessWidget {
-  final String text;
-  TextMode({this.text});
-  @override
-  Widget build(BuildContext context) {
-    return RichText(
-      text: TextSpan(text: text, style: textStyle),
-    );
-  }
+Widget textDescriptionDialog(
+    BuildContext context, String text, String textDesciption) {
+  text = text.replaceAll(new RegExp(r'[^\w\s]+'), '');
+  MediaQueryData mediaQuery = MediaQuery.of(context);
+  return new Card(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(
+        Radius.circular(20.0),
+      ),
+    ),
+    child: Container(
+      child: new Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              new IconButton(
+                  icon: new Icon(Icons.close),
+                  iconSize: mediaQuery.size.height * 0.07,
+                  color: Colors.black,
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  }),
+              new IconButton(
+                  icon: new Icon(Icons.volume_up),
+                  iconSize: mediaQuery.size.height * 0.07,
+                  color: Colors.black,
+                  onPressed: () {
+                    FlutterTts().speak(text);
+                  }),
+            ],
+          ),
+          Text(
+            text,
+            style: TextStyle(
+                fontSize: mediaQuery.size.height * 0.05, color: Colors.green),
+          ),
+          Image.asset('assets/stories/images/$text.jpg',
+              height: mediaQuery.orientation == Orientation.portrait
+                  ? mediaQuery.size.height * 0.2
+                  : mediaQuery.size.height * 0.3),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Text(
+              textDesciption + '$text',
+              style: TextStyle(
+                  fontSize: mediaQuery.orientation == Orientation.portrait
+                      ? mediaQuery.size.height * 0.02
+                      : mediaQuery.size.height * 0.03,
+                  color: Colors.black),
+            ),
+          )
+        ],
+      ),
+    ),
+  );
 }

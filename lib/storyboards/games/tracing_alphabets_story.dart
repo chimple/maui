@@ -6,13 +6,15 @@ class TracingAlphabetStory extends FullScreenStory {
   @override
   List<Widget> get storyContent => [
         Scaffold(
-          body: TracingAlphabetGame(
-            alphabets: [
-            'A',
-            'B',
-            'C',
-            'D',
-          ]),
+          body: Center(
+            child: TracingAlphabetGame(
+              alphabets: [
+              'A',
+              'B',
+              'C',
+              'D',
+            ]),
+          ),
         )
       ];
 }

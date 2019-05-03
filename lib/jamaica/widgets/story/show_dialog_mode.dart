@@ -4,28 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
-enum StoryMode {
-  activityMode,
-  showDialogOnLongPressMode,
-  textHighlighterMode,
-  dragTextMode,
-  audioBoldTextMode,
-  textMode,
-  doneStatus,
-  jumbledWords
-}
-
 class ShowDialogMode extends StatefulWidget {
   final List<String> listofWords;
-  final StoryMode storyMode;
-  ShowDialogMode({Key key, this.listofWords, this.storyMode}) : super(key: key);
+  ShowDialogMode({Key key, this.listofWords}) : super(key: key);
 
   @override
   _ShowDialogModeState createState() => _ShowDialogModeState();
 }
 
-class _ShowDialogModeState extends State<ShowDialogMode> {
-  StoryMode storyMode = StoryMode.textHighlighterMode;
+class ShowDialogModeState extends State<ShowDialogMode> {
   bool highlightOnLongPress = false;
   int highlightIndex = -1;
   FlutterTts flutterTts = new FlutterTts();
