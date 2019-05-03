@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
 enum TtsState { PLAYING, PAUSE, STOPPED }
@@ -19,30 +21,26 @@ class FlutterTextToSpeech {
 }
 
 class TextToSpeech extends StatefulWidget {
-  final Function onComplete;
-  final String fullText;
-  final TextStyle textStyle;
-  final Color highLightColor;
-  final Function(String) onTap;
-  final Function(String) onLongPress;
-  final double setSpeechRate;
-  final Function(TtsState) playingStatus;
-  final String setLanguage;
-  final int index;
   final FlutterTextToSpeech keys;
-  TextToSpeech(
-      {@required this.keys,
-      this.playingStatus,
-      @required this.fullText,
-      this.setSpeechRate = .78,
-      this.setLanguage='EN-IN',
-      this.index,
-      this.onTap,
-      this.onLongPress,
-      this.onComplete,
-      this.highLightColor = Colors.red,
-      this.textStyle = const TextStyle(fontSize: 20, color: Colors.black54)})
-      : super(key: keys.textToSpeech) {}
+  final Function onComplete;
+  final Function(String) onLongPress;
+  final Function(TtsState) playingStatus;
+  final TextStyle textStyle;
+  final Color highlightColor;
+  final String setLanguage;
+  final String fullText;
+  final double setSpeechRate;
+  TextToSpeech({
+    @required this.keys,
+    this.onComplete,
+    this.onLongPress,
+    this.playingStatus,
+    this.textStyle = const TextStyle(fontSize: 20, color: Colors.black54),
+    this.highlightColor = Colors.red,
+    this.setLanguage = 'EN-IN',
+    @required this.fullText,
+    this.setSpeechRate = .78,
+  }) : super(key: keys.textToSpeech);
   @override
   TextToSpeechState createState() => new TextToSpeechState();
 }
@@ -51,27 +49,20 @@ final regExp1 = RegExp('[\n]');
 final regExp2 = RegExp('[!.,"-:|?–]');
 
 class TextToSpeechState extends State<TextToSpeech> {
-  bool isPlaying = false;
-  List<String> listOfLines;
-  int incr = 0;
-  bool isLoading = false;
+  bool isPlaying = false, isLoading = false;
+  int version = 7, count = 0;
+  List<String> listOfLines, words;
   FlutterTts flutterTts;
-  String text;
   String startText = '', middleText = '', endText = '';
-  int version = 7;
-  List<String> words;
-  String temp = '';
-  Key keys;
-  String _content;
+  String content = '', temp = '', text = '';
 
   @override
   void initState() {
     super.initState();
-    _content = widget.fullText;
-    text = _content.replaceAll(regExp1, ' ');
-    if (!text.substring(text.length - 1, text.length).contains(regExp2)) {
+    content = widget.fullText;
+    text = content.replaceAll(regExp1, ' ');
+    if (!text.substring(text.length - 1, text.length).contains(regExp2))
       text = text + '.';
-    }
     var words = text.split(" ");
     for (var i = 0; i < words.length; i++) {
       if (words[i].substring(0, 1).contains(regExp2)) {
@@ -133,9 +124,8 @@ class TextToSpeechState extends State<TextToSpeech> {
   }
 
   Future initTts() async {
-   
     flutterTts = FlutterTts();
-     if (Platform.isAndroid) {
+    if (Platform.isAndroid) {
       flutterTts.setSpeechRate(widget.setSpeechRate);
       flutterTts.setLanguage(widget.setLanguage);
     }
@@ -145,9 +135,9 @@ class TextToSpeechState extends State<TextToSpeech> {
       });
     }
     flutterTts.completionHandler = () {
-      if (incr == listOfLines.length - 1) {
+      if (count == listOfLines.length - 1) {
         setState(() {
-          incr = 0;
+          count = 0;
           startText = '';
           middleText = '';
           endText = temp;
@@ -157,7 +147,7 @@ class TextToSpeechState extends State<TextToSpeech> {
         widget.onComplete();
       } else {
         if (version < 8) {
-          incr++;
+          count++;
           speak();
         }
       }
@@ -182,10 +172,10 @@ class TextToSpeechState extends State<TextToSpeech> {
   highlight() {
     var s = '', e = '';
     setState(() {
-      for (var i = 0; i < incr; i++) s = s + listOfLines[i];
+      for (var i = 0; i < count; i++) s = s + listOfLines[i];
       startText = s;
-      middleText = listOfLines[incr];
-      for (var i = incr + 1; i < listOfLines.length; i++) {
+      middleText = listOfLines[count];
+      for (var i = count + 1; i < listOfLines.length; i++) {
         e = e + listOfLines[i];
       }
       endText = e;
@@ -210,15 +200,15 @@ class TextToSpeechState extends State<TextToSpeech> {
       });
 
   Future<dynamic> speak() async {
-    if (incr == 0 || listOfLines.isEmpty || words.isEmpty) {
+    if (count == 0 || listOfLines.isEmpty || words.isEmpty) {
       stringFormat();
       setState(() {});
     }
     initTts();
-    final middle = version >= 8 ? words.join(' ') : listOfLines[incr];
+    final middle = version >= 8 ? words.join(' ') : listOfLines[count];
     if (widget.playingStatus != null) widget.playingStatus(TtsState.PLAYING);
     new Future.delayed(
-        Duration(milliseconds: (incr == 0 || listOfLines.isEmpty) ? 600 : 40),
+        Duration(milliseconds: (count == 0 || listOfLines.isEmpty) ? 600 : 40),
         () {
       _speak(middle);
     });
@@ -234,72 +224,22 @@ class TextToSpeechState extends State<TextToSpeech> {
     });
   }
 
-  onComplete() => setState(() {
-        incr = 0;
-      });
+  onComplete() => setState(() => count = 0);
 
   @override
   Widget build(BuildContext context) {
-    var index = 0;
-    var space = ' ';
-    final children = <Widget>[];
-    Widget _text(String data, String space) {
-      return InkWell(
-        onTap: widget.onTap != null ? () => widget.onTap(data) : null,
-        onLongPress:
-            widget.onLongPress != null ? () => widget.onLongPress(data) : null,
-        child: Text(data + space, style: widget.textStyle),
-      );
-    }
-
-    if (startText != '')
-      startText.split(" ").map((s) {
-        index++;
-        if (index == startText.split(" ").length) space = '';
-        children.add(_text(s, space));
-      }).toList();
-    space = ' ';
-    index = 0;
-    if (middleText != '')
-      middleText.split(" ").map((s) {
-        index++;
-        if (index == middleText.split(" ").length) space = '';
-        children.add(InkWell(
-          onTap: widget.onTap != null ? () => widget.onTap(s) : null,
-          onLongPress:
-              widget.onLongPress != null ? () => widget.onLongPress(s) : null,
-          child: Text(
-            s + space,
-            style: TextStyle(
-                background: widget.textStyle.background,
-                backgroundColor: widget.textStyle.backgroundColor,
-                fontFamily: widget.textStyle.fontFamily,
-                decoration: widget.textStyle.decoration,
-                fontSize: widget.textStyle.fontSize,
-                color: widget.highLightColor),
-          ),
-        ));
-      }).toList();
-    space = ' ';
-    index = 0;
-    if (endText != '')
-      endText.split(" ").map((s) {
-        index++;
-        if (index == endText.split(" ").length) space = '';
-        children.add(_text(s, space));
-      }).toList();
-    space = ' ';
-    index = 0;
-    Widget _buildText() {
-      return Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Wrap(
-          children: children,
-        ),
-      );
-    }
-
-    return _buildText();
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: _RichText(
+        end: endText,
+        middle: middleText,
+        start: startText,
+        highlightColor: widget.highlightColor,
+        onLongPress: (s) => widget.onLongPress(s),
+        textStyle: widget.textStyle,
+      ),
+    );
+    // return _buildText();
   }
 
   @override
@@ -312,6 +252,82 @@ class TextToSpeechState extends State<TextToSpeech> {
   void deactivate() {
     flutterTts?.stop();
     super.deactivate();
+  }
+}
+
+class _RichText extends StatelessWidget {
+  final String start;
+  final String middle;
+  final String end;
+  final Color highlightColor;
+  final Function(String) onLongPress;
+  final TextStyle textStyle;
+  _RichText(
+      {Key key,
+      this.start,
+      this.middle,
+      this.end,
+      this.onLongPress,
+      this.textStyle,
+      this.highlightColor})
+      : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    var index = 0;
+    var space = ' ';
+    var newLine = '';
+    final children = <TextSpan>[];
+    if (start != '')
+      start.split(" ").map((s) {
+        index++;
+        if (index == start.split(" ").length) space = '';
+        if (s.contains(RegExp('[.]'))) {
+          newLine = '\n';
+        } else {
+          newLine = '';
+        }
+        children.add(TextSpan(
+            text: s + space + newLine,
+            recognizer: LongPressGestureRecognizer()
+              ..onLongPress = () => onLongPress(s)));
+      }).toList();
+    space = ' ';
+    index = 0;
+    if (middle != '')
+      middle.split(" ").map((s) {
+        index++;
+        if (index == middle.split(" ").length) space = '';
+        if (s.contains(RegExp('[.]'))) {
+          newLine = '\n';
+        } else {
+          newLine = '';
+        }
+        children.add(TextSpan(
+            text: s + space + newLine,
+            style: TextStyle(color: highlightColor),
+            recognizer: LongPressGestureRecognizer()
+              ..onLongPress = () => onLongPress(s)));
+      }).toList();
+    space = ' ';
+    index = 0;
+    if (end != '')
+      end.split(" ").map((s) {
+        index++;
+        if (index == end.split(" ").length) space = '';
+        if (s.contains(RegExp('[.]'))) {
+          newLine = '\n';
+        } else {
+          newLine = '';
+        }
+        children.add(TextSpan(
+            text: s + space + newLine,
+            recognizer: LongPressGestureRecognizer()
+              ..onLongPress = () => onLongPress(s)));
+      }).toList();
+    space = ' ';
+    index = 0;
+    return RepaintBoundary(
+        child: RichText(text: TextSpan(children: children, style: textStyle)));
   }
 }
 
