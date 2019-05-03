@@ -1,0 +1,96 @@
+Flutter crash report; please file at https://github.com/flutter/flutter/issues.
+
+## command
+
+flutter run -d HGCGUQ0X
+
+## exception
+
+FileSystemException: FileSystemException: Cannot copy file to 'C:\Users\User\Documents\github_chimple\maui\build\app\outputs\apk\app.apk', path = 'C:\Users\User\Documents\github_chimple\maui\build\app\outputs\apk\debug\app-debug.apk' (OS Error: The requested operation cannot be performed on a file with a user-mapped section open.
+, errno = 1224)
+
+```
+#0      _File.throwIfError (dart:io/file_impl.dart:643:7)
+#1      _File.copySync (dart:io/file_impl.dart:348:5)
+#2      _LocalFile&LocalFileSystemEntity&ForwardingFile.copySync (package:file/src/forwarding/forwarding_file.dart:29:50)
+#3      _buildGradleProjectV2 (package:flutter_tools/src/android/gradle.dart:486:13)
+<asynchronous suspension>
+#4      buildGradleProject (package:flutter_tools/src/android/gradle.dart:346:14)
+<asynchronous suspension>
+#5      buildApk (package:flutter_tools/src/android/apk.dart:34:9)
+<asynchronous suspension>
+#6      AndroidDevice.startApp (package:flutter_tools/src/android/android_device.dart:377:13)
+<asynchronous suspension>
+#7      FlutterDevice.runHot (package:flutter_tools/src/resident_runner.dart:364:54)
+<asynchronous suspension>
+#8      HotRunner.run (package:flutter_tools/src/run_hot.dart:253:39)
+<asynchronous suspension>
+#9      RunCommand.runCommand (package:flutter_tools/src/commands/run.dart:428:37)
+<asynchronous suspension>
+#10     FlutterCommand.verifyThenRunCommand (package:flutter_tools/src/runner/flutter_command.dart:559:18)
+#11     _asyncThenWrapperHelper.<anonymous closure> (dart:async-patch/async_patch.dart:77:64)
+#12     _rootRunUnary (dart:async/zone.dart:1132:38)
+#13     _CustomZone.runUnary (dart:async/zone.dart:1029:19)
+#14     _FutureListener.handleValue (dart:async/future_impl.dart:126:18)
+#15     Future._propagateToListeners.handleValueCallback (dart:async/future_impl.dart:639:45)
+#16     Future._propagateToListeners (dart:async/future_impl.dart:668:32)
+#17     Future._complete (dart:async/future_impl.dart:473:7)
+#18     _SyncCompleter.complete (dart:async/future_impl.dart:51:12)
+#19     _AsyncAwaitCompleter.complete (dart:async-patch/async_patch.dart:28:18)
+#20     _completeOnAsyncReturn (dart:async-patch/async_patch.dart:294:13)
+#21     RunCommand.usageValues (package:flutter_tools/src/commands/run.dart)
+#22     _asyncThenWrapperHelper.<anonymous closure> (dart:async-patch/async_patch.dart:77:64)
+#23     _rootRunUnary (dart:async/zone.dart:1132:38)
+#24     _CustomZone.runUnary (dart:async/zone.dart:1029:19)
+#25     _FutureListener.handleValue (dart:async/future_impl.dart:126:18)
+#26     Future._propagateToListeners.handleValueCallback (dart:async/future_impl.dart:639:45)
+#27     Future._propagateToListeners (dart:async/future_impl.dart:668:32)
+#28     Future._complete (dart:async/future_impl.dart:473:7)
+#29     _SyncCompleter.complete (dart:async/future_impl.dart:51:12)
+#30     _AsyncAwaitCompleter.complete.<anonymous closure> (dart:async-patch/async_patch.dart:33:20)
+#31     _rootRun (dart:async/zone.dart:1124:13)
+#32     _CustomZone.run (dart:async/zone.dart:1021:19)
+#33     _CustomZone.bindCallback.<anonymous closure> (dart:async/zone.dart:947:23)
+#34     _microtaskLoop (dart:async/schedule_microtask.dart:41:21)
+#35     _startMicrotaskLoop (dart:async/schedule_microtask.dart:50:5)
+#36     _runPendingImmediateCallback (dart:isolate-patch/isolate_patch.dart:115:13)
+#37     _RawReceivePortImpl._handleMessage (dart:isolate-patch/isolate_patch.dart:172:5)
+```
+
+## flutter doctor
+
+```
+[32m[✓][39m Flutter (Channel beta, v1.5.4-hotfix.1, on Microsoft Windows [Version 10.0.17134.706], locale en-IN)
+    [32m•[39m Flutter version 1.5.4-hotfix.1 at C:\flutter_windows_v1.0.0-stable\flutter
+    [32m•[39m Framework revision 09cbc34a0b (2 days ago), 2019-04-30 15:44:27 -0700
+    [32m•[39m Engine revision 52c7a1e849
+    [32m•[39m Dart version 2.3.0 (build 2.3.0-dev.0.5 a1668566e5)
+
+[33m[!][39m Android toolchain - develop for Android devices (Android SDK version 28.0.3)
+    [32m•[39m Android SDK at C:\Users\User\AppData\Local\Android\Sdk
+    [32m•[39m Android NDK location not configured (optional; useful for native profiling support)
+    [32m•[39m Platform android-28, build-tools 28.0.3
+    [32m•[39m ANDROID_SDK_ROOT = C:\Users\User\AppData\Local\Android\Sdk
+    [32m•[39m Java binary at: C:\Program Files\Android\Android Studio\jre\bin\java
+    [32m•[39m Java version OpenJDK Runtime Environment (build 1.8.0_152-release-1248-b01)
+    [31m✗[39m Android license status unknown.
+      Try re-installing or updating your Android SDK Manager.
+      See https://developer.android.com/studio/#downloads or visit https://flutter.dev/setup/#android-setup for
+      detailed instructions.
+
+[32m[✓][39m Android Studio (version 3.3)
+    [32m•[39m Android Studio at C:\Program Files\Android\Android Studio
+    [32m•[39m Flutter plugin version 34.0.1
+    [32m•[39m Dart plugin version 182.5215
+    [32m•[39m Java version OpenJDK Runtime Environment (build 1.8.0_152-release-1248-b01)
+
+[32m[✓][39m VS Code (version 1.33.1)
+    [32m•[39m VS Code at C:\Users\User\AppData\Local\Programs\Microsoft VS Code
+    [32m•[39m Flutter extension version 2.26.1
+
+[32m[✓][39m Connected device (2 available)
+    [32m•[39m Lenovo TB 7304F • HGCGUQ0X   • android-arm64 • Android 7.0 (API 24)
+    [32m•[39m XT1635 02       • ZY223ZP4X9 • android-arm   • Android null (API null)
+
+[33m![39m Doctor found issues in 1 category.
+```

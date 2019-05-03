@@ -98,7 +98,7 @@ class AppStateContainerState extends State<AppStateContainer> {
   ClassSession myClassSession;
   List<String> classStudents = [];
   Map<String, Performance> performances;
-  Set<String> quizStudents;
+  Set<String> quizStudents = new Set();
   QuizSession quizSession;
   Map<QuizSession, StatusEnum> quizSessions = new Map();
   Map<String, Performance> quizPerformances;
@@ -377,7 +377,9 @@ class AppStateContainerState extends State<AppStateContainer> {
       if (obj is ClassInterest) {
       } else if (obj is ClassJoin) {
         if (state.loggedInUser.userType == UserType.teacher) {
-          classStudents.add(obj.studentId);
+          setState(() {
+            classStudents.add(obj.studentId);
+          });
         }
       } else if (obj is ClassSession) {
         setState(() {
@@ -415,8 +417,7 @@ class AppStateContainerState extends State<AppStateContainer> {
           });
         }
       } else if (obj is QuizJoin) {
-        if (state.loggedInUser.userType == UserType.student &&
-            quizSession.sessionId == obj.sessionId) {
+        if (quizSession.sessionId == obj.sessionId) { //state.loggedInUser.userType == UserType.student &&
           setState(() {
             quizStudents.add(obj.studentId);
           });
@@ -456,11 +457,11 @@ class AppStateContainerState extends State<AppStateContainer> {
     }
   }
 
-  createQuizSession(QuizSession quizSession) async {
+  Future<void> createQuizSession(QuizSession quizSession) async {
     if (state.loggedInUser.userType == UserType.teacher) {
       setState(() {
         quizSessions[quizSession] = StatusEnum.create;
-        quizSession = quizSession;
+        this.quizSession = quizSession;
       });
       final standardSerializers =
           (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
@@ -470,7 +471,7 @@ class AppStateContainerState extends State<AppStateContainer> {
     }
   }
 
-  startQuizSession(QuizSession quizSession) async {
+  Future<void> startQuizSession(QuizSession quizSession) async {
     if (state.loggedInUser.userType == UserType.teacher &&
         quizSession != null) {
       QuizUpdate quizUpdate = QuizUpdate((q) => q
@@ -505,7 +506,7 @@ class AppStateContainerState extends State<AppStateContainer> {
     }
   }
 
-  joinQuizSession(QuizSession quizSession) async {
+  Future<void> joinQuizSession(QuizSession quizSession) async {
     if (quizSession != null) {
       QuizJoin quizJoin = QuizJoin((q) => q
         ..sessionId = quizSession.sessionId

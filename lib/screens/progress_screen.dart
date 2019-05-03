@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:maui/models/multi_data.dart';
 import 'package:maui/models/quiz_session.dart';
+import 'package:maui/repos/game_data_repo.dart';
+import 'package:maui/repos/lesson_repo.dart';
+import 'package:maui/screens/quiz_waiting_screen.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/models/performance.dart';
 import 'package:random_string/random_string.dart';
@@ -9,6 +12,7 @@ import 'package:maui/db/entity/user.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'package:built_collection/built_collection.dart';
+import 'package:uuid/uuid.dart';
 
 class ProgressScreen extends StatefulWidget {
   @override
@@ -19,6 +23,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
   Map<String, Performance> _performance;
   List<String> _userIDs;
   List<User> _students = [];
+  List<String> _onlineStudents = [];
   String latestUserID;
 
   @override
@@ -27,20 +32,16 @@ class _ProgressScreenState extends State<ProgressScreen> {
     _initData();
   }
 
-  void _initData() async {
+  Future<void> _initData() async {
     await UserRepo().getUsers().then((onValue) {
       setState(() {
         if (onValue != null) {
-          print('Getting Users............................................');
           onValue.forEach((User user) {
-            print(
-                'UserID:...................................................................................${user.id}');
             if (user.userType == UserType.student) {
               _students.add(user);
             }
           });
         } else {
-          print('No Users Found...........................................');
           Center(
             child: Container(
               child: Text('No Students'),
@@ -52,25 +53,29 @@ class _ProgressScreenState extends State<ProgressScreen> {
   }
 
   @override
-  void didChangeDependencies() {
-    if (AppStateContainer.of(context).classStudents.isNotEmpty) {
-      latestUserID = AppStateContainer.of(context).classStudents.last;
+  void didChangeDependencies() async {
+    if (AppStateContainer
+        .of(context)
+        .classStudents
+        .isNotEmpty) {
+      latestUserID = AppStateContainer
+          .of(context)
+          .classStudents
+          .last;
       if (latestUserID != null) {
-        queryUser(latestUserID);
+        await queryUser(latestUserID);
       }
     }
     super.didChangeDependencies();
   }
 
-  void queryUser(String latestUserID) async {
-    await UserRepo().getUsers().then((onValue) {
-      onValue.forEach((User user) {});
-    });
+  Future<void> queryUser(String latestUserID) async {
     await UserRepo().getUser(latestUserID).then((User user) {
       if (user != null) {
         setState(() {
           if (user.userType == UserType.student && !_students.contains(user)) {
             _students.add(user);
+            _onlineStudents.add(user.id);
           }
         });
       } else {
@@ -81,8 +86,6 @@ class _ProgressScreenState extends State<ProgressScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //var keys = _performance.keys.toList();
-
     var background = Container(
       decoration: BoxDecoration(
           image: DecorationImage(
@@ -115,8 +118,25 @@ class _ProgressScreenState extends State<ProgressScreen> {
           IconButton(
               icon: Icon(Icons.add),
               color: Colors.white,
-              onPressed: () {
-                AppStateContainer.of(context).createQuizSession(addDummyData());
+              onPressed: () async {
+                final lesson = await LessonRepo().getLesson(1);
+                final gameData = await fetchGameData(lesson);
+
+                QuizSession quizSession = new QuizSession((b) =>
+                b
+                  ..sessionId = new Uuid().v4()
+                  ..gameId = 'B'
+                  ..level = 1
+                  ..gameData.addAll(gameData));
+
+                //QuizSession newQuizSession = addDummyData();
+                AppStateContainer.of(context)
+                    .createQuizSession(quizSession)
+                    .then((_) {
+                  Navigator.of(context).push(MaterialPageRoute<Null>(
+                      builder: (BuildContext context) =>
+                          QuizWaitingScreen(quizSession: quizSession)));
+                });
               })
         ],
       ),
@@ -162,7 +182,19 @@ class _ProgressScreenState extends State<ProgressScreen> {
         width: 70,
         height: 70,
         //Replace & add a Child CircleAvatar for image
-        decoration: BoxDecoration(color: Colors.red, shape: BoxShape.circle),
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: FileImage(File(_students[index].image)),
+                fit: BoxFit.fill),
+            //shape: BoxShape.circle,
+            borderRadius: new BorderRadius.all(new Radius.circular(40.0)),
+            border: new Border.all(
+                color: _onlineStudents.length == 0
+                    ? Colors.red
+                    : _onlineStudents.contains(_students[index])
+                    ? Colors.green
+                    : Colors.red,
+                width: 4.0)),
       ),
     );
 
@@ -187,103 +219,5 @@ class _ProgressScreenState extends State<ProgressScreen> {
             style: TextStyle(fontSize: 20), overflow: TextOverflow.fade)
       ],
     );
-  }
-
-  QuizSession addDummyData() {
-    QuizSession quizSession = QuizSession(
-      (c) => c
-        ..sessionId = '1'
-        ..gameId = 'FindWordGame'
-        ..level = 3
-        ..gameData.add(
-          MultiData(
-            (d) => d
-              ..gameId = 'FindWordGame'
-              ..choices.addAll(['a', 'b'])
-              ..specials.add('value')
-              ..answers.addAll(['a']),
-          ),
-        )
-        ..gameData.add(
-          MultiData(
-            (d) => d
-              ..gameId = 'FindWordGame'
-              ..choices.addAll(['x', 'y', 'z'])
-              ..specials.add('value')
-              ..answers.addAll(['x']),
-          ),
-        )
-        ..gameData.add(
-          MultiData(
-            (d) => d
-              ..gameId = 'FindWordGame'
-              ..choices.addAll(['a', 'b', 'c'])
-              ..specials.add('value')
-              ..answers.addAll(['b']),
-          ),
-        )
-        ..gameData.add(
-          MultiData(
-            (d) => d
-              ..gameId = 'FindWordGame'
-              ..choices.addAll(['a', 'b'])
-              ..specials.add('value')
-              ..answers.addAll(['a']),
-          ),
-        )
-        ..gameData.add(
-          MultiData(
-            (d) => d
-              ..gameId = 'FindWordGame'
-              ..choices.addAll(['a', 'b'])
-              ..specials.add('value')
-              ..answers.addAll(['a']),
-          ),
-        )
-        ..gameData.add(
-          MultiData(
-            (d) => d
-              ..gameId = 'FindWordGame'
-              ..choices.addAll(['a', 'b'])
-              ..specials.add('value')
-              ..answers.addAll(['a']),
-          ),
-        )
-        ..gameData.add(
-          MultiData(
-            (d) => d
-              ..gameId = 'FindWordGame'
-              ..choices.addAll(['a', 'b'])
-              ..specials.add('value')
-              ..answers.addAll(['a']),
-          ),
-        )
-        ..gameData.add(
-          MultiData(
-            (d) => d
-              ..gameId = 'FindWordGame'
-              ..choices.addAll(['a', 'b'])
-              ..specials.add('value')
-              ..answers.addAll(['a']),
-          ),
-        )
-        ..gameData.add(
-          MultiData(
-            (d) => d
-              ..gameId = 'FindWordGame'
-              ..choices.addAll(['a', 'b', 'c'])
-              ..answers.addAll(['b']),
-          ),
-        )
-        ..gameData.add(
-          MultiData(
-            (d) => d
-              ..gameId = 'FindWordGame'
-              ..choices.addAll(['a', 'b', 'c', 'd'])
-              ..answers.addAll(['d']),
-          ),
-        ),
-    );
-    return quizSession;
   }
 }

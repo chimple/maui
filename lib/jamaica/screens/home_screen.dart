@@ -26,6 +26,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   bool _isLoading = true;
+  bool _quizJoined = false;
   Navigator _navigator;
   ChatScript _chatScript;
   String _emotion = 'idle';
@@ -34,6 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    _quizJoined = false;
     _navigator = Navigator(
       onGenerateRoute: (settings) => SlideUpRoute(
             widgetBuilder: (context) => _buildChatBot(context),
@@ -69,8 +71,11 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () {
                 Navigator.of(context).pop();
                 //Navigator.of(context).pushNamed('/quizWaitingScreen');
-                Navigator.of(context).push(MaterialPageRoute<Null>(
-                    builder: (BuildContext context) => QuizWaitingScreen(quizSession: quizSession)));
+                _quizJoined = true;
+                AppStateContainer.of(context).joinQuizSession(quizSession).then((_){
+                  Navigator.of(context).push(MaterialPageRoute<Null>(
+                      builder: (BuildContext context) => QuizWaitingScreen(quizSession: quizSession)));
+                });
               },
             ),
             new FlatButton(
@@ -88,12 +93,15 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    AppStateContainer.of(context).quizSessions.forEach((quizSession, quizStatus){
-      if(quizStatus == StatusEnum.create){
-        showAlertDialog(quizSession);
-      }
-    });
+    if(!_quizJoined){
+      AppStateContainer.of(context).quizSessions.forEach((quizSession, quizStatus){
+        if(quizStatus == StatusEnum.create){
+          showAlertDialog(quizSession);
+        }
+      });
+    }
   }
+
 
   @override
   Widget build(BuildContext context) {
