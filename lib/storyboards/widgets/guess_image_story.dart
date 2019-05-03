@@ -14,7 +14,7 @@ class GuessImageStory extends FullScreenStory {
             child: Container(
               color: Colors.white,
               child: GuessImage(
-                imageName: "assets/topic/asb/hospital.jpg",
+                imageName: "assets/temp/hospital.jpg",
                 imageItemDetails: BuiltList<ImageItemDetail>(
                   [
                     ImageItemDetail((s) => s
