@@ -20,6 +20,7 @@ class Store extends StatefulWidget {
 
 class StoreWidget extends State<Store> with SingleTickerProviderStateMixin {
   final int itemCrossAxisCount;
+  final List<String> itemNames = <String>[];
   TabController _tabController;
   List<Tab> tabs;
   List<int> _colorStatus = [];
@@ -27,7 +28,7 @@ class StoreWidget extends State<Store> with SingleTickerProviderStateMixin {
   var tabIndex;
   var l;
   int listIndex = 0;
-  int coin = 1000;
+  int score = 500;
   int _itemCount = 0;
   List<Tuple4<String, String, int, int>> itemRange =
       List<Tuple4<String, String, int, int>>();
@@ -74,6 +75,7 @@ class StoreWidget extends State<Store> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    int index = 0;
     MediaQueryData mediaQuery = MediaQuery.of(context);
     return Scaffold(
         body: Container(
@@ -91,20 +93,20 @@ class StoreWidget extends State<Store> with SingleTickerProviderStateMixin {
                                   bottomLeft: Radius.circular(20.0),
                                   bottomRight: Radius.circular(20.0))),
                           child: Stack(
-                            alignment: AlignmentDirectional.bottomEnd,
+                            alignment: AlignmentDirectional.bottomStart,
                             children: <Widget>[
                               Positioned(
                                 top: 10.0,
                                 left: 10.0,
-                                child: Text('$coin',
+                                child: Text('$score',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 20.0,
                                     )),
                               ),
                               ChimpCharacter(
-                                itemName: itemName,
-                                key: GlobalObjectKey(itemName),
+                                itemNames: itemNames,
+                                key: UniqueKey(),
                               ),
                               Padding(
                                 padding: EdgeInsets.all(8.0),
@@ -146,7 +148,7 @@ class StoreWidget extends State<Store> with SingleTickerProviderStateMixin {
                               Padding(
                                 padding: const EdgeInsets.only(top: 30.0),
                                 child: Text(
-                                  'Coins is $coin',
+                                  'Coins is $score',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 20.0,
@@ -156,8 +158,8 @@ class StoreWidget extends State<Store> with SingleTickerProviderStateMixin {
                               Expanded(
                                 flex: 1,
                                 child: ChimpCharacter(
-                                  itemName: itemName,
-                                  // key: GlobalObjectKey(itemName),
+                                  itemNames: itemNames,
+                                  key: UniqueKey(),
                                 ),
                               ),
                             ],
@@ -232,12 +234,21 @@ class StoreWidget extends State<Store> with SingleTickerProviderStateMixin {
                           coin: f.coin,
                           colorStatus: _colorStatus,
                           imagePath: f.imagePath,
+                          itemNames: itemNames,
                           name: f.accessoryName,
-                          setName: (String s, int n) {
+                          toggleItem: (s) {
                             setState(() {
-                              itemName = s;
-                              if (coin <= 0) {
-                                coin = 0;
+                              itemNames.add(s);
+                            });
+                          },
+                          score: score,
+                          setName: (int n) {
+                            // itemName = s;
+                            setState(() {
+                              if (score <= 0 && _colorStatus[n] == 0) {
+                                print('call is comingf here');
+                                score = 0;
+                                Navigator.of(context).pop();
                                 return showDialog(
                                     context: context,
                                     builder: (context) {
@@ -262,21 +273,23 @@ class StoreWidget extends State<Store> with SingleTickerProviderStateMixin {
                                                 child: Text(
                                               'Sorry Not Enough Coins',
                                               style: TextStyle(
-                                                  fontSize: 30.0,
+                                                  fontSize: 20.0,
                                                   color: Colors.green,
                                                   fontWeight: FontWeight.bold),
                                             )),
                                           ));
                                     });
                               } else if (_colorStatus[n] == 0) {
-                                coin = coin - 100;
+                                setState(() {
+                                  score = score - 100;
+                                });
                               }
-
                               _colorStatus[n] = 1;
                               // container.setAccessories(BuiltMap<String, String>(
                               //     {r.accessoryCategoryName: itemName}));
                               // print(container.state.userProfile);
                             });
+                            print('coin in set Name is $score');
                           },
                         );
                       }).toList(),
@@ -292,14 +305,20 @@ class StoreAccessoryButton extends StatefulWidget {
   int index;
   String imagePath;
   String name;
+  List<String> itemNames = <String>[];
   int coin;
+  int score;
   Color color;
+  final Function toggleItem;
   final Function setName;
   List<int> colorStatus;
   StoreAccessoryButton({
     Key key,
     this.setName,
+    this.toggleItem,
+    this.itemNames,
     this.index,
+    this.score,
     this.color,
     this.imagePath,
     this.coin,
@@ -317,63 +336,79 @@ class _StoreAccessoryButtonState extends State<StoreAccessoryButton> {
     MediaQueryData mediaQuery = MediaQuery.of(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Column(children: <Widget>[
-        Container(
-          decoration: BoxDecoration(
-            color: widget.colorStatus[widget.index] == 1
-                ? Colors.yellow
-                : Colors.indigo[400],
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          height: mediaQuery.orientation == Orientation.portrait
-              ? mediaQuery.size.height * 0.07
-              : mediaQuery.size.height * 0.10,
-          width: mediaQuery.orientation == Orientation.portrait
-              ? mediaQuery.size.width * 0.14
-              : mediaQuery.size.width * 0.06,
-          child: InkWell(
-              key: Key('key ${widget.index}'),
-              onTap: () {
-                setState(() {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return _showDialog(
-                          context, widget.name, widget.imagePath);
-                    },
-                  );
-                });
-              },
-              child: SvgPicture.asset('${widget.imagePath}.svg')),
-        ),
-        Text(
-          widget.name,
-          style: TextStyle(
-            fontSize: mediaQuery.orientation == Orientation.portrait
-                ? mediaQuery.size.height * 0.018
-                : mediaQuery.size.height * 0.03,
-            color: Colors.white,
-          ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Icon(
-              Icons.add_circle,
-              color: Colors.yellow[700],
-            ),
-            Text(
-              widget.coin.toString(),
-              style: TextStyle(
-                fontSize: mediaQuery.orientation == Orientation.portrait
-                    ? mediaQuery.size.height * 0.018
-                    : mediaQuery.size.height * 0.03,
-                color: Colors.white,
+            Expanded(
+              flex: 6,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: widget.colorStatus[widget.index] == 1
+                      ? Colors.yellow
+                      : Colors.indigo[400],
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                height: mediaQuery.orientation == Orientation.portrait
+                    ? mediaQuery.size.height * 0.07
+                    : mediaQuery.size.height * 0.10,
+                width: mediaQuery.orientation == Orientation.portrait
+                    ? mediaQuery.size.width * 0.14
+                    : mediaQuery.size.width * 0.06,
+                child: InkWell(
+                    key: Key('key ${widget.index}'),
+                    onTap: () {
+                      print('coin in button is ${widget.score}');
+                      if (widget.colorStatus[widget.index] != 1) {
+                        setState(() {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return _showDialog(
+                                  context, widget.name, widget.imagePath);
+                            },
+                          );
+                        });
+                      } else {
+                        _toggleItem(widget.name);
+                        widget.setName(widget.index);
+                      }
+                    },
+                    child: SvgPicture.asset('${widget.imagePath}.svg')),
               ),
             ),
-          ],
-        ),
-      ]),
+            Expanded(
+              flex: 2,
+              child: Text(
+                widget.name,
+                style: TextStyle(
+                  fontSize: mediaQuery.orientation == Orientation.portrait
+                      ? mediaQuery.size.height * 0.018
+                      : mediaQuery.size.height * 0.03,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Icon(
+                    Icons.add_circle,
+                    color: Colors.yellow[700],
+                    size: 20.0,
+                  ),
+                  Text(
+                    widget.coin.toString(),
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ]),
     );
   }
 
@@ -391,41 +426,58 @@ class _StoreAccessoryButtonState extends State<StoreAccessoryButton> {
             Radius.circular(20.0),
           ),
         ),
-        child: Center(
-          child: Container(
-              decoration:
-                  BoxDecoration(border: Border.all(color: Colors.black)),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    'Do you want to purchase $text ?',
-                    style: TextStyle(
-                        fontSize: 20.0,
-                        color: Colors.green,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(
-                    child: SvgPicture.asset('${widget.imagePath}.svg'),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      RaisedButton(
-                        color: Colors.blue,
-                        elevation: 3.0,
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          widget.setName(widget.name, widget.index);
-                        },
-                        child: Text('BUY'),
-                      ),
-                    ],
-                  )
-                ],
-              )),
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: EdgeInsets.only(top: 15.0),
+                child: Text(
+                  'Do you want $text ?',
+                  style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.green,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 5,
+              child: Padding(
+                padding: EdgeInsets.only(bottom: 10.0, top: 10),
+                child: SizedBox(
+                  child: SvgPicture.asset('${widget.imagePath}.svg'),
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 3,
+              child: Padding(
+                padding: EdgeInsets.all(15.0),
+                child: RaisedButton(
+                  color: Colors.blue,
+                  elevation: 3.0,
+                  onPressed: () {
+                    print('coin is ${widget.score}');
+                    if (widget.score + 100 != 0) {
+                      setState(() {
+                        widget.setName(widget.index);
+                      });
+                    }
+                    _toggleItem(widget.name);
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('BUY'),
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );
+  }
+
+  void _toggleItem(String item) {
+    widget.itemNames.add(item);
   }
 }

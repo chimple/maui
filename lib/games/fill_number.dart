@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:maui/games/single_game.dart';
-import 'package:maui/repos/game_data.dart';
+import 'package:maui/repos/game_data_repo.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/components/Shaker.dart';
 import '../components/unit_button.dart';
@@ -664,12 +664,12 @@ class SignaturePainter extends CustomPainter {
     for (int i = 0; i < points.length - 1; i++) {
       print("object....i values varying from 0th position......$i");
       print("object......points offsets is......$points");
-      print("object.....points.....::${points[points.length-1]}");
+      print("object.....points.....::${points[points.length - 1]}");
 
       canvas.drawLine(points[i], points[i + 1], paint);
 
       print("object.. canvas x axis is...::${points[i]}");
-      print("object.....points based on i...is....:${points[i+1]}");
+      print("object.....points based on i...is....:${points[i + 1]}");
     }
   }
 
