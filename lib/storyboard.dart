@@ -5,10 +5,12 @@ import 'package:maui/storyboards/games/bingo_game_story.dart';
 import 'package:maui/storyboards/games/calculate_number_story.dart';
 import 'package:maui/storyboards/games/clock_game_story.dart';
 import 'package:maui/storyboards/games/compare_number_game_story.dart';
+import 'package:maui/storyboards/games/connect_dots_game_story.dart';
 import 'package:maui/storyboards/games/counting_game_story.dart';
 import 'package:maui/storyboards/games/crossword_game_story.dart';
 import 'package:maui/storyboards/games/dice_game_story.dart';
 import 'package:maui/storyboards/games/fill_in_the_blanks_story.dart';
+import 'package:maui/storyboards/games/fill_number_game_story.dart';
 import 'package:maui/storyboards/games/find_word_game_story.dart';
 import 'package:maui/storyboards/games/finger_game_story.dart';
 import 'package:maui/storyboards/games/game_list_story.dart';
@@ -60,32 +62,31 @@ import 'package:storyboard/storyboard.dart';
 
 void main() {
   runApp(StoryboardApp([
-    TapHomeStory(),
-    CalculateTheNumberStory(),
-    PlaceTheNumberStory(),
-    GameScoreStory(),
-    CompareNumberGameStroy(),
-    RulerNumbersGameStory(),
     AudioWidgetStory(),
     BasicCountingGameStory(),
     BentoBoxStory(),
     BingoGameStory(),
     BoxMatchingGameStory(),
+    CalculateTheNumberStory(),
     ChatBotScreenStory(),
     ChatBotStory(),
     ClockGameStory(),
     CollectedItemStory(),
     CompareNumberGameStroy(),
+    CompareNumberGameStroy(),
+    ConnectDotGameStory(),
     CountingGameStory(),
     CrosswordGameStory(),
     CuteButtonStory(),
     DiceGameStory(),
     DotNumberStory(),
     FillInTheBlanksGameStory(),
+    FillNumberGameStory(),
     FindWordGameStory(),
     FingerGameStory(),
     GameLevelStory(),
     GameListStory(),
+    GameScoreStory(),
     GameScoreStory(),
     GameStory(),
     JumbledWordsGameStory(),
@@ -96,13 +97,16 @@ void main() {
     MathOpGameStory(),
     MemoryGameStory(),
     MonsterGameStory(),
+    MultipleChoiceGameStory(),
     NumberBalanceGameStory(),
     OrderBySizeGameStory(),
     OrderItGameStory(),
     PlaceTheNumberStory(),
+    PlaceTheNumberStory(),
     RecognizeNumberGameStory(),
     ReflexGameStory(),
     RhymeWordsGameStory(),
+    RulerNumbersGameStory(),
     RulerNumbersGameStory(),
     ScoreStory(),
     SelectStudentScreenStory(),
@@ -113,12 +117,12 @@ void main() {
     SpinWheelGameStory(),
     StoreScreenStory(),
     StoryBoard(),
+    TapHomeStory(),
     TapWrongGameStory(),
     ThemeMapStory(),
     TracingAlphabetStory(),
     TrueFalseGameStory(),
     UnitGameStory(),
     UserProgressScreenStory(),
-    MultipleChoiceGameStory(),
   ]));
 }
