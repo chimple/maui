@@ -35,7 +35,7 @@ class TextToSpeech extends StatefulWidget {
     this.onComplete,
     this.onLongPress,
     this.playingStatus,
-    this.textStyle = const TextStyle(fontSize: 20, color: Colors.black54),
+    this.textStyle = const TextStyle(fontSize: 25, color: Colors.black54),
     this.highlightColor = Colors.red,
     this.setLanguage = 'EN-IN',
     @required this.fullText,
