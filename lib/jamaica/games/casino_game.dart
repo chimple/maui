@@ -30,15 +30,17 @@ class _CasinoGameState extends State<CasinoGame> {
   void _initLetters() {
     for (var i = 0; i < widget.letters.length; i++) {
       givenWord += widget.letters[i][0];
-      _wordPos[i] = widget.letters[i][0];
     }
   }
 
   Widget _buildScrollButton(
       BuildContext context, List<String> scrollingData, int buttonNumber) {
     var rndm = new Random();
-    var random = rndm.nextInt(5);
+    var random = rndm.nextInt(3);
     final buttonConfig = MediaQuery.of(context).size;
+
+    _wordPos[buttonNumber] = widget.letters[buttonNumber][random];
+    word += _wordPos[buttonNumber];
     return Container(
       height: buttonConfig.height * 0.18,
       width: buttonConfig.width * 0.15,
@@ -49,7 +51,11 @@ class _CasinoGameState extends State<CasinoGame> {
         itemExtent: buttonConfig.height * 0.08,
         backgroundColor: Color(0xFF734052),
         onSelectedItemChanged: (index) {
+          word = "";
           _wordPos[buttonNumber] = scrollingData[index];
+          for (int i = 0; i < widget.letters.length; i++) {
+            word += _wordPos[i];
+          }
         },
         children: scrollingData.map((w) {
           return Column(
@@ -105,9 +111,6 @@ class _CasinoGameState extends State<CasinoGame> {
             child: Center(
               child: RaisedButton(
                 onPressed: () {
-                  for (int i = 0; i < widget.letters.length; i++) {
-                    word += _wordPos[i];
-                  }
                   if (givenWord == word) {
                     score++;
                     Future.delayed(const Duration(milliseconds: 700),
