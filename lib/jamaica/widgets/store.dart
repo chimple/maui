@@ -1,11 +1,9 @@
-import 'package:built_collection/built_collection.dart';
+import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:maui/jamaica/models/accessories_data.dart';
-import 'package:maui/jamaica/state/state_container.dart';
 import 'package:maui/jamaica/widgets/chimp_character.dart';
 import 'package:tuple/tuple.dart';
-import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 
 class Store extends StatefulWidget {
   // final BuiltMap<String, String> accessories;
