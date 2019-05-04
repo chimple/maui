@@ -18,14 +18,14 @@ class TrueFalseGame extends StatefulWidget {
   final String question;
   final String answer;
   final bool right_or_wrong;
-  final OnGameOver onGameOver;
+  final OnGameUpdate onGameUpdate;
 
   const TrueFalseGame(
       {Key key,
       this.question,
       this.answer,
       this.right_or_wrong,
-      this.onGameOver})
+      this.onGameUpdate})
       : super(key: key);
 
   @override
@@ -69,7 +69,7 @@ class _RhymeWordsGameState extends State<TrueFalseGame> {
           onPressed: () {
             if (widget.right_or_wrong) {
               //  Reaction.success;
-              widget.onGameOver(1);
+              widget.onGameUpdate(score: 1, max: 1, gameOver: true, star: true);
             } else {
               return Reaction.failure;
             }
@@ -84,7 +84,7 @@ class _RhymeWordsGameState extends State<TrueFalseGame> {
           )),
           onPressed: () {
             if (!widget.right_or_wrong) {
-              widget.onGameOver(1);
+              widget.onGameUpdate(score: 1, max: 1, gameOver: true, star: true);
               // return Reaction.success;
             } else {
               return Reaction.failure;

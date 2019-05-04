@@ -21,9 +21,9 @@ class _ChoiceDetail {
 
 class PlaceTheNumber extends StatefulWidget {
   final int answer;
-  final OnGameOver onGameOver;
+  final OnGameUpdate onGameUpdate;
 
-  const PlaceTheNumber({Key key, this.answer, this.onGameOver})
+  const PlaceTheNumber({Key key, this.answer, this.onGameUpdate})
       : super(key: key);
 
   @override
@@ -96,13 +96,14 @@ class _PlaceTheNumberState extends State<PlaceTheNumber> {
                               // height: 200.0,
                               decoration: BoxDecoration(
                                   color: Colors.red,
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(16.0))),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(16.0))),
                             ),
                         onWillAccept: (data) => data == a.number.toString(),
                         onAccept: (data) {
                           setState(() => a.solved = true);
-                          widget.onGameOver(1);
+                          widget.onGameUpdate(
+                              score: 1, max: 1, gameOver: true, star: true);
                         },
                       ))
                 .toList(growable: false),

@@ -1,33 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:maui/jamaica/games/unit_game.dart';
+import 'package:maui/jamaica/games/word_grid_game.dart';
 import 'package:storyboard/storyboard.dart';
 
-class UnitGameStory extends FullScreenStory {
+class WordGridGameStory extends FullScreenStory {
   @override
   List<Widget> get storyContent => [
         Scaffold(
           body: SafeArea(
-            child: UnitGame(
-              question: 65,
+            child: WordGridGame(
+              answer: ['C', 'A', 'T'],
+              choice: ['X'],
               onGameUpdate: ({int score, int max, bool gameOver, bool star}) {},
             ),
           ),
         ),
         Scaffold(
           body: SafeArea(
-            child: UnitGame(
-              question: 909,
+            child: WordGridGame(
+              answer: ['A', 'P', 'P', 'L', 'E'],
+              choice: ['X', 'Y', 'Z', 'O'],
               onGameUpdate: ({int score, int max, bool gameOver, bool star}) {},
             ),
           ),
         ),
-        Scaffold(
-          body: SafeArea(
-            child: UnitGame(
-              question: 9,
-              onGameUpdate: ({int score, int max, bool gameOver, bool star}) {},
-            ),
-          ),
-        )
       ];
 }

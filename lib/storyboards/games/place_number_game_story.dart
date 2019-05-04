@@ -10,7 +10,7 @@ class PlaceTheNumberStory extends FullScreenStory {
         Scaffold(
           body: SafeArea(
             child: PlaceTheNumber(
-              onGameOver: (_) {},
+              onGameUpdate: ({int score, int max, bool gameOver, bool star}) {},
               answer: 55,
             ),
           ),
@@ -18,7 +18,7 @@ class PlaceTheNumberStory extends FullScreenStory {
         Scaffold(
           body: SafeArea(
             child: PlaceTheNumber(
-              onGameOver: (_) {},
+              onGameUpdate: ({int score, int max, bool gameOver, bool star}) {},
               answer: 2,
             ),
           ),

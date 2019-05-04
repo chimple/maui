@@ -29,13 +29,13 @@ class NumberBalanceGame extends StatefulWidget {
   final Tuple3<String, String, String> leftExpression;
   final Tuple3<String, String, String> rightExpression;
   final BuiltList<int> choices;
-  final OnGameOver onGameOver;
+  final OnGameUpdate onGameUpdate;
   const NumberBalanceGame(
       {Key key,
       this.leftExpression,
       this.rightExpression,
       this.choices,
-      this.onGameOver})
+      this.onGameUpdate})
       : super(key: key);
   @override
   _NumberBalanceGameState createState() => new _NumberBalanceGameState();

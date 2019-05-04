@@ -7,8 +7,8 @@ import 'package:maui/jamaica/state/game_utils.dart';
 
 class CasinoGame extends StatefulWidget {
   final List<List<String>> letters;
-  final OnGameOver onGameOver;
-  CasinoGame({key, this.letters, this.onGameOver}) : super(key: key);
+  final OnGameUpdate onGameUpdate;
+  CasinoGame({key, this.letters, this.onGameUpdate}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _CasinoGameState();
@@ -113,8 +113,13 @@ class _CasinoGameState extends State<CasinoGame> {
                 onPressed: () {
                   if (givenWord == word) {
                     score++;
-                    Future.delayed(const Duration(milliseconds: 700),
-                        () => widget.onGameOver(score));
+                    Future.delayed(
+                        const Duration(milliseconds: 700),
+                        () => widget.onGameUpdate(
+                            score: score,
+                            max: score,
+                            gameOver: true,
+                            star: true));
                     Navigator.of(context).pop();
                   }
                 },

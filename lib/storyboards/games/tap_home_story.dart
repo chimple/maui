@@ -10,7 +10,7 @@ class TapHomeStory extends FullScreenStory {
             child: TapHome(
               answer: "2",
               choices: ["1", "2", "3", "4", "5", "6", "7"],
-              onGameOver: (_) {},
+              onGameUpdate: ({int score, int max, bool gameOver, bool star}) {},
             ),
           ),
         ),

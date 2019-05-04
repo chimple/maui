@@ -26,9 +26,9 @@ class CompareNumberGame extends StatefulWidget {
   final String image;
   final List<String> choices;
   final String answer;
-  final OnGameOver onGameOver;
+  final OnGameUpdate onGameUpdate;
   const CompareNumberGame(
-      {Key key, this.image, this.choices, this.answer, this.onGameOver})
+      {Key key, this.image, this.choices, this.answer, this.onGameUpdate})
       : super(key: key);
   @override
   _CompareNumberGameState createState() => _CompareNumberGameState();
@@ -175,7 +175,8 @@ class _CompareNumberGameState extends State<CompareNumberGame>
                   });
                 });
 
-                widget.onGameOver(1);
+                widget.onGameUpdate(
+                    score: 1, max: 1, gameOver: true, star: true);
               },
             ),
           ),

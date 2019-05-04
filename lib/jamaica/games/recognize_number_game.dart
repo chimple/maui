@@ -18,10 +18,10 @@ class _ChoiceDetail {
 class RecognizeNumberGame extends StatefulWidget {
   final int answer;
   final BuiltList<int> choices;
-  final OnGameOver onGameOver;
+  final OnGameUpdate onGameUpdate;
 
   const RecognizeNumberGame(
-      {Key key, this.answer, this.choices, this.onGameOver})
+      {Key key, this.answer, this.choices, this.onGameUpdate})
       : super(key: key);
 
   @override
@@ -70,7 +70,12 @@ class _RecognizeNumberGameState extends State<RecognizeNumberGame> {
                       print("this my score $score");
                       print("this is my answer ${widget.answer}");
                       print("this is my choice ${c.number}");
-                      if (--complete == 0) widget.onGameOver(score);
+                      if (--complete == 0)
+                        widget.onGameUpdate(
+                            score: score,
+                            max: score,
+                            gameOver: true,
+                            star: true);
                     } else {
                       score--;
                       c.reaction = Reaction.failure;

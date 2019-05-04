@@ -14,7 +14,7 @@ class FindWordGameStory extends FullScreenStory {
               answer: BuiltList<String>(['A', 'P', 'P', 'L', 'E']),
               choices:
                   BuiltList<String>(['A', 'X', 'Y', 'P', 'E', 'B', 'L', 'W']),
-              onGameOver: (_) {},
+              onGameUpdate: ({int score, int max, bool gameOver, bool star}) {},
             ),
           ),
         ),

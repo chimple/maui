@@ -10,10 +10,10 @@ class CalculateTheNumbers extends StatefulWidget {
   final int second;
   final String op;
   final int answer;
-  final OnGameOver onGameOver;
+  final OnGameUpdate onGameUpdate;
 
   CalculateTheNumbers(
-      {key, this.first, this.second, this.op, this.answer, this.onGameOver})
+      {key, this.first, this.second, this.op, this.answer, this.onGameUpdate})
       : super(key: key);
   @override
   State<StatefulWidget> createState() => new _CalculateTheNumbersState();
@@ -309,7 +309,7 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
         });
         _scoreCount = 1;
         new Future.delayed(const Duration(milliseconds: 1000), () {
-          widget.onGameOver(1);
+          widget.onGameUpdate(score: 1, max: 1, gameOver: true, star: true);
         });
       }
       return true;

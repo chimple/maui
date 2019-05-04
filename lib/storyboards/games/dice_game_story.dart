@@ -10,10 +10,8 @@ class DiceGameStory extends FullScreenStory {
         Scaffold(
           body: SafeArea(
             child: DiceGame(
-              question: 4,
-              answerPosition: 1,
-              choices: BuiltList<int>([1, 4, 5, 8]),
-              onGameOver: (_) {},
+              choices: BuiltList<int>([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
+              onGameUpdate: ({int score, int max, bool gameOver, bool star}) {},
             ),
           ),
         )
