@@ -24,10 +24,10 @@ class TablesGame extends StatefulWidget {
   final int question1;
   final int question2;
   final int answer;
-  final OnGameUpdate onGameOver;
+  final OnGameUpdate onGameUpdate;
 
   const TablesGame(
-      {Key key, this.question1, this.question2, this.answer, this.onGameOver})
+      {Key key, this.question1, this.question2, this.answer, this.onGameUpdate})
       : super(key: key);
 
   @override
@@ -122,7 +122,8 @@ class TablesGameState extends State<TablesGame> {
                         } else if (e == '✔') {
                           if (int.parse(_result) == widget.answer) {
                             print('its correct');
-                            widget.onGameOver(2);
+                            widget.onGameUpdate(
+                                score: 2, max: 2, gameOver: true, star: true);
                             return Reaction.success;
                           } else {
                             return Reaction.failure;
