@@ -51,6 +51,9 @@ class FillNumberGameState extends State<FillNumberGame> {
   int lastclick;
   var code;
   var temp = 0;
+  int maxScore;
+  int score = 0;
+  int wrongAttempt = 0;
   @override
   void initState() {
     super.initState();
@@ -60,6 +63,7 @@ class FillNumberGameState extends State<FillNumberGame> {
     _allLetters.forEach((e) {
       _copyVal.add(e);
     });
+    maxScore = 2 * (_allLetters.length ~/ 4);
 
     for (var i = 0; i < _copyVal.length; i += _size * _size) {
       _shuffledLetters
@@ -239,6 +243,9 @@ class FillNumberGameState extends State<FillNumberGame> {
           if (sumOfClickValue == displayAns) {
             setState(() {
               start = false;
+              score = score + 2;
+              widget.onGameUpdate(
+                  score: score, max: maxScore, gameOver: false, star: false);
             });
             flag = 1;
             addClickValue = '$addClickValue' + '=$sumOfClickValue';
@@ -323,7 +330,7 @@ class FillNumberGameState extends State<FillNumberGame> {
               // new Future.delayed(const Duration(milliseconds: 250), () {
               start = false;
               widget.onGameUpdate(
-                  score: 10, max: 10, gameOver: true, star: true);
+                  score: 10, max: maxScore, gameOver: true, star: true);
               scorCount = scorCount;
               _pointssend.removeRange(0, _pointssend.length);
               // });
@@ -331,6 +338,24 @@ class FillNumberGameState extends State<FillNumberGame> {
 
             subListset.removeRange(0, subListset.length);
           } else {
+            wrongAttempt = wrongAttempt + 1;
+            if (wrongAttempt < 2) {
+              setState(() {
+                widget.onGameUpdate(
+                    score: score - 1,
+                    max: maxScore,
+                    gameOver: false,
+                    star: false);
+              });
+            } else {
+              setState(() {
+                widget.onGameUpdate(
+                    score: score - 1,
+                    max: maxScore,
+                    gameOver: true,
+                    star: false);
+              });
+            }
             setState(() {
               _pointssend = [];
               start = false;
