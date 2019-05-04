@@ -41,6 +41,7 @@ import 'package:maui/storyboards/games/tap_wrong_game_story.dart';
 import 'package:maui/storyboards/games/tracing_alphabets_story.dart';
 import 'package:maui/storyboards/games/true_false_game_story.dart';
 import 'package:maui/storyboards/games/unit_game_story.dart';
+import 'package:maui/storyboards/games/wordgrid_game_story.dart';
 import 'package:maui/storyboards/monster_game_story.dart';
 import 'package:maui/storyboards/map_reward_screen_story.dart';
 import 'package:maui/storyboards/user_progress_screen_story.dart';
@@ -62,17 +63,17 @@ import 'package:maui/storyboards/widgets/story_board.dart';
 import 'package:maui/storyboards/widgets/store_screen_story.dart';
 import 'package:storyboard/storyboard.dart';
 
+import 'storyboards/widgets/guess_image_story.dart';
+
 void main() {
   runApp(StoryboardApp([
     AudioWidgetStory(),
     BasicCountingGameStory(),
     BentoBoxStory(),
     BingoGameStory(),
-    MadSentenceGameStory(),
-    CasinoGameStory(),
-    NumberBalanceGameStory(),
     BoxMatchingGameStory(),
     CalculateTheNumberStory(),
+    CasinoGameStory(),
     ChatBotScreenStory(),
     ChatBotStory(),
     ClockGameStory(),
@@ -94,7 +95,9 @@ void main() {
     GameScoreStory(),
     GameScoreStory(),
     GameStory(),
+    GuessImageStory(),
     JumbledWordsGameStory(),
+    MadSentenceGameStory(),
     MadSentenceGameStory(),
     MapRewardsScreenStory(),
     MatchTheShapeGameStory(),
@@ -103,6 +106,8 @@ void main() {
     MemoryGameStory(),
     MonsterGameStory(),
     MultipleChoiceGameStory(),
+    MultipleChoiceGameStory(),
+    NumberBalanceGameStory(),
     NumberBalanceGameStory(),
     OrderBySizeGameStory(),
     OrderItGameStory(),
@@ -130,5 +135,6 @@ void main() {
     TrueFalseGameStory(),
     UnitGameStory(),
     UserProgressScreenStory(),
+    WordGridGameStory(),
   ]));
 }
