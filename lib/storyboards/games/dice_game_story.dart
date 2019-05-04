@@ -11,7 +11,7 @@ class DiceGameStory extends FullScreenStory {
           body: SafeArea(
             child: DiceGame(
               choices: BuiltList<int>([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
-              onGameOver: (_) {},
+              onGameUpdate: ({int score, int max, bool gameOver, bool star}) {},
             ),
           ),
         )

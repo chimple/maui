@@ -30,7 +30,7 @@ class StoryBoard extends FullScreenStory {
                   BuiltList<String>(["He", 'Like', 'to', 'tease', 'people']),
               choices:
                   BuiltList<String>(["He", 'Like', 'to', 'tease', 'people']),
-              onGameOver: (_) {},
+              onGameUpdate: ({int score, int max, bool gameOver, bool star}) {},
             ),
           ),
         ),

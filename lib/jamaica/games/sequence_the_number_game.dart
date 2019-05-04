@@ -14,14 +14,14 @@ class SequenceTheNumberGame extends StatefulWidget {
   final BuiltList<int> sequence;
   final BuiltList<int> choices;
   final int blankPosition;
-  final OnGameOver onGameOver;
+  final OnGameUpdate onGameUpdate;
 
   const SequenceTheNumberGame(
       {Key key,
       this.sequence,
       this.choices,
       this.blankPosition,
-      this.onGameOver})
+      this.onGameUpdate})
       : super(key: key);
 
   @override
@@ -83,7 +83,11 @@ class _SequenceTheNumberGameState extends State<SequenceTheNumberGame> {
                         const Duration(milliseconds: 1000),
                         () => setState(() {
                               solved = true;
-                              widget.onGameOver(score);
+                              widget.onGameUpdate(
+                                  score: score,
+                                  max: score,
+                                  gameOver: true,
+                                  star: true);
                             }));
                   } else {
                     score--;

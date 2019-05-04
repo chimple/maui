@@ -7,8 +7,8 @@ import 'package:maui/jamaica/state/game_utils.dart';
 
 class CasinoGame extends StatefulWidget {
   final List<List<String>> letters;
-  final OnGameOver onGameOver;
-  CasinoGame({key, this.letters, this.onGameOver}) : super(key: key);
+  final OnGameUpdate onGameUpdate;
+  CasinoGame({key, this.letters, this.onGameUpdate}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _CasinoGameState();
@@ -18,27 +18,32 @@ class _CasinoGameState extends State<CasinoGame> {
   String givenWord = "";
   String word = "";
   Map<int, String> _wordPos = Map();
-  int score = 0;
+  int _score = 0;
+  int _maxScore;
+  int _trial = 0;
   int buttonKey = 0;
 
   @override
   void initState() {
     super.initState();
+    _maxScore = widget.letters.length * 2;
     _initLetters();
   }
 
   void _initLetters() {
     for (var i = 0; i < widget.letters.length; i++) {
       givenWord += widget.letters[i][0];
-      _wordPos[i] = widget.letters[i][0];
     }
   }
 
   Widget _buildScrollButton(
       BuildContext context, List<String> scrollingData, int buttonNumber) {
     var rndm = new Random();
-    var random = rndm.nextInt(5);
+    var random = rndm.nextInt(3);
     final buttonConfig = MediaQuery.of(context).size;
+
+    _wordPos[buttonNumber] = widget.letters[buttonNumber][random];
+    word += _wordPos[buttonNumber];
     return Container(
       height: buttonConfig.height * 0.18,
       width: buttonConfig.width * 0.15,
@@ -49,7 +54,11 @@ class _CasinoGameState extends State<CasinoGame> {
         itemExtent: buttonConfig.height * 0.08,
         backgroundColor: Color(0xFF734052),
         onSelectedItemChanged: (index) {
+          word = "";
           _wordPos[buttonNumber] = scrollingData[index];
+          for (int i = 0; i < widget.letters.length; i++) {
+            word += _wordPos[i];
+          }
         },
         children: scrollingData.map((w) {
           return Column(
@@ -105,14 +114,40 @@ class _CasinoGameState extends State<CasinoGame> {
             child: Center(
               child: RaisedButton(
                 onPressed: () {
-                  for (int i = 0; i < widget.letters.length; i++) {
-                    word += _wordPos[i];
+                  _score = 0;
+                  for (int i = 0; i < givenWord.length; i++) {
+                    if (word[i] == givenWord[i]) {
+                      _score = _score + 2;
+                    } else {
+                      _score--;
+                    }
                   }
                   if (givenWord == word) {
-                    score++;
-                    Future.delayed(const Duration(milliseconds: 700),
-                        () => widget.onGameOver(score));
+                    Future.delayed(
+                        const Duration(milliseconds: 700),
+                        () => widget.onGameUpdate(
+                            score: _score,
+                            max: _maxScore,
+                            gameOver: true,
+                            star: true));
                     Navigator.of(context).pop();
+                  } else if (givenWord != word && _trial < 2) {
+                    _trial++;
+                    Future.delayed(
+                        const Duration(milliseconds: 700),
+                        () => widget.onGameUpdate(
+                            score: _score,
+                            max: _maxScore,
+                            gameOver: false,
+                            star: false));
+                  } else {
+                    Future.delayed(
+                        const Duration(milliseconds: 700),
+                        () => widget.onGameUpdate(
+                            score: _score,
+                            max: _maxScore,
+                            gameOver: true,
+                            star: false));
                   }
                 },
                 color: Color(0xFF734052),

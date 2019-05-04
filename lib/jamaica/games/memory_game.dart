@@ -27,9 +27,9 @@ enum _Status { closed, opened, escaping, escaped }
 class MemoryGame extends StatefulWidget {
   final BuiltList<String> first;
   final BuiltList<String> second;
-  final OnGameOver onGameOver;
+  final OnGameUpdate onGameUpdate;
 
-  const MemoryGame({Key key, this.first, this.second, this.onGameOver})
+  const MemoryGame({Key key, this.first, this.second, this.onGameUpdate})
       : super(key: key);
 
   @override

@@ -10,7 +10,7 @@ class WordGridGameStory extends FullScreenStory {
             child: WordGridGame(
               answer: ['C', 'A', 'T'],
               choice: ['X'],
-              onGameOver: (_) {},
+              onGameUpdate: ({int score, int max, bool gameOver, bool star}) {},
             ),
           ),
         ),
@@ -19,7 +19,7 @@ class WordGridGameStory extends FullScreenStory {
             child: WordGridGame(
               answer: ['A', 'P', 'P', 'L', 'E'],
               choice: ['X', 'Y', 'Z', 'O'],
-              onGameOver: (_) {},
+              onGameUpdate: ({int score, int max, bool gameOver, bool star}) {},
             ),
           ),
         ),

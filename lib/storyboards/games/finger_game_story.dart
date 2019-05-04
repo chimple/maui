@@ -12,7 +12,7 @@ class FingerGameStory extends FullScreenStory {
             child: FingerGame(
               answer: 3,
               choices: BuiltList<int>([2, 3]),
-              onGameOver: (_) {},
+              onGameUpdate: ({int score, int max, bool gameOver, bool star}) {},
             ),
           ),
         ),
@@ -21,7 +21,7 @@ class FingerGameStory extends FullScreenStory {
             child: FingerGame(
               answer: 7,
               choices: BuiltList<int>([6, 7, 8]),
-              onGameOver: (_) {},
+              onGameUpdate: ({int score, int max, bool gameOver, bool star}) {},
             ),
           ),
         )

@@ -7,6 +7,7 @@ part of 'performance.dart';
 // **************************************************************************
 
 Serializer<Performance> _$performanceSerializer = new _$PerformanceSerializer();
+Serializer<SubScore> _$subScoreSerializer = new _$SubScoreSerializer();
 
 class _$PerformanceSerializer implements StructuredSerializer<Performance> {
   @override
@@ -21,27 +22,21 @@ class _$PerformanceSerializer implements StructuredSerializer<Performance> {
       'studentId',
       serializers.serialize(object.studentId,
           specifiedType: const FullType(String)),
-      'gameId',
-      serializers.serialize(object.gameId,
-          specifiedType: const FullType(String)),
       'sessionId',
       serializers.serialize(object.sessionId,
           specifiedType: const FullType(String)),
-      'level',
-      serializers.serialize(object.level, specifiedType: const FullType(int)),
-      'question',
-      serializers.serialize(object.question,
+      'title',
+      serializers.serialize(object.title,
           specifiedType: const FullType(String)),
-      'answer',
-      serializers.serialize(object.answer,
-          specifiedType: const FullType(String)),
-      'correct',
-      serializers.serialize(object.correct,
-          specifiedType: const FullType(bool)),
+      'numGames',
+      serializers.serialize(object.numGames,
+          specifiedType: const FullType(int)),
       'score',
       serializers.serialize(object.score, specifiedType: const FullType(int)),
-      'total',
-      serializers.serialize(object.total, specifiedType: const FullType(int)),
+      'subScores',
+      serializers.serialize(object.subScores,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(SubScore)])),
       'startTime',
       serializers.serialize(object.startTime,
           specifiedType: const FullType(DateTime)),
@@ -68,36 +63,92 @@ class _$PerformanceSerializer implements StructuredSerializer<Performance> {
           result.studentId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'gameId':
-          result.gameId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
         case 'sessionId':
           result.sessionId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'level':
-          result.level = serializers.deserialize(value,
+        case 'title':
+          result.title = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'numGames':
+          result.numGames = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
-          break;
-        case 'question':
-          result.question = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'answer':
-          result.answer = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'correct':
-          result.correct = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
           break;
         case 'score':
           result.score = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
-        case 'total':
-          result.total = serializers.deserialize(value,
+        case 'subScores':
+          result.subScores.replace(serializers.deserialize(value,
+              specifiedType: const FullType(
+                  BuiltList, const [const FullType(SubScore)])) as BuiltList);
+          break;
+        case 'startTime':
+          result.startTime = serializers.deserialize(value,
+              specifiedType: const FullType(DateTime)) as DateTime;
+          break;
+        case 'endTime':
+          result.endTime = serializers.deserialize(value,
+              specifiedType: const FullType(DateTime)) as DateTime;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$SubScoreSerializer implements StructuredSerializer<SubScore> {
+  @override
+  final Iterable<Type> types = const [SubScore, _$SubScore];
+  @override
+  final String wireName = 'SubScore';
+
+  @override
+  Iterable serialize(Serializers serializers, SubScore object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'gameId',
+      serializers.serialize(object.gameId,
+          specifiedType: const FullType(String)),
+      'complete',
+      serializers.serialize(object.complete,
+          specifiedType: const FullType(bool)),
+      'score',
+      serializers.serialize(object.score, specifiedType: const FullType(int)),
+      'startTime',
+      serializers.serialize(object.startTime,
+          specifiedType: const FullType(DateTime)),
+      'endTime',
+      serializers.serialize(object.endTime,
+          specifiedType: const FullType(DateTime)),
+    ];
+
+    return result;
+  }
+
+  @override
+  SubScore deserialize(Serializers serializers, Iterable serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new SubScoreBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'gameId':
+          result.gameId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'complete':
+          result.complete = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'score':
+          result.score = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
         case 'startTime':
@@ -119,21 +170,15 @@ class _$Performance extends Performance {
   @override
   final String studentId;
   @override
-  final String gameId;
-  @override
   final String sessionId;
   @override
-  final int level;
+  final String title;
   @override
-  final String question;
-  @override
-  final String answer;
-  @override
-  final bool correct;
+  final int numGames;
   @override
   final int score;
   @override
-  final int total;
+  final BuiltList<SubScore> subScores;
   @override
   final DateTime startTime;
   @override
@@ -144,43 +189,31 @@ class _$Performance extends Performance {
 
   _$Performance._(
       {this.studentId,
-      this.gameId,
       this.sessionId,
-      this.level,
-      this.question,
-      this.answer,
-      this.correct,
+      this.title,
+      this.numGames,
       this.score,
-      this.total,
+      this.subScores,
       this.startTime,
       this.endTime})
       : super._() {
     if (studentId == null) {
       throw new BuiltValueNullFieldError('Performance', 'studentId');
     }
-    if (gameId == null) {
-      throw new BuiltValueNullFieldError('Performance', 'gameId');
-    }
     if (sessionId == null) {
       throw new BuiltValueNullFieldError('Performance', 'sessionId');
     }
-    if (level == null) {
-      throw new BuiltValueNullFieldError('Performance', 'level');
+    if (title == null) {
+      throw new BuiltValueNullFieldError('Performance', 'title');
     }
-    if (question == null) {
-      throw new BuiltValueNullFieldError('Performance', 'question');
-    }
-    if (answer == null) {
-      throw new BuiltValueNullFieldError('Performance', 'answer');
-    }
-    if (correct == null) {
-      throw new BuiltValueNullFieldError('Performance', 'correct');
+    if (numGames == null) {
+      throw new BuiltValueNullFieldError('Performance', 'numGames');
     }
     if (score == null) {
       throw new BuiltValueNullFieldError('Performance', 'score');
     }
-    if (total == null) {
-      throw new BuiltValueNullFieldError('Performance', 'total');
+    if (subScores == null) {
+      throw new BuiltValueNullFieldError('Performance', 'subScores');
     }
     if (startTime == null) {
       throw new BuiltValueNullFieldError('Performance', 'startTime');
@@ -202,14 +235,11 @@ class _$Performance extends Performance {
     if (identical(other, this)) return true;
     return other is Performance &&
         studentId == other.studentId &&
-        gameId == other.gameId &&
         sessionId == other.sessionId &&
-        level == other.level &&
-        question == other.question &&
-        answer == other.answer &&
-        correct == other.correct &&
+        title == other.title &&
+        numGames == other.numGames &&
         score == other.score &&
-        total == other.total &&
+        subScores == other.subScores &&
         startTime == other.startTime &&
         endTime == other.endTime;
   }
@@ -221,19 +251,11 @@ class _$Performance extends Performance {
             $jc(
                 $jc(
                     $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc($jc(0, studentId.hashCode),
-                                            gameId.hashCode),
-                                        sessionId.hashCode),
-                                    level.hashCode),
-                                question.hashCode),
-                            answer.hashCode),
-                        correct.hashCode),
+                        $jc($jc($jc(0, studentId.hashCode), sessionId.hashCode),
+                            title.hashCode),
+                        numGames.hashCode),
                     score.hashCode),
-                total.hashCode),
+                subScores.hashCode),
             startTime.hashCode),
         endTime.hashCode));
   }
@@ -242,14 +264,11 @@ class _$Performance extends Performance {
   String toString() {
     return (newBuiltValueToStringHelper('Performance')
           ..add('studentId', studentId)
-          ..add('gameId', gameId)
           ..add('sessionId', sessionId)
-          ..add('level', level)
-          ..add('question', question)
-          ..add('answer', answer)
-          ..add('correct', correct)
+          ..add('title', title)
+          ..add('numGames', numGames)
           ..add('score', score)
-          ..add('total', total)
+          ..add('subScores', subScores)
           ..add('startTime', startTime)
           ..add('endTime', endTime))
         .toString();
@@ -263,37 +282,27 @@ class PerformanceBuilder implements Builder<Performance, PerformanceBuilder> {
   String get studentId => _$this._studentId;
   set studentId(String studentId) => _$this._studentId = studentId;
 
-  String _gameId;
-  String get gameId => _$this._gameId;
-  set gameId(String gameId) => _$this._gameId = gameId;
-
   String _sessionId;
   String get sessionId => _$this._sessionId;
   set sessionId(String sessionId) => _$this._sessionId = sessionId;
 
-  int _level;
-  int get level => _$this._level;
-  set level(int level) => _$this._level = level;
+  String _title;
+  String get title => _$this._title;
+  set title(String title) => _$this._title = title;
 
-  String _question;
-  String get question => _$this._question;
-  set question(String question) => _$this._question = question;
-
-  String _answer;
-  String get answer => _$this._answer;
-  set answer(String answer) => _$this._answer = answer;
-
-  bool _correct;
-  bool get correct => _$this._correct;
-  set correct(bool correct) => _$this._correct = correct;
+  int _numGames;
+  int get numGames => _$this._numGames;
+  set numGames(int numGames) => _$this._numGames = numGames;
 
   int _score;
   int get score => _$this._score;
   set score(int score) => _$this._score = score;
 
-  int _total;
-  int get total => _$this._total;
-  set total(int total) => _$this._total = total;
+  ListBuilder<SubScore> _subScores;
+  ListBuilder<SubScore> get subScores =>
+      _$this._subScores ??= new ListBuilder<SubScore>();
+  set subScores(ListBuilder<SubScore> subScores) =>
+      _$this._subScores = subScores;
 
   DateTime _startTime;
   DateTime get startTime => _$this._startTime;
@@ -308,14 +317,11 @@ class PerformanceBuilder implements Builder<Performance, PerformanceBuilder> {
   PerformanceBuilder get _$this {
     if (_$v != null) {
       _studentId = _$v.studentId;
-      _gameId = _$v.gameId;
       _sessionId = _$v.sessionId;
-      _level = _$v.level;
-      _question = _$v.question;
-      _answer = _$v.answer;
-      _correct = _$v.correct;
+      _title = _$v.title;
+      _numGames = _$v.numGames;
       _score = _$v.score;
-      _total = _$v.total;
+      _subScores = _$v.subScores?.toBuilder();
       _startTime = _$v.startTime;
       _endTime = _$v.endTime;
       _$v = null;
@@ -338,17 +344,166 @@ class PerformanceBuilder implements Builder<Performance, PerformanceBuilder> {
 
   @override
   _$Performance build() {
+    _$Performance _$result;
+    try {
+      _$result = _$v ??
+          new _$Performance._(
+              studentId: studentId,
+              sessionId: sessionId,
+              title: title,
+              numGames: numGames,
+              score: score,
+              subScores: subScores.build(),
+              startTime: startTime,
+              endTime: endTime);
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'subScores';
+        subScores.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'Performance', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$SubScore extends SubScore {
+  @override
+  final String gameId;
+  @override
+  final bool complete;
+  @override
+  final int score;
+  @override
+  final DateTime startTime;
+  @override
+  final DateTime endTime;
+
+  factory _$SubScore([void Function(SubScoreBuilder) updates]) =>
+      (new SubScoreBuilder()..update(updates)).build();
+
+  _$SubScore._(
+      {this.gameId, this.complete, this.score, this.startTime, this.endTime})
+      : super._() {
+    if (gameId == null) {
+      throw new BuiltValueNullFieldError('SubScore', 'gameId');
+    }
+    if (complete == null) {
+      throw new BuiltValueNullFieldError('SubScore', 'complete');
+    }
+    if (score == null) {
+      throw new BuiltValueNullFieldError('SubScore', 'score');
+    }
+    if (startTime == null) {
+      throw new BuiltValueNullFieldError('SubScore', 'startTime');
+    }
+    if (endTime == null) {
+      throw new BuiltValueNullFieldError('SubScore', 'endTime');
+    }
+  }
+
+  @override
+  SubScore rebuild(void Function(SubScoreBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  SubScoreBuilder toBuilder() => new SubScoreBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is SubScore &&
+        gameId == other.gameId &&
+        complete == other.complete &&
+        score == other.score &&
+        startTime == other.startTime &&
+        endTime == other.endTime;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc(
+        $jc(
+            $jc($jc($jc(0, gameId.hashCode), complete.hashCode),
+                score.hashCode),
+            startTime.hashCode),
+        endTime.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('SubScore')
+          ..add('gameId', gameId)
+          ..add('complete', complete)
+          ..add('score', score)
+          ..add('startTime', startTime)
+          ..add('endTime', endTime))
+        .toString();
+  }
+}
+
+class SubScoreBuilder implements Builder<SubScore, SubScoreBuilder> {
+  _$SubScore _$v;
+
+  String _gameId;
+  String get gameId => _$this._gameId;
+  set gameId(String gameId) => _$this._gameId = gameId;
+
+  bool _complete;
+  bool get complete => _$this._complete;
+  set complete(bool complete) => _$this._complete = complete;
+
+  int _score;
+  int get score => _$this._score;
+  set score(int score) => _$this._score = score;
+
+  DateTime _startTime;
+  DateTime get startTime => _$this._startTime;
+  set startTime(DateTime startTime) => _$this._startTime = startTime;
+
+  DateTime _endTime;
+  DateTime get endTime => _$this._endTime;
+  set endTime(DateTime endTime) => _$this._endTime = endTime;
+
+  SubScoreBuilder();
+
+  SubScoreBuilder get _$this {
+    if (_$v != null) {
+      _gameId = _$v.gameId;
+      _complete = _$v.complete;
+      _score = _$v.score;
+      _startTime = _$v.startTime;
+      _endTime = _$v.endTime;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(SubScore other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$SubScore;
+  }
+
+  @override
+  void update(void Function(SubScoreBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$SubScore build() {
     final _$result = _$v ??
-        new _$Performance._(
-            studentId: studentId,
+        new _$SubScore._(
             gameId: gameId,
-            sessionId: sessionId,
-            level: level,
-            question: question,
-            answer: answer,
-            correct: correct,
+            complete: complete,
             score: score,
-            total: total,
             startTime: startTime,
             endTime: endTime);
     replace(_$result);

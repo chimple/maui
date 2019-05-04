@@ -57,7 +57,7 @@ class MadSentenceGameStory extends FullScreenStory {
           body: SafeArea(
             child: MadSentenceGame(
               sentenceData: sentenceData,
-              onGameOver: (_) {},
+              onGameUpdate: ({int score, int max, bool gameOver, bool star}) {},
             ),
           ),
         )

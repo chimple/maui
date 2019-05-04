@@ -90,9 +90,8 @@ class GameListState extends State<GameList>
         .push(SlideUpRoute(
           widgetBuilder: (context) => Game(
                 quizSession: QuizSession((b) => b
-                  ..sessionId = 'A'
-                  ..gameId = 'B'
-                  ..level = 1
+                  ..sessionId = 'game'
+                  ..title = lesson.title
                   ..gameData.addAll(gameData)),
               ),
         ))
