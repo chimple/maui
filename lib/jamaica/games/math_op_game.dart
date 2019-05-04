@@ -146,7 +146,7 @@ class _MathOpGameState extends State<MathOpGame> {
                                   star: true);
                             } else {
                               wrongAttempt = wrongAttempt + 1;
-                              if (wrongAttempt < 2) {
+                              if (wrongAttempt <= 2) {
                                 widget.onGameUpdate(
                                     score: score - 1,
                                     max: maxScore,

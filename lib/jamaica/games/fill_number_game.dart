@@ -339,7 +339,7 @@ class FillNumberGameState extends State<FillNumberGame> {
             subListset.removeRange(0, subListset.length);
           } else {
             wrongAttempt = wrongAttempt + 1;
-            if (wrongAttempt < 2) {
+            if (wrongAttempt <= 2) {
               setState(() {
                 widget.onGameUpdate(
                     score: score - 1,
