@@ -255,7 +255,7 @@ class _GameState extends State<Game> {
                   SlideUpRoute(
                       widgetBuilder: (context) =>
                           ++index < widget.quizSession.gameData.length
-                              ? widget.quizSession.sessionId == 'game'
+                              ? widget.quizSession.sessionId != 'game'
                                   ? IntermediateQuizScore(
                                       onTap: () => Navigator.push(
                                           context,
