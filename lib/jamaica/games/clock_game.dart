@@ -30,10 +30,10 @@ class ClockGame extends StatefulWidget {
   final int minute;
 
   final BuiltList<int> choices;
-  final OnGameUpdate onGameOver;
+  final OnGameUpdate onGameUpdate;
 
   const ClockGame(
-      {Key key, this.choices, this.hour, this.minute, this.onGameOver})
+      {Key key, this.choices, this.hour, this.minute, this.onGameUpdate})
       : super(key: key);
 
   @override
@@ -89,7 +89,7 @@ class ClockGameState extends State<ClockGame> {
                                   .firstWhere((c) => c.choice == widget.hour)
                                   .appear = false;
                               if (--complete == 0) {
-                                // widget.onGameOver(score);
+                                // widget.onGameUpdate(score);
                                 print('Game is over');
                               }
                             } else
@@ -119,7 +119,7 @@ class ClockGameState extends State<ClockGame> {
                                   .firstWhere((c) => c.choice == widget.minute)
                                   .appear = false;
                               if (--complete == 0) {
-                                // widget.onGameOver(score);
+                                // widget.onGameUpdate(score);
                                 print('Game is over');
                               }
                             } else
