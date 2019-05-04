@@ -31,7 +31,8 @@ class QuizScoreScreen extends StatelessWidget {
         strokeCap: 2 == i || quizSession.gameData.length == i - 1
             ? LinearStrokeCap.round
             : LinearStrokeCap.butt,
-        color: e.correct == true ? Colors.green : Colors.red,
+//        color: e.correct == true ? Colors.green : Colors.red,
+        color: Colors.green,
         width: size.width / quizSession.gameData.length - 5.0,
       );
       linearProgress.add(progress);
@@ -57,16 +58,10 @@ class QuizScoreScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                "- ${e.question} ?",
+                "- ${e.title} ?",
                 style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Text(e.answer,
-                  style:
-                      TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
-            )
           ],
         ),
       ));
