@@ -28,8 +28,8 @@ class _ChoiceDetail {
 }
 
 class MovingTextGame extends StatefulWidget {
-  final BuiltList choices;
-  final BuiltList answers;
+  final BuiltList<String> choices;
+  final BuiltList<String> answers;
   final OnGameUpdate onGameUpdate;
   const MovingTextGame({Key key, this.answers, this.choices, this.onGameUpdate})
       : super(key: key);
