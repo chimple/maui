@@ -197,14 +197,6 @@ Widget buildGame({GameData gameData, OnGameUpdate onGameUpdate}) {
         onGameUpdate: onGameUpdate,
       );
       break;
-    case 'MovingTextGame':
-      final gd = gameData as MultiData;
-      return MovingTextGame(
-        onGameUpdate: onGameUpdate,
-        choices: gd.choices,
-        answers: gd.answers,
-      );
-      break;
     case 'GuessImage':
       final gd = gameData as ImageLabelData;
       return GuessImage(
