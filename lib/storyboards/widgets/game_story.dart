@@ -15,16 +15,14 @@ class GameStory extends FullScreenStory {
         Game(
           updateCoins: (coins) => print(coins),
           quizSession: QuizSession((b) => b
-            ..gameId = 'SequenceAlphabetGame'
-            ..level = 1
+            ..title = 'SequenceAlphabetGame'
             ..sessionId = '2'
             ..gameData.addAll([
               MultiData((g) => g
                 ..gameId = 'SequenceAlphabetGame'
                 ..answers.addAll(['A', 'P', 'P', 'L', 'E'])),
             ])
-            ..gameId = 'SequenceTheNumberGame'
-            ..level = 1
+            ..title = 'SequenceTheNumberGame'
             ..sessionId = '2'
             ..gameData.addAll([
               NumMultiData((g) => g
@@ -33,8 +31,7 @@ class GameStory extends FullScreenStory {
                 ..choices.addAll([3, 5, 6])
                 ..answers.addAll([1, 2, 3, 4])),
             ])
-            ..gameId = 'RhymeWordsGame'
-            ..level = 1
+            ..title = 'RhymeWordsGame'
             ..sessionId = '2'
             ..gameData.addAll([
               MultiData((g) => g
@@ -52,8 +49,7 @@ class GameStory extends FullScreenStory {
                   'See',
                 ])),
             ])
-            ..gameId = 'TrueFalseGame'
-            ..level = 1
+            ..title = 'TrueFalseGame'
             ..sessionId = '2'
             ..gameData.addAll([
               MultiData((g) => g
@@ -62,8 +58,7 @@ class GameStory extends FullScreenStory {
                 ..question = 'win'
                 ..answers.add("True")),
             ])
-            ..gameId = 'RecognizeNumberGame'
-            ..level = 1
+            ..title = 'RecognizeNumberGame'
             ..sessionId = '2'
             ..gameData.addAll([
               NumMultiData((g) => g
@@ -71,8 +66,7 @@ class GameStory extends FullScreenStory {
                 ..answers.addAll([1])
                 ..choices.addAll([2, 1, 4, 3])),
             ])
-            ..gameId = 'OrderBySizeGame'
-            ..level = 1
+            ..title = 'OrderBySizeGame'
             ..sessionId = '2'
             ..gameData.addAll([
               NumMultiData((g) => g
@@ -80,8 +74,7 @@ class GameStory extends FullScreenStory {
                 ..answers.addAll([1, 7])
                 ..choices.addAll([2, 7, 3, 1])),
             ])
-            ..gameId = 'MathOpGame'
-            ..level = 1
+            ..title = 'MathOpGame'
             ..sessionId = '2'
             ..gameData.addAll([
               MathOpData((g) => g
@@ -91,8 +84,7 @@ class GameStory extends FullScreenStory {
                 ..op = '+'
                 ..answer = 8),
             ])
-            ..gameId = 'MatchTheShapeGame'
-            ..level = 1
+            ..title = 'MatchTheShapeGame'
             ..sessionId = '2'
             ..gameData.addAll([
               MultiData((g) => g
@@ -100,8 +92,7 @@ class GameStory extends FullScreenStory {
                 ..answers.addAll(['A', 'B', 'C', 'D'])
                 ..choices.addAll(['A', 'B', 'C', 'D'])),
             ])
-            ..gameId = 'MatchWithImageGame'
-            ..level = 1
+            ..title = 'MatchWithImageGame'
             ..sessionId = '2'
             ..gameData.addAll([
               MultiData((g) => g
@@ -122,8 +113,7 @@ class GameStory extends FullScreenStory {
                   'Fruit',
                 ])),
             ])
-            ..gameId = 'BingoGame'
-            ..level = 1
+            ..title = 'BingoGame'
             ..sessionId = '2'
             ..gameData.addAll([
               MultiData((g) => g
@@ -131,8 +121,7 @@ class GameStory extends FullScreenStory {
                 ..answers.addAll(['A', 'B', 'C', 'D'])
                 ..choices.addAll(['A', 'B', 'C', 'D'])),
             ])
-            ..gameId = 'JumbledWordsGame'
-            ..level = 1
+            ..title = 'JumbledWordsGame'
             ..sessionId = '2'
             ..gameData.addAll([
               MultiData((g) => g
@@ -140,8 +129,7 @@ class GameStory extends FullScreenStory {
                 ..answers.add('A')
                 ..choices.addAll(['A', 'B', 'C', 'D', 'E', 'F', 'H'])),
             ])
-            ..gameId = 'JumbledWordsGame'
-            ..level = 1
+            ..title = 'JumbledWordsGame'
             ..sessionId = '2'
             ..gameData.addAll([
               MultiData((g) => g
@@ -149,8 +137,7 @@ class GameStory extends FullScreenStory {
                 ..answers.add('A')
                 ..choices.addAll(['A', 'B', 'C', 'D'])),
             ])
-            ..gameId = 'FingerGame'
-            ..level = 1
+            ..title = 'FingerGame'
             ..sessionId = '2'
             ..gameData.addAll([
               NumMultiData((g) => g
@@ -158,8 +145,7 @@ class GameStory extends FullScreenStory {
                 ..answers.add(3)
                 ..choices.addAll([2, 3])),
             ])
-            ..gameId = 'FingerGame'
-            ..level = 1
+            ..title = 'FingerGame'
             ..sessionId = '2'
             ..gameData.addAll([
               NumMultiData((g) => g
@@ -167,8 +153,7 @@ class GameStory extends FullScreenStory {
                 ..answers.add(7)
                 ..choices.addAll([6, 7, 8])),
             ])
-            ..gameId = 'FindWordGame'
-            ..level = 1
+            ..title = 'FindWordGame'
             ..sessionId = '2'
             ..gameData.addAll([
               MultiData((g) => g
@@ -177,8 +162,7 @@ class GameStory extends FullScreenStory {
                 ..answers.addAll(['A', 'P', 'P', 'L', 'E'])
                 ..choices.addAll(['A', 'X', 'Y', 'P', 'E', 'B', 'L', 'W'])),
             ])
-            ..gameId = 'DiceGame'
-            ..level = 1
+            ..title = 'DiceGame'
             ..sessionId = '2'
             ..gameData.addAll([
               NumMultiData((g) => g
@@ -186,8 +170,7 @@ class GameStory extends FullScreenStory {
                 ..answers.add(4)
                 ..choices.addAll([1, 4, 5, 8])),
             ])
-            ..gameId = 'FillInTheBlanksGame'
-            ..level = 1
+            ..title = 'FillInTheBlanksGame'
             ..sessionId = '2'
             ..gameData.addAll([
               MultiData((g) => g
@@ -195,8 +178,7 @@ class GameStory extends FullScreenStory {
                 ..question = ' Mount Everest is the highest 1_ in the 2_ .'
                 ..choices.addAll(['mountain', 'earth', 'chair', 'ball'])),
             ])
-            ..gameId = 'FillInTheBlanksGame'
-            ..level = 1
+            ..title = 'FillInTheBlanksGame'
             ..sessionId = '2'
             ..gameData.addAll([
               MultiData((g) => g
@@ -205,8 +187,7 @@ class GameStory extends FullScreenStory {
                     ' The fact is Mount Everest is the highest 1_ in the earth followed by K2,located in the Himalayas.'
                 ..choices.addAll(['mountain', 'earth', 'chair', 'ball'])),
             ])
-            ..gameId = 'FillInTheBlanksGame'
-            ..level = 1
+            ..title = 'FillInTheBlanksGame'
             ..sessionId = '2'
             ..gameData.addAll([
               MultiData((g) => g
@@ -214,8 +195,7 @@ class GameStory extends FullScreenStory {
                 ..question = 'Lion is the king of the 1_ .'
                 ..choices.addAll(['jungle', 'earth', 'chair', 'ball'])),
             ])
-            ..gameId = 'BoxMatchingGame'
-            ..level = 1
+            ..title = 'BoxMatchingGame'
             ..sessionId = '2'
             ..gameData.addAll([
               MultiData((g) => g
@@ -224,8 +204,7 @@ class GameStory extends FullScreenStory {
                 ..choices.addAll(
                     ['A', 'B', 'C', 'D', 'A', 'B', 'C', 'D', 'A', 'B'])),
             ])
-            ..gameId = 'CrosswordGame'
-            ..level = 1
+            ..title = 'CrosswordGame'
             ..sessionId = '3'
             ..gameData.addAll([
               CrosswordData((g) => g
@@ -310,8 +289,7 @@ class GameStory extends FullScreenStory {
                     ..y = 2),
                 ]))),
             ])
-            ..gameId = 'CountingGame'
-            ..level = 1
+            ..title = 'CountingGame'
             ..sessionId = '2'
             ..gameData.addAll([
               NumMultiData((g) => g
@@ -327,25 +305,25 @@ class GameStory extends FullScreenStory {
                 ..answers.addAll([8])
                 ..choices.addAll([1, 2, 3, 4, 5, 6, 7, 8, 9])),
             ])
-            ..gameId = 'JumbleWordsGame'
-            ..level = 1
+            ..title = 'JumbleWordsGame'
             ..sessionId = '2'
             ..gameData.addAll([
               MultiData((g) => g
                 ..gameId = 'JumbleWordsGame'
                 ..question = 'He Like to tease people'
-                ..answers.addAll(['He', 'Like', 'to', 'tease', 'people']))
-                ,
-            ])..gameId = "MultipleChoiceGame"
-                ..level = 1
-                ..sessionId = '2'
-                ..gameData.addAll([
-                  MultiData((g) => g
-                    ..gameId = 'MultipleChoiceGame'
-                    ..question ='The largest land animal is _________________?'
-                    ..answers.addAll(['African Bush Elephant',])
-                    ..choices.addAll(['Lion', 'Whale', 'Panther']))
-                ])),
+                ..answers.addAll(['He', 'Like', 'to', 'tease', 'people'])),
+            ])
+            ..title = "MultipleChoiceGame"
+            ..sessionId = '2'
+            ..gameData.addAll([
+              MultiData((g) => g
+                ..gameId = 'MultipleChoiceGame'
+                ..question = 'The largest land animal is _________________?'
+                ..answers.addAll([
+                  'African Bush Elephant',
+                ])
+                ..choices.addAll(['Lion', 'Whale', 'Panther']))
+            ])),
         ),
       ];
 }

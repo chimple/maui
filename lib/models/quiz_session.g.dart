@@ -21,11 +21,9 @@ class _$QuizSessionSerializer implements StructuredSerializer<QuizSession> {
       'sessionId',
       serializers.serialize(object.sessionId,
           specifiedType: const FullType(String)),
-      'gameId',
-      serializers.serialize(object.gameId,
+      'title',
+      serializers.serialize(object.title,
           specifiedType: const FullType(String)),
-      'level',
-      serializers.serialize(object.level, specifiedType: const FullType(int)),
       'gameData',
       serializers.serialize(object.gameData,
           specifiedType:
@@ -50,13 +48,9 @@ class _$QuizSessionSerializer implements StructuredSerializer<QuizSession> {
           result.sessionId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'gameId':
-          result.gameId = serializers.deserialize(value,
+        case 'title':
+          result.title = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
-          break;
-        case 'level':
-          result.level = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
           break;
         case 'gameData':
           result.gameData.replace(serializers.deserialize(value,
@@ -74,25 +68,19 @@ class _$QuizSession extends QuizSession {
   @override
   final String sessionId;
   @override
-  final String gameId;
-  @override
-  final int level;
+  final String title;
   @override
   final BuiltList<GameData> gameData;
 
   factory _$QuizSession([void Function(QuizSessionBuilder) updates]) =>
       (new QuizSessionBuilder()..update(updates)).build();
 
-  _$QuizSession._({this.sessionId, this.gameId, this.level, this.gameData})
-      : super._() {
+  _$QuizSession._({this.sessionId, this.title, this.gameData}) : super._() {
     if (sessionId == null) {
       throw new BuiltValueNullFieldError('QuizSession', 'sessionId');
     }
-    if (gameId == null) {
-      throw new BuiltValueNullFieldError('QuizSession', 'gameId');
-    }
-    if (level == null) {
-      throw new BuiltValueNullFieldError('QuizSession', 'level');
+    if (title == null) {
+      throw new BuiltValueNullFieldError('QuizSession', 'title');
     }
     if (gameData == null) {
       throw new BuiltValueNullFieldError('QuizSession', 'gameData');
@@ -111,24 +99,21 @@ class _$QuizSession extends QuizSession {
     if (identical(other, this)) return true;
     return other is QuizSession &&
         sessionId == other.sessionId &&
-        gameId == other.gameId &&
-        level == other.level &&
+        title == other.title &&
         gameData == other.gameData;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc(0, sessionId.hashCode), gameId.hashCode), level.hashCode),
-        gameData.hashCode));
+        $jc($jc(0, sessionId.hashCode), title.hashCode), gameData.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('QuizSession')
           ..add('sessionId', sessionId)
-          ..add('gameId', gameId)
-          ..add('level', level)
+          ..add('title', title)
           ..add('gameData', gameData))
         .toString();
   }
@@ -141,13 +126,9 @@ class QuizSessionBuilder implements Builder<QuizSession, QuizSessionBuilder> {
   String get sessionId => _$this._sessionId;
   set sessionId(String sessionId) => _$this._sessionId = sessionId;
 
-  String _gameId;
-  String get gameId => _$this._gameId;
-  set gameId(String gameId) => _$this._gameId = gameId;
-
-  int _level;
-  int get level => _$this._level;
-  set level(int level) => _$this._level = level;
+  String _title;
+  String get title => _$this._title;
+  set title(String title) => _$this._title = title;
 
   ListBuilder<GameData> _gameData;
   ListBuilder<GameData> get gameData =>
@@ -159,8 +140,7 @@ class QuizSessionBuilder implements Builder<QuizSession, QuizSessionBuilder> {
   QuizSessionBuilder get _$this {
     if (_$v != null) {
       _sessionId = _$v.sessionId;
-      _gameId = _$v.gameId;
-      _level = _$v.level;
+      _title = _$v.title;
       _gameData = _$v.gameData?.toBuilder();
       _$v = null;
     }
@@ -186,10 +166,7 @@ class QuizSessionBuilder implements Builder<QuizSession, QuizSessionBuilder> {
     try {
       _$result = _$v ??
           new _$QuizSession._(
-              sessionId: sessionId,
-              gameId: gameId,
-              level: level,
-              gameData: gameData.build());
+              sessionId: sessionId, title: title, gameData: gameData.build());
     } catch (_) {
       String _$failedField;
       try {
