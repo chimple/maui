@@ -70,14 +70,9 @@ class _LoginScreenState extends State<LoginScreen>
     //   await AppStateContainer.of(context).setLoggedInUser(user);
     //   Navigator.of(context).pushNamed('/welcome');
     // }
-
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await UserRepo().getUsers().then((futureData) {
-        setState(() {
-          existingUsers = futureData;
-          _isLoading = false;
-        });
-      });
+    existingUsers = await UserRepo().getLocalUsers();
+    setState(() {
+      _isLoading = false;
     });
   }
 

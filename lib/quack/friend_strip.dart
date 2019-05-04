@@ -88,7 +88,6 @@ class _FriendStripState extends State<FriendStrip> {
               SizedBox(
                 width: 96.0,
                 child: FriendItem(
-                  replaceWithHoodie: false,
                   id: user.id,
                   name: user.name,
                   imageUrl: user.image,

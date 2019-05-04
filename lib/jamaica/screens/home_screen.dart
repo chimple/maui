@@ -349,7 +349,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: <Widget>[
                           InkWell(
                             onTap: () {
-                              Navigator.of(context).pushNamed('/jam_map');
+                              Navigator.of(context).pushNamed('/friends');
                             },
                             child: Container(
                                 height:
@@ -362,7 +362,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: SvgPicture.asset(
                                     'assets/home_screen_icons/map.svg')),
                           ),
-                          Text('Map',
+                          Text('Chat',
                               style: TextStyle(
                                   fontSize:
                                       media.orientation == Orientation.portrait

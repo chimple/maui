@@ -15,6 +15,7 @@ import 'package:maui/quack/main_collection.dart';
 import 'package:maui/quack/story_page.dart';
 import 'package:maui/screens/chat_bot_screen.dart';
 import 'package:maui/screens/chat_screen.dart';
+import 'package:maui/screens/friend_list_view.dart';
 import 'package:maui/screens/game_category_list_screen.dart';
 import 'package:maui/screens/game_list_view.dart';
 import 'package:maui/screens/login_screen.dart';
@@ -53,7 +54,8 @@ class MauiApp extends StatelessWidget {
         '/login': (BuildContext context) => new LoginScreen(),
         '/welcome': (BuildContext context) => new WelcomeScreen(),
         '/progressScreen': (BuildContext context) => new ProgressScreen(),
-        '/quizPerformanceScreen': (BuildContext context) => new QuizPerformanceScreen(),
+        '/quizPerformanceScreen': (BuildContext context) =>
+            new QuizPerformanceScreen(),
         '/quizWaitingScreen': (BuildContext context) => new QuizWaitingScreen(),
         '/tab': (BuildContext context) => new Bento(),
         '/chatbot': (BuildContext context) => new ChatBotScreen(),
@@ -61,6 +63,7 @@ class MauiApp extends StatelessWidget {
         '/stories': (BuildContext context) => StoryPage(),
         '/topics': (BuildContext context) => MainCollection(),
         '/games': (BuildContext context) => GameListView(),
+        '/friends': (BuildContext context) => FriendListView(),
         '/jam_chatbot': (BuildContext context) => HomeScreen(),
         '/jam_profile': (BuildContext context) => ProfileScreen(),
         '/jam_map': (BuildContext context) => MapScreen(),
