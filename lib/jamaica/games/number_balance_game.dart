@@ -50,6 +50,7 @@ class _NumberBalanceGameState extends State<NumberBalanceGame> {
   int _leftHandAnswer;
   int _rightHandAnswer;
   bool _correct = false;
+  int _score = 0;
   var _leftAlignment = Alignment.center;
   var _rightAlignment = Alignment.center;
   @override
@@ -95,8 +96,13 @@ class _NumberBalanceGameState extends State<NumberBalanceGame> {
     if (_leftHandAnswer != null && _rightHandAnswer != null) {
       if (_leftHandAnswer == _rightHandAnswer) {
         _correct = true;
+        _score = _score + 2;
         _leftAlignment = Alignment.center;
         _rightAlignment = Alignment.center;
+        Future.delayed(
+            const Duration(milliseconds: 700),
+            () => widget.onGameUpdate(
+                score: _score, max: _score, gameOver: true, star: true));
       } else if (_leftHandAnswer > _rightHandAnswer) {
         setState(() {
           _leftAlignment = Alignment.bottomCenter;
