@@ -180,12 +180,9 @@ sendPerformance(QuizSession quizSession, String string, int score,
 
   Performance performance = Performance((p) => p
     ..studentId = studentId
-    ..gameId = quizSession.gameId
     ..sessionId = quizSession.sessionId
-    ..level = quizSession.level
-    ..question = "question we have to send"
-    ..answer = string
-    ..correct = correct
+    ..title = "title we have to send"
+    ..numGames = 5
     ..score = score
     ..startTime = timeStart
     ..endTime = timeEnd);
