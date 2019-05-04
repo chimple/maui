@@ -20,9 +20,9 @@ class MultipleChoiceGame extends StatefulWidget {
   final String question;
   final BuiltList<String> choices;
   final BuiltList<String> answers;
-  // final OnGameUpdate onGameUpdate;
+  final OnGameUpdate onGameUpdate;
   MultipleChoiceGame(
-      {Key key, this.answers, this.choices, this.question})
+      {Key key, this.answers, this.choices, this.question, this.onGameUpdate})
       : super(key: key);
   @override
   _MultipleChoiceGameState createState() => new _MultipleChoiceGameState();
@@ -78,21 +78,38 @@ class _MultipleChoiceGameState extends State<MultipleChoiceGame> {
                     reaction: c.reaction,
                     onPressed: () {
                       if (widget.answers.contains(c.choice)) {
-                          choiceDetails[choices.indexOf(c.choice)] =
-                              _ChoiceDetail(
-                                  appear: true,
-                                  choice: c.choice,
-                                  reaction: Reaction.success);
+                        choiceDetails[choices.indexOf(c.choice)] =
+                            _ChoiceDetail(
+                                appear: true,
+                                choice: c.choice,
+                                reaction: Reaction.success);
                         choiceDetails.forEach((c) {
                           if (c.appear) {
                             _count++;
                             print('game over');
-                            // if (_count == _complete) widget.onGameOver(2);
+                            if (_count == _complete) {
+                              widget.onGameUpdate(
+                                  max: choices.length,
+                                  score: 2,
+                                  gameOver: true,
+                                  star: true);
+                            }
                           }
                         });
+                        widget.onGameUpdate(
+                            max: choices.length,
+                            score: 2,
+                            gameOver: false,
+                            star: true);
                         return Reaction.success;
-                      } else
+                      } else {
+                        widget.onGameUpdate(
+                            max: choices.length,
+                            score: 0,
+                            gameOver: false,
+                            star: false);
                         return Reaction.failure;
+                      }
                     },
                   );
                 }).toList(),
@@ -101,6 +118,7 @@ class _MultipleChoiceGameState extends State<MultipleChoiceGame> {
       ),
     );
   }
+
   @override
   void dispose() {
     super.dispose();
