@@ -4,10 +4,10 @@ import 'package:maui/jamaica/widgets/game.dart';
 import 'package:maui/models/game_data.dart';
 import 'package:maui/models/quiz_session.dart';
 
-class QuizPage extends StatelessWidget {
+class StartGame extends StatelessWidget {
   final BuiltList<GameData> gameData;
   final VoidCallback startQuiz;
-  QuizPage({Key key, this.startQuiz, this.gameData}) : super(key: key);
+  StartGame({Key key, this.startQuiz, this.gameData}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return new Scaffold(

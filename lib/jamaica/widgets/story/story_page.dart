@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:maui/jamaica/widgets/story/activity/quiz_page.dart';
+import 'package:maui/jamaica/widgets/story/activity/start_game.dart';
 import 'package:maui/jamaica/widgets/story/audio_text_bold.dart';
 import 'package:maui/jamaica/widgets/tts/text_to_speech.dart';
 import 'package:maui/models/serializers.dart';
@@ -89,7 +89,7 @@ class StoryPageState extends State<StoryPage> {
         },
       ));
     }).toList();
-    widgets.add(QuizPage(
+    widgets.add(StartGame(
       gameData: story.gameDatas,
     ));
     return new Scaffold(
@@ -100,15 +100,12 @@ class StoryPageState extends State<StoryPage> {
             height: 90,
             child: Container(
               decoration: BoxDecoration(
-                boxShadow: [BoxShadow(
-                  offset: Offset.zero,
-                  blurRadius: 4.0,
-                  color: Colors.grey
-                )],
-                 color: Colors.orange,
-               
+                boxShadow: [
+                  BoxShadow(
+                      offset: Offset.zero, blurRadius: 4.0, color: Colors.grey)
+                ],
+                color: Colors.orange,
               ),
-             
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -140,8 +137,7 @@ class StoryPageState extends State<StoryPage> {
           Expanded(
             child: Stack(
               children: <Widget>[
-                Scrollable(
-                  viewportBuilder: (c,k){
+                Scrollable(viewportBuilder: (c, k) {
                   return PageView(
                     controller: PageController(),
                     onPageChanged: (i) {
@@ -151,12 +147,12 @@ class StoryPageState extends State<StoryPage> {
                       });
                     },
                     physics: !_isPlaying
-                        ?ClampingScrollPhysics ()
+                        ? ClampingScrollPhysics()
                         : NeverScrollableScrollPhysics(),
                     scrollDirection: Axis.vertical,
                     children: widgets,
-                  );}
-                ),
+                  );
+                }),
                 _currentPageIndex != story.pages.length
                     ? IconButton(
                         icon: !_isPlaying

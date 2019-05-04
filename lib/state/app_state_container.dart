@@ -409,13 +409,13 @@ class AppStateContainerState extends State<AppStateContainer> {
         });
       } else if (obj is ClassStudents) {
       } else if (obj is Performance) {
-        if (quizSession?.sessionId == obj.sessionId) {
-          quizPerformances[obj.studentId] = obj;
-        } else if (state.loggedInUser.userType == UserType.teacher) {
-          setState(() {
+        setState(() {
+          if (quizSession?.sessionId == obj.sessionId) {
+            quizPerformances[obj.studentId] = obj;
+          } else if (state.loggedInUser.userType == UserType.teacher) {
             performances[obj.studentId] = obj;
-          });
-        }
+          }
+        });
       } else if (obj is QuizJoin) {
         if (quizSession.sessionId == obj.sessionId) {
           //state.loggedInUser.userType == UserType.student &&
@@ -507,13 +507,13 @@ class AppStateContainerState extends State<AppStateContainer> {
     }
   }
 
-  Future<void> joinQuizSession(QuizSession quizSession) async {
-    if (quizSession != null) {
+  Future<void> joinQuizSession(QuizSession qs) async {
+    if (qs != null) {
       QuizJoin quizJoin = QuizJoin((q) => q
-        ..sessionId = quizSession.sessionId
+        ..sessionId = qs.sessionId
         ..studentId = state.loggedInUser.id);
       setState(() {
-        quizSession = quizSession;
+        quizSession = qs;
       });
       final standardSerializers =
           (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
