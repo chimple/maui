@@ -27,9 +27,9 @@ enum _Escape { no, escaping, escaped }
 class MatchTheShapeGame extends StatefulWidget {
   final BuiltList<String> first;
   final BuiltList<String> second;
-  final OnGameOver onGameOver;
+  final OnGameUpdate onGameUpdate;
 
-  const MatchTheShapeGame({Key key, this.first, this.second, this.onGameOver})
+  const MatchTheShapeGame({Key key, this.first, this.second, this.onGameUpdate})
       : super(key: key);
 
   @override
@@ -73,7 +73,12 @@ class _MatchTheShapeGameState extends State<MatchTheShapeGame> {
                             score++;
                             print("this is my data ${data.length}");
                             print("this is my score in match $score");
-                            if (--complete == 0) widget.onGameOver(score);
+                            if (--complete == 0)
+                              widget.onGameUpdate(
+                                  score: score,
+                                  max: score,
+                                  gameOver: true,
+                                  star: true);
 
                             choiceDetails
                                 .where((choice) => c.choice == choice.choice)

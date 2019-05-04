@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:maui/games/head_to_head_game.dart';
 import 'package:maui/games/single_game.dart';
-import 'package:maui/jamaica/screens/games_screen.dart';
 import 'package:maui/jamaica/screens/home_screen.dart';
 import 'package:maui/jamaica/screens/map_screen.dart';
 import 'package:maui/jamaica/screens/profile_screen.dart';
 import 'package:maui/jamaica/screens/store_screen.dart';
 import 'package:maui/jamaica/screens/story_screen.dart';
+import 'package:maui/jamaica/widgets/game_list.dart';
 import 'package:maui/quack/bento.dart';
 import 'package:maui/quack/card_detail.dart';
 import 'package:maui/quack/main_collection.dart';
@@ -19,6 +19,8 @@ import 'package:maui/screens/game_category_list_screen.dart';
 import 'package:maui/screens/game_list_view.dart';
 import 'package:maui/screens/login_screen.dart';
 import 'package:maui/screens/progress_screen.dart';
+import 'package:maui/screens/quiz_performance_screen.dart';
+import 'package:maui/screens/quiz_waiting_screen.dart';
 import 'package:maui/screens/switch_screen.dart';
 import 'package:maui/screens/tab_home.dart';
 import 'package:maui/state/app_state_container.dart';
@@ -51,6 +53,8 @@ class MauiApp extends StatelessWidget {
         '/login': (BuildContext context) => new LoginScreen(),
         '/welcome': (BuildContext context) => new WelcomeScreen(),
         '/progressScreen': (BuildContext context) => new ProgressScreen(),
+        '/quizPerformanceScreen': (BuildContext context) => new QuizPerformanceScreen(),
+        '/quizWaitingScreen': (BuildContext context) => new QuizWaitingScreen(),
         '/tab': (BuildContext context) => new Bento(),
         '/chatbot': (BuildContext context) => new ChatBotScreen(),
         '/camera': (BuildContext context) => CameraScreen(false),
@@ -60,7 +64,7 @@ class MauiApp extends StatelessWidget {
         '/jam_chatbot': (BuildContext context) => HomeScreen(),
         '/jam_profile': (BuildContext context) => ProfileScreen(),
         '/jam_map': (BuildContext context) => MapScreen(),
-        '/jam_games': (BuildContext context) => GamesScreen(),
+        '/jam_games': (BuildContext context) => GameList(),
         '/jam_store': (BuildContext context) => StoreScreen(),
         '/jam_story': (BuildContext context) => StoryScreen(),
       },

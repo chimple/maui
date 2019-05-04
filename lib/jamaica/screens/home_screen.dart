@@ -4,16 +4,18 @@ import 'package:built_value/standard_json_plugin.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:maui/models/chat_script.dart';
 import 'package:maui/models/quiz_join.dart';
+import 'package:maui/models/quiz_session.dart';
+import 'package:maui/models/quiz_update.dart';
 import 'package:maui/models/serializers.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:maui/jamaica/state/state_container.dart';
-
 import 'package:maui/jamaica/widgets/quiz_game.dart';
 import 'package:flutter/services.dart';
 import 'package:maui/jamaica/widgets/chat_bot.dart';
 import 'package:maui/jamaica/widgets/quiz_game.dart';
 import 'package:maui/jamaica/widgets/slide_up_route.dart';
+import 'package:maui/screens/quiz_waiting_screen.dart';
 import 'package:maui/state/app_state_container.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -24,6 +26,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   bool _isLoading = true;
+  bool _quizJoined = false;
   Navigator _navigator;
   ChatScript _chatScript;
   String _emotion = 'idle';
@@ -32,6 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    _quizJoined = false;
     _navigator = Navigator(
       onGenerateRoute: (settings) => SlideUpRoute(
             widgetBuilder: (context) => _buildChatBot(context),
@@ -52,6 +56,55 @@ class _HomeScreenState extends State<HomeScreen> {
       _isLoading = false;
       _chatScript = standardSerializers.deserialize(json);
     });
+  }
+
+  void showAlertDialog(QuizSession quizSession) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: new Text(quizSession.title),
+          content: new Text("JOIN QUIZ..!!"),
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text("YES"),
+              onPressed: () {
+                Navigator.of(context).pop();
+                //Navigator.of(context).pushNamed('/quizWaitingScreen');
+                _quizJoined = true;
+                AppStateContainer.of(context)
+                    .joinQuizSession(quizSession)
+                    .then((_) {
+                  Navigator.of(context).push(MaterialPageRoute<Null>(
+                      builder: (BuildContext context) =>
+                          QuizWaitingScreen(quizSession: quizSession)));
+                });
+              },
+            ),
+            new FlatButton(
+              child: new Text("NO"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_quizJoined) {
+      AppStateContainer.of(context)
+          .quizSessions
+          .forEach((quizSession, quizStatus) {
+        if (quizStatus == StatusEnum.create) {
+          showAlertDialog(quizSession);
+        }
+      });
+    }
   }
 
   @override
@@ -271,7 +324,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 children: <Widget>[
                                   InkWell(
                                     onTap: () {
-                                      Navigator.of(context).pushNamed('/jam_games');
+                                      Navigator.of(context)
+                                          .pushNamed('/jam_games');
                                     },
                                     child: Container(
                                         height: media.orientation ==
@@ -300,7 +354,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 children: <Widget>[
                                   InkWell(
                                     onTap: () {
-                                      Navigator.of(context).pushNamed('/stories');
+                                      Navigator.of(context)
+                                          .pushNamed('/stories');
                                     },
                                     child: Container(
                                         height: media.orientation ==
@@ -331,7 +386,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 children: <Widget>[
                                   InkWell(
                                     onTap: () {
-                                      Navigator.of(context).pushNamed('/jam_map');
+                                      Navigator.of(context)
+                                          .pushNamed('/jam_map');
                                     },
                                     child: Container(
                                         height: media.orientation ==

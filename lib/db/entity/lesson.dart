@@ -56,6 +56,7 @@ class Lesson {
   static const hasOrderCol = 'hasOrder';
   static const topicCol = 'topic';
   static const imageCol = 'image';
+  static const dataCol = 'data';
 
   int id;
   String title;
@@ -64,6 +65,7 @@ class Lesson {
   int hasOrder;
   TopicType topic;
   String image;
+  String data;
 
   static const maxLessonId = 90;
 
@@ -75,6 +77,7 @@ class Lesson {
     Lesson.hasOrderCol,
     Lesson.topicCol,
     Lesson.imageCol,
+    Lesson.dataCol,
   ];
 
   Lesson({
@@ -85,6 +88,7 @@ class Lesson {
     this.hasOrder,
     this.topic,
     this.image,
+    this.data,
   });
 
   Map<String, dynamic> toMap() {
@@ -96,6 +100,7 @@ class Lesson {
       hasOrderCol: hasOrder,
       topicCol: topic.index,
       imageCol: image,
+      dataCol: data,
     };
   }
 
@@ -108,6 +113,7 @@ class Lesson {
           hasOrder: map[hasOrderCol],
           topic: TopicType.values[map[topicCol]],
           image: map[imageCol],
+          data: map[dataCol],
         );
 
   @override
@@ -118,7 +124,8 @@ class Lesson {
       seq.hashCode ^
       hasOrder.hashCode ^
       topic.hashCode ^
-      image.hashCode;
+      image.hashCode ^
+      data.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -131,10 +138,11 @@ class Lesson {
           seq == other.seq &&
           hasOrder == other.hasOrder &&
           topic == other.topic &&
-          image == other.image;
+          image == other.image &&
+          data == other.data;
 
   @override
   String toString() {
-    return 'Lesson{id: $id, title: $title, conceptId: $conceptId, seq: $seq, hasOrder: $hasOrder, topic: $topic, image: $image}';
+    return 'Lesson{id: $id, title: $title, conceptId: $conceptId, seq: $seq, hasOrder: $hasOrder, topic: $topic, image: $image, data: $data}';
   }
 }

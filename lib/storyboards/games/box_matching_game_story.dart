@@ -12,7 +12,7 @@ class BoxMatchingGameStory extends FullScreenStory {
               choices: BuiltList<String>(
                   ['A', 'B', 'C', 'D', 'A', 'B', 'C', 'D', 'A', 'B']),
               answers: BuiltList<String>(['A', 'B', 'C', 'D']),
-              onGameOver: (_) {},
+              onGameUpdate: ({int score, int max, bool gameOver, bool star}) {},
             ),
           ),
         )

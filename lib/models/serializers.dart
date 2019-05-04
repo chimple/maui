@@ -11,6 +11,7 @@ import 'package:maui/models/class_students.dart';
 import 'package:maui/models/crossword_data.dart';
 import 'package:maui/models/game_config.dart';
 import 'package:maui/models/game_data.dart';
+import 'package:maui/models/image_label_data.dart';
 import 'package:maui/models/quiz_update.dart';
 import 'package:maui/models/game_status.dart';
 import 'package:maui/models/math_op_data.dart';
@@ -20,6 +21,7 @@ import 'package:maui/models/quiz_join.dart';
 import 'package:maui/models/num_multi_data.dart';
 import 'package:maui/models/performance.dart';
 import 'package:maui/models/score.dart';
+import 'package:maui/models/sentence_data.dart';
 import 'package:maui/models/story_config.dart';
 import 'package:maui/models/student.dart';
 import 'package:maui/models/user_profile.dart';
@@ -41,16 +43,19 @@ part 'serializers.g.dart';
   GameConfig,
   GameData,
   GameStatus,
+  ImageLabelData,
   MathOpData,
   MultiData,
   NumMultiData,
   Page,
   Performance,
   Score,
+  SentenceData,
   StoryConfig,
   Stories,
   Student,
   UserProfile,
+  WordWithImage,
 ])
 final Serializers serializers =
     (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();

@@ -2,10 +2,12 @@ import 'dart:convert';
 
 import 'package:built_value/standard_json_plugin.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:maui/jamaica/widgets/story/activity/quiz_page.dart';
 import 'package:maui/jamaica/widgets/story/audio_text_bold.dart';
-import 'package:maui/jamaica/widgets/story/show_dialog_mode.dart';
+import 'package:maui/jamaica/widgets/tts/text_to_speech.dart';
 import 'package:maui/models/serializers.dart';
 import 'package:maui/models/story_config.dart';
 
@@ -25,9 +27,8 @@ class StoryPageState extends State<StoryPage> {
   bool _isLoading = true;
   bool _isPlaying = false;
   PageController pageController = PageController();
-  List<StoryMode> _storyMode = [];
   int incr = 0;
-
+  List<FlutterTextToSpeech> _keys = List<FlutterTextToSpeech>();
   @override
   void initState() {
     super.initState();
@@ -41,15 +42,18 @@ class StoryPageState extends State<StoryPage> {
     final standardSerializers =
         (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
     story = standardSerializers.deserialize(jsonDecode(json));
-    for (int i = 0; i < story.pages.length; i++)
-      _storyMode.add(StoryMode.textMode);
+    for (int i = 0; i < story.pages.length; i++) {
+      _keys.add(FlutterTextToSpeech());
+    }
     setState(() {
       _isLoading = false;
     });
   }
 
+  int _currentPageIndex = 0;
   @override
   Widget build(BuildContext context) {
+    int index = 0;
     if (_isLoading) {
       return new SizedBox(
         width: 20.0,
@@ -57,18 +61,32 @@ class StoryPageState extends State<StoryPage> {
         child: new CircularProgressIndicator(),
       );
     }
-    int index = 0;
     final widgets = <Widget>[];
     story.pages.map((data) {
       widgets.add(AudioTextBold(
+        playingStatus: (status) {
+          if (status == TtsState.PLAYING) {
+            setState(() {
+              _isPlaying = true;
+            });
+          } else if (status == TtsState.PAUSE) {
+            setState(() {
+              _isPlaying = false;
+            });
+          }
+        },
+        onComplete: () {
+          setState(() {
+            _isPlaying = false;
+          });
+        },
         imagePath: data.imagePath,
         audioFile: data.audioPath,
         fullText: data.text,
-        onComplete: () => incr++,
-        pageSliding: (index) => setState(() {
-              _isPlaying = !_isPlaying;
-            }),
-        index: index++,
+        keys: _keys[index++],
+        onLongPress: (s) {
+          print(s);
+        },
       ));
     }).toList();
     widgets.add(QuizPage(
@@ -76,11 +94,21 @@ class StoryPageState extends State<StoryPage> {
     ));
     return new Scaffold(
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           SizedBox(
             height: 90,
             child: Container(
-              color: Colors.orange,
+              decoration: BoxDecoration(
+                boxShadow: [BoxShadow(
+                  offset: Offset.zero,
+                  blurRadius: 4.0,
+                  color: Colors.grey
+                )],
+                 color: Colors.orange,
+               
+              ),
+             
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -110,54 +138,44 @@ class StoryPageState extends State<StoryPage> {
             ),
           ),
           Expanded(
-            child: Container(
-                child: PageView(
-              physics: !_isPlaying
-                  ? ScrollPhysics()
-                  : NeverScrollableScrollPhysics(),
-              scrollDirection: Axis.vertical,
-              children: widgets,
-            )),
+            child: Stack(
+              children: <Widget>[
+                Scrollable(
+                  viewportBuilder: (c,k){
+                  return PageView(
+                    controller: PageController(),
+                    onPageChanged: (i) {
+                      setState(() {
+                        _isPlaying = false;
+                        _currentPageIndex = i;
+                      });
+                    },
+                    physics: !_isPlaying
+                        ?ClampingScrollPhysics ()
+                        : NeverScrollableScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    children: widgets,
+                  );}
+                ),
+                _currentPageIndex != story.pages.length
+                    ? IconButton(
+                        icon: !_isPlaying
+                            ? Icon(Icons.play_arrow)
+                            : Icon(Icons.pause),
+                        onPressed: () {
+                          if (!_isPlaying) {
+                            _keys[_currentPageIndex].speak();
+                          } else {
+                            _keys[_currentPageIndex].pause();
+                          }
+                        },
+                      )
+                    : Container(),
+              ],
+            ),
           )
         ],
       ),
     );
   }
 }
-
-// class ActivityButton extends StatelessWidget {
-//   final IconData icon;
-//   final String string;
-//   final Function(int) onTap;
-//   final int pageIndex;
-//   final bool isEnable;
-//   ActivityButton({
-//     @required this.icon,
-//     @required this.string,
-//     @required this.onTap,
-//     this.isEnable = false,
-//     this.pageIndex,
-//   });
-//   @override
-//   Widget build(BuildContext context) => Padding(
-//       padding: const EdgeInsets.only(right: 0.0, bottom: 0.0),
-//       child: Container(
-//           width: 138,
-//           height: 50,
-//           child: RaisedButton(
-//               color: Colors.white,
-//               disabledColor: Colors.grey,
-//               shape: RoundedRectangleBorder(
-//                   side: BorderSide(width: 2.0, color: Colors.orange),
-//                   borderRadius: BorderRadius.circular(25.0)),
-//               onPressed: isEnable ? () => onTap(pageIndex) : null,
-//               child: Row(
-//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                   children: <Widget>[
-//                     Text(
-//                       string,
-//                       style: TextStyle(fontSize: 20),
-//                     ),
-//                     Icon(icon, color: Colors.red, size: 30)
-//                   ]))));
-// }

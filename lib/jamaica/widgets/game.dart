@@ -1,4 +1,5 @@
 import 'package:flare_flutter/flare_actor.dart';
+import 'package:maui/jamaica/widgets/game_timer.dart';
 import 'package:maui/models/quiz_session.dart';
 // import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +14,14 @@ typedef UpdateQuizScore(int score);
 class Game extends StatefulWidget {
   final QuizSession quizSession;
   final UpdateCoins updateCoins;
+  final OnGameUpdate onGameUpdate;
   final UpdateQuizScore updateScore;
-  const Game({Key key, this.quizSession, this.updateCoins, this.updateScore})
+  const Game(
+      {Key key,
+      this.quizSession,
+      this.updateCoins,
+      this.onGameUpdate,
+      this.updateScore})
       : super(key: key);
   @override
   _GameState createState() => _GameState();
@@ -24,17 +31,33 @@ class _GameState extends State<Game> {
   int _currentGame = 0;
   int _score = 0;
   int _stars = 0;
+  String timeTaken;
+  int gameIndex = 0;
+  bool gameTimer = true;
+  bool timeEnd = false;
+
   Navigator _navigator;
+
+  timeCallback(t) {
+    setState(() {
+      timeTaken = t;
+    });
+  }
+
+  timeEndCallback(t) {
+    setState(() {
+      if (gameIndex + 1 == widget.quizSession.gameData.length) {
+        gameTimer = false;
+      }
+      timeEnd = t;
+      ++gameIndex;
+      timeEnd = false;
+    });
+  }
 
   @override
   void initState() {
     super.initState();
-    _navigator = Navigator(
-      onGenerateRoute: (settings) => SlideUpRoute(
-            widgetBuilder: (context) =>
-                _buildGame(context, 0, widget.updateScore),
-          ),
-    );
   }
 
   @override
@@ -44,11 +67,17 @@ class _GameState extends State<Game> {
 
   @override
   Widget build(BuildContext context) {
-    print("......controll comming in game");
+    _navigator = Navigator(
+      onGenerateRoute: (settings) => SlideUpRoute(
+            widgetBuilder: (context) =>
+                _buildGame(context, gameIndex, widget.updateScore),
+          ),
+    );
+
     MediaQueryData media = MediaQuery.of(context);
     Size size = media.size;
 
-    double upPadding =size.height * 0.05;
+    double upPadding = size.height * 0.05;
     return Scaffold(
       backgroundColor: Colors.purple,
       body: SafeArea(
@@ -70,7 +99,6 @@ class _GameState extends State<Game> {
                   flex: 37,
                   child: _navigator,
                 ),
-               
                 Row(
                   children: <Widget>[
                     Container(
@@ -96,7 +124,7 @@ class _GameState extends State<Game> {
                         ))
                   ],
                 ),
-                 Expanded(
+                Expanded(
                   flex: 1,
                   child: Container(),
                 ),
@@ -105,6 +133,13 @@ class _GameState extends State<Game> {
                   height: 0.0,
                 ),
                 Expanded(flex: 3, child: buildUI(size)),
+                gameTimer
+                    ? GameTimer(
+                        time: 30,
+                        onGameUpdate: widget.onGameUpdate,
+                        timeCallback: timeCallback,
+                        timeEndCallback: timeEndCallback)
+                    : Container()
               ],
             ),
           ],
@@ -185,19 +220,22 @@ class _GameState extends State<Game> {
     );
   }
 
-  Widget _buildGame(BuildContext context, int index, updateScore) {
+  Widget _buildGame(BuildContext context, index, updateScore) {
     print("lets check the values ..is  $index");
+    print('lets check the tim end $timeEnd');
+
     if (index < widget.quizSession.gameData.length) {
       return buildGame(
           gameData: widget.quizSession.gameData[index],
-          onGameOver: (score) {
+          onGameUpdate: ({int score, int max, bool gameOver, bool star}) {
             print("in side clicking or not lets check $index");
-
             setState(() {
               _score += score;
+              timeEnd = false;
+              ++gameIndex;
               // updateScore(_score);
               if (score > 0) _stars++;
-//              _currentGame++;
+              //  _currentGame++;
             });
 
             Navigator.push(

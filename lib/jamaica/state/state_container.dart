@@ -13,7 +13,6 @@ import 'package:maui/models/user_profile.dart';
 import 'package:flutter/widgets.dart';
 import 'package:maui/jamaica/models/app_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:simple_permissions/simple_permissions.dart';
 
 class StateContainer extends StatefulWidget {
   final AppState state;

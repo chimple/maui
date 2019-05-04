@@ -18,6 +18,8 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(GameConfig.serializer)
       ..add(GameStatus.serializer)
       ..add(ImageData.serializer)
+      ..add(ImageItemDetail.serializer)
+      ..add(ImageLabelData.serializer)
       ..add(MathOpData.serializer)
       ..add(MultiData.serializer)
       ..add(NumMultiData.serializer)
@@ -27,11 +29,22 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(QuizSession.serializer)
       ..add(QuizUpdate.serializer)
       ..add(Score.serializer)
+      ..add(SentenceData.serializer)
       ..add(StatusEnum.serializer)
       ..add(Stories.serializer)
       ..add(StoryConfig.serializer)
       ..add(Student.serializer)
+      ..add(SubScore.serializer)
       ..add(UserProfile.serializer)
+      ..add(WordWithImage.serializer)
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [
+            const FullType(BuiltList, const [const FullType(WordWithImage)])
+          ]),
+          () => new ListBuilder<BuiltList<WordWithImage>>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(String)]),
+          () => new ListBuilder<String>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(GameData)]),
           () => new ListBuilder<GameData>())
@@ -43,6 +56,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
             const FullType(BuiltList, const [const FullType(String)])
           ]),
           () => new ListBuilder<BuiltList<String>>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(ImageItemDetail)]),
+          () => new ListBuilder<ImageItemDetail>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(Page)]),
           () => new ListBuilder<Page>())
@@ -73,6 +89,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(Student)]),
           () => new ListBuilder<Student>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(SubScore)]),
+          () => new ListBuilder<SubScore>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(int)]),
           () => new ListBuilder<int>())

@@ -26,9 +26,9 @@ class _ChoiceDetail {
 class CountingGame extends StatefulWidget {
   final int answer;
   final BuiltList<int> choices;
-  final OnGameOver onGameOver;
+  final OnGameUpdate onGameUpdate;
 
-  const CountingGame({Key key, this.answer, this.choices, this.onGameOver})
+  const CountingGame({Key key, this.answer, this.choices, this.onGameUpdate})
       : super(key: key);
 
   @override
@@ -104,7 +104,8 @@ class _CountingGameState extends State<CountingGame> {
                         onWillAccept: (data) => data == a.number.toString(),
                         onAccept: (data) {
                           setState(() => a.solved = true);
-                          widget.onGameOver(1);
+                          widget.onGameUpdate(
+                              score: 1, max: 1, gameOver: true, star: true);
                         },
                       ))
                 .toList(growable: false),
