@@ -40,7 +40,7 @@ class QuizPage extends StatelessWidget {
                 updateCoins: (coins) => print(coins),
                 quizSession: QuizSession((b) => b
                   ..title = 'MultipleChoiceGame'
-                  ..sessionId = '1'
+                  ..sessionId = 'game'
                   ..gameData.addAll(gameData)))));
   }
 }
