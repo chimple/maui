@@ -123,6 +123,7 @@ class _MadSentenceGameState extends State<MadSentenceGame> {
                   const Duration(milliseconds: 700),
                   () => widget.onGameUpdate(
                       score: score, max: score, gameOver: true, star: true));
+              _buttonKey = 0;
             });
           },
           icon: Icon(
