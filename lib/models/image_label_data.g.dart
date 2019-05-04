@@ -84,15 +84,15 @@ class _$ImageItemDetailSerializer
       serializers.serialize(object.itemName,
           specifiedType: const FullType(String)),
       'x',
-      serializers.serialize(object.x, specifiedType: const FullType(String)),
+      serializers.serialize(object.x, specifiedType: const FullType(double)),
       'y',
-      serializers.serialize(object.y, specifiedType: const FullType(String)),
+      serializers.serialize(object.y, specifiedType: const FullType(double)),
       'height',
       serializers.serialize(object.height,
-          specifiedType: const FullType(String)),
+          specifiedType: const FullType(double)),
       'width',
       serializers.serialize(object.width,
-          specifiedType: const FullType(String)),
+          specifiedType: const FullType(double)),
     ];
 
     return result;
@@ -115,19 +115,19 @@ class _$ImageItemDetailSerializer
           break;
         case 'x':
           result.x = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(double)) as double;
           break;
         case 'y':
           result.y = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(double)) as double;
           break;
         case 'height':
           result.height = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(double)) as double;
           break;
         case 'width':
           result.width = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(double)) as double;
           break;
       }
     }
@@ -265,13 +265,13 @@ class _$ImageItemDetail extends ImageItemDetail {
   @override
   final String itemName;
   @override
-  final String x;
+  final double x;
   @override
-  final String y;
+  final double y;
   @override
-  final String height;
+  final double height;
   @override
-  final String width;
+  final double width;
 
   factory _$ImageItemDetail([void Function(ImageItemDetailBuilder) updates]) =>
       (new ImageItemDetailBuilder()..update(updates)).build();
@@ -342,21 +342,21 @@ class ImageItemDetailBuilder
   String get itemName => _$this._itemName;
   set itemName(String itemName) => _$this._itemName = itemName;
 
-  String _x;
-  String get x => _$this._x;
-  set x(String x) => _$this._x = x;
+  double _x;
+  double get x => _$this._x;
+  set x(double x) => _$this._x = x;
 
-  String _y;
-  String get y => _$this._y;
-  set y(String y) => _$this._y = y;
+  double _y;
+  double get y => _$this._y;
+  set y(double y) => _$this._y = y;
 
-  String _height;
-  String get height => _$this._height;
-  set height(String height) => _$this._height = height;
+  double _height;
+  double get height => _$this._height;
+  set height(double height) => _$this._height = height;
 
-  String _width;
-  String get width => _$this._width;
-  set width(String width) => _$this._width = width;
+  double _width;
+  double get width => _$this._width;
+  set width(double width) => _$this._width = width;
 
   ImageItemDetailBuilder();
 
