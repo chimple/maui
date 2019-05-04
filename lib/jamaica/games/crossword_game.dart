@@ -28,13 +28,13 @@ class _ChoiceDetail {
 class CrosswordGame extends StatefulWidget {
   final BuiltList<ImageData> images;
   final BuiltList<BuiltList<String>> data;
-  final OnGameOver onGameOver;
+  final OnGameUpdate onGameUpdate;
 
   const CrosswordGame({
     Key key,
     this.images,
     this.data,
-    this.onGameOver,
+    this.onGameUpdate,
   }) : super(key: key);
 
   @override
@@ -154,7 +154,12 @@ class _CrosswordGameState extends State<CrosswordGame> {
                                 f.choice,
                             onAccept: (data) => setState(() {
                                   score++;
-                                  if (--complete == 0) widget.onGameOver(score);
+                                  if (--complete == 0)
+                                    widget.onGameUpdate(
+                                        score: score,
+                                        max: score,
+                                        gameOver: true,
+                                        star: true);
                                   f.appear = true;
                                   choiceDetails[int.parse(data)].appear = false;
                                 }),

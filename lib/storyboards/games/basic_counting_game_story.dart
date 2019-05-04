@@ -12,7 +12,7 @@ class BasicCountingGameStory extends FullScreenStory {
             child: BasicCountingGame(
               answer: 5,
               choices: BuiltList<int>([1, 2, 3, 4, 5, 6, 7, 8, 9]),
-              onGameOver: (_) {},
+              onGameUpdate: ({int score, int max, bool gameOver, bool star}) {},
             ),
           ),
         )

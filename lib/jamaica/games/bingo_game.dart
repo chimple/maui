@@ -28,9 +28,9 @@ enum _Type { choice, question }
 
 class BingoGame extends StatefulWidget {
   final Map<String, String> choices;
-  final OnGameOver onGameOver;
+  final OnGameUpdate onGameUpdate;
 
-  const BingoGame({Key key, this.choices, this.onGameOver}) : super(key: key);
+  const BingoGame({Key key, this.choices, this.onGameUpdate}) : super(key: key);
 
   @override
   _BingoGameState createState() => _BingoGameState();
@@ -174,7 +174,8 @@ class _BingoGameState extends State<BingoGame> {
       }
       if (_bingo == true) {
         print("this is my game $score");
-        widget.onGameOver(score);
+        widget.onGameUpdate(
+            score: score, max: score, gameOver: true, star: true);
       }
     } else if (str1 != str2) {
       score--;

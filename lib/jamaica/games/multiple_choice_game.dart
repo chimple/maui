@@ -31,9 +31,9 @@ class MultipleChoiceGame extends StatefulWidget {
   final String question;
   final BuiltList<String> choices;
   final BuiltList<String> answers;
-  final OnGameOver onGameOver;
+  final OnGameUpdate onGameUpdate;
   MultipleChoiceGame(
-      {Key key, this.answers, this.choices, this.question, this.onGameOver})
+      {Key key, this.answers, this.choices, this.question, this.onGameUpdate})
       : super(key: key);
   @override
   _MultipleChoiceGameState createState() => new _MultipleChoiceGameState();
@@ -42,7 +42,7 @@ class MultipleChoiceGame extends StatefulWidget {
 class _MultipleChoiceGameState extends State<MultipleChoiceGame> {
   List<_ChoiceDetail> choiceDetails;
   List<_ChoiceDetail> answerDetails;
-  var _dataLen = 0, _complete = 0, _count=0;
+  var _dataLen = 0, _complete = 0, _count = 0;
   @override
   void initState() {
     super.initState();
@@ -95,14 +95,17 @@ class _MultipleChoiceGameState extends State<MultipleChoiceGame> {
                       print(c.choice);
                       if (widget.answers.contains(c.choice)) {
                         _count++;
-                        if (_count== _complete) {
-                          widget.onGameOver(_count);
+                        if (_count == _complete) {
+                          widget.onGameUpdate(
+                              score: _count,
+                              max: _count,
+                              gameOver: true,
+                              star: true);
                         }
                         return Reaction.success;
                       } else {
                         return Reaction.failure;
                       }
-                       
                     },
                   );
                 }).toList(),

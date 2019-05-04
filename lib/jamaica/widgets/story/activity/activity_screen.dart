@@ -89,7 +89,8 @@ class _ActivityScreenState extends State<ActivityScreen> {
                       ["He", 'Like', 'to', 'tease', 'people']),
                   choices: BuiltList<String>(
                       ["He", 'Like', 'to', 'tease', 'people']),
-                  onGameOver: (_) {},
+                  onGameUpdate: (
+                      {int score, int max, bool gameOver, bool star}) {},
                   onComplete: () {
                     setState(() => _isEnable = true);
                   })

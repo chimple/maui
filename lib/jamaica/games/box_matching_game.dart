@@ -19,13 +19,13 @@ class _ChoiceDetail {
 class BoxMatchingGame extends StatefulWidget {
   final BuiltList<String> choices;
   final BuiltList<String> answers;
-  final OnGameOver onGameOver;
+  final OnGameUpdate onGameUpdate;
 
   const BoxMatchingGame({
     Key key,
     this.choices,
     this.answers,
-    this.onGameOver,
+    this.onGameUpdate,
   }) : super(key: key);
 
   @override
@@ -106,7 +106,13 @@ class _BoxMatchingGameState extends State<BoxMatchingGame> {
                           onWillAccept: (data) => data[0] == a.choice,
                           onAccept: (data) => setState(() {
                                 score++;
-                                if (--complete == 0) widget.onGameOver(score);
+                                if (--complete == 0)
+                                  widget.onGameUpdate(
+                                      score: score,
+                                      max: score,
+                                      gameOver: true,
+                                      star: true);
+                                ;
                                 int index = int.parse(data.substring(1));
                                 print(
                                     "${data.substring(1)}......${choiceDetails[index]}");

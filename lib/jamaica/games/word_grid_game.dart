@@ -8,9 +8,9 @@ import 'package:maui/jamaica/state/game_utils.dart';
 class WordGridGame extends StatefulWidget {
   final List<String> answer;
   final List<String> choice;
-  final OnGameOver onGameOver;
+  final OnGameUpdate onGameUpdate;
 
-  WordGridGame({key, this.answer, this.choice, this.onGameOver})
+  WordGridGame({key, this.answer, this.choice, this.onGameUpdate})
       : super(key: key);
   @override
   State<StatefulWidget> createState() => new WordGridGameState();
@@ -269,7 +269,8 @@ class WordGridGameState extends State<WordGridGame> {
             new Future.delayed(const Duration(milliseconds: 350), () {
               setState(() {
                 print(' finally over');
-                widget.onGameOver(2);
+                widget.onGameUpdate(
+                    score: 2, max: 2, gameOver: true, star: true);
               });
             });
         });

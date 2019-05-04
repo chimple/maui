@@ -18,9 +18,10 @@ class _ChoiceDetail {
 class RhymeWordsGame extends StatefulWidget {
   final BuiltList<String> questions;
   final BuiltList<String> answers;
-  final OnGameOver onGameOver;
+  final OnGameUpdate onGameUpdate;
 
-  const RhymeWordsGame({Key key, this.questions, this.answers, this.onGameOver})
+  const RhymeWordsGame(
+      {Key key, this.questions, this.answers, this.onGameUpdate})
       : super(key: key);
 
   @override
@@ -86,7 +87,12 @@ class _RhymeWordsGameState extends State<RhymeWordsGame> {
                             widget.answers.indexWhere((a) => a == data);
                         if (dataIndex == currentIndex) {
                           score++;
-                          if (--complete == 0) widget.onGameOver(score);
+                          if (--complete == 0)
+                            widget.onGameUpdate(
+                                score: score,
+                                max: score,
+                                gameOver: true,
+                                star: true);
                           print("this is complete $complete");
                           WidgetsBinding.instance.addPostFrameCallback(
                             (_) => setState(() {
@@ -111,8 +117,12 @@ class _RhymeWordsGameState extends State<RhymeWordsGame> {
                                     print("success....");
                                     Future.delayed(
                                         const Duration(milliseconds: 1000),
-                                        () => setState(
-                                            () => widget.onGameOver(score)));
+                                        () => setState(() =>
+                                            widget.onGameUpdate(
+                                                score: score,
+                                                max: score,
+                                                gameOver: true,
+                                                star: true)));
                                   } else {
                                     score--;
                                     _endList = [];
