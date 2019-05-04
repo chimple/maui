@@ -116,8 +116,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
 
                 QuizSession quizSession = new QuizSession((b) => b
                   ..sessionId = new Uuid().v4()
-                  ..gameId = 'B'
-                  ..level = 1
+                  ..title = lesson.title
                   ..gameData.addAll(gameData));
 
                 //QuizSession newQuizSession = addDummyData();

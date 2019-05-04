@@ -18,10 +18,9 @@ class QuizPage extends StatelessWidget {
         child: RaisedButton(
           onPressed: () => _startQuiz(context),
           color: Colors.blue,
-          child: Text('Start',style:Theme.of(context).textTheme.display1),
-        shape: RoundedRectangleBorder(
-          borderRadius: const BorderRadius.all(const Radius.circular(10))
-        ),
+          child: Text('Start', style: Theme.of(context).textTheme.display1),
+          shape: RoundedRectangleBorder(
+              borderRadius: const BorderRadius.all(const Radius.circular(10))),
         ),
       ),
       body: Center(
@@ -40,8 +39,7 @@ class QuizPage extends StatelessWidget {
             builder: (context) => Game(
                 updateCoins: (coins) => print(coins),
                 quizSession: QuizSession((b) => b
-                  ..gameId = 'MultipleChoiceGame'
-                  ..level = 1
+                  ..title = 'MultipleChoiceGame'
                   ..sessionId = '1'
                   ..gameData.addAll(gameData)))));
   }

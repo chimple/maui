@@ -91,8 +91,7 @@ class GameListState extends State<GameList>
           widgetBuilder: (context) => Game(
                 quizSession: QuizSession((b) => b
                   ..sessionId = 'A'
-                  ..gameId = 'B'
-                  ..level = 1
+                  ..title = lesson.title
                   ..gameData.addAll(gameData)),
               ),
         ))
