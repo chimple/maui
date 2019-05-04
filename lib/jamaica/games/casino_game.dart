@@ -18,12 +18,15 @@ class _CasinoGameState extends State<CasinoGame> {
   String givenWord = "";
   String word = "";
   Map<int, String> _wordPos = Map();
-  int score = 0;
+  int _score = 0;
+  int _maxScore;
+  int _trial = 0;
   int buttonKey = 0;
 
   @override
   void initState() {
     super.initState();
+    _maxScore = widget.letters.length * 2;
     _initLetters();
   }
 
@@ -111,16 +114,40 @@ class _CasinoGameState extends State<CasinoGame> {
             child: Center(
               child: RaisedButton(
                 onPressed: () {
+                  _score = 0;
+                  for (int i = 0; i < givenWord.length; i++) {
+                    if (word[i] == givenWord[i]) {
+                      _score = _score + 2;
+                    } else {
+                      _score--;
+                    }
+                  }
                   if (givenWord == word) {
-                    score++;
                     Future.delayed(
                         const Duration(milliseconds: 700),
                         () => widget.onGameUpdate(
-                            score: score,
-                            max: score,
+                            score: _score,
+                            max: _maxScore,
                             gameOver: true,
                             star: true));
                     Navigator.of(context).pop();
+                  } else if (givenWord != word && _trial < 2) {
+                    _trial++;
+                    Future.delayed(
+                        const Duration(milliseconds: 700),
+                        () => widget.onGameUpdate(
+                            score: _score,
+                            max: _maxScore,
+                            gameOver: false,
+                            star: false));
+                  } else {
+                    Future.delayed(
+                        const Duration(milliseconds: 700),
+                        () => widget.onGameUpdate(
+                            score: _score,
+                            max: _maxScore,
+                            gameOver: true,
+                            star: false));
                   }
                 },
                 color: Color(0xFF734052),
