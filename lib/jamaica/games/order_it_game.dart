@@ -59,7 +59,7 @@ class _OrderItGameState extends State<OrderItGame> {
                         score++;
                         print("this my score$score");
                         if (--complete == 0)
-                          // widget.onGameOver(score);
+                          // widget.onGameUpdate(score);
                           WidgetsBinding.instance
                               .addPostFrameCallback((_) => setState(() {
                                     int currentIndex = choiceDetails.indexWhere(

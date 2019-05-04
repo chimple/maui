@@ -13,7 +13,7 @@ class CasinoGameStory extends FullScreenStory {
                 ['N', 'O', 'P', 'Q'],
                 ['T', 'U', 'V', 'W']
               ],
-              onGameOver: (_) {},
+              onGameUpdate: ({int score, int max, bool gameOver, bool star}) {},
             ),
           ),
         ),
@@ -28,7 +28,7 @@ class CasinoGameStory extends FullScreenStory {
                 ['G', 'H', 'I', 'J'],
                 ['E', 'F', 'G', 'H']
               ],
-              onGameOver: (_) {},
+              onGameUpdate: ({int score, int max, bool gameOver, bool star}) {},
             ),
           ),
         ),
@@ -42,7 +42,7 @@ class CasinoGameStory extends FullScreenStory {
                 ['L', 'M', 'N', 'O'],
                 ['E', 'F', 'G', 'H']
               ],
-              onGameOver: (_) {},
+              onGameUpdate: ({int score, int max, bool gameOver, bool star}) {},
             ),
           ),
         ),
@@ -56,7 +56,7 @@ class CasinoGameStory extends FullScreenStory {
                 ['E', 'F', 'G', 'H'],
                 ['R', 'S', 'T', 'U'],
               ],
-              onGameOver: (_) {},
+              onGameUpdate: ({int score, int max, bool gameOver, bool star}) {},
             ),
           ),
         ),

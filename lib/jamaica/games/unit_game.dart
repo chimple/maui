@@ -25,12 +25,12 @@ class _ChoiceDetail {
 
 class UnitGame extends StatefulWidget {
   final int question;
-  final OnGameOver onGameOver;
+  final OnGameUpdate onGameUpdate;
 
   const UnitGame({
     Key key,
     this.question,
-    this.onGameOver,
+    this.onGameUpdate,
   }) : super(key: key);
 
   @override
@@ -343,7 +343,11 @@ class _UnitGameState extends State<UnitGame> {
                       print('submit btn $isComplete');
                       if (isComplete) {
                         score += 5;
-                        widget.onGameOver(score);
+                        widget.onGameUpdate(
+                            score: score,
+                            max: score,
+                            gameOver: true,
+                            star: true);
                       } else
                         score--;
                     }),

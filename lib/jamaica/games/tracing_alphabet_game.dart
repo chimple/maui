@@ -6,8 +6,8 @@ import 'package:maui/jamaica/state/game_utils.dart';
 
 class TracingAlphabetGame extends StatefulWidget {
   final List<String> alphabets;
-  final OnGameOver onGameOver;
-  TracingAlphabetGame({Key key, this.alphabets, this.onGameOver});
+  final OnGameUpdate onGameUpdate;
+  TracingAlphabetGame({Key key, this.alphabets, this.onGameUpdate});
 
   @override
   _TracingAlphabetGameState createState() => _TracingAlphabetGameState();
@@ -96,7 +96,8 @@ class _TracingAlphabetGameState extends State<TracingAlphabetGame> {
                   borderRadius: new BorderRadius.circular(30.0)),
               onPressed: () {
                 setState(() {
-                  widget.onGameOver(4);
+                  widget.onGameUpdate(
+                      score: 4, max: 4, gameOver: true, star: true);
                 });
               },
               child: Text(

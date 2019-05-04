@@ -24,9 +24,10 @@ enum _Type { choice, answer }
 class OrderBySizeGame extends StatefulWidget {
   final BuiltList<int> answers;
   final BuiltList<int> choices;
-  final OnGameOver onGameOver;
+  final OnGameUpdate onGameUpdate;
 
-  const OrderBySizeGame({Key key, this.answers, this.choices, this.onGameOver})
+  const OrderBySizeGame(
+      {Key key, this.answers, this.choices, this.onGameUpdate})
       : super(key: key);
 
   @override
@@ -87,7 +88,12 @@ class _OrderBySizeGameState extends State<OrderBySizeGame> {
                       if (data == a.number.toString()) {
                         score++;
                         print("this my score$score");
-                        if (--complete == 0) widget.onGameOver(score);
+                        if (--complete == 0)
+                          widget.onGameUpdate(
+                              score: score,
+                              max: score,
+                              gameOver: true,
+                              star: true);
                         WidgetsBinding.instance
                             .addPostFrameCallback((_) => setState(() {
                                   a.type = _Type.answer;

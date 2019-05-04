@@ -5,13 +5,13 @@ import 'package:maui/jamaica/state/game_utils.dart';
 class TapHome extends StatefulWidget {
   final String answer;
   final List<String> choices;
-  final OnGameOver onGameOver;
+  final OnGameUpdate onGameUpdate;
 
   TapHome({
     key,
     this.answer,
     this.choices,
-    this.onGameOver,
+    this.onGameUpdate,
   }) : super(key: key);
 
   @override
@@ -52,7 +52,7 @@ class _TapState extends State<TapHome> with TickerProviderStateMixin {
         });
         new Future.delayed(const Duration(milliseconds: 1000), () {
           print('calling onEnd');
-          widget.onGameOver(1);
+          widget.onGameUpdate(score: 1, max: 1, gameOver: true, star: true);
         });
       }
     });
@@ -116,7 +116,7 @@ class _TapState extends State<TapHome> with TickerProviderStateMixin {
   void _clickText() {
     if (_answer == _option[_animationTimer.value]) {
       _animTimerController.stop();
-      widget.onGameOver(1);
+      widget.onGameUpdate(score: 1, max: 1, gameOver: true, star: true);
       setState(() {
         score = score + 4;
         _status = 0.0;

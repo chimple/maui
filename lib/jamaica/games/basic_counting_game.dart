@@ -25,9 +25,10 @@ enum _Escape { no, escaping, escaped }
 class BasicCountingGame extends StatefulWidget {
   final int answer;
   final BuiltList<int> choices;
-  final OnGameOver onGameOver;
+  final OnGameUpdate onGameUpdate;
 
-  const BasicCountingGame({Key key, this.answer, this.choices, this.onGameOver})
+  const BasicCountingGame(
+      {Key key, this.answer, this.choices, this.onGameUpdate})
       : super(key: key);
   @override
   _BasicCountingGameState createState() => _BasicCountingGameState();

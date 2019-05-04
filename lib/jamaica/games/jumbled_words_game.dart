@@ -29,9 +29,10 @@ enum _Type { choice, question }
 class JumbledWordsGame extends StatefulWidget {
   final String answer;
   final BuiltList<String> choices;
-  final OnGameOver onGameOver;
+  final OnGameUpdate onGameUpdate;
 
-  const JumbledWordsGame({Key key, this.answer, this.choices, this.onGameOver})
+  const JumbledWordsGame(
+      {Key key, this.answer, this.choices, this.onGameUpdate})
       : super(key: key);
 
   @override
@@ -86,8 +87,13 @@ class _JumbledWordsGameState extends State<JumbledWordsGame> {
                                 .solved = true;
                             thisSolved = true;
                             score++;
-                            Future.delayed(const Duration(milliseconds: 700),
-                                () => widget.onGameOver(score));
+                            Future.delayed(
+                                const Duration(milliseconds: 700),
+                                () => widget.onGameUpdate(
+                                    score: score,
+                                    max: score,
+                                    gameOver: true,
+                                    star: true));
                           }));
                 },
               )

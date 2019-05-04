@@ -6,10 +6,11 @@ import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/components/Shaker.dart';
 
 class ConnectDotGame extends StatefulWidget {
-  final OnGameOver onGameOver;
+  final OnGameUpdate onGameUpdate;
   final List<int> otherData;
   final List<int> serialData;
-  const ConnectDotGame({key, this.onGameOver, this.otherData, this.serialData})
+  const ConnectDotGame(
+      {key, this.onGameUpdate, this.otherData, this.serialData})
       : super(key: key);
   @override
   State<StatefulWidget> createState() => new ConnectDotGameState();
@@ -287,7 +288,8 @@ class ConnectDotGameState extends State<ConnectDotGame> {
             print('flaggggggggggggg     $flag');
             if (flag == 0) {
               print('on  endddd  ');
-              widget.onGameOver(20);
+              widget.onGameUpdate(
+                  score: 20, max: 20, gameOver: true, star: true);
 
               setState(() {
                 rowExtracting = 0;
@@ -310,7 +312,7 @@ class ConnectDotGameState extends State<ConnectDotGame> {
               });
             }
             if (flag == 1) {
-              widget.onGameOver(-1);
+              widget.onGameUpdate(score: 0, max: 1, gameOver: true, star: true);
               print("object....shanking thing is...:$_visibleflag");
               setState(() {
                 storingAnsData = [];

@@ -14,13 +14,13 @@ typedef UpdateQuizScore(int score);
 class Game extends StatefulWidget {
   final QuizSession quizSession;
   final UpdateCoins updateCoins;
-  final OnGameOver onGameOver;
+  final OnGameUpdate onGameUpdate;
   final UpdateQuizScore updateScore;
   const Game(
       {Key key,
       this.quizSession,
       this.updateCoins,
-      this.onGameOver,
+      this.onGameUpdate,
       this.updateScore})
       : super(key: key);
   @override
@@ -136,7 +136,7 @@ class _GameState extends State<Game> {
                 gameTimer
                     ? GameTimer(
                         time: 30,
-                        onGameOver: widget.onGameOver,
+                        onGameUpdate: widget.onGameUpdate,
                         timeCallback: timeCallback,
                         timeEndCallback: timeEndCallback)
                     : Container()
@@ -227,7 +227,7 @@ class _GameState extends State<Game> {
     if (index < widget.quizSession.gameData.length) {
       return buildGame(
           gameData: widget.quizSession.gameData[index],
-          onGameOver: (score) {
+          onGameUpdate: ({int score, int max, bool gameOver, bool star}) {
             print("in side clicking or not lets check $index");
             setState(() {
               _score += score;

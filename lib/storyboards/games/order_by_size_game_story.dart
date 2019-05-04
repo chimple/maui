@@ -12,7 +12,7 @@ class OrderBySizeGameStory extends FullScreenStory {
             child: OrderBySizeGame(
               answers: BuiltList<int>([1, 7]),
               choices: BuiltList<int>([2, 7, 3, 1]),
-              onGameOver: (score) => print(score),
+              onGameUpdate: ({int score, int max, bool gameOver, bool star}) {},
             ),
           ),
         )
