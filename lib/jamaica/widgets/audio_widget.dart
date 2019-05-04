@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:maui/jamaica/state/audio_service.dart';
+import 'package:maui/util/audio_service.dart';
 
 class AudioWidget extends StatefulWidget {
   final String word;

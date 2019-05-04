@@ -1,6 +1,6 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
-import 'package:maui/jamaica/state/game_utils.dart';
+import 'package:maui/data/game_utils.dart';
 import 'package:maui/models/image_label_data.dart';
 
 class GuessImage extends StatefulWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:maui/jamaica/models/accessories_data.dart';
+import 'package:maui/data/accessories_data.dart';
 import 'package:maui/jamaica/widgets/store.dart';
 
 class StoreScreen extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
-import 'package:maui/jamaica/state/game_utils.dart';
+import 'package:maui/data/game_utils.dart';
 import 'package:maui/jamaica/widgets/bento_box.dart';
 import 'package:maui/jamaica/widgets/cute_button.dart';
 
@@ -32,7 +32,7 @@ class _MultipleChoiceGameState extends State<MultipleChoiceGame> {
   List<_ChoiceDetail> choiceDetails;
   // List<_ChoiceDetail> answerDetails;
   List<String> choices = [];
-  var _dataLength = 0, _complete = 0, _score = 0,_count=0;
+  var _dataLength = 0, _complete = 0, _score = 0, _count = 0;
   @override
   void initState() {
     super.initState();
@@ -78,7 +78,7 @@ class _MultipleChoiceGameState extends State<MultipleChoiceGame> {
                     reaction: c.reaction,
                     onPressed: () {
                       if (widget.answers.contains(c.choice)) {
-                         _score=_score+2;
+                        _score = _score + 2;
                         print('correct');
                         choiceDetails[choices.indexOf(c.choice)] =
                             _ChoiceDetail(
