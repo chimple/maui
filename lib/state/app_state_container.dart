@@ -96,11 +96,11 @@ class AppStateContainerState extends State<AppStateContainer> {
   List<ClassSession> classSessions;
   ClassSession myClassSession;
   List<String> classStudents = [];
-  Map<String, Performance> performances;
+  Map<String, Performance> performances = {};
   Set<String> quizStudents = new Set();
   QuizSession quizSession;
   Map<QuizSession, StatusEnum> quizSessions = new Map();
-  Map<String, Performance> quizPerformances;
+  Map<String, Performance> quizPerformances = {};
 
   @override
   void initState() {
@@ -492,6 +492,7 @@ class AppStateContainerState extends State<AppStateContainer> {
       setState(() {
         quizSessions[quizSession] = StatusEnum.create;
         this.quizSession = quizSession;
+        quizPerformances.clear();
       });
       final standardSerializers =
           (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
@@ -543,6 +544,7 @@ class AppStateContainerState extends State<AppStateContainer> {
         ..studentId = state.loggedInUser.id);
       setState(() {
         quizSession = qs;
+        quizPerformances.clear();
       });
       final standardSerializers =
           (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
