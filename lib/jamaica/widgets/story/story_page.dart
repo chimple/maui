@@ -13,9 +13,7 @@ import 'package:maui/models/story_config.dart';
 
 class StoryPage extends StatefulWidget {
   final String storyId;
-
   const StoryPage({Key key, this.storyId}) : super(key: key);
-
   @override
   StoryPageState createState() {
     return new StoryPageState();
@@ -26,8 +24,8 @@ class StoryPageState extends State<StoryPage> {
   StoryConfig story;
   bool _isLoading = true;
   bool _isPlaying = false;
+  int _currentPageIndex = 0;
   PageController pageController = PageController();
-  int incr = 0;
   List<FlutterTextToSpeech> _keys = List<FlutterTextToSpeech>();
   @override
   void initState() {
@@ -50,7 +48,6 @@ class StoryPageState extends State<StoryPage> {
     });
   }
 
-  int _currentPageIndex = 0;
   @override
   Widget build(BuildContext context) {
     int index = 0;

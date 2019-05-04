@@ -14,13 +14,13 @@ import 'package:maui/jamaica/games/match_the_shape_game.dart';
 import 'package:maui/jamaica/games/match_with_image_game.dart';
 import 'package:maui/jamaica/games/math_op_game.dart';
 import 'package:maui/jamaica/games/memory_game.dart';
+import 'package:maui/jamaica/games/moving_text_game.dart';
 import 'package:maui/jamaica/games/order_by_size_game.dart';
 import 'package:maui/jamaica/games/recognize_number_game.dart';
 import 'package:maui/jamaica/games/rhyme_words_game.dart';
 import 'package:maui/jamaica/games/sequence_alphabet_game.dart';
 import 'package:maui/jamaica/games/sequence_the_number_game.dart';
 import 'package:maui/jamaica/games/true_false_game.dart';
-import 'package:maui/jamaica/widgets/story/activity/jumble_words.dart';
 import 'package:maui/models/crossword_data.dart';
 import 'package:maui/models/game_data.dart';
 import 'package:maui/models/image_label_data.dart';
@@ -195,14 +195,6 @@ Widget buildGame({GameData gameData, OnGameUpdate onGameUpdate}) {
         answer: gd.choices.first,
         right_or_wrong: gd.answers.first == 'True',
         onGameUpdate: onGameUpdate,
-      );
-      break;
-    case 'JumbleWordsGame':
-      final gd = gameData as MultiData;
-      return JumbleWords(
-        onGameUpdate: onGameUpdate,
-        choices: gd.choices,
-        answers: gd.answers,
       );
       break;
     case 'GuessImage':
