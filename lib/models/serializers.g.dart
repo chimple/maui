@@ -34,6 +34,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(Stories.serializer)
       ..add(StoryConfig.serializer)
       ..add(Student.serializer)
+      ..add(SubScore.serializer)
       ..add(UserProfile.serializer)
       ..add(WordWithImage.serializer)
       ..addBuilderFactory(
@@ -88,6 +89,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(Student)]),
           () => new ListBuilder<Student>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(SubScore)]),
+          () => new ListBuilder<SubScore>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(int)]),
           () => new ListBuilder<int>())
