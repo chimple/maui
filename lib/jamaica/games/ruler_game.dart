@@ -139,20 +139,9 @@ class _RulerGameState extends State<RulerGame> {
             return true;
           } else {
             setState(() {
-              wrongAttempt = wrongAttempt + 1;
-              if (wrongAttempt < 2) {
-                widget.onGameUpdate(
-                    score: score - 1,
-                    max: maxScore,
-                    gameOver: false,
-                    star: false);
-              } else {
-                widget.onGameUpdate(
-                    score: score - 1,
-                    max: maxScore,
-                    gameOver: true,
-                    star: false);
-              }
+              print("wrong attept is....$wrongAttempt");
+              // wrongAttempt = wrongAttempt + 1;
+
               translateAnimation = false;
             });
             return false;
@@ -174,11 +163,15 @@ class _RulerGameState extends State<RulerGame> {
               }
             });
             if (flag == 1) {
-              widget.onGameUpdate(
-                  score: score, max: maxScore, gameOver: false, star: false);
+              setState(() {
+                widget.onGameUpdate(
+                    score: score, max: maxScore, gameOver: false, star: false);
+              });
             } else {
-              widget.onGameUpdate(
-                  score: score, max: maxScore, gameOver: true, star: true);
+              setState(() {
+                widget.onGameUpdate(
+                    score: score, max: maxScore, gameOver: true, star: true);
+              });
             }
           });
         },
@@ -199,6 +192,21 @@ class _RulerGameState extends State<RulerGame> {
           });
         },
         onDragEnd: (d) {
+          wrongAttempt = wrongAttempt + 1;
+          if (wrongAttempt <= 3) {
+            setState(() {
+              widget.onGameUpdate(
+                  score: score - 1,
+                  max: maxScore,
+                  gameOver: false,
+                  star: false);
+            });
+          } else {
+            setState(() {
+              widget.onGameUpdate(
+                  score: score - 1, max: maxScore, gameOver: true, star: false);
+            });
+          }
           final currentOffset = Offset(offsets[index].dx, offsets[index].dy);
           WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {
                 offsets[index] = currentOffset;

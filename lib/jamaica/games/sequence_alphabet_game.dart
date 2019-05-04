@@ -79,6 +79,7 @@ class _SequenceAlphabetGameState extends State<SequenceAlphabetGame> {
                   onAccept: (data) {
                     setState(() {
                       attempt = attempt + 1;
+                      print("attempt is......$attempt");
                       // score = score + 2;
                       // if (score > maxScore) {
                       //   setState(() => widget.onGameUpdate(
@@ -104,7 +105,7 @@ class _SequenceAlphabetGameState extends State<SequenceAlphabetGame> {
                             });
                             int scoreBasedOnPosition = 0;
                             if (attempt <= 10) {
-                              for (int i = 0; i < choiceDetails.length; i++) {
+                              for (int i = 0; i < widget.answers.length; i++) {
                                 if (choiceDetails[i].choice ==
                                     widget.answers[i]) {
                                   scoreBasedOnPosition =
@@ -114,34 +115,42 @@ class _SequenceAlphabetGameState extends State<SequenceAlphabetGame> {
                               setState(() => widget.onGameUpdate(
                                   score: score,
                                   max: maxScore,
-                                  gameOver: true,
+                                  gameOver: false,
                                   star: false));
                             } else {
-                              for (int i = 0; i < choiceDetails.length; i++) {
+                              for (int i = 0; i < widget.answers.length; i++) {
                                 if (choiceDetails[i].choice ==
                                     widget.answers[i]) {
                                   scoreBasedOnPosition =
                                       scoreBasedOnPosition + 2;
                                 }
                               }
+                              setState(() => widget.onGameUpdate(
+                                  score: score,
+                                  max: maxScore,
+                                  gameOver: false,
+                                  star: true));
                             }
 
-                            score = scoreBasedOnPosition;
-                            setState(() => widget.onGameUpdate(
-                                score: score,
-                                max: maxScore,
-                                gameOver: false,
-                                star: false));
+                            // score = scoreBasedOnPosition;
+                            // setState(() => widget.onGameUpdate(
+                            //     score: score,
+                            //     max: maxScore,
+                            //     gameOver: false,
+                            //     star: false));
                             print("this is my new game $_endList");
 
                             if (_endList.join() == widget.answers.join()) {
                               score = 2 * widget.answers.length - attempt;
                               print("success....");
-                              setState(() => widget.onGameUpdate(
-                                  score: score,
-                                  max: maxScore,
-                                  gameOver: true,
-                                  star: true));
+                              new Future.delayed(
+                                  const Duration(milliseconds: 500), () {
+                                setState(() => widget.onGameUpdate(
+                                    score: score,
+                                    max: maxScore,
+                                    gameOver: true,
+                                    star: true));
+                              });
                             } else {
                               score--;
                               _endList = [];

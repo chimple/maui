@@ -321,7 +321,7 @@ class ConnectDotGameState extends State<ConnectDotGame> {
             }
             if (flag == 1) {
               wrongAttempt = wrongAttempt + 1;
-              if (wrongAttempt < 2) {
+              if (wrongAttempt <= 2) {
                 setState(() {
                   widget.onGameUpdate(
                       score: -1, max: maxScore, gameOver: false, star: false);
