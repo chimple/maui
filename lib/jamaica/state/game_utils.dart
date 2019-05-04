@@ -9,6 +9,7 @@ import 'package:maui/jamaica/games/fill_in_the_blanks_game.dart';
 import 'package:maui/jamaica/games/find_word_game.dart';
 import 'package:maui/jamaica/games/finger_game.dart';
 import 'package:maui/jamaica/games/guess_image.dart';
+import 'package:maui/jamaica/games/jumble_words_game.dart';
 import 'package:maui/jamaica/games/jumbled_words_game.dart';
 import 'package:maui/jamaica/games/match_the_shape_game.dart';
 import 'package:maui/jamaica/games/match_with_image_game.dart';
@@ -20,7 +21,6 @@ import 'package:maui/jamaica/games/rhyme_words_game.dart';
 import 'package:maui/jamaica/games/sequence_alphabet_game.dart';
 import 'package:maui/jamaica/games/sequence_the_number_game.dart';
 import 'package:maui/jamaica/games/true_false_game.dart';
-import 'package:maui/jamaica/widgets/story/activity/jumble_words.dart';
 import 'package:maui/models/crossword_data.dart';
 import 'package:maui/models/game_data.dart';
 import 'package:maui/models/image_label_data.dart';
@@ -199,7 +199,7 @@ Widget buildGame({GameData gameData, OnGameUpdate onGameUpdate}) {
       break;
     case 'JumbleWordsGame':
       final gd = gameData as MultiData;
-      return JumbleWords(
+      return JumbleWordsGame(
         onGameUpdate: onGameUpdate,
         choices: gd.choices,
         answers: gd.answers,
