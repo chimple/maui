@@ -32,7 +32,8 @@ class _SequenceAlphabetGameState extends State<SequenceAlphabetGame> {
   int complete;
   int count = 0;
   List<String> _endList = [];
-
+  int maxScore;
+  int attempt = 0;
   @override
   void initState() {
     super.initState();
@@ -48,6 +49,13 @@ class _SequenceAlphabetGameState extends State<SequenceAlphabetGame> {
     // i=0;
     //  _endList.addAll(choiceDetails[i++].choice);
     print("this is my count $_endList");
+    maxScore = 2 * widget.answers.length;
+    // for (int i = 0; i < choiceDetails.length; i++) {
+    //   if (choiceDetails[i].choice != widget.answers[i]) {
+    //     maxScore = maxScore + 2;
+    //   }
+    // }
+
     complete = count;
     print("this is my object ${widget.answers}");
   }
@@ -70,7 +78,15 @@ class _SequenceAlphabetGameState extends State<SequenceAlphabetGame> {
                   },
                   onAccept: (data) {
                     setState(() {
-                      score++;
+                      attempt = attempt + 1;
+                      // score = score + 2;
+                      // if (score > maxScore) {
+                      //   setState(() => widget.onGameUpdate(
+                      //       score: score - 10,
+                      //       max: maxScore,
+                      //       gameOver: true,
+                      //       star: false));
+                      // }
                       print("this my score$score");
                       WidgetsBinding.instance.addPostFrameCallback((_) =>
                           setState(() {
@@ -86,17 +102,46 @@ class _SequenceAlphabetGameState extends State<SequenceAlphabetGame> {
                               print(".......${d.choice}");
                               _endList.add(d.choice);
                             });
+                            int scoreBasedOnPosition = 0;
+                            if (attempt <= 10) {
+                              for (int i = 0; i < choiceDetails.length; i++) {
+                                if (choiceDetails[i].choice ==
+                                    widget.answers[i]) {
+                                  scoreBasedOnPosition =
+                                      scoreBasedOnPosition + 2;
+                                }
+                              }
+                              setState(() => widget.onGameUpdate(
+                                  score: score,
+                                  max: maxScore,
+                                  gameOver: true,
+                                  star: false));
+                            } else {
+                              for (int i = 0; i < choiceDetails.length; i++) {
+                                if (choiceDetails[i].choice ==
+                                    widget.answers[i]) {
+                                  scoreBasedOnPosition =
+                                      scoreBasedOnPosition + 2;
+                                }
+                              }
+                            }
+
+                            score = scoreBasedOnPosition;
+                            setState(() => widget.onGameUpdate(
+                                score: score,
+                                max: maxScore,
+                                gameOver: false,
+                                star: false));
                             print("this is my new game $_endList");
 
                             if (_endList.join() == widget.answers.join()) {
+                              score = 2 * widget.answers.length - attempt;
                               print("success....");
-                              Future.delayed(
-                                  const Duration(milliseconds: 1000),
-                                  () => setState(() => widget.onGameUpdate(
-                                      score: score,
-                                      max: score,
-                                      gameOver: true,
-                                      star: true)));
+                              setState(() => widget.onGameUpdate(
+                                  score: score,
+                                  max: maxScore,
+                                  gameOver: true,
+                                  star: true));
                             } else {
                               score--;
                               _endList = [];

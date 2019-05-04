@@ -44,12 +44,15 @@ class _MathOpGameState extends State<MathOpGame> {
   List<_ChoiceDetail> answers = [];
   var score = 0;
   int complete;
-
+  int maxScore;
+  int wrongAttempt = 0;
   @override
   void initState() {
     super.initState();
     int value = widget.answer;
     int i = 0;
+    maxScore = widget.answer;
+    maxScore = maxScore.toString().length;
     while (value > 0) {
       answers.insert(
           0,
@@ -133,17 +136,31 @@ class _MathOpGameState extends State<MathOpGame> {
                         onAccept: (data) {
                           setState(() {
                             if (data == a.number.toString()) {
-                              score++;
+                              score = score + 2;
                               print("this my score$score");
                               if (--complete == 0) a.solved = true;
                               widget.onGameUpdate(
                                   score: score,
-                                  max: score,
+                                  max: maxScore,
                                   gameOver: true,
                                   star: true);
-                            } else
-                              score--;
-                            print("this my decrement score $score");
+                            } else {
+                              wrongAttempt = wrongAttempt + 1;
+                              if (wrongAttempt < 2) {
+                                widget.onGameUpdate(
+                                    score: score - 1,
+                                    max: maxScore,
+                                    gameOver: false,
+                                    star: false);
+                              } else {
+                                widget.onGameUpdate(
+                                    score: score - 1,
+                                    max: maxScore,
+                                    gameOver: true,
+                                    star: false);
+                              }
+                              print("this my decrement score $score");
+                            }
                           });
                         },
                       ))

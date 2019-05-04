@@ -1,11 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:maui/jamaica/state/game_utils.dart';
 
 class RulerGame extends StatefulWidget {
+  final OnGameUpdate onGameUpdate;
   final List<String> sequence;
   final List<int> blankPosition;
   final List<int> answer;
-  const RulerGame({Key key, this.sequence, this.blankPosition, this.answer})
+  const RulerGame(
+      {Key key,
+      this.onGameUpdate,
+      this.sequence,
+      this.blankPosition,
+      this.answer})
       : super(key: key);
   @override
   _RulerGameState createState() => _RulerGameState();
@@ -24,6 +31,9 @@ class _RulerGameState extends State<RulerGame> {
   List<Offset> offsets = [];
   List<int> ansDataDragging = [];
   bool translateAnimation = false;
+  int maxScore;
+  int score = 0;
+  int wrongAttempt = 0;
   @override
   void initState() {
     super.initState();
@@ -34,6 +44,7 @@ class _RulerGameState extends State<RulerGame> {
       formatData.add(e);
       sequenceData.add(e);
     });
+    maxScore = 2 * widget.blankPosition.length;
     _statuses = widget.answer
         .map((a) => DraggableStatus.active)
         .toList(growable: false);
@@ -128,6 +139,20 @@ class _RulerGameState extends State<RulerGame> {
             return true;
           } else {
             setState(() {
+              wrongAttempt = wrongAttempt + 1;
+              if (wrongAttempt < 2) {
+                widget.onGameUpdate(
+                    score: score - 1,
+                    max: maxScore,
+                    gameOver: false,
+                    star: false);
+              } else {
+                widget.onGameUpdate(
+                    score: score - 1,
+                    max: maxScore,
+                    gameOver: true,
+                    star: false);
+              }
               translateAnimation = false;
             });
             return false;
@@ -135,11 +160,26 @@ class _RulerGameState extends State<RulerGame> {
         },
         onAccept: (val) {
           setState(() {
+            score = score + 2;
+            int flag = 0;
+
             int ansIndex = ansDataDragging.indexOf(val);
             ansDataDragging.remove(val);
             ansDataDragging.insert(ansIndex, null);
             sequenceData.removeAt(index);
             sequenceData.insert(index, val.toString());
+            sequenceData.forEach((e) {
+              if (e == "?") {
+                flag = 1;
+              }
+            });
+            if (flag == 1) {
+              widget.onGameUpdate(
+                  score: score, max: maxScore, gameOver: false, star: false);
+            } else {
+              widget.onGameUpdate(
+                  score: score, max: maxScore, gameOver: true, star: true);
+            }
           });
         },
       ),
