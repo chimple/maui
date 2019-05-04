@@ -7,8 +7,7 @@ part 'quiz_session.g.dart';
 
 abstract class QuizSession implements Built<QuizSession, QuizSessionBuilder> {
   String get sessionId;
-  String get gameId;
-  int get level;
+  String get title;
   BuiltList<GameData> get gameData;
 
   QuizSession._();
