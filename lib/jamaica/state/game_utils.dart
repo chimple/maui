@@ -9,12 +9,12 @@ import 'package:maui/jamaica/games/fill_in_the_blanks_game.dart';
 import 'package:maui/jamaica/games/find_word_game.dart';
 import 'package:maui/jamaica/games/finger_game.dart';
 import 'package:maui/jamaica/games/guess_image.dart';
-import 'package:maui/jamaica/games/jumble_words_game.dart';
 import 'package:maui/jamaica/games/jumbled_words_game.dart';
 import 'package:maui/jamaica/games/match_the_shape_game.dart';
 import 'package:maui/jamaica/games/match_with_image_game.dart';
 import 'package:maui/jamaica/games/math_op_game.dart';
 import 'package:maui/jamaica/games/memory_game.dart';
+import 'package:maui/jamaica/games/moving_text_game.dart';
 import 'package:maui/jamaica/games/order_by_size_game.dart';
 import 'package:maui/jamaica/games/recognize_number_game.dart';
 import 'package:maui/jamaica/games/rhyme_words_game.dart';
@@ -197,9 +197,9 @@ Widget buildGame({GameData gameData, OnGameUpdate onGameUpdate}) {
         onGameUpdate: onGameUpdate,
       );
       break;
-    case 'JumbleWordsGame':
+    case 'MovingTextGame':
       final gd = gameData as MultiData;
-      return JumbleWordsGame(
+      return MovingTextGame(
         onGameUpdate: onGameUpdate,
         choices: gd.choices,
         answers: gd.answers,

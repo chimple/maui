@@ -27,18 +27,18 @@ class _ChoiceDetail {
       '_ChoiceDetail(choice: $choice, appear: $appear,index: $index, )';
 }
 
-class JumbleWordsGame extends StatefulWidget {
+class MovingTextGame extends StatefulWidget {
   final BuiltList choices;
   final BuiltList answers;
   final OnGameUpdate onGameUpdate;
-  const JumbleWordsGame({Key key, this.answers, this.choices, this.onGameUpdate})
+  const MovingTextGame({Key key, this.answers, this.choices, this.onGameUpdate})
       : super(key: key);
 
   @override
-  _JumbleWordsGameState createState() => _JumbleWordsGameState();
+  _MovingTextGameState createState() => _MovingTextGameState();
 }
 
-class _JumbleWordsGameState extends State<JumbleWordsGame> {
+class _MovingTextGameState extends State<MovingTextGame> {
   List<_ChoiceDetail> choiceDetails;
   List<_ChoiceDetail> answerDetails;
   // final BuiltList<String> choices =
