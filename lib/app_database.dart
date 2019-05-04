@@ -1,22 +1,11 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:maui/db/dao/tile_dao.dart';
-import 'package:maui/db/entity/tile.dart';
-import 'package:uuid/uuid.dart';
 
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:maui/db/dao/unit_dao.dart';
-import 'package:maui/db/dao/user_dao.dart';
-import 'package:maui/db/entity/user.dart';
-import 'package:maui/repos/game_data_repo.dart';
-import 'package:maui/db/dao/lesson_dao.dart';
-import 'package:maui/db/dao/lesson_unit_dao.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'loca.dart';
 
 class AppDatabase {
   static final AppDatabase _appDatabase = new AppDatabase._internal();
@@ -46,88 +35,81 @@ class AppDatabase {
       await new File(path).writeAsBytes(bytes);
       _db = await openDatabase(path, version: 1);
 
-      String imagePath = join(documentsDirectory.path, "sister.png");
-      ByteData imageData = await rootBundle.load(join("assets", "sister.png"));
-      List<int> imageBytes = imageData.buffer
-          .asUint8List(imageData.offsetInBytes, imageData.lengthInBytes);
-      await new File(imagePath).writeAsBytes(imageBytes);
-
-      String imagePath1 = join(documentsDirectory.path, "brother.png");
-      ByteData imageData1 =
-          await rootBundle.load(join("assets", "brother.png"));
-      List<int> imageBytes1 = imageData1.buffer
-          .asUint8List(imageData1.offsetInBytes, imageData1.lengthInBytes);
-      await new File(imagePath1).writeAsBytes(imageBytes1);
-
-      String imagePath2 = join(documentsDirectory.path, "father.png");
-      ByteData imageData2 = await rootBundle.load(join("assets", "father.png"));
-      List<int> imageBytes2 = imageData2.buffer
-          .asUint8List(imageData2.offsetInBytes, imageData2.lengthInBytes);
-      await new File(imagePath2).writeAsBytes(imageBytes2);
-
-      String imagePath3 = join(documentsDirectory.path, "mother.png");
-      ByteData imageData3 = await rootBundle.load(join("assets", "mother.png"));
-      List<int> imageBytes3 = imageData3.buffer
-          .asUint8List(imageData3.offsetInBytes, imageData3.lengthInBytes);
-      await new File(imagePath3).writeAsBytes(imageBytes3);
-
-      String imagePath5 = join(documentsDirectory.path, "chat_Bot_Icon.png");
-      ByteData imageData5 =
-          await rootBundle.load(join("assets", "chat_Bot_Icon.png"));
-      List<int> imageBytes5 = imageData5.buffer
-          .asUint8List(imageData5.offsetInBytes, imageData5.lengthInBytes);
-      await new File(imagePath5).writeAsBytes(imageBytes5);
-
-      String audioPath = join(documentsDirectory.path, "apple.ogg");
-      ByteData audioData = await rootBundle.load(join("assets", "apple.ogg"));
-      List<int> audioBytes = audioData.buffer
-          .asUint8List(audioData.offsetInBytes, audioData.lengthInBytes);
-      await new File(audioPath).writeAsBytes(audioBytes);
-
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      final deviceId = prefs.getString('deviceId');
-
-      await new UserDao().insert(new User(
-          id: 'sister',
-          name: Loca().sister,
-          image: imagePath,
-          deviceId: deviceId,
-          currentLessonId: 56));
-
-      await new UserDao().insert(new User(
-          id: 'brother',
-          name: Loca().brother,
-          image: imagePath1,
-          deviceId: deviceId,
-          currentLessonId: 1));
-
-      await new UserDao().insert(new User(
-          id: 'mother',
-          name: Loca().mother,
-          image: imagePath3,
-          deviceId: deviceId,
-          currentLessonId: 1));
-
-      await new UserDao().insert(new User(
-          id: 'father',
-          name: Loca().father,
-          image: imagePath2,
-          deviceId: deviceId,
-          currentLessonId: 1));
-
+//      String imagePath = join(documentsDirectory.path, "sister.png");
+//      ByteData imageData = await rootBundle.load(join("assets", "sister.png"));
+//      List<int> imageBytes = imageData.buffer
+//          .asUint8List(imageData.offsetInBytes, imageData.lengthInBytes);
+//      await new File(imagePath).writeAsBytes(imageBytes);
+//
+//      String imagePath1 = join(documentsDirectory.path, "brother.png");
+//      ByteData imageData1 =
+//          await rootBundle.load(join("assets", "brother.png"));
+//      List<int> imageBytes1 = imageData1.buffer
+//          .asUint8List(imageData1.offsetInBytes, imageData1.lengthInBytes);
+//      await new File(imagePath1).writeAsBytes(imageBytes1);
+//
+//      String imagePath2 = join(documentsDirectory.path, "father.png");
+//      ByteData imageData2 = await rootBundle.load(join("assets", "father.png"));
+//      List<int> imageBytes2 = imageData2.buffer
+//          .asUint8List(imageData2.offsetInBytes, imageData2.lengthInBytes);
+//      await new File(imagePath2).writeAsBytes(imageBytes2);
+//
+//      String imagePath3 = join(documentsDirectory.path, "mother.png");
+//      ByteData imageData3 = await rootBundle.load(join("assets", "mother.png"));
+//      List<int> imageBytes3 = imageData3.buffer
+//          .asUint8List(imageData3.offsetInBytes, imageData3.lengthInBytes);
+//      await new File(imagePath3).writeAsBytes(imageBytes3);
+//
+//      String imagePath5 = join(documentsDirectory.path, "chat_Bot_Icon.png");
+//      ByteData imageData5 =
+//          await rootBundle.load(join("assets", "chat_Bot_Icon.png"));
+//      List<int> imageBytes5 = imageData5.buffer
+//          .asUint8List(imageData5.offsetInBytes, imageData5.lengthInBytes);
+//      await new File(imagePath5).writeAsBytes(imageBytes5);
+//
+//      String audioPath = join(documentsDirectory.path, "apple.ogg");
+//      ByteData audioData = await rootBundle.load(join("assets", "apple.ogg"));
+//      List<int> audioBytes = audioData.buffer
+//          .asUint8List(audioData.offsetInBytes, audioData.lengthInBytes);
+//      await new File(audioPath).writeAsBytes(audioBytes);
+//
+//      SharedPreferences prefs = await SharedPreferences.getInstance();
+//      final deviceId = prefs.getString('deviceId');
+//
 //      await new UserDao().insert(new User(
-//          id: 'best_friend',
-//          name: 'Best Friend',
-//          image: imagePath4,
-//          deviceId: 'other_device',
+//          id: 'sister',
+//          name: Loca().sister,
+//          image: imagePath,
+//          deviceId: deviceId,
+//          currentLessonId: 56));
+//
+//      await new UserDao().insert(new User(
+//          id: 'brother',
+//          name: Loca().brother,
+//          image: imagePath1,
+//          deviceId: deviceId,
 //          currentLessonId: 1));
-
-      await new UserDao().insert(new User(
-          id: 'bot',
-          name: Loca().friend,
-          image: imagePath5,
-          deviceId: deviceId,
-          currentLessonId: 1));
+//
+//      await new UserDao().insert(new User(
+//          id: 'mother',
+//          name: Loca().mother,
+//          image: imagePath3,
+//          deviceId: deviceId,
+//          currentLessonId: 1));
+//
+//      await new UserDao().insert(new User(
+//          id: 'father',
+//          name: Loca().father,
+//          image: imagePath2,
+//          deviceId: deviceId,
+//          currentLessonId: 1));
+//
+//      await new UserDao().insert(new User(
+//          id: 'bot',
+//          name: Loca().friend,
+//          image: imagePath5,
+//          deviceId: deviceId,
+//          currentLessonId: 1));
     } else {
       _db = await openDatabase(path, version: 1);
     }
