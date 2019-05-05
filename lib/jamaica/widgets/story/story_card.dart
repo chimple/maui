@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:maui/jamaica/widgets/story/router.dart';
 import 'package:maui/jamaica/widgets/story/story_page.dart';
 import 'package:maui/models/story_config.dart';
 
 class StoryCard extends StatelessWidget {
-  final index;
   final StoryConfig storyConfig;
-  StoryCard({this.index, @required this.storyConfig});
+  StoryCard({@required this.storyConfig});
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraint) {
       return Padding(
@@ -61,7 +59,6 @@ class StoryCard extends StatelessWidget {
               // splashColor: Colors.red,
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute<Null>(
-                  fullscreenDialog: true,
                   settings: RouteSettings(),
                   builder: (context) => StoryPage(
                         storyId: storyConfig.storyId,

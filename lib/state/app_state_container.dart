@@ -1,9 +1,27 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:math';
 import 'dart:io';
+import 'dart:math';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:built_value/standard_json_plugin.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_redurx/flutter_redurx.dart';
+import 'package:maui/actions/add_comment.dart';
+import 'package:maui/actions/add_like.dart';
+import 'package:maui/actions/fetch_initial_data.dart';
+import 'package:maui/actions/post_tile.dart';
+import 'package:maui/components/flash_card.dart';
+import 'package:maui/db/entity/comment.dart';
+import 'package:maui/db/entity/lesson.dart';
+import 'package:maui/db/entity/lesson_unit.dart';
+import 'package:maui/db/entity/notif.dart';
+import 'package:maui/db/entity/tile.dart';
+import 'package:maui/db/entity/user.dart';
+import 'package:maui/loca.dart';
 import 'package:maui/models/class_interest.dart';
 import 'package:maui/models/class_join.dart';
 import 'package:maui/models/class_session.dart';
@@ -12,40 +30,20 @@ import 'package:maui/models/performance.dart';
 import 'package:maui/models/quiz_join.dart';
 import 'package:maui/models/quiz_session.dart';
 import 'package:maui/models/quiz_update.dart';
+import 'package:maui/models/root_state.dart';
 import 'package:maui/models/serializers.dart';
 import 'package:maui/models/user_profile.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_redurx/flutter_redurx.dart';
-import 'package:maui/actions/add_comment.dart';
-import 'package:maui/actions/add_like.dart';
-import 'package:maui/actions/fetch_card_detail.dart';
-import 'package:maui/actions/fetch_initial_data.dart';
-import 'package:maui/actions/post_tile.dart';
-import 'package:maui/db/entity/comment.dart';
-import 'package:maui/db/entity/tile.dart';
-import 'package:maui/models/root_state.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:audioplayers/audioplayers.dart';
-import 'package:maui/repos/p2p.dart' as p2p;
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:maui/components/flash_card.dart';
-import 'package:maui/db/entity/user.dart';
-import 'package:maui/repos/user_repo.dart';
+import 'package:maui/repos/chat_bot_data.dart';
 import 'package:maui/repos/lesson_repo.dart';
 import 'package:maui/repos/lesson_unit_repo.dart';
-import 'package:maui/state/app_state.dart';
-import 'package:maui/screens/chat_screen.dart';
-import 'package:maui/repos/notif_repo.dart';
-import 'package:maui/db/entity/notif.dart';
-import 'package:maui/db/entity/lesson_unit.dart';
-import 'package:maui/db/entity/lesson.dart';
-import 'package:maui/repos/chat_bot_data.dart';
 import 'package:maui/repos/log_repo.dart';
-import 'package:maui/loca.dart';
+import 'package:maui/repos/notif_repo.dart';
+import 'package:maui/repos/p2p.dart' as p2p;
+import 'package:maui/repos/user_repo.dart';
+import 'package:maui/screens/chat_screen.dart';
+import 'package:maui/state/app_state.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
 enum ChatMode { teach, conversation, quiz }
@@ -92,16 +90,17 @@ class AppStateContainerState extends State<AppStateContainer> {
   ChatMode _currentMode = ChatMode.conversation;
   String _expectedAnswer;
   String extStorageDir;
+  UserProfile userProfile;
 
   // teacher objects
   List<ClassSession> classSessions;
   ClassSession myClassSession;
   List<String> classStudents = [];
-  Map<String, Performance> performances;
+  Map<String, Performance> performances = {};
   Set<String> quizStudents = new Set();
   QuizSession quizSession;
   Map<QuizSession, StatusEnum> quizSessions = new Map();
-  Map<String, Performance> quizPerformances;
+  Map<String, Performance> quizPerformances = {};
 
   @override
   void initState() {
@@ -169,6 +168,36 @@ class AppStateContainerState extends State<AppStateContainer> {
                   friend: user,
                   friendImageUrl: user.image)));
     }
+  }
+
+  void updateUserProfile(UserProfile up) async {
+    setState(() {
+      userProfile = up;
+    });
+    final directory = await getApplicationDocumentsDirectory();
+    final file =
+        File('${directory.path}/${state.loggedInUser.id}.profile.json');
+    final standardSerializers =
+        (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
+    String contents = jsonEncode(standardSerializers.serialize(up));
+    await file.writeAsString(contents);
+  }
+
+  void fetchUserProfile() async {
+    final directory = await getApplicationDocumentsDirectory();
+    final file =
+        File('${directory.path}/${state.loggedInUser.id}.profile.json');
+    if (await file.exists()) {
+      final upString = await file.readAsString();
+      final standardSerializers =
+          (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
+      userProfile =
+          standardSerializers.deserialize(jsonDecode(upString)) as UserProfile;
+    }
+    final up = UserProfile((b) => b
+      ..name = state.loggedInUser.name
+      ..currentTheme = 'Gym');
+    updateUserProfile(up);
   }
 
   void play(String fileName) async {
@@ -409,13 +438,13 @@ class AppStateContainerState extends State<AppStateContainer> {
         });
       } else if (obj is ClassStudents) {
       } else if (obj is Performance) {
-        if (quizSession?.sessionId == obj.sessionId) {
-          quizPerformances[obj.studentId] = obj;
-        } else if (state.loggedInUser.userType == UserType.teacher) {
-          setState(() {
+        setState(() {
+          if (quizSession?.sessionId == obj.sessionId) {
+            quizPerformances[obj.studentId] = obj;
+          } else if (state.loggedInUser.userType == UserType.teacher) {
             performances[obj.studentId] = obj;
-          });
-        }
+          }
+        });
       } else if (obj is QuizJoin) {
         if (quizSession.sessionId == obj.sessionId) {
           //state.loggedInUser.userType == UserType.student &&
@@ -463,6 +492,7 @@ class AppStateContainerState extends State<AppStateContainer> {
       setState(() {
         quizSessions[quizSession] = StatusEnum.create;
         this.quizSession = quizSession;
+        quizPerformances.clear();
       });
       final standardSerializers =
           (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
@@ -507,13 +537,14 @@ class AppStateContainerState extends State<AppStateContainer> {
     }
   }
 
-  Future<void> joinQuizSession(QuizSession quizSession) async {
-    if (quizSession != null) {
+  Future<void> joinQuizSession(QuizSession qs) async {
+    if (qs != null) {
       QuizJoin quizJoin = QuizJoin((q) => q
-        ..sessionId = quizSession.sessionId
+        ..sessionId = qs.sessionId
         ..studentId = state.loggedInUser.id);
       setState(() {
-        quizSession = quizSession;
+        quizSession = qs;
+        quizPerformances.clear();
       });
       final standardSerializers =
           (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
@@ -724,6 +755,7 @@ class AppStateContainerState extends State<AppStateContainer> {
     setState(() {
       state = new AppState(loggedInUser: user);
     });
+    fetchUserProfile();
   }
 
   @override

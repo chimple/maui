@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:maui/jamaica/state/game_utils.dart';
+import 'package:maui/jamaica/widgets/game_score.dart';
+import 'package:maui/data/game_utils.dart';
 
 class TapHome extends StatefulWidget {
   final String answer;
@@ -52,7 +53,7 @@ class _TapState extends State<TapHome> with TickerProviderStateMixin {
         });
         new Future.delayed(const Duration(milliseconds: 1000), () {
           print('calling onEnd');
-          widget.onGameUpdate(score: 1, max: 1, gameOver: true, star: true);
+          widget.onGameUpdate(score: score, max: 4, gameOver: true, star: true);
         });
       }
     });
@@ -116,25 +117,30 @@ class _TapState extends State<TapHome> with TickerProviderStateMixin {
   void _clickText() {
     if (_answer == _option[_animationTimer.value]) {
       _animTimerController.stop();
-      widget.onGameUpdate(score: 1, max: 1, gameOver: true, star: true);
+
       setState(() {
-        score = score + 4;
+        print("hi i am $_answer");
+        score = score + 2;
         _status = 0.0;
+        print("correct the score $score");
       });
 
       _screenController.forward(from: 0.0);
     } else {
-      if (score > 0) {}
       setState(() {
         count = count + 1;
-        score = score > 0 ? score - 1 : score;
+        score = score - 1;
+        print("object is $score");
       });
       _myAnim();
       new Future.delayed(const Duration(milliseconds: 1000), () {
         _animationController.stop();
-        if (count == 4) {
+        if (count == 2) {
           setState(() {
             _status = 0.0;
+            print("this is count $count and score $score");
+            widget.onGameUpdate(
+                score: score, max: 2, gameOver: true, star: false);
           });
           _screenController.forward(from: 0.0);
         }

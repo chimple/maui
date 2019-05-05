@@ -1,10 +1,10 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
-import 'package:maui/jamaica/state/game_utils.dart';
+import 'package:maui/data/game_utils.dart';
 import 'package:maui/jamaica/widgets/bento_box.dart';
 import 'package:maui/jamaica/widgets/cute_button.dart';
 
-TextStyle textStyle({double fSize = 25, color: Colors.red}) => TextStyle(
+TextStyle textStyle({double fSize = 30, color: Colors.red}) => TextStyle(
         fontSize: fSize,
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.bold,
@@ -27,30 +27,24 @@ class _ChoiceDetail {
       '_ChoiceDetail(choice: $choice, appear: $appear,index: $index, )';
 }
 
-class JumbleWords extends StatefulWidget {
-  final BuiltList choices;
-  final BuiltList answers;
-  final Function onComplete;
+class MovingTextGame extends StatefulWidget {
+  final BuiltList<String> choices;
+  final BuiltList<String> answers;
   final OnGameUpdate onGameUpdate;
-  const JumbleWords(
-      {Key key, this.answers, this.choices, this.onGameUpdate, this.onComplete})
+  const MovingTextGame({Key key, this.answers, this.choices, this.onGameUpdate})
       : super(key: key);
 
   @override
-  _JumbleWordsState createState() => _JumbleWordsState();
+  _MovingTextGameState createState() => _MovingTextGameState();
 }
 
-class _JumbleWordsState extends State<JumbleWords> {
+class _MovingTextGameState extends State<MovingTextGame> {
   List<_ChoiceDetail> choiceDetails;
   List<_ChoiceDetail> answerDetails;
-  // final BuiltList<String> choices =
-  //     BuiltList<String>(["He", 'Like', 'to', 'tease', 'peaope']);
-  // final BuiltList<String> answers =
-  //     BuiltList<String>(["He", 'Like', 'to', 'tease', 'peaope']);
+
   List<List<String>> addToBox = [];
-  int complete, score = 0;
-  List<bool> _colorStatus = [];
-  double textSize;
+  int complete, score = 0, max = 0;
+  double textSize = 50;
   @override
   void initState() {
     super.initState();
@@ -59,14 +53,11 @@ class _JumbleWordsState extends State<JumbleWords> {
     choiceDetails = widget.choices
         .map((c) => _ChoiceDetail(choice: c, index: i++))
         .toList(growable: false);
-    complete = choiceDetails.length;
     answerDetails = widget.answers
         .map((a) => _ChoiceDetail(choice: a, appear: false, index: j++))
         .toList(growable: false);
-    for (int k = 0; k < answerDetails.length; k++) {
-      addToBox.add([]);
-      _colorStatus.add(true);
-    }
+    complete = answerDetails.length;
+    max = complete;
   }
 
   Widget _dragTarget(String s, int index, bool c) {
@@ -74,22 +65,32 @@ class _JumbleWordsState extends State<JumbleWords> {
         // key: Key('answer'),
         onAccept: (a) {
           if (a == s) {
+            score = score + 2;
+            widget.onGameUpdate(
+                score: score, max: max * 2, gameOver: false, star: true);
             setState(() {
               answerDetails[widget.choices.indexOf(a)].appear = true;
               choiceDetails[widget.choices.indexOf(a)].appear = false;
             });
-            score++;
             if (--complete == 0) {
               print('game over');
               widget.onGameUpdate(
-                  score: score, max: score, gameOver: true, star: true);
-              widget.onComplete();
+                  score: score, max: max * 2, gameOver: true, star: true);
             }
-            // print('on accept ${widget.choices.indexOf(a)}, $answerDetails');
           }
         },
         onLeave: (s) {},
-        onWillAccept: (data) => data == s,
+        onWillAccept: (data) {
+          if (data == s)
+            return true;
+          else {
+            score--;
+            if (score <= 0) score = 0;
+            widget.onGameUpdate(
+                score: score, max: max * 2, gameOver: false, star: false);
+            return false;
+          }
+        },
         builder: (context, list, er) {
           return Container(
             child: Text(
@@ -103,16 +104,22 @@ class _JumbleWordsState extends State<JumbleWords> {
 
   @override
   Widget build(BuildContext context) {
-    textSize = MediaQuery.of(context).orientation == Orientation.portrait
-        ? MediaQuery.of(context).size.width * .065
-        : MediaQuery.of(context).size.height * .065;
+    // var maxChars = (widget.choices != null
+    //     ? widget.choices .fold(
+    //         1, (prev, element) => element.length > prev ? element.length : prev)
+    //     : 1);
+    // textSize = MediaQuery.of(context).orientation == Orientation.portrait
+    //     ? MediaQuery.of(context).size.width * .065
+    //     : MediaQuery.of(context).size.height * .065;
+    //     textSize=textSize/maxChars*2;
     int index = 0;
     return Flow(
-      // alignment: AlignmentDirectional.center,
       delegate: _FlowDelegate(),
       children: <Widget>[
         Center(
           child: Wrap(
+            alignment: WrapAlignment.spaceEvenly,
+            crossAxisAlignment: WrapCrossAlignment.start,
             spacing: 15,
             children: answerDetails
                 .map((s) => _dragTarget(s.choice, index++, s.appear))
@@ -122,8 +129,8 @@ class _JumbleWordsState extends State<JumbleWords> {
         BentoBox(
           calculateLayout: BentoBox.calculateOrderlyRandomizedLayout,
           dragConfig: DragConfig.draggableBounceBack,
-          rows: 2,
-          cols: 5,
+          rows: max,
+          cols: max + 1,
           children: choiceDetails
               .map((c) => c.appear
                   ? CuteButton(

@@ -6,7 +6,7 @@ import 'package:maui/models/performance.dart';
 import 'package:maui/models/quiz_session.dart';
 // import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
-import 'package:maui/jamaica/state/game_utils.dart';
+import 'package:maui/data/game_utils.dart';
 import 'package:maui/jamaica/widgets/game_score.dart';
 import 'package:maui/jamaica/widgets/score.dart';
 import 'package:maui/jamaica/widgets/slide_up_route.dart';
@@ -255,7 +255,7 @@ class _GameState extends State<Game> {
                   SlideUpRoute(
                       widgetBuilder: (context) =>
                           ++index < widget.quizSession.gameData.length
-                              ? widget.quizSession.sessionId == 'game'
+                              ? widget.quizSession.sessionId != 'game'
                                   ? IntermediateQuizScore(
                                       onTap: () => Navigator.push(
                                           context,

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:maui/jamaica/widgets/story/activity/quiz_page.dart';
+import 'package:maui/jamaica/widgets/story/activity/start_game.dart';
 import 'package:maui/jamaica/widgets/story/audio_text_bold.dart';
 import 'package:maui/jamaica/widgets/tts/text_to_speech.dart';
 import 'package:maui/models/serializers.dart';
@@ -13,9 +13,7 @@ import 'package:maui/models/story_config.dart';
 
 class StoryPage extends StatefulWidget {
   final String storyId;
-
   const StoryPage({Key key, this.storyId}) : super(key: key);
-
   @override
   StoryPageState createState() {
     return new StoryPageState();
@@ -26,8 +24,8 @@ class StoryPageState extends State<StoryPage> {
   StoryConfig story;
   bool _isLoading = true;
   bool _isPlaying = false;
+  int _currentPageIndex = 0;
   PageController pageController = PageController();
-  int incr = 0;
   List<FlutterTextToSpeech> _keys = List<FlutterTextToSpeech>();
   @override
   void initState() {
@@ -50,7 +48,6 @@ class StoryPageState extends State<StoryPage> {
     });
   }
 
-  int _currentPageIndex = 0;
   @override
   Widget build(BuildContext context) {
     int index = 0;
@@ -89,10 +86,22 @@ class StoryPageState extends State<StoryPage> {
         },
       ));
     }).toList();
-    widgets.add(QuizPage(
+    widgets.add(StartGame(
       gameData: story.gameDatas,
     ));
     return new Scaffold(
+      floatingActionButton: _currentPageIndex != story.pages.length
+          ? FloatingActionButton(
+              backgroundColor: Colors.red,
+              onPressed: () {
+                if (!_isPlaying) {
+                  _keys[_currentPageIndex].speak();
+                } else {
+                  _keys[_currentPageIndex].pause();
+                }
+              },
+              child: !_isPlaying ? Icon(Icons.play_arrow) : Icon(Icons.pause))
+          : Container(),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -100,15 +109,12 @@ class StoryPageState extends State<StoryPage> {
             height: 90,
             child: Container(
               decoration: BoxDecoration(
-                boxShadow: [BoxShadow(
-                  offset: Offset.zero,
-                  blurRadius: 4.0,
-                  color: Colors.grey
-                )],
-                 color: Colors.orange,
-               
+                boxShadow: [
+                  BoxShadow(
+                      offset: Offset.zero, blurRadius: 4.0, color: Colors.grey)
+                ],
+                color: Colors.orange,
               ),
-             
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -140,8 +146,7 @@ class StoryPageState extends State<StoryPage> {
           Expanded(
             child: Stack(
               children: <Widget>[
-                Scrollable(
-                  viewportBuilder: (c,k){
+                Scrollable(viewportBuilder: (c, k) {
                   return PageView(
                     controller: PageController(),
                     onPageChanged: (i) {
@@ -151,26 +156,12 @@ class StoryPageState extends State<StoryPage> {
                       });
                     },
                     physics: !_isPlaying
-                        ?ClampingScrollPhysics ()
+                        ? ClampingScrollPhysics()
                         : NeverScrollableScrollPhysics(),
                     scrollDirection: Axis.vertical,
                     children: widgets,
-                  );}
-                ),
-                _currentPageIndex != story.pages.length
-                    ? IconButton(
-                        icon: !_isPlaying
-                            ? Icon(Icons.play_arrow)
-                            : Icon(Icons.pause),
-                        onPressed: () {
-                          if (!_isPlaying) {
-                            _keys[_currentPageIndex].speak();
-                          } else {
-                            _keys[_currentPageIndex].pause();
-                          }
-                        },
-                      )
-                    : Container(),
+                  );
+                }),
               ],
             ),
           )

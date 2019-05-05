@@ -20,10 +20,10 @@ abstract class ImageLabelData
 abstract class ImageItemDetail
     implements Built<ImageItemDetail, ImageItemDetailBuilder> {
   String get itemName;
-  String get x;
-  String get y;
-  String get height;
-  String get width;
+  double get x;
+  double get y;
+  double get height;
+  double get width;
   ImageItemDetail._();
   factory ImageItemDetail([updates(ImageItemDetailBuilder b)]) =
       _$ImageItemDetail;
