@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:maui/jamaica/widgets/story/story_list.dart';
+import 'package:maui/widgets/story/story_list.dart';
 
 class StoryScreen extends StatelessWidget {
   @override

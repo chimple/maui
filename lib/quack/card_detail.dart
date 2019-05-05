@@ -1,24 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:flutter_redurx/flutter_redurx.dart';
-import 'package:maui/actions/add_progress.dart';
-import 'package:maui/app.dart';
-import 'package:maui/db/entity/card_progress.dart';
-import 'package:maui/db/entity/tile.dart';
-import 'package:maui/models/root_state.dart';
-import 'package:maui/quack/card_header.dart';
-import 'package:maui/quack/card_pager.dart';
-import 'package:maui/quack/collection_grid.dart';
 import 'package:maui/db/entity/quack_card.dart';
-import 'package:maui/quack/comment_list.dart';
-import 'package:maui/quack/comment_text_field.dart';
+import 'package:maui/db/entity/tile.dart';
 import 'package:maui/quack/activity_drawing_grid.dart';
+import 'package:maui/quack/collection_grid.dart';
+import 'package:maui/quack/comment_list.dart';
 import 'package:maui/quack/header_app_bar.dart';
 import 'package:maui/quack/knowledge_button.dart';
-import 'package:maui/repos/card_progress_repo.dart';
-import 'package:maui/repos/collection_repo.dart';
-import 'package:maui/repos/tile_repo.dart';
-import 'package:maui/state/app_state_container.dart';
 
 class CardDetail extends StatelessWidget {
   final QuackCard card;

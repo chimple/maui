@@ -1,15 +1,9 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:maui/components/friend_item.dart';
-import 'package:maui/screens/Page_Route.dart';
-import 'package:maui/state/app_state_container.dart';
-import 'package:maui/repos/p2p.dart' as p2p;
-import 'package:maui/db/entity/user.dart';
-import 'package:maui/repos/user_repo.dart';
 import 'package:maui/db/entity/notif.dart';
+import 'package:maui/screens/Page_Route.dart';
 import 'package:maui/screens/chat_screen.dart';
-import 'package:maui/components/gameaudio.dart';
+import 'package:maui/state/app_state_container.dart';
 
 class FriendStrip extends StatefulWidget {
   const FriendStrip({Key key}) : super(key: key);
@@ -88,7 +82,6 @@ class _FriendStripState extends State<FriendStrip> {
               SizedBox(
                 width: 96.0,
                 child: FriendItem(
-                  replaceWithHoodie: false,
                   id: user.id,
                   name: user.name,
                   imageUrl: user.image,

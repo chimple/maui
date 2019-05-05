@@ -16,7 +16,7 @@ import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
-import 'package:maui/repos/dot_map.dart';
+import 'package:maui/data/dot_map.dart';
 
 class UserRepo {
   static final UserDao userDao = new UserDao();
@@ -76,9 +76,8 @@ class UserRepo {
     //TODO temporarily setting any user beginning with t as teacher
     if (user.name.startsWith('t')) {
       user.userType = UserType.teacher;
-    }
-    else{
-      user.userType =UserType.student;
+    } else {
+      user.userType = UserType.student;
     }
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final deviceId = prefs.getString('deviceId');
