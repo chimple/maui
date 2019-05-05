@@ -28,6 +28,8 @@ class _GuessImageState extends State<GuessImage> {
   double deviceWidth;
   double dx;
   double dy;
+  int itemCount = 0;
+  List<Widget> displayTextList = [];
   @override
   void initState() {
     super.initState();
@@ -35,6 +37,7 @@ class _GuessImageState extends State<GuessImage> {
       label.add(f.itemName);
     }).toList();
     label.sort((a, b) => a.length.compareTo(b.length));
+
     assestImage = AssetImage(widget.imageName);
     WidgetsBinding.instance.addPostFrameCallback((a) => _getImageInfo());
   }
@@ -91,6 +94,7 @@ class _GuessImageState extends State<GuessImage> {
                                         context.findRenderObject();
                                     deviceHeight = getBox.size.height;
                                     deviceWidth = getBox.size.width;
+                                    dragText = s;
                                   }));
                         },
                         onDragEnd: (details) {
@@ -122,15 +126,7 @@ class _GuessImageState extends State<GuessImage> {
   }
 
   Widget displayText(double x, double y, String s) {
-    return Stack(
-      children: <Widget>[
-        Positioned(
-          left: x,
-          top: y,
-          child: Text(s),
-        )
-      ],
-    );
+    return Stack(children: displayTextList);
   }
 
   void dragEnd(double dx, double dy) {
@@ -138,12 +134,24 @@ class _GuessImageState extends State<GuessImage> {
       widget.imageItemDetails.forEach((c) {
         if ((c.x <= dx && dx <= c.x + c.width) &&
             (c.y <= dy && dy <= c.y + c.height)) {
-          double tempX = (c.x + c.x + c.width) / 2;
-          double tempY = (c.y + c.y + c.height) / 2;
-          centerX = ((tempX / _imageInfo.image.width) * deviceWidth);
-          centerY = ((tempY / _imageInfo.image.width) * deviceWidth);
-          dragText = c.itemName;
-          flag = 1;
+          setState(() {
+            double tempX = (c.x + c.x + c.width) / 2;
+            double tempY = (c.y + c.y + c.height) / 2;
+            centerX = ((tempX / _imageInfo.image.width) * deviceWidth);
+            centerY = ((tempY / _imageInfo.image.width) * deviceWidth);
+            if (c.itemName == dragText && itemCount < label.length) {
+              displayTextList.add(Positioned(
+                child: Text(
+                  c.itemName,
+                  style: TextStyle(color: Colors.black, fontSize: 25.0),
+                ),
+                left: centerX,
+                top: centerY,
+              ));
+              flag = 1;
+              itemCount++;
+            }
+          });
         }
       });
     }
