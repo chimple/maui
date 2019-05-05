@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -28,9 +29,18 @@ class _IntermediateQuizScoreState extends State<IntermediateQuizScore> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    AppStateContainer.of(context)
-        .quizPerformances
-        .forEach((studentId, performance) async {
+
+    var sortedKeys = AppStateContainer.of(context).quizPerformances.keys.toList(
+        growable: false)
+      ..sort((k1, k2) => AppStateContainer.of(context)
+          .quizPerformances[k1]
+          .score
+          .compareTo(AppStateContainer.of(context).quizPerformances[k2].score));
+    LinkedHashMap sortedMap = new LinkedHashMap.fromIterable(sortedKeys,
+        key: (k) => k,
+        value: (k) => AppStateContainer.of(context).quizPerformances[k]);
+
+    sortedMap.forEach((studentId, performance) async {
       if (performance.studentId != null) {
         await queryUser(performance.studentId);
         studentsScores.add(performance.score);
