@@ -33,7 +33,8 @@ class PlaceTheNumber extends StatefulWidget {
 class _PlaceTheNumberState extends State<PlaceTheNumber> {
   List<_ChoiceDetail> answers = [];
   List<int> choice = [];
-
+  int score = 0;
+  int attempt = 0;
   @override
   void initState() {
     super.initState();
@@ -47,8 +48,6 @@ class _PlaceTheNumberState extends State<PlaceTheNumber> {
           number: value,
           index: i++,
         ));
-
-    print("object $choice");
   }
 
   @override
@@ -99,11 +98,36 @@ class _PlaceTheNumberState extends State<PlaceTheNumber> {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(16.0))),
                             ),
-                        onWillAccept: (data) => data == a.number.toString(),
+                        onWillAccept: (data) => true,
                         onAccept: (data) {
-                          setState(() => a.solved = true);
-                          widget.onGameUpdate(
-                              score: 1, max: 1, gameOver: true, star: true);
+                          setState(() {
+                            if (data == a.number.toString()) {
+                              score = score + 2;
+                              print("this is score $score");
+                              a.solved = true;
+                              Future.delayed(
+                                  const Duration(milliseconds: 1000),
+                                  () => setState(() {
+                                        print("this is a object");
+                                        widget.onGameUpdate(
+                                            score: score,
+                                            max: 2,
+                                            gameOver: true,
+                                            star: true);
+                                      }));
+                            } else {
+                              print("this is score else R$score");
+                              score = score - 1;
+                              attempt++;
+                              if (attempt == 2) {
+                                widget.onGameUpdate(
+                                    score: score,
+                                    max: 2,
+                                    gameOver: true,
+                                    star: false);
+                              }
+                            }
+                          });
                         },
                       ))
                 .toList(growable: false),

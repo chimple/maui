@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:maui/data/game_utils.dart';
 import 'package:maui/jamaica/widgets/bento_box.dart';
@@ -48,7 +46,8 @@ class _BingoGameState extends State<BingoGame> {
   var _referenceMatrix;
   List _letters = [];
   bool _bingo = false;
-  var score = 0;
+  int score = 0;
+  int attempt = 0;
 
   @override
   void initState() {
@@ -125,7 +124,7 @@ class _BingoGameState extends State<BingoGame> {
     if (str1 == str2) {
       setState(() {
         count++;
-        score++;
+        score = score + 2;
       });
       ques = questionDetails[count];
       int counter = 0;
@@ -173,13 +172,16 @@ class _BingoGameState extends State<BingoGame> {
         }
       }
       if (_bingo == true) {
-        print("this is my game $score");
         widget.onGameUpdate(
-            score: score, max: score, gameOver: true, star: true);
+            score: score, max: _maxSize * 4, gameOver: true, star: true);
       }
     } else if (str1 != str2) {
-      score--;
-      print("this is my game $score");
+      score = score - 1;
+      attempt++;
+      if (attempt == (_maxSize / 2)) {
+        widget.onGameUpdate(
+            score: score, max: _maxSize * 4, gameOver: true, star: false);
+      }
     }
   }
 

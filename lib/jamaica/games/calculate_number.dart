@@ -301,7 +301,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
 
   bool _final(String _text, String _gettingResult) {
     if (_text == '✔' && _gettingResult == _finalResult) {
-      print('nikkk         $_gettingResult   $_finalResult  $_scoreCount');
+      print(
+          'nikkk         $_gettingResult   $_finalResult  $_scoreCount $_score');
       if (_scoreCount == 0) {
         print("nikkk   ");
         setState(() {
@@ -309,7 +310,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
         });
         _scoreCount = 1;
         new Future.delayed(const Duration(milliseconds: 1000), () {
-          widget.onGameUpdate(score: 1, max: 1, gameOver: true, star: true);
+          widget.onGameUpdate(
+              score: _score, max: 4, gameOver: true, star: true);
         });
       }
       return true;
@@ -389,12 +391,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                             });
                           });
                         } else {
-                          if (_score > 0) {
-                            // widget.onScore(-1);
-                          }
-
                           setState(() {
-                            _score = _score > 0 ? _score - 1 : _score;
+                            _score = _score - 1;
                             _shake[_i] = false;
                             _control = false;
                             _wrong = _wrong + 1;
@@ -413,7 +411,16 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                           _options == 'doubleDigit' && _wrong == 5 ||
                           _options == 'tripleDigit' && _wrong == 6) {
                         setState(() {
-                          _isShowingFlashCard = true;
+                          print("this is wrong $_score");
+                          // _isShowingFlashCard = true;
+                          new Future.delayed(const Duration(milliseconds: 1000),
+                              () {
+                            widget.onGameUpdate(
+                                score: _score,
+                                max: 4,
+                                gameOver: true,
+                                star: false);
+                          });
                           _wrong = 0;
                         });
                       }
@@ -520,11 +527,8 @@ class _CalculateTheNumbersState extends State<CalculateTheNumbers>
                             });
                           });
                         } else {
-                          if (_score > 0) {
-                            // widget.onScore(-1);
-                          }
                           setState(() {
-                            _score = _score > 0 ? _score - 1 : _score;
+                            _score = _score - 1;
                             _shake[_i] = false;
                             _control = false;
                             _wrong = _wrong + 1;

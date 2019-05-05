@@ -124,7 +124,6 @@ class CuteButtonWrapperState extends State<CuteButtonWrapper> {
   }
 
   Widget buildButton(BuildContext context, bool gridFeedback) {
-    print("object is Bool ${widget.gridFeedback}");
     if (widget.child.cuteButtonType == CuteButtonType.cuteButton)
       return SizedBox(
         width:
