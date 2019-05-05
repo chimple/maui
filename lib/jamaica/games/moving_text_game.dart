@@ -27,20 +27,18 @@ class _ChoiceDetail {
       '_ChoiceDetail(choice: $choice, appear: $appear,index: $index, )';
 }
 
-class JumbleWords extends StatefulWidget {
-  final BuiltList choices;
-  final BuiltList answers;
-  final Function onComplete;
+class MovingTextGame extends StatefulWidget {
+  final BuiltList<String> choices;
+  final BuiltList<String> answers;
   final OnGameUpdate onGameUpdate;
-  const JumbleWords(
-      {Key key, this.answers, this.choices, this.onGameUpdate, this.onComplete})
+  const MovingTextGame({Key key, this.answers, this.choices, this.onGameUpdate})
       : super(key: key);
 
   @override
-  _JumbleWordsState createState() => _JumbleWordsState();
+  _MovingTextGameState createState() => _MovingTextGameState();
 }
 
-class _JumbleWordsState extends State<JumbleWords> {
+class _MovingTextGameState extends State<MovingTextGame> {
   List<_ChoiceDetail> choiceDetails;
   List<_ChoiceDetail> answerDetails;
   // final BuiltList<String> choices =
@@ -83,9 +81,11 @@ class _JumbleWordsState extends State<JumbleWords> {
               print('game over');
               widget.onGameUpdate(
                   score: score, max: score, gameOver: true, star: true);
-              widget.onComplete();
             }
             // print('on accept ${widget.choices.indexOf(a)}, $answerDetails');
+          } else {
+            widget.onGameUpdate(
+                score: 0, max: score, gameOver: false, star: false);
           }
         },
         onLeave: (s) {},

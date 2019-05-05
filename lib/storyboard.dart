@@ -22,7 +22,7 @@ import 'package:maui/storyboards/games/match_the_shape_game_story.dart';
 import 'package:maui/storyboards/games/match_with_image_game_story.dart';
 import 'package:maui/storyboards/games/math_op_game_story.dart';
 import 'package:maui/storyboards/games/memory_game_story.dart';
-import 'package:maui/jamaica/games/multiple_choice_game.dart';
+import 'package:maui/storyboards/games/multiple_choice_game_story.dart';
 import 'package:maui/storyboards/games/number_balance_game_story.dart';
 import 'package:maui/storyboards/games/order_by_size_game_story.dart';
 import 'package:maui/storyboards/games/order_it_game_story.dart';
@@ -54,7 +54,6 @@ import 'package:maui/storyboards/widgets/dot_number_story.dart';
 import 'package:maui/storyboards/games/game_level_story.dart';
 import 'package:maui/storyboards/theme_map_story.dart';
 import 'package:maui/storyboards/widgets/game_story.dart';
-import 'package:maui/storyboards/widgets/multiple_choice_game_story.dart';
 import 'package:maui/storyboards/widgets/score_story.dart';
 import 'package:maui/storyboards/widgets/select_student_screen_story.dart';
 import 'package:maui/storyboards/widgets/select_teacher_screen_story.dart';
@@ -106,7 +105,6 @@ void main() {
     MemoryGameStory(),
     MonsterGameStory(),
     MultipleChoiceGameStory(),
-    MultipleChoiceGameStory(),
     NumberBalanceGameStory(),
     NumberBalanceGameStory(),
     OrderBySizeGameStory(),
@@ -116,8 +114,7 @@ void main() {
     RecognizeNumberGameStory(),
     ReflexGameStory(),
     RhymeWordsGameStory(),
-    RulerNumbersGameStory(),
-    RulerNumbersGameStory(),
+    RulerGameStory(),
     ScoreStory(),
     SelectStudentScreenStory(),
     SelectTeacherScreenStory(),

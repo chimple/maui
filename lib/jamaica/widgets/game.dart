@@ -1,5 +1,8 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:maui/jamaica/widgets/game_timer.dart';
+import 'package:maui/jamaica/widgets/intermediate_quiz_score.dart';
+import 'package:maui/models/performance.dart';
 import 'package:maui/models/quiz_session.dart';
 // import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
@@ -8,33 +11,27 @@ import 'package:maui/jamaica/widgets/game_score.dart';
 import 'package:maui/jamaica/widgets/score.dart';
 import 'package:maui/jamaica/widgets/slide_up_route.dart';
 import 'package:maui/jamaica/widgets/stars.dart';
-
-typedef UpdateQuizScore(int score);
+import 'package:maui/state/app_state_container.dart';
 
 class Game extends StatefulWidget {
   final QuizSession quizSession;
   final UpdateCoins updateCoins;
   final OnGameUpdate onGameUpdate;
-  final UpdateQuizScore updateScore;
-  const Game(
-      {Key key,
-      this.quizSession,
-      this.updateCoins,
-      this.onGameUpdate,
-      this.updateScore})
+  const Game({Key key, this.quizSession, this.updateCoins, this.onGameUpdate})
       : super(key: key);
   @override
   _GameState createState() => _GameState();
 }
 
 class _GameState extends State<Game> {
-  int _currentGame = 0;
   int _score = 0;
+  int _currentGameScore = 0;
   int _stars = 0;
   String timeTaken;
   int gameIndex = 0;
   bool gameTimer = true;
   bool timeEnd = false;
+  BuiltList<SubScore> _subScores;
 
   Navigator _navigator;
 
@@ -58,6 +55,7 @@ class _GameState extends State<Game> {
   @override
   void initState() {
     super.initState();
+    _subScores = BuiltList<SubScore>();
   }
 
   @override
@@ -69,8 +67,7 @@ class _GameState extends State<Game> {
   Widget build(BuildContext context) {
     _navigator = Navigator(
       onGenerateRoute: (settings) => SlideUpRoute(
-            widgetBuilder: (context) =>
-                _buildGame(context, gameIndex, widget.updateScore),
+            widgetBuilder: (context) => _buildGame(context, gameIndex),
           ),
     );
 
@@ -194,7 +191,7 @@ class _GameState extends State<Game> {
                           Flexible(
                             flex: 2,
                             child: Text(
-                              '$_stars',
+                              '$_score',
                               style: TextStyle(fontSize: size.width * 0.05),
                             ),
                           ),
@@ -220,32 +217,55 @@ class _GameState extends State<Game> {
     );
   }
 
-  Widget _buildGame(BuildContext context, index, updateScore) {
+  Widget _buildGame(BuildContext context, index) {
     print("lets check the values ..is  $index");
     print('lets check the tim end $timeEnd');
 
-    if (index < widget.quizSession.gameData.length) {
-      return buildGame(
-          gameData: widget.quizSession.gameData[index],
-          onGameUpdate: ({int score, int max, bool gameOver, bool star}) {
-            print("in side clicking or not lets check $index");
-            setState(() {
-              _score += score;
-              timeEnd = false;
+    return buildGame(
+        gameData: widget.quizSession.gameData[index],
+        onGameUpdate: ({int score, int max, bool gameOver, bool star}) {
+          print("in side clicking or not lets check $index");
+          setState(() {
+            _score += score - _currentGameScore;
+            _currentGameScore = score;
+            timeEnd = false;
+            if (star) _stars++;
+            if (gameOver) {
               ++gameIndex;
-              // updateScore(_score);
-              if (score > 0) _stars++;
-              //  _currentGame++;
-            });
+              _score += score;
+              _currentGameScore = 0;
+              _subScores = _subScores.rebuild((b) => b.add(SubScore((b) => b
+                ..gameId = widget.quizSession.gameData[index].gameId
+                ..score = score
+                ..complete = star
+                ..startTime = DateTime.now()
+                ..endTime = DateTime.now())));
 
-            Navigator.push(
-                context,
-                SlideUpRoute(
-                    widgetBuilder: (context) =>
-                        _buildGame(context, ++index, updateScore)));
+              AppStateContainer.of(context).addPerformance(Performance((b) => b
+                ..studentId =
+                    AppStateContainer.of(context).state.loggedInUser.id
+                ..sessionId = widget.quizSession.sessionId
+                ..title = widget.quizSession.title
+                ..numGames = widget.quizSession.gameData.length
+                ..score = _score
+                ..startTime = DateTime.now()
+                ..endTime = DateTime.now()));
+              Navigator.push(
+                  context,
+                  SlideUpRoute(
+                      widgetBuilder: (context) =>
+                          ++index < widget.quizSession.gameData.length
+                              ? widget.quizSession.sessionId != 'game'
+                                  ? IntermediateQuizScore(
+                                      onTap: () => Navigator.push(
+                                          context,
+                                          SlideUpRoute(
+                                              widgetBuilder: (context) =>
+                                                  _buildGame(context, index))))
+                                  : _buildGame(context, index)
+                              : GameScore(scores: _score)));
+            }
           });
-    } else {
-      return GameScore(scores: _score);
-    }
+        });
   }
 }
