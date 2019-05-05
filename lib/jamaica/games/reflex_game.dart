@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:maui/jamaica/state/game_utils.dart';
 import 'package:maui/jamaica/widgets/bento_box.dart';
 import 'package:maui/jamaica/widgets/cute_button.dart';
 
@@ -17,8 +18,10 @@ class _ChoiceDetail {
 
 class ReflexGame extends StatefulWidget {
   final List<String> allLetters;
+  final OnGameUpdate onGameUpdate;
 
-  const ReflexGame({Key key, this.allLetters}) : super(key: key);
+  const ReflexGame({Key key, this.onGameUpdate, this.allLetters})
+      : super(key: key);
 
   @override
   _ReflexGameState createState() => _ReflexGameState();
@@ -31,6 +34,8 @@ class _ReflexGameState extends State<ReflexGame> {
   List<String> _letters;
   List<String> _shuffledLetters = [];
   int _maxSize = 4;
+  int _score = 0;
+  int _count = 0;
 
   @override
   void initState() {
@@ -104,6 +109,7 @@ class _ReflexGameState extends State<ReflexGame> {
                       : null;
               _currentIndex++;
             });
+            _score += 2;
             new Future.delayed(const Duration(milliseconds: 250), () {
               setState(() {
                 _solvedLetters.insert(0, text);
@@ -111,12 +117,27 @@ class _ReflexGameState extends State<ReflexGame> {
               });
             });
             if (_currentIndex >= widget.allLetters.length) {
+              widget.onGameUpdate(
+                  score: _score, max: 52, gameOver: true, star: true);
               new Future.delayed(const Duration(milliseconds: 250), () {
                 // widget.onEnd(toJsonMap(), true);
               });
-            }
+            } else
+              widget.onGameUpdate(
+                  score: _score, max: 52, gameOver: false, star: false);
+
             return Reaction.success;
           } else {
+            _score -= 1;
+            _count++;
+            if (_count >= 7) {
+              widget.onGameUpdate(
+                  score: _score, max: 52, gameOver: true, star: false);
+              print('Game Lose');
+            } else {
+              widget.onGameUpdate(
+                  score: _score, max: 52, gameOver: false, star: false);
+            }
             return Reaction.failure;
             // wrong tap
           }
