@@ -120,7 +120,7 @@ class User {
           image: map[imageSel],
           points: map[pointsSel],
           currentLessonId: map[currentLessonIdSel],
-          userType: UserType.values[map[userTypeSel]],
+          userType: UserType.values[map[userTypeSel] ?? 0],
           grade: map[gradeSel],
         );
 
