@@ -37,6 +37,8 @@ class CountingGame extends StatefulWidget {
 
 class _CountingGameState extends State<CountingGame> {
   List<_ChoiceDetail> answers = [];
+  int score = 0;
+  int maxScore, wrongAttempt = 0;
 
   @override
   void initState() {
@@ -103,9 +105,31 @@ class _CountingGameState extends State<CountingGame> {
                             ),
                         onWillAccept: (data) => data == a.number.toString(),
                         onAccept: (data) {
-                          setState(() => a.solved = true);
-                          widget.onGameUpdate(
-                              score: 1, max: 1, gameOver: true, star: true);
+                          setState(() {
+                            if (data == a.number.toString()) {
+                              a.solved = true;
+                              score = score + 2;
+                              widget.onGameUpdate(
+                                  score: score,
+                                  max: 2,
+                                  gameOver: true,
+                                  star: true);
+                            } else if (wrongAttempt < 2) {
+                              score = score - 1;
+                              wrongAttempt = wrongAttempt + 1;
+                              widget.onGameUpdate(
+                                  score: score,
+                                  max: 2,
+                                  gameOver: false,
+                                  star: false);
+                            } else {
+                              widget.onGameUpdate(
+                                  score: score,
+                                  max: 2,
+                                  gameOver: true,
+                                  star: false);
+                            }
+                          });
                         },
                       ))
                 .toList(growable: false),

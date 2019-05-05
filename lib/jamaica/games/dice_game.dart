@@ -6,6 +6,7 @@ import 'package:maui/jamaica/state/game_utils.dart';
 import 'package:maui/jamaica/widgets/bento_box.dart';
 import 'package:maui/jamaica/widgets/cute_button.dart';
 import 'package:maui/jamaica/widgets/dot_number.dart';
+import 'package:maui/jamaica/widgets/game_score.dart';
 
 class _ChoiceDetail {
   int number;
@@ -45,6 +46,9 @@ class _DiceGameState extends State<DiceGame>
   String _myCounter = " ";
   int count = 0;
   bool gameEnd = false;
+  int score = 0;
+  int maxScore = 0;
+  int wrongAttempt = 0;
   AnimationController animation;
 
   @override
@@ -54,6 +58,7 @@ class _DiceGameState extends State<DiceGame>
     choiceDetails = widget.choices
         .map((c) => _ChoiceDetail(number: c, index: i++))
         .toList(growable: false);
+    maxScore = choiceDetails.length * 2;
     animation = new AnimationController(
       vsync: this,
       duration: new Duration(milliseconds: 400),
@@ -179,14 +184,18 @@ class _DiceGameState extends State<DiceGame>
   }
 
   getExistingDataForScore(List<_ChoiceDetail> choiceDetail) {
-    List<int> existingData1 = [];
+    List<int> existingData = [];
     for (int i = 0; i < choiceDetail.length; i++) {
       if (choiceDetail[i].number != null)
-        existingData1.add(choiceDetail[i].number);
+        existingData.add(choiceDetail[i].number);
     }
-    if (existingData1.length <= 1) {
-      widget.onGameUpdate(score: 2, max: 2, gameOver: true, star: true);
+    if (existingData.length <= 1) {
+      widget.onGameUpdate(
+          score: score, max: maxScore, gameOver: true, star: true);
       print("game over");
+    } else {
+      widget.onGameUpdate(
+          score: score, max: maxScore, gameOver: false, star: false);
     }
   }
 
@@ -225,6 +234,7 @@ class _DiceGameState extends State<DiceGame>
                               sub = -sub;
                             }
                             if (btnVal == sum || btnVal == sub) {
+                              score = score + 2;
                               getExistingDataForScore(choiceDetails);
                               resetDice();
                               sum = 0;
@@ -232,15 +242,19 @@ class _DiceGameState extends State<DiceGame>
                               setState(() {
                                 c.number = null;
                               });
-                            }
-                            if (gameEnd) {
-                              setState(() {
-                                widget.onGameUpdate(
-                                    score: 2,
-                                    max: 2,
-                                    gameOver: true,
-                                    star: true);
-                              });
+                            } else if (wrongAttempt < 2) {
+                              score = score - 1;
+                              widget.onGameUpdate(
+                                  score: score,
+                                  max: maxScore,
+                                  gameOver: false,
+                                  star: false);
+                            } else {
+                              widget.onGameUpdate(
+                                  score: score,
+                                  max: maxScore,
+                                  gameOver: true,
+                                  star: false);
                             }
                           });
                         },
