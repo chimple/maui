@@ -1,14 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redurx/flutter_redurx.dart';
-import 'package:maui/actions/add_progress.dart';
-import 'package:maui/widgets/story/story_page.dart';
-import 'package:maui/models/root_state.dart';
 import 'package:maui/loca.dart';
-import 'package:maui/quack/card_header.dart';
-import 'package:maui/quack/card_pager.dart';
-import 'package:maui/quack/card_summary.dart';
-import 'package:maui/db/entity/quack_card.dart';
-import 'package:maui/quack/quiz_navigator.dart';
+import 'package:maui/widgets/story/story_page.dart';
 
 class KnowledgeButton extends StatelessWidget {
   final String cardId;

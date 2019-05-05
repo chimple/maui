@@ -1,14 +1,9 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_redurx/flutter_redurx.dart';
-import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/db/entity/tile.dart';
 import 'package:maui/models/root_state.dart';
-import 'package:maui/quack/collection_progress_indicator.dart';
 import 'package:maui/quack/like_button.dart';
 import 'package:maui/quack/user_activity.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class SocialSummary extends StatelessWidget {
   final String parentId;
