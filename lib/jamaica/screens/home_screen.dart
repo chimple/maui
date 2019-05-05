@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:built_value/standard_json_plugin.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:maui/jamaica/screens/profile_screen.dart';
 import 'package:maui/models/chat_script.dart';
 import 'package:maui/models/quiz_join.dart';
 import 'package:maui/models/quiz_session.dart';
@@ -193,9 +194,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 children: <Widget>[
                                                   InkWell(
                                                     onTap: () {
-                                                      Navigator.of(context)
-                                                          .pushNamed(
-                                                              '/jam_profile');
+                                                      // Navigator.of(context)
+                                                      //     .pushNamed(
+                                                      //         '/jam_profile');
+                                                      Navigator.of(context).push(
+                                                          MaterialPageRoute(
+                                                              builder: (BuildContext
+                                                                      context) =>
+                                                                  ProfileScreen()));
                                                     },
                                                     child: CircleAvatar(
                                                       child: new Container(
