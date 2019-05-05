@@ -1,30 +1,19 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
-import 'package:maui/jamaica/state/game_utils.dart';
+import 'package:maui/data/game_utils.dart';
 import 'package:maui/jamaica/widgets/bento_box.dart';
 import 'package:maui/jamaica/widgets/cute_button.dart';
 
-enum _Type { choice, question, answer }
+// enum _Type { choice, question, answer }
 
 class _ChoiceDetail {
-  int number;
   Reaction reaction;
   String choice;
-  String answer;
-  _Type type;
-  int index;
   bool appear;
-  _ChoiceDetail(
-      {this.number,
-      this.type = _Type.choice,
-      this.reaction = Reaction.success,
-      this.index,
-      this.choice,
-      this.answer,
-      this.appear});
+  _ChoiceDetail({this.reaction = Reaction.success, this.choice, this.appear});
   @override
   String toString() =>
-      '_ChoiceDetail(choice: $number, answer: $answer, appear: $appear , type: $type, index: $index, reaction: $reaction)';
+      '_ChoiceDetail(choice $choice, appear: $appear , reaction: $reaction)';
 }
 
 class MultipleChoiceGame extends StatefulWidget {
@@ -41,26 +30,22 @@ class MultipleChoiceGame extends StatefulWidget {
 
 class _MultipleChoiceGameState extends State<MultipleChoiceGame> {
   List<_ChoiceDetail> choiceDetails;
-  List<_ChoiceDetail> answerDetails;
-  var _dataLen = 0, _complete = 0, _count = 0;
+  // List<_ChoiceDetail> answerDetails;
+  List<String> choices = [];
+  var _dataLength = 0, _complete = 0, _score = 0, _count = 0;
   @override
   void initState() {
     super.initState();
-    int i = 0;
-    int j = 0;
-    choiceDetails = widget.choices
+    choices.addAll(widget.answers?.asList());
+    choices.addAll(widget.choices?.asList());
+    choices.shuffle();
+    choiceDetails = choices
         .map((c) =>
-            _ChoiceDetail(choice: c, index: i++, reaction: Reaction.success))
+            _ChoiceDetail(choice: c, appear: false, reaction: Reaction.success))
         .toList();
-    widget.answers.map((c) {
-      choiceDetails.add(_ChoiceDetail(choice: c, index: i++));
-    }).toList();
-    // answerDetails = widget.answers
-    //     .map((a) => _ChoiceDetail(choice: a, appear: false, index: j++))
-    //     .toList(growable: false);
     _complete = widget.answers.length;
-    _dataLen = widget.answers.length + widget.choices.length;
-    _dataLen = (_dataLen / 2).ceil();
+    _dataLength = widget.choices.length;
+    _dataLength = (_dataLength / 2).ceil();
   }
 
   @override
@@ -82,8 +67,8 @@ class _MultipleChoiceGameState extends State<MultipleChoiceGame> {
               child: BentoBox(
                 calculateLayout: BentoBox.calculateVerticalLayout,
                 axis: Axis.vertical,
-                cols: _dataLen,
-                rows: _dataLen,
+                cols: _dataLength,
+                rows: _dataLength,
                 dragConfig: DragConfig.fixed,
                 qChildren: <Widget>[],
                 children: choiceDetails.map((c) {
@@ -92,18 +77,44 @@ class _MultipleChoiceGameState extends State<MultipleChoiceGame> {
                     child: Text(c.choice),
                     reaction: c.reaction,
                     onPressed: () {
-                      print(c.choice);
                       if (widget.answers.contains(c.choice)) {
-                        _count++;
-                        if (_count == _complete) {
-                          widget.onGameUpdate(
-                              score: _count,
-                              max: _count,
-                              gameOver: true,
-                              star: true);
-                        }
+                        _score = _score + 2;
+                        print('correct');
+                        choiceDetails[choices.indexOf(c.choice)] =
+                            _ChoiceDetail(
+                                appear: true,
+                                choice: c.choice,
+                                reaction: Reaction.success);
+                        choiceDetails.forEach((c) {
+                          if (c.appear) {
+                            _count++;
+                            print('game over');
+                            if (_count == _complete) {
+                              widget.onGameUpdate(
+                                  max: choices.length,
+                                  score: _score,
+                                  gameOver: true,
+                                  star: true);
+                            }
+                          }
+                        });
+                        widget.onGameUpdate(
+                            max: choices.length,
+                            score: _score,
+                            gameOver: false,
+                            star: true);
                         return Reaction.success;
                       } else {
+                        print('wrong');
+                        _score--;
+                        if (_score <= 0) {
+                          _score = 0;
+                        }
+                        widget.onGameUpdate(
+                            max: choices.length,
+                            score: _score,
+                            gameOver: false,
+                            star: false);
                         return Reaction.failure;
                       }
                     },
@@ -113,5 +124,10 @@ class _MultipleChoiceGameState extends State<MultipleChoiceGame> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

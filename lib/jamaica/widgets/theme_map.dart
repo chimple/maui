@@ -1,7 +1,7 @@
-import 'package:flutter/rendering.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
-import 'package:maui/jamaica/state/state_container.dart';
+import 'package:flutter/rendering.dart';
+import 'package:maui/state/app_state_container.dart';
 
 final List<String> _iconTitle = [
   'House',
@@ -99,9 +99,6 @@ class _ThemeMapState extends State<ThemeMap>
 
   @override
   Widget build(BuildContext context) {
-    // final stateContainer = StateContainer.of(context);
-    // print(
-    //     'stateContainer.state.userProfile ${stateContainer.state..userProfile.name}');
     int _incr0 = 0;
     int _incr1 = 0;
     _mediaQueryData = MediaQuery.of(context);
@@ -397,9 +394,9 @@ class FlareIcon extends StatelessWidget {
 }
 
 void navigateToScreen(BuildContext context, String text, String t) {
-  StateContainer.of(context).setCurrentTheme(t);
-  // print(StateContainer.of(context).state.userProfile.currentTheme);
-  print(t);
+  AppStateContainer.of(context).updateUserProfile(AppStateContainer.of(context)
+      .userProfile
+      .rebuild((b) => b..currentTheme = t));
   Widget child = Container(
     child: Center(
         child: Text(

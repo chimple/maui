@@ -285,7 +285,6 @@ class _SelectOpponentScreenState extends State<SelectOpponentScreen> {
       name: user.name,
       imageUrl: user.image,
       color: user.color,
-      replaceWithHoodie: false,
       onTap: () => onTap != null ? onTap(context, user) : null,
     );
   }

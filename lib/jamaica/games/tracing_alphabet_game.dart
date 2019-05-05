@@ -2,7 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart' hide Image;
 import 'package:maui/components/simple_drawing.dart';
-import 'package:maui/jamaica/state/game_utils.dart';
+import 'package:maui/data/game_utils.dart';
 
 class TracingAlphabetGame extends StatefulWidget {
   final List<String> alphabets;
