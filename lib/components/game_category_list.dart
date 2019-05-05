@@ -426,6 +426,9 @@ class _GameCategoryList extends State<GameCategoryList> {
                       gameConfig: gameConfig,
                     ),
               ));
+        break;
+      case GameDisplay.otherHeadToHead:
+        break;
     }
   }
 }
