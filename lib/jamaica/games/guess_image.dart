@@ -1,13 +1,13 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
-import 'package:maui/jamaica/state/game_utils.dart';
+import 'package:flutter/rendering.dart';
+import 'package:maui/data/game_utils.dart';
 import 'package:maui/models/image_label_data.dart';
 
 class GuessImage extends StatefulWidget {
   final String imageName;
   final OnGameUpdate onGameUpdate;
   final BuiltList<ImageItemDetail> imageItemDetails;
-
   const GuessImage(
       {Key key, this.imageName, this.imageItemDetails, this.onGameUpdate})
       : super(key: key);
@@ -17,7 +17,17 @@ class GuessImage extends StatefulWidget {
 
 class _GuessImageState extends State<GuessImage> {
   List<String> label = [];
+  int flag = 0;
+  String dragText;
   double textSize;
+  double centerX;
+  double centerY;
+  ImageInfo _imageInfo;
+  AssetImage assestImage;
+  double deviceHeight;
+  double deviceWidth;
+  double dx;
+  double dy;
   @override
   void initState() {
     super.initState();
@@ -25,6 +35,17 @@ class _GuessImageState extends State<GuessImage> {
       label.add(f.itemName);
     }).toList();
     label.sort((a, b) => a.length.compareTo(b.length));
+    assestImage = AssetImage(widget.imageName);
+    WidgetsBinding.instance.addPostFrameCallback((a) => _getImageInfo());
+  }
+
+  void _getImageInfo() async {
+    Image image = new Image.asset(widget.imageName);
+    image.image
+        .resolve(new ImageConfiguration())
+        .addListener((ImageInfo info, bool _) {
+      _imageInfo = info;
+    });
   }
 
   @override
@@ -36,7 +57,18 @@ class _GuessImageState extends State<GuessImage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Image.asset(widget.imageName),
+          Expanded(
+            child: Stack(
+              children: <Widget>[
+                Image(
+                  image: assestImage,
+                ),
+                flag == 1
+                    ? displayText(centerX, centerY, dragText)
+                    : Container()
+              ],
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
@@ -51,6 +83,25 @@ class _GuessImageState extends State<GuessImage> {
               alignment: WrapAlignment.center,
               children: label
                   .map((s) => Draggable(
+                        dragAnchor: DragAnchor.pointer,
+                        onDragStarted: () {
+                          WidgetsBinding.instance
+                              .addPostFrameCallback((_) => setState(() {
+                                    RenderBox getBox =
+                                        context.findRenderObject();
+                                    deviceHeight = getBox.size.height;
+                                    deviceWidth = getBox.size.width;
+                                  }));
+                        },
+                        onDragEnd: (details) {
+                          dx = (details.offset.dx / deviceWidth) *
+                              _imageInfo.image.width;
+                          dy = ((details.offset.dy) / deviceWidth) *
+                              _imageInfo.image.height;
+                          setState(() {
+                            dragEnd(dx, dy);
+                          });
+                        },
                         feedback: Material(
                           color: Colors.transparent,
                           child: _build(s),
@@ -68,6 +119,34 @@ class _GuessImageState extends State<GuessImage> {
         ],
       ),
     );
+  }
+
+  Widget displayText(double x, double y, String s) {
+    return Stack(
+      children: <Widget>[
+        Positioned(
+          left: x,
+          top: y,
+          child: Text(s),
+        )
+      ],
+    );
+  }
+
+  void dragEnd(double dx, double dy) {
+    if (_imageInfo != null) {
+      widget.imageItemDetails.forEach((c) {
+        if ((c.x <= dx && dx <= c.x + c.width) &&
+            (c.y <= dy && dy <= c.y + c.height)) {
+          double tempX = (c.x + c.x + c.width) / 2;
+          double tempY = (c.y + c.y + c.height) / 2;
+          centerX = ((tempX / _imageInfo.image.width) * deviceWidth);
+          centerY = ((tempY / _imageInfo.image.width) * deviceWidth);
+          dragText = c.itemName;
+          flag = 1;
+        }
+      });
+    }
   }
 
   Widget _build(String s) {

@@ -3,7 +3,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:maui/jamaica/state/game_utils.dart';
+import 'package:maui/data/game_utils.dart';
 import 'package:maui/models/sentence_data.dart';
 
 class MadSentenceGame extends StatefulWidget {
@@ -123,6 +123,7 @@ class _MadSentenceGameState extends State<MadSentenceGame> {
                   const Duration(milliseconds: 700),
                   () => widget.onGameUpdate(
                       score: score, max: score, gameOver: true, star: true));
+              _buttonKey = 0;
             });
           },
           icon: Icon(

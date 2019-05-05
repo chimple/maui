@@ -4,12 +4,12 @@ import 'package:built_collection/built_collection.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:maui/db/entity/lesson.dart';
-import 'package:maui/jamaica/models/app_state.dart';
 import 'package:maui/jamaica/widgets/game.dart';
 import 'package:maui/jamaica/widgets/slide_up_route.dart';
 import 'package:maui/models/quiz_session.dart';
 import 'package:maui/repos/game_data_repo.dart';
 import 'package:maui/repos/lesson_repo.dart';
+import 'package:maui/state/app_state_container.dart';
 
 enum _ButtonStatus { active, disabled }
 
@@ -41,14 +41,16 @@ class GameListState extends State<GameList>
   }
 
   initFn() async {
-    setState(() => isLoading = true);
-    data = [];
-    userData = AppState.loading().userProfile.lessons;
-    data.add(await LessonRepo().getLessonsByTopic(TopicType.math));
-    data.add(await LessonRepo().getLessonsByTopic(TopicType.reading));
-    double scrollOffset = _calcCurrentLessonIndex(data[0]) * (width * .7) / 2.1;
-    _scrollController = ScrollController(initialScrollOffset: scrollOffset);
-    setState(() => isLoading = false);
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      data = [];
+      userData = AppStateContainer.of(context).userProfile.lessons;
+      data.add(await LessonRepo().getLessonsByTopic(TopicType.math));
+      data.add(await LessonRepo().getLessonsByTopic(TopicType.reading));
+      double scrollOffset =
+          _calcCurrentLessonIndex(data[0]) * (width * .7) / 2.1;
+      _scrollController = ScrollController(initialScrollOffset: scrollOffset);
+      setState(() => isLoading = false);
+    });
   }
 
   _tabListener() {
@@ -90,7 +92,7 @@ class GameListState extends State<GameList>
         .push(SlideUpRoute(
           widgetBuilder: (context) => Game(
                 quizSession: QuizSession((b) => b
-                  ..sessionId = 'A'
+                  ..sessionId = 'game'
                   ..title = lesson.title
                   ..gameData.addAll(gameData)),
               ),

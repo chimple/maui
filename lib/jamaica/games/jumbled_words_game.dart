@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
-import 'package:maui/jamaica/state/game_utils.dart';
+import 'package:maui/data/game_utils.dart';
 import 'package:maui/jamaica/widgets/bento_box.dart';
 import 'package:maui/jamaica/widgets/cute_button.dart';
 
@@ -78,7 +78,7 @@ class _JumbledWordsGameState extends State<JumbledWordsGame> {
                 key: Key('answer'),
                 builder: (context, candidateData, rejectedData) =>
                     Center(child: Text(widget.answer)),
-                onWillAccept: (data) => data == widget.answer,
+                onWillAccept: (data) => true,
                 onAccept: (data) {
                   WidgetsBinding.instance
                       .addPostFrameCallback((_) => setState(() {
@@ -86,14 +86,17 @@ class _JumbledWordsGameState extends State<JumbledWordsGame> {
                                 .firstWhere((c) => c.choice == data)
                                 .solved = true;
                             thisSolved = true;
-                            score++;
+                            score = score + 2;
                             Future.delayed(
                                 const Duration(milliseconds: 700),
-                                () => widget.onGameUpdate(
-                                    score: score,
-                                    max: score,
-                                    gameOver: true,
-                                    star: true));
+                                () => setState(() {
+                                      widget.onGameUpdate(
+                                          score: score,
+                                          max: 2,
+                                          gameOver: true,
+                                          star: true);
+                                      print("object");
+                                    }));
                           }));
                 },
               )

@@ -14,7 +14,6 @@ class FriendItem extends StatelessWidget {
   bool isFile;
   Function onTap;
   int numNotifs;
-  bool replaceWithHoodie;
   FriendItem(
       {Key key,
       @required this.id,
@@ -24,7 +23,6 @@ class FriendItem extends StatelessWidget {
       this.imageMemory,
       this.onTap,
       this.numNotifs = 0,
-      this.replaceWithHoodie = true,
       this.isFile = true})
       : super(key: key);
 
@@ -68,13 +66,11 @@ class FriendItem extends StatelessWidget {
 
   Widget _buildFriendItem(String id, User user) {
     return new CircleAvatar(
-      backgroundImage: replaceWithHoodie && user.id == id
-          ? new AssetImage('assets/chat_Bot_Icon.png')
-          : isFile
-              ? FileImage(File(imageUrl))
-              : imageMemory != null
-                  ? MemoryImage(imageMemory)
-                  : AssetImage('assets/hoodie_bear.png'),
+      backgroundImage: isFile
+          ? FileImage(File(imageUrl))
+          : imageMemory != null
+              ? MemoryImage(imageMemory)
+              : AssetImage('assets/hoodie_bear.png'),
     );
   }
 

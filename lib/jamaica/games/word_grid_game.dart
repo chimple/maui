@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:maui/components/Shaker.dart';
 import 'package:maui/components/responsive_grid_view.dart';
-import 'package:maui/jamaica/state/game_utils.dart';
+import 'package:maui/data/game_utils.dart';
 
 class WordGridGame extends StatefulWidget {
   final List<String> answer;
