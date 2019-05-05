@@ -24,6 +24,7 @@ import 'package:maui/storyboards/games/match_the_shape_game_story.dart';
 import 'package:maui/storyboards/games/match_with_image_game_story.dart';
 import 'package:maui/storyboards/games/math_op_game_story.dart';
 import 'package:maui/storyboards/games/memory_game_story.dart';
+import 'package:maui/storyboards/games/moving_text_game_story.dart';
 import 'package:maui/storyboards/games/multiple_choice_game_story.dart';
 import 'package:maui/storyboards/games/number_balance_game_story.dart';
 import 'package:maui/storyboards/games/order_by_size_game_story.dart';
@@ -101,6 +102,7 @@ void main() {
     MathOpGameStory(),
     MemoryGameStory(),
     MonsterGameStory(),
+    MovingTextGameStory(),
     MultipleChoiceGameStory(),
     NumberBalanceGameStory(),
     OrderBySizeGameStory(),

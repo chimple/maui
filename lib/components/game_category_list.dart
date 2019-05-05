@@ -1,14 +1,14 @@
 import 'dart:math';
 import 'package:maui/components/expansionTile.dart';
 import 'package:maui/db/entity/concept.dart';
-import 'package:maui/games/single_game.dart';
+import 'package:maui/old/games/single_game.dart';
 import 'package:meta/meta.dart';
 import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
 import 'expansionTile.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/state/app_state_container.dart';
-import 'package:maui/games/head_to_head_game.dart';
+import 'package:maui/old/games/head_to_head_game.dart';
 import 'package:maui/loca.dart';
 import 'package:maui/components/gameaudio.dart';
 
@@ -251,8 +251,7 @@ class _GameCategoryList extends State<GameCategoryList> {
             ),
             trailing: lessonId != null &&
                     lessonId >
-                        AppStateContainer
-                            .of(context)
+                        AppStateContainer.of(context)
                             .state
                             .loggedInUser
                             .currentLessonId
@@ -268,8 +267,7 @@ class _GameCategoryList extends State<GameCategoryList> {
             onTap: () {
               lessonId != null &&
                       lessonId >
-                          AppStateContainer
-                              .of(context)
+                          AppStateContainer.of(context)
                               .state
                               .loggedInUser
                               .currentLessonId
@@ -299,8 +297,7 @@ class _GameCategoryList extends State<GameCategoryList> {
         )),
         trailing: lessonId != null &&
                 lessonId >
-                    AppStateContainer
-                        .of(context)
+                    AppStateContainer.of(context)
                         .state
                         .loggedInUser
                         .currentLessonId
@@ -316,8 +313,7 @@ class _GameCategoryList extends State<GameCategoryList> {
         onTap: () {
           lessonId != null &&
                   lessonId >
-                      AppStateContainer
-                          .of(context)
+                      AppStateContainer.of(context)
                           .state
                           .loggedInUser
                           .currentLessonId
@@ -417,19 +413,22 @@ class _GameCategoryList extends State<GameCategoryList> {
         gameConfig.otherUser = otherUser;
         gameMode == GameMode.iterations
             ? Navigator.of(context).push(MaterialPageRoute<Null>(
-                  builder: (BuildContext context) => new HeadToHeadGame(
-                        gameName,
-                        gameMode: GameMode.iterations,
-                        gameConfig: gameConfig,
-                      ),
-                ))
+                builder: (BuildContext context) => new HeadToHeadGame(
+                      gameName,
+                      gameMode: GameMode.iterations,
+                      gameConfig: gameConfig,
+                    ),
+              ))
             : Navigator.of(context).push(MaterialPageRoute<Null>(
-                  builder: (BuildContext context) => new HeadToHeadGame(
-                        gameName,
-                        gameMode: GameMode.timed,
-                        gameConfig: gameConfig,
-                      ),
-                ));
+                builder: (BuildContext context) => new HeadToHeadGame(
+                      gameName,
+                      gameMode: GameMode.timed,
+                      gameConfig: gameConfig,
+                    ),
+              ));
+        break;
+      case GameDisplay.otherHeadToHead:
+        break;
     }
   }
 }

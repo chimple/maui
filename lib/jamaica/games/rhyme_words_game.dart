@@ -30,9 +30,9 @@ class RhymeWordsGame extends StatefulWidget {
 
 class _RhymeWordsGameState extends State<RhymeWordsGame> {
   List<_ChoiceDetail> choiceDetails;
-  var score = 0;
+  var _score = 0;
   int complete = 0;
-  int count = 0;
+  int _count = 0;
   List<String> _endList = [];
 
   @override
@@ -77,7 +77,7 @@ class _RhymeWordsGameState extends State<RhymeWordsGame> {
                           .indexWhere((ch) => ch.choice == c.choice);
                       int dataIndex =
                           widget.answers.indexWhere((a) => a == data);
-                      return dataIndex == currentIndex;
+                      return true;
                     },
                     onAccept: (data) {
                       setState(() {
@@ -86,11 +86,11 @@ class _RhymeWordsGameState extends State<RhymeWordsGame> {
                         int dataIndex =
                             widget.answers.indexWhere((a) => a == data);
                         if (dataIndex == currentIndex) {
-                          score++;
+                          _score += 2;
                           if (--complete == 0)
                             widget.onGameUpdate(
-                                score: score,
-                                max: score,
+                                score: _score,
+                                max: 8,
                                 gameOver: true,
                                 star: true);
                           print("this is complete $complete");
@@ -119,18 +119,40 @@ class _RhymeWordsGameState extends State<RhymeWordsGame> {
                                         const Duration(milliseconds: 1000),
                                         () => setState(() =>
                                             widget.onGameUpdate(
-                                                score: score,
-                                                max: score,
-                                                gameOver: true,
-                                                star: true)));
+                                                score: _score,
+                                                max: 8,
+                                                gameOver: false,
+                                                star: false)));
                                   } else {
-                                    score--;
+                                    _score--;
+                                    widget.onGameUpdate(
+                                        score: _score,
+                                        max: 8,
+                                        gameOver: false,
+                                        star: false);
                                     _endList = [];
                                   }
                                 }),
                           );
-                        } else
-                          score--;
+                        } else {
+                          _score--;
+                          _count++;
+                          if (_count >= 2) {
+                            // print('You lose');
+                            widget.onGameUpdate(
+                                score: _score,
+                                max: 8,
+                                gameOver: true,
+                                star: false);
+                          } else {
+                            widget.onGameUpdate(
+                                score: _score,
+                                max: 8,
+                                gameOver: false,
+                                star: false);
+                          }
+                        }
+                        // print('score iz : $_score');
                       });
                     }),
               ))

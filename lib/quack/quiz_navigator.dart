@@ -1,21 +1,14 @@
 import 'dart:convert';
 
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_redurx/flutter_redurx.dart';
-import 'package:maui/actions/add_progress.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:maui/db/entity/chapter.dart';
-import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/db/entity/quiz.dart';
 import 'package:maui/loca.dart';
-import 'package:maui/models/root_state.dart';
-import 'package:maui/quack/card_header.dart';
 import 'package:maui/quack/knowledge_detail.dart';
 import 'package:maui/quack/quiz_card_detail.dart';
 import 'package:maui/quack/quiz_result.dart';
-import 'package:maui/quack/quiz_selection.dart';
-import 'package:maui/repos/collection_repo.dart';
 
 enum NavigatorMode { disabled, checkable, result }
 

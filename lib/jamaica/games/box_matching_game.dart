@@ -36,7 +36,8 @@ class _BoxMatchingGameState extends State<BoxMatchingGame> {
   List<_ChoiceDetail> choiceDetails;
   List<_ChoiceDetail> answerDetails;
   List<List<String>> addToBox = [];
-  int complete, score = 0;
+  int score = 0;
+  int complete, maxScore, wrongAttempt = 0;
   @override
   void initState() {
     super.initState();
@@ -47,6 +48,7 @@ class _BoxMatchingGameState extends State<BoxMatchingGame> {
         .toList(growable: false)
           ..shuffle();
     complete = choiceDetails.length;
+    maxScore = choiceDetails.length * 2;
     answerDetails = widget.answers
         .map((a) => _ChoiceDetail(choice: a, appear: false, index: j++))
         .toList(growable: false);
@@ -105,20 +107,34 @@ class _BoxMatchingGameState extends State<BoxMatchingGame> {
                               }),
                           onWillAccept: (data) => data[0] == a.choice,
                           onAccept: (data) => setState(() {
-                                score++;
-                                if (--complete == 0)
+                                if (data[0] == a.choice) {
+                                  int index = int.parse(data.substring(1));
+                                  print("${data.substring(1)}......${choiceDetails[index]}");
+                                  addToBox[a.index].add(a.choice);
+                                  a.appear = true;
+                                  choiceDetails[index].appear = false;
+                                  score = score + 2;
+                                  if (--complete == 0)
+                                    widget.onGameUpdate(
+                                        score: score,
+                                        max: choiceDetails.length,
+                                        gameOver: true,
+                                        star: true);
+                                } else if (wrongAttempt < 2) {
+                                  score = score - 1;
+                                  wrongAttempt = wrongAttempt + 1;
                                   widget.onGameUpdate(
                                       score: score,
-                                      max: score,
+                                      max: maxScore,
+                                      gameOver: false,
+                                      star: false);
+                                } else {
+                                  widget.onGameUpdate(
+                                      score: score,
+                                      max: 2,
                                       gameOver: true,
-                                      star: true);
-                                ;
-                                int index = int.parse(data.substring(1));
-                                print(
-                                    "${data.substring(1)}......${choiceDetails[index]}");
-                                addToBox[a.index].add(a.choice);
-                                a.appear = true;
-                                choiceDetails[index].appear = false;
+                                      star: false);
+                                }
                               }),
                         ) as Widget),
                   )

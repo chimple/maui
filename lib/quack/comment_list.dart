@@ -5,7 +5,6 @@ import 'package:maui/db/entity/tile.dart';
 import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/comment_card.dart';
 import 'package:maui/quack/comment_text_field.dart';
-import 'package:maui/repos/comment_repo.dart';
 
 class CommentList extends StatelessWidget {
   final String parentId;
