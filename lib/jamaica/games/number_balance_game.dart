@@ -50,6 +50,8 @@ class _NumberBalanceGameState extends State<NumberBalanceGame> {
   int _leftHandAnswer;
   int _rightHandAnswer;
   bool _correct = false;
+  bool qPosition1 = false;
+  bool qPosition2 = false;
   int _score = 0;
   var _leftAlignment = Alignment.center;
   var _rightAlignment = Alignment.center;
@@ -64,6 +66,12 @@ class _NumberBalanceGameState extends State<NumberBalanceGame> {
     _leftOperand2 = widget.leftExpression.item3;
     _rightOperand1 = widget.rightExpression.item1;
     _rightOperand2 = widget.rightExpression.item3;
+
+    if (_leftOperand1 == '?' || _rightOperand1 == '?') {
+      qPosition1 = true;
+    } else if (_leftOperand2 == '?' || _rightOperand2 == '?') {
+      qPosition2 = true;
+    }
   }
 
   _solveEquation() {
@@ -133,34 +141,52 @@ class _NumberBalanceGameState extends State<NumberBalanceGame> {
               : MainAxisAlignment.spaceAround,
           children: <Widget>[
             operand1 != null
-                ? DragTarget<String>(
-                    key: Key('lbox1'),
-                    builder: (context, candidateData, rejectedData) =>
-                        Container(
-                          height: 70.0,
-                          width: 70.0,
-                          decoration: BoxDecoration(
-                              color: Colors.blue,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(16.0))),
-                          child: Center(
-                            child: Text(
-                              "$operand1",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 50.0,
-                                  fontWeight: FontWeight.bold),
+                ? qPosition1
+                    ? DragTarget<String>(
+                        key: Key('lbox1'),
+                        builder: (context, candidateData, rejectedData) =>
+                            Container(
+                              height: 70.0,
+                              width: 70.0,
+                              decoration: BoxDecoration(
+                                  color: Colors.blue,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(16.0))),
+                              child: Center(
+                                child: Text(
+                                  "$operand1",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 50.0,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
                             ),
+                        onWillAccept: (data) => true,
+                        onAccept: (data) => setState(() {
+                              if (equation == Equation.lefthandside) {
+                                _leftOperand1 = data;
+                              } else
+                                _rightOperand1 = data;
+                            }),
+                      )
+                    : Container(
+                        height: 70.0,
+                        width: 70.0,
+                        decoration: BoxDecoration(
+                            color: Colors.blue,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(16.0))),
+                        child: Center(
+                          child: Text(
+                            "$operand1",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 50.0,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
-                    onWillAccept: (data) => true,
-                    onAccept: (data) => setState(() {
-                          if (equation == Equation.lefthandside) {
-                            _leftOperand1 = data;
-                          } else
-                            _rightOperand1 = data;
-                        }),
-                  )
+                      )
                 : Container(),
             op != null
                 ? Text(
@@ -172,35 +198,53 @@ class _NumberBalanceGameState extends State<NumberBalanceGame> {
                   )
                 : Container(),
             operand2 != null
-                ? DragTarget<String>(
-                    key: Key('rbox2'),
-                    builder: (context, candidateData, rejectedData) =>
-                        Container(
-                          height: 70.0,
-                          width: 70.0,
-                          decoration: BoxDecoration(
-                              color: Colors.blue,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(16.0))),
-                          child: Center(
-                            child: Text(
-                              "$operand2",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 50.0,
-                                  fontWeight: FontWeight.bold),
+                ? qPosition2
+                    ? DragTarget<String>(
+                        key: Key('rbox2'),
+                        builder: (context, candidateData, rejectedData) =>
+                            Container(
+                              height: 70.0,
+                              width: 70.0,
+                              decoration: BoxDecoration(
+                                  color: Colors.blue,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(16.0))),
+                              child: Center(
+                                child: Text(
+                                  "$operand2",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 50.0,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
                             ),
+                        onWillAccept: (data) => true,
+                        onAccept: (data) {
+                          setState(() {
+                            if (equation == Equation.lefthandside) {
+                              _leftOperand2 = data;
+                            } else
+                              _rightOperand2 = data;
+                          });
+                        })
+                    : Container(
+                        height: 70.0,
+                        width: 70.0,
+                        decoration: BoxDecoration(
+                            color: Colors.blue,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(16.0))),
+                        child: Center(
+                          child: Text(
+                            "$operand2",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 50.0,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
-                    onWillAccept: (data) => true,
-                    onAccept: (data) {
-                      setState(() {
-                        if (equation == Equation.lefthandside) {
-                          _leftOperand2 = data;
-                        } else
-                          _rightOperand2 = data;
-                      });
-                    })
+                      )
                 : Container(),
           ],
         ));
