@@ -1,17 +1,15 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_redurx/flutter_redurx.dart';
 import 'package:maui/actions/add_progress.dart';
 import 'package:maui/actions/fetch_card_detail.dart';
 import 'package:maui/db/entity/quack_card.dart';
+import 'package:maui/loca.dart';
 import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/card_detail.dart';
-import 'package:maui/loca.dart';
-import 'package:maui/quack/collection_progress_indicator.dart';
 import 'package:maui/state/app_state_container.dart';
-import '../actions/update_points.dart';
 import 'package:nima/nima_actor.dart';
+
+import '../actions/update_points.dart';
 
 class CardLock extends StatefulWidget {
   final QuackCard card;

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:maui/jamaica/state/game_utils.dart';
+import 'package:maui/data/game_utils.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/components/Shaker.dart';
 
@@ -32,6 +32,7 @@ class ConnectDotGameState extends State<ConnectDotGame> {
   var range;
   var rand;
   var code;
+
   List<int> numbers = [];
   List<int> storingAnsData = [];
   List<int> _shuffledLetters = [];
@@ -44,11 +45,15 @@ class ConnectDotGameState extends State<ConnectDotGame> {
   List<Offset> _pointssend = <Offset>[];
   var temp = 0;
   List<ShakeCell> shakeCells = [];
+  int maxScore;
+  int score = 0;
+  int wrongAttempt = 0;
   @override
   void initState() {
     super.initState();
     print("hello this should come first...");
     var rnge = new Random();
+
     for (var i = 0; i < 1; i++) {
       rand = rnge.nextInt(2);
     }
@@ -76,6 +81,7 @@ class ConnectDotGameState extends State<ConnectDotGame> {
     shakeCells = numbers.map((a) => ShakeCell.inActive).toList(growable: false);
 
     print(_shuffledLetters);
+    maxScore = 2 * widget.serialData.length;
 
     var todnumbers = new List.generate(n, (_) => new List(n));
     for (var i = 0; i < size; i++) {
@@ -202,6 +208,7 @@ class ConnectDotGameState extends State<ConnectDotGame> {
               print('nikkkkkkkkkkkkkk');
               temp = index;
               start = true;
+              score = score + 2;
               storingAnsData.add(text);
               tempindex.add(index);
               _pointssend.add(offset);
@@ -275,6 +282,7 @@ class ConnectDotGameState extends State<ConnectDotGame> {
             if (storingAnsData.length == widget.serialData.length) {
               for (int i = 0; i < storingAnsData.length; i++) {
                 if (storingAnsData[i] == widget.serialData[i]) {
+                  score = score + 2;
                 } else {
                   //  tries += 5;
                   flag = 1;
@@ -289,7 +297,7 @@ class ConnectDotGameState extends State<ConnectDotGame> {
             if (flag == 0) {
               print('on  endddd  ');
               widget.onGameUpdate(
-                  score: 20, max: 20, gameOver: true, star: true);
+                  score: score, max: maxScore, gameOver: true, star: true);
 
               setState(() {
                 rowExtracting = 0;
@@ -312,7 +320,19 @@ class ConnectDotGameState extends State<ConnectDotGame> {
               });
             }
             if (flag == 1) {
-              widget.onGameUpdate(score: 0, max: 1, gameOver: true, star: true);
+              wrongAttempt = wrongAttempt + 1;
+              if (wrongAttempt <= 2) {
+                setState(() {
+                  widget.onGameUpdate(
+                      score: -1, max: maxScore, gameOver: false, star: false);
+                });
+              } else {
+                setState(() {
+                  widget.onGameUpdate(
+                      score: -1, max: maxScore, gameOver: true, star: false);
+                });
+              }
+
               print("object....shanking thing is...:$_visibleflag");
               setState(() {
                 storingAnsData = [];

@@ -5,13 +5,8 @@ import 'package:maui/actions/fetch_comments.dart';
 import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/db/entity/tile.dart';
 import 'package:maui/models/root_state.dart';
-import 'package:maui/quack/card_detail.dart';
-import 'package:maui/quack/comment_list.dart';
-import 'package:maui/quack/comment_text_field.dart';
 import 'package:maui/quack/knowledge_detail.dart';
-import 'package:maui/quack/quiz_navigator.dart';
 import 'package:maui/quack/quiz_welcome.dart';
-import 'package:maui/repos/collection_repo.dart';
 
 class CardPager extends StatefulWidget {
   final String cardId;
