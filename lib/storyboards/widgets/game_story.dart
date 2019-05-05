@@ -310,7 +310,7 @@ class GameStory extends FullScreenStory {
             ..gameData.addAll([
               MultiData((g) => g
                 ..gameId = 'MovingTextGame'
-                ..choices.addAll(['He' 'Like' 'to' 'tease' ,'people'])
+                ..choices.addAll(['He', 'Like', 'to', 'tease', 'people'])
                 ..answers.addAll(['He', 'Like', 'to', 'tease', 'people'])),
             ])
             ..title = "MultipleChoiceGame"
