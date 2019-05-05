@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:built_value/standard_json_plugin.dart';
+import 'package:maui/jamaica/screens/profile_screen.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -195,11 +196,42 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       : size.width * 0.12,
                                                   width: media.orientation ==
                                                           Orientation.portrait
-                                                      ? size.width * 0.204
-                                                      : size.width * 0.12,
-                                                  decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                          color: Colors.white,
+                                                      ? size.width * 0.0064
+                                                      : size.width * 0.005),
+                                              borderRadius:
+                                                  BorderRadius.circular(50.0),
+                                              color: Colors.black12,
+                                            ),
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: <Widget>[
+                                              Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: <Widget>[
+                                                  InkWell(
+                                                    onTap: () {
+                                                      // Navigator.of(context)
+                                                      //     .pushNamed(
+                                                      //         '/jam_profile');
+                                                      Navigator.of(context).push(
+                                                          MaterialPageRoute(
+                                                              builder: (BuildContext
+                                                                      context) =>
+                                                                  ProfileScreen()));
+                                                    },
+                                                    child: CircleAvatar(
+                                                      child: new Container(
+                                                          height: media
+                                                                      .orientation ==
+                                                                  Orientation
+                                                                      .portrait
+                                                              ? size.width *
+                                                                  0.204
+                                                              : size.width *
+                                                                  0.12,
                                                           width: media.orientation ==
                                                                   Orientation
                                                                       .portrait

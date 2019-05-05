@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:maui/data/game_utils.dart';
 import 'package:maui/jamaica/widgets/bento_box.dart';
 import 'package:maui/jamaica/widgets/cute_button.dart';
+import 'package:maui/jamaica/widgets/game_score.dart';
 
 class _ChoiceDetail {
   String choice;
@@ -68,9 +69,10 @@ class _RhymeWordsGameState extends State<TrueFalseGame> {
           )),
           onPressed: () {
             if (widget.right_or_wrong) {
-              //  Reaction.success;
-              widget.onGameUpdate(score: 1, max: 1, gameOver: true, star: true);
+              widget.onGameUpdate(score: 2, max: 2, gameOver: true, star: true);
             } else {
+              widget.onGameUpdate(
+                  score: -1, max: 2, gameOver: true, star: false);
               return Reaction.failure;
             }
           },
@@ -84,9 +86,11 @@ class _RhymeWordsGameState extends State<TrueFalseGame> {
           )),
           onPressed: () {
             if (!widget.right_or_wrong) {
-              widget.onGameUpdate(score: 1, max: 1, gameOver: true, star: true);
-              // return Reaction.success;
+              widget.onGameUpdate(score: 2, max: 2, gameOver: true, star: true);
+              return Reaction.success;
             } else {
+              widget.onGameUpdate(
+                  score: -1, max: 2, gameOver: true, star: false);
               return Reaction.failure;
             }
           },
