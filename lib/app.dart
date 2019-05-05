@@ -1,8 +1,8 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:maui/games/head_to_head_game.dart';
-import 'package:maui/games/single_game.dart';
+import 'package:maui/old/games/head_to_head_game.dart';
+import 'package:maui/old/games/single_game.dart';
 import 'package:maui/jamaica/screens/home_screen.dart';
 import 'package:maui/jamaica/screens/map_screen.dart';
 import 'package:maui/jamaica/screens/profile_screen.dart';

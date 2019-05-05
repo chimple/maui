@@ -16,7 +16,7 @@ import 'package:maui/state/app_state_container.dart';
 import 'package:tuple/tuple.dart';
 import 'package:maui/components/unit_button.dart';
 import 'package:maui/components/instruction_card.dart';
-import 'package:maui/games/single_game.dart';
+import 'package:maui/old/games/single_game.dart';
 import 'package:maui/repos/chat_bot_data.dart';
 
 enum ChatItemType { card, text, game, image, audio }

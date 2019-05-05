@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redurx/flutter_redurx.dart';
 import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/db/entity/tile.dart';
-import 'package:maui/games/single_game.dart';
+import 'package:maui/old/games/single_game.dart';
 import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/card_summary.dart';
 import 'package:maui/quack/tile_card.dart';
