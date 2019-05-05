@@ -55,86 +55,87 @@ class _IntermediateQuizScoreState extends State<IntermediateQuizScore> {
   }
 
   Widget studentsScoreList(int index) {
-    if(isLoading) {
+    if (isLoading) {
       return new CircularProgressIndicator(
         backgroundColor: Colors.black,
       );
     } else {
       return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Row(
-          children: <Widget>[
-            new Expanded(
-              flex: 10,
-              child: new Row(
-                children: <Widget>[
-                  new Expanded(
-                      flex: 2,
-                      child: new Column(
-                        children: <Widget>[
-                          new Container(
-                            height: 50.0,
-                            decoration: new BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: new DecorationImage(
-                                    image:  new FileImage(File(studnetObjs[index].image)),
-                                    fit: BoxFit.fill)),
-                          ),
-                          new Container(
-                            child: new Text(
-                              "${studnetObjs[index].name}",
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              new Expanded(
+                flex: 10,
+                child: new Row(
+                  children: <Widget>[
+                    new Expanded(
+                        flex: 2,
+                        child: new Column(
+                          children: <Widget>[
+                            new Container(
+                              height: 50.0,
+                              decoration: new BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: new DecorationImage(
+                                      image: new FileImage(
+                                          File(studnetObjs[index].image)),
+                                      fit: BoxFit.fill)),
+                            ),
+                            new Container(
+                              child: new Text(
+                                "${studnetObjs[index].name}",
+                                style: new TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(left: 10.0),
+                              child: new Row(
+                                children: <Widget>[
+                                  new Icon(
+                                    Icons.star,
+                                    color: Colors.yellow,
+                                  ),
+                                  new Container(
+                                    child: new Text("${studentsScores[index]}",
+                                        style: new TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 15.0,
+                                            fontWeight: FontWeight.bold)),
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        )),
+                    new Divider(
+                      height: 5.0,
+                    ),
+                    new Expanded(
+                      flex: 8,
+                      child: new Container(
+                          margin: EdgeInsets.only(left: 10.0),
+                          height: 50.0,
+                          child: new Text("${titles[index]}",
                               style: new TextStyle(
                                   color: Colors.black,
                                   fontSize: 15.0,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(left: 10.0),
-                            child: new Row(
-                              children: <Widget>[
-                                new Icon(
-                                  Icons.star,
-                                  color: Colors.yellow,
-                                ),
-                                new Container(
-                                  child: new Text("${studentsScores[index]}",
-                                      style: new TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 15.0,
-                                          fontWeight: FontWeight.bold)),
-                                )
-                              ],
-                            ),
-                          )
-                        ],
-                      )),
-                  new Divider(
-                    height: 5.0,
-                  ),
-                  new Expanded(
-                    flex: 8,
-                    child: new Container(
-                      margin: EdgeInsets.only(left: 10.0),
-                        height: 50.0,
-                        child: new Text("${titles[index]}",
-                            style: new TextStyle(
-                                color: Colors.black,
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.bold))),
-                  )
-                ],
-              ),
-            )
-          ],
-        ),
-        new Divider(
-          height: 5.0,
-          color: Colors.black,
-        )
-      ],
-    );
+                                  fontWeight: FontWeight.bold))),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
+          new Divider(
+            height: 5.0,
+            color: Colors.black,
+          )
+        ],
+      );
     }
   }
 
@@ -156,6 +157,9 @@ class _IntermediateQuizScoreState extends State<IntermediateQuizScore> {
           ),
           new RaisedButton(
             onPressed: widget.onTap,
+            disabledColor: Colors.grey.withOpacity(0.6),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             child: new Text("Next"),
           )
         ],
