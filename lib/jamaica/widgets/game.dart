@@ -238,8 +238,8 @@ class _GameState extends State<Game> {
                 ..gameId = widget.quizSession.gameData[index].gameId
                 ..score = score
                 ..complete = star
-                ..startTime = DateTime.now()
-                ..endTime = DateTime.now())));
+                ..startTime = DateTime.now().toUtc()
+                ..endTime = DateTime.now().toUtc())));
 
               AppStateContainer.of(context).addPerformance(Performance((b) => b
                 ..studentId =
@@ -248,8 +248,8 @@ class _GameState extends State<Game> {
                 ..title = widget.quizSession.title
                 ..numGames = widget.quizSession.gameData.length
                 ..score = _score
-                ..startTime = DateTime.now()
-                ..endTime = DateTime.now()));
+                ..startTime = DateTime.now().toUtc()
+                ..endTime = DateTime.now().toUtc()));
               Navigator.push(
                   context,
                   SlideUpRoute(
