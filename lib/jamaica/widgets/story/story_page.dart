@@ -90,6 +90,18 @@ class StoryPageState extends State<StoryPage> {
       gameData: story.gameDatas,
     ));
     return new Scaffold(
+      floatingActionButton: _currentPageIndex != story.pages.length
+          ? FloatingActionButton(
+              backgroundColor: Colors.red,
+              onPressed: () {
+                if (!_isPlaying) {
+                  _keys[_currentPageIndex].speak();
+                } else {
+                  _keys[_currentPageIndex].pause();
+                }
+              },
+              child: !_isPlaying ? Icon(Icons.play_arrow) : Icon(Icons.pause))
+          : Container(),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -150,20 +162,6 @@ class StoryPageState extends State<StoryPage> {
                     children: widgets,
                   );
                 }),
-                _currentPageIndex != story.pages.length
-                    ? IconButton(
-                        icon: !_isPlaying
-                            ? Icon(Icons.play_arrow)
-                            : Icon(Icons.pause),
-                        onPressed: () {
-                          if (!_isPlaying) {
-                            _keys[_currentPageIndex].speak();
-                          } else {
-                            _keys[_currentPageIndex].pause();
-                          }
-                        },
-                      )
-                    : Container(),
               ],
             ),
           )

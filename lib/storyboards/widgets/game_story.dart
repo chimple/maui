@@ -305,12 +305,12 @@ class GameStory extends FullScreenStory {
                 ..answers.addAll([8])
                 ..choices.addAll([1, 2, 3, 4, 5, 6, 7, 8, 9])),
             ])
-            ..title = 'JumbleWordsGame'
+            ..title = 'MovingTextGame'
             ..sessionId = '2'
             ..gameData.addAll([
               MultiData((g) => g
-                ..gameId = 'JumbleWordsGame'
-                ..question = 'He Like to tease people'
+                ..gameId = 'MovingTextGame'
+                ..choices.addAll(['He' 'Like' 'to' 'tease' ,'people'])
                 ..answers.addAll(['He', 'Like', 'to', 'tease', 'people'])),
             ])
             ..title = "MultipleChoiceGame"
