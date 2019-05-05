@@ -4,17 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redurx/flutter_redurx.dart';
 import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/db/entity/tile.dart';
-import 'package:maui/old/games/single_game.dart';
+import 'package:maui/loca.dart';
 import 'package:maui/models/root_state.dart';
+import 'package:maui/old/games/single_game.dart';
 import 'package:maui/quack/card_summary.dart';
 import 'package:maui/quack/tile_card.dart';
-import 'package:maui/loca.dart';
-import 'package:maui/repos/tile_repo.dart';
-import 'package:maui/app.dart';
 import 'package:maui/screens/game_list_view.dart';
 import 'package:maui/screens/select_opponent_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class QuackHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context);

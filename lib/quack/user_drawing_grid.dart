@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redurx/flutter_redurx.dart';
 import 'package:maui/db/entity/tile.dart';
-import 'package:maui/models/root_state.dart';
 import 'package:maui/quack/drawing_card.dart';
 import 'package:maui/repos/tile_repo.dart';
 

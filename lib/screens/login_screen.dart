@@ -1,23 +1,19 @@
 import 'dart:async';
 import 'dart:io';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/services.dart';
+import 'package:image/image.dart' as Img;
 import 'package:maui/components/Shaker.dart';
 import 'package:maui/components/camera.dart';
 import 'package:maui/components/user_item.dart';
 import 'package:maui/db/entity/user.dart';
+import 'package:maui/loca.dart';
 import 'package:maui/repos/user_repo.dart';
 import 'package:maui/state/app_state_container.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:maui/screens/welcome_screen.dart';
-import 'tab_home.dart';
-import 'package:maui/components/gameaudio.dart';
-import 'package:maui/loca.dart';
 import 'package:nima/nima_actor.dart';
-import 'package:image/image.dart' as Img;
+import 'package:path_provider/path_provider.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
