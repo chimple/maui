@@ -1,6 +1,6 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
-import 'package:maui/data/game_utils.dart';
+import 'package:maui/util/game_utils.dart';
 import 'package:maui/jamaica/widgets/bento_box.dart';
 import 'package:maui/jamaica/widgets/cute_button.dart';
 
@@ -87,8 +87,8 @@ class _MultipleChoiceGameState extends State<MultipleChoiceGame> {
                                 appear: true,
                                 choice: c.choice,
                                 reaction: Reaction.success);
-                        
-                       int count = 0;
+
+                        int count = 0;
                         choiceDetails.forEach((c) {
                           if (c.appear) {
                             count++;

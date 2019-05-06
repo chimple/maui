@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:maui/jamaica/widgets/game_score.dart';
-import 'package:maui/data/game_utils.dart';
+import 'package:maui/util/game_utils.dart';
 
 class TapHome extends StatefulWidget {
   final String answer;

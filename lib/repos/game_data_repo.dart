@@ -20,6 +20,39 @@ import 'unit_repo.dart';
 
 enum Category { letter, number }
 
+const String basicCountingGame = 'BasicCountingGame';
+const String bingoGame = 'BingoGame';
+const String boxMatchingGame = 'BoxMatchingGame';
+const String compareNumberGame = 'CompareNumberGame';
+const String countingGame = 'CountingGame';
+const String crosswordGame = 'CrosswordGame';
+const String diceGame = 'DiceGame';
+const String fillInTheBlanksGame = 'FillInTheBlanksGame';
+const String findWordGame = 'FindWordGame';
+const String fingerGame = 'FingerGame';
+const String guessImageGame = 'GuessImageGame';
+const String jumbledWordsGame = 'JumbledWordsGame';
+const String madSentenceGame = 'MadSentenceGame';
+const String matchTheShapeGame = 'MatchTheShapeGame';
+const String matchWithImageGame = 'MatchWithImageGame';
+const String mathOpGame = 'MathOpGame';
+const String memoryGame = 'MemoryGame';
+const String multipleChoiceGame = 'MultipleChoiceGame';
+const String numberBalanceGame = 'NumberBalanceGame';
+const String orderBySizeGame = 'OrderBySizeGame';
+const String orderItGame = 'OrderItGame';
+const String recognizeNumberGame = 'RecognizeNumberGame';
+const String reflexGame = 'ReflexGame';
+const String rhymeWordsGame = 'RhymeWordsGame';
+const String rulerGame = 'RulerGame';
+const String sequenceAlphabetGame = 'SequenceAlphabetGame';
+const String sequenceTheNumberGame = 'SequenceTheNumberGame';
+const String spinWheelGame = 'SpinWheelGame';
+const String tapWrongGame = 'TapWrongGame';
+const String tracingAlphabetGame = 'TracingAlphabetGame';
+const String trueFalseGame = 'TrueFalseGame';
+const String unitGame = 'UnitGame';
+
 enum GameType {
   BasicCountingGame,
   BingoGame,
@@ -31,12 +64,14 @@ enum GameType {
   FillInTheBlanksGame,
   FindWordGame,
   FingerGame,
+  GuessImageGame,
   JumbledWordsGame,
   MadSentenceGame,
   MatchTheShapeGame,
   MatchWithImageGame,
   MathOpGame,
   MemoryGame,
+  MultipleChoiceGame,
   NumberBalanceGame,
   OrderBySizeGame,
   OrderItGame,
@@ -58,6 +93,7 @@ Map<ConceptType, List<GameType>> conceptGames = {
     GameType.BingoGame,
     GameType.BoxMatchingGame,
     GameType.MemoryGame,
+    GameType.MultipleChoiceGame,
     GameType.SpinWheelGame,
     GameType.TracingAlphabetGame,
     GameType.TrueFalseGame,
@@ -153,6 +189,154 @@ Map<ConceptType, List<GameType>> conceptGames = {
   ConceptType.numbers0to99: [],
 };
 
+Future<GameData> fetchLessonGameData({GameType gameType, Lesson lesson}) async {
+  switch (gameType) {
+    case GameType.BasicCountingGame:
+      break;
+    case GameType.BingoGame:
+      final data = await fetchPairData(lesson.id, 9);
+      final List<String> answers = [];
+      final List<String> choices = [];
+      data.forEach((k, v) {
+        answers.add(k);
+        choices.add(v);
+      });
+      return MultiData((b) => b
+        ..gameId = bingoGame
+        ..answers.addAll(answers)
+        ..choices.addAll(choices));
+      break;
+    case GameType.BoxMatchingGame:
+      final data = await fetchPairData(lesson.id, 4);
+      final List<String> answers = [];
+      final List<String> choices = [];
+      data.forEach((k, v) {
+        answers.add(k);
+        choices.add(v);
+      });
+      return MultiData((b) => b
+        ..gameId = boxMatchingGame
+        ..answers.addAll(answers)
+        ..choices.addAll(choices));
+      break;
+    case GameType.CompareNumberGame:
+      break;
+    case GameType.CountingGame:
+      break;
+    case GameType.CrosswordGame:
+      break;
+    case GameType.DiceGame:
+      break;
+    case GameType.FillInTheBlanksGame:
+      break;
+    case GameType.FindWordGame:
+      break;
+    case GameType.FingerGame:
+      break;
+    case GameType.GuessImageGame:
+      break;
+    case GameType.JumbledWordsGame:
+      final data = await fetchMultipleChoiceData(lesson.id, 3);
+      return MultiData((b) => b
+        ..gameId = jumbledWordsGame
+        ..answers.add(data.item1)
+        ..choices.update((b) => b
+          ..addAll(data.item3)
+          ..add(data.item2)
+          ..shuffle()));
+      break;
+    case GameType.MadSentenceGame:
+      break;
+    case GameType.MatchTheShapeGame:
+      break;
+    case GameType.MatchWithImageGame:
+      break;
+    case GameType.MathOpGame:
+      break;
+    case GameType.MemoryGame:
+      final data = await fetchPairData(lesson.id, 8);
+      final List<String> answers = [];
+      final List<String> choices = [];
+      data.forEach((k, v) {
+        answers.add(k);
+        choices.add(v);
+      });
+      return MultiData((b) => b
+        ..gameId = memoryGame
+        ..answers.addAll(answers)
+        ..choices.addAll(choices));
+      break;
+    case GameType.MultipleChoiceGame:
+      final data = await fetchMultipleChoiceData(lesson.id, 3);
+      return MultiData((b) => b
+        ..gameId = multipleChoiceGame
+        ..question = data.item1
+        ..answers.add(data.item1)
+        ..choices.update((b) => b
+          ..addAll(data.item3)
+          ..add(data.item2)
+          ..shuffle()));
+      break;
+    case GameType.NumberBalanceGame:
+      break;
+    case GameType.OrderBySizeGame:
+      break;
+    case GameType.OrderItGame:
+      break;
+    case GameType.RecognizeNumberGame:
+      break;
+    case GameType.ReflexGame:
+      break;
+    case GameType.RhymeWordsGame:
+      break;
+    case GameType.RulerGame:
+      break;
+    case GameType.SequenceAlphabetGame:
+      break;
+    case GameType.SequenceTheNumberGame:
+      break;
+    case GameType.SpinWheelGame:
+      final data = await fetchPairData(lesson.id, 8);
+      final List<String> answers = [];
+      final List<String> choices = [];
+      data.forEach((k, v) {
+        answers.add(k);
+        choices.add(v);
+      });
+      return MultiData((b) => b
+        ..gameId = spinWheelGame
+        ..answers.addAll(answers)
+        ..choices.addAll(choices));
+      break;
+    case GameType.TapWrongGame:
+      break;
+    case GameType.TracingAlphabetGame:
+      final data = await fetchSequenceData(lesson.id, 4);
+      return MultiData((b) => b
+        ..gameId = tracingAlphabetGame
+        ..answers.addAll(data.item2));
+      break;
+    case GameType.TrueFalseGame:
+      final data = await fetchPairData(lesson.id, 2);
+      final rand = Random();
+      final tOrF = rand.nextBool();
+      final List<String> answers = [];
+      final List<String> choices = [];
+      data.forEach((k, v) {
+        answers.add(k);
+        choices.add(v);
+      });
+      return MultiData((b) => b
+        ..gameId = trueFalseGame
+        ..question = answers.first
+        ..choices.add(tOrF ? choices.first : choices.last)
+        ..answers.add(tOrF ? 'True' : 'False'));
+      break;
+    case GameType.UnitGame:
+      break;
+  }
+}
+
 Future<List<GameData>> fetchGameData(Lesson lesson, {int numData = 5}) async {
   if (lesson.data != null) {
     final standardSerializers =
@@ -173,16 +357,12 @@ Future<List<GameData>> fetchGameData(Lesson lesson, {int numData = 5}) async {
       case ConceptType.upperCaseLetterToWord:
       case ConceptType.lowerCaseLetter:
         List<GameData> returnData = [];
+        List<GameType> gameTypes = conceptGames[lesson.conceptId];
+        final rand = Random();
         for (int i = 0; i < numData; i++) {
-          final data = await fetchMultipleChoiceData(lesson.id, 3);
-          GameData gameData = MultiData((b) => b
-            ..gameId = 'JumbledWordsGame'
-            ..answers.add(data.item1)
-            ..choices.update((b) => b
-              ..addAll(data.item3)
-              ..add(data.item2)
-              ..shuffle()));
-          returnData.add(gameData);
+          returnData.add(await fetchLessonGameData(
+              lesson: lesson,
+              gameType: gameTypes[rand.nextInt(gameTypes.length)]));
         }
         return returnData;
         break;
@@ -309,7 +489,6 @@ Future<Tuple2<String, List<String>>> fetchSequenceDataForCategory(
 }
 
 Future<Map<String, String>> fetchPairData(int lessonId, int maxData) async {
-  Lesson lesson = await new LessonRepo().getLesson(lessonId);
   var lessonUnits =
       await new LessonUnitRepo().getLessonUnitsByLessonId(lessonId);
   lessonUnits.shuffle();
@@ -791,7 +970,6 @@ Future<Tuple2<List<String>, String>> fetchCirclewrdData(int categoryId) async {
 
 Future<Tuple3<String, String, List<String>>> fetchMultipleChoiceData(
     int lessonId, int maxChoices) async {
-  Lesson lesson = await new LessonRepo().getLesson(lessonId);
   List<LessonUnit> lessonUnits;
   lessonUnits = await new LessonUnitRepo().getLessonUnitsByLessonId(lessonId);
   lessonUnits.shuffle();
@@ -819,14 +997,17 @@ Future<Tuple2<List<String>, List<String>>> fetchWordData(
   lessonUnits.shuffle();
   List<String> words;
   List<String> wordLetters;
-  if (lesson.conceptId == 3 || lesson.conceptId == 5) {
+  if (lesson.conceptId == ConceptType.lowerCaseLetterToWord ||
+      lesson.conceptId == ConceptType.upperCaseLetterToWord) {
     words = lessonUnits.map((l) => l.objectUnitId).toList(growable: false);
   } else {
     words = lessonUnits.map((l) => l.subjectUnitId).toList(growable: false);
   }
   String word = words.firstWhere((w) => w.length <= maxLength);
 
-  if (lesson.conceptId == 1 || lesson.conceptId == 2 || lesson.conceptId == 6) {
+  if (lesson.conceptId == ConceptType.upperCaseLetter ||
+      lesson.conceptId == ConceptType.upperCaseToLowerCase ||
+      lesson.conceptId == ConceptType.lowerCaseLetter) {
     word = word.padRight(maxLength, word);
   }
 

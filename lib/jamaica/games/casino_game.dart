@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'dart:async';
-import 'package:maui/data/game_utils.dart';
+import 'package:maui/util/game_utils.dart';
 
 class CasinoGame extends StatefulWidget {
   final List<List<String>> letters;

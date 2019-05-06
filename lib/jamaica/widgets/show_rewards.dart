@@ -1,6 +1,6 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
-import 'package:maui/data/rewards_data.dart';
+import 'package:maui/util/rewards_data.dart';
 import 'package:tahiti/activity_board.dart';
 import 'package:tuple/tuple.dart';
 import 'package:flutter_svg/svg.dart';

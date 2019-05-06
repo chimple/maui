@@ -1,11 +1,12 @@
 import 'dart:math';
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart' hide Image;
 import 'package:maui/components/simple_drawing.dart';
-import 'package:maui/data/game_utils.dart';
+import 'package:maui/util/game_utils.dart';
 
 class TracingAlphabetGame extends StatefulWidget {
-  final List<String> alphabets;
+  final BuiltList<String> alphabets;
   final OnGameUpdate onGameUpdate;
   TracingAlphabetGame({Key key, this.alphabets, this.onGameUpdate});
 

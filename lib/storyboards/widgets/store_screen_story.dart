@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:maui/data/accessories_data.dart';
+import 'package:maui/util/accessories_data.dart';
 import 'package:maui/jamaica/widgets/store.dart';
 import 'package:storyboard/storyboard.dart';
 

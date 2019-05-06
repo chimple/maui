@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:maui/data/game_utils.dart';
+import 'package:maui/util/game_utils.dart';
 import 'package:maui/jamaica/widgets/cute_button.dart';
 
 class _ChoiceDetail {
