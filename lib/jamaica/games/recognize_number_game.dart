@@ -32,6 +32,7 @@ class _RecognizeNumberGameState extends State<RecognizeNumberGame> {
   List<_ChoiceDetail> choiceDetails;
   var score = 0;
   int complete = 1;
+  int count = 0;
 
   @override
   void initState() {
@@ -65,20 +66,19 @@ class _RecognizeNumberGameState extends State<RecognizeNumberGame> {
                 onPressed: () {
                   setState(() {
                     if ((c.number == widget.answer)) {
-                      score++;
+                      score = score + 2;
                       c.reaction = Reaction.success;
-                      print("this my score $score");
-                      print("this is my answer ${widget.answer}");
-                      print("this is my choice ${c.number}");
-                      if (--complete == 0)
-                        widget.onGameUpdate(
-                            score: score,
-                            max: score,
-                            gameOver: true,
-                            star: true);
+                      widget.onGameUpdate(
+                          score: score, max: 2, gameOver: true, star: true);
                     } else {
-                      score--;
+                      score = score - 1;
                       c.reaction = Reaction.failure;
+                      count++;
+                      if (count == 2) {
+                        print("object is new reduced score");
+                        widget.onGameUpdate(
+                            score: score, max: 2, gameOver: true, star: false);
+                      }
                     }
                   });
                 },
