@@ -12,6 +12,7 @@ import 'package:maui/widgets/score.dart';
 import 'package:maui/widgets/slide_up_route.dart';
 import 'package:maui/widgets/stars.dart';
 import 'package:maui/state/app_state_container.dart';
+import 'package:maui/widgets/theme_background.dart';
 
 class Game extends StatefulWidget {
   final QuizSession quizSession;
@@ -80,15 +81,7 @@ class _GameState extends State<Game> {
       body: SafeArea(
         child: Stack(
           children: <Widget>[
-            Container(
-              // height: 1000,
-              // width: 1000,
-              color: Colors.white,
-              child: FlareActor("assets/hud/bg.flr",
-                  alignment: Alignment.center,
-                  fit: BoxFit.cover,
-                  animation: "bg"),
-            ),
+            ThemeBackground(),
             Column(
               verticalDirection: VerticalDirection.up,
               children: <Widget>[
@@ -103,7 +96,7 @@ class _GameState extends State<Game> {
                       width: size.width * 0.17,
                       child: Hero(
                         tag: 'chimp',
-                        child: FlareActor("assets/hud/chimp_1.flr",
+                        child: FlareActor("assets/character/chimp_ik.flr",
                             alignment: Alignment.center,
                             fit: BoxFit.cover,
                             animation: "happy"),
@@ -275,6 +268,7 @@ class _GameState extends State<Game> {
                 ..title = widget.quizSession.title
                 ..numGames = widget.quizSession.gameData.length
                 ..score = _score
+                ..subScores.addAll(_subScores)
                 ..startTime = DateTime.now().toUtc()
                 ..endTime = DateTime.now().toUtc()));
               Navigator.push(
