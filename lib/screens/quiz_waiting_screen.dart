@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:maui/db/entity/user.dart';
-import 'package:maui/jamaica/widgets/game.dart';
-import 'package:maui/jamaica/widgets/slide_up_route.dart';
+import 'package:maui/widgets/game.dart';
+import 'package:maui/widgets/slide_up_route.dart';
 import 'package:maui/models/quiz_session.dart';
 import 'package:maui/models/quiz_update.dart';
 import 'package:maui/repos/user_repo.dart';
@@ -76,7 +76,8 @@ class _QuizWaitingScreenState extends State<QuizWaitingScreen> {
             new FlatButton(
               child: new Text("YES"),
               onPressed: () {
-                AppStateContainer.of(context).quizStudents.remove(AppStateContainer.of(context).state.loggedInUser.id);
+                AppStateContainer.of(context).quizStudents.remove(
+                    AppStateContainer.of(context).state.loggedInUser.id);
               },
             ),
             new FlatButton(

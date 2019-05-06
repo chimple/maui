@@ -1,6 +1,6 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
-import 'package:maui/jamaica/games/fill_in_the_blanks_game.dart';
+import 'package:maui/games/fill_in_the_blanks_game.dart';
 import 'package:storyboard/storyboard.dart';
 import 'package:tuple/tuple.dart';
 

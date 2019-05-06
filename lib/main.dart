@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redurx/flutter_redurx.dart';
 import 'package:maui/app.dart';
-import 'package:maui/middlewares/collections_middleware.dart';
+import 'package:maui/state/collections_middleware.dart';
 import 'package:maui/models/root_state.dart';
 import 'package:maui/repos/card_extra_repo.dart';
 import 'package:maui/repos/card_progress_repo.dart';

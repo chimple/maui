@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:maui/screens/chat_bot_screen.dart';
+import 'package:maui/screens/old_chat_bot_screen.dart';
 import 'package:maui/state/app_state_container.dart';
 
 class TextChoice extends StatelessWidget {

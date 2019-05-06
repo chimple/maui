@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:maui/jamaica/games/ruler_game.dart';
+import 'package:maui/games/ruler_game.dart';
 import 'package:storyboard/storyboard.dart';
 
 class RulerGameStory extends FullScreenStory {

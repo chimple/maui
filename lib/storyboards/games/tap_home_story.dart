@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:maui/jamaica/games/tap_home_game.dart';
+import 'package:maui/games/tap_home_game.dart';
 import 'package:storyboard/storyboard.dart';
 
 class TapHomeStory extends FullScreenStory {

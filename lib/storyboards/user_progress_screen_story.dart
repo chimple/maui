@@ -1,7 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:maui/models/game_status.dart';
-import 'package:maui/jamaica/screens/user_progress_screen.dart';
+import 'package:maui/screens/user_progress_screen.dart';
 import 'package:storyboard/storyboard.dart';
 
 class UserProgressScreenStory extends FullScreenStory {

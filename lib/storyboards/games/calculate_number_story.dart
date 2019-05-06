@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:maui/jamaica/games/calculate_number.dart';
+import 'package:maui/games/calculate_number.dart';
 import 'package:storyboard/storyboard.dart';
 
 class CalculateTheNumberStory extends FullScreenStory {
