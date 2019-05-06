@@ -79,60 +79,63 @@ class _GameState extends State<Game> {
     return Scaffold(
       backgroundColor: Colors.purple,
       body: SafeArea(
-        child: Stack(
-          children: <Widget>[
-            ThemeBackground(),
-            Column(
-              verticalDirection: VerticalDirection.up,
-              children: <Widget>[
-                Expanded(
-                  flex: 37,
-                  child: _navigator,
-                ),
-                Row(
-                  children: <Widget>[
-                    Container(
-                      height: size.width * 0.17,
-                      width: size.width * 0.17,
-                      child: Hero(
-                        tag: 'chimp',
-                        child: FlareActor("assets/character/chimp_ik.flr",
-                            alignment: Alignment.center,
-                            fit: BoxFit.cover,
-                            animation: "happy"),
+        child: WillPopScope(
+          onWillPop: ()=>showExitDialog(context),
+                  child: Stack(
+            children: <Widget>[
+              ThemeBackground(),
+              Column(
+                verticalDirection: VerticalDirection.up,
+                children: <Widget>[
+                  Expanded(
+                    flex: 37,
+                    child: _navigator,
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Container(
+                        height: size.width * 0.17,
+                        width: size.width * 0.17,
+                        child: Hero(
+                          tag: 'chimp',
+                          child: FlareActor("assets/character/chimp_ik.flr",
+                              alignment: Alignment.center,
+                              fit: BoxFit.cover,
+                              animation: "happy"),
+                        ),
                       ),
-                    ),
-                    Flexible(
-                      flex: 2,
-                      child: Container(),
-                    ),
-                    Flexible(
-                        flex: 50,
-                        child: Text(
-                          'In this game you have to click on the alphabets in sequence order.',
-                          style: Theme.of(context).textTheme.headline,
-                        ))
-                  ],
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Container(),
-                ),
-                Divider(
-                  color: Colors.black,
-                  height: 0.0,
-                ),
-                Expanded(flex: 3, child: buildUI(size, context)),
-                gameTimer
-                    ? GameTimer(
-                        time: 30,
-                        onGameUpdate: widget.onGameUpdate,
-                        timeCallback: timeCallback,
-                        timeEndCallback: timeEndCallback)
-                    : Container()
-              ],
-            ),
-          ],
+                      Flexible(
+                        flex: 2,
+                        child: Container(),
+                      ),
+                      Flexible(
+                          flex: 50,
+                          child: Text(
+                            'In this game you have to click on the alphabets in sequence order.',
+                            style: Theme.of(context).textTheme.headline,
+                          ))
+                    ],
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Container(),
+                  ),
+                  Divider(
+                    color: Colors.black,
+                    height: 0.0,
+                  ),
+                  Expanded(flex: 3, child: buildUI(size, context)),
+                  gameTimer
+                      ? GameTimer(
+                          time: 30,
+                          onGameUpdate: widget.onGameUpdate,
+                          timeCallback: timeCallback,
+                          timeEndCallback: timeEndCallback)
+                      : Container()
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -213,7 +216,7 @@ class _GameState extends State<Game> {
     );
   }
 
-  void showExitDialog(BuildContext context) {
+   showExitDialog(BuildContext context) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -223,13 +226,14 @@ class _GameState extends State<Game> {
               new FlatButton(
                 child: new Text("Yes"),
                 onPressed: () {
-                  Navigator.of(context).pushNamed('/jam_games');
+                  // Navigator.of(context).pop(context);
+                  Navigator.of(context).popUntil(ModalRoute.withName('/jam_games'));
                 },
               ),
               new FlatButton(
                 child: new Text("No"),
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  Navigator.of(context).pop(null);
                 },
               ),
             ],
