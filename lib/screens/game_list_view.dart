@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:maui/games/single_game.dart';
+import 'package:maui/old/games/single_game.dart';
 import 'package:maui/screens/select_opponent_screen.dart';
 import 'package:maui/repos/notif_repo.dart';
 import 'package:badge/badge.dart';

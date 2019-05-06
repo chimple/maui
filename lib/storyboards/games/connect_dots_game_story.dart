@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:maui/jamaica/games/connect_dots_game.dart';
+import 'package:maui/games/connect_dots_game.dart';
 import 'package:maui/state/button_state_container.dart';
 
 import 'package:storyboard/storyboard.dart';

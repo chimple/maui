@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:maui/db/entity/quiz.dart';
 import 'package:maui/quack/quiz_card_detail.dart';
-import 'package:maui/quack/quiz_stack.dart';
 import 'package:maui/state/app_state_container.dart';
 
 class QuizSelection extends StatefulWidget {

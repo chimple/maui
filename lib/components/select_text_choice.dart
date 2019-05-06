@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:maui/screens/chat_screen.dart';
 import 'package:maui/components/unit_button.dart';
-import 'package:maui/games/single_game.dart';
+import 'package:maui/old/games/single_game.dart';
 import 'package:maui/loca.dart';
 
 class SelectTextChoice extends StatelessWidget {

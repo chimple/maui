@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import 'package:maui/db/entity/user.dart';
-import 'package:maui/games/single_game.dart';
+import 'package:maui/old/games/single_game.dart';
 import 'package:maui/components/progress_circle.dart';
 
 class Hud extends StatelessWidget {
@@ -47,7 +47,6 @@ class Hud extends StatelessWidget {
 
     var headers = <Widget>[
       new Stack(
-     
         alignment: AlignmentDirectional.center,
         children: <Widget>[
           new Container(

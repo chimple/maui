@@ -14,7 +14,7 @@ import 'package:maui/components/select_sticker.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/components/instruction_card.dart';
 import 'package:maui/components/unit_button.dart';
-import 'package:maui/games/single_game.dart';
+import 'package:maui/old/games/single_game.dart';
 import 'package:maui/components/select_text_choice.dart';
 import 'package:maui/repos/chat_bot_data.dart';
 import 'package:uuid/uuid.dart';

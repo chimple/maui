@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/components/flash_card.dart';
-import '../components/unit_button.dart';
+import 'package:maui/components/unit_button.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
-import '../games/single_game.dart';
+import 'package:maui/old/games/single_game.dart';
 import 'package:maui/components/gameaudio.dart';
 
 class SecondScreen extends StatefulWidget {

@@ -5,7 +5,7 @@ import 'package:maui/db/entity/concept.dart';
 import 'package:maui/db/entity/game_category.dart';
 import 'package:maui/repos/game_category_repo.dart';
 import 'package:maui/components/game_category_list.dart';
-import 'package:maui/games/single_game.dart';
+import 'package:maui/old/games/single_game.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/repos/concept_repo.dart';
 
@@ -30,7 +30,7 @@ class GameCategoryListScreen extends StatefulWidget {
 }
 
 class _GameCategoryListScreenState extends State<GameCategoryListScreen> {
-  List<Tuple4<int, int, String,int>> _gameCategories;
+  List<Tuple4<int, int, String, int>> _gameCategories;
   List<Concept> _concepts;
   Map<int, Concept> _conceptMap;
   bool _isLoading = false;

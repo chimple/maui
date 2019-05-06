@@ -1,21 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:maui/app.dart';
-import 'package:maui/db/entity/card_progress.dart';
-import 'package:maui/db/entity/tile.dart';
+import 'package:maui/db/entity/quack_card.dart';
 import 'package:maui/quack/audio_text_bold.dart';
 import 'package:maui/quack/card_header.dart';
-import 'package:maui/quack/collection_grid.dart';
-import 'package:maui/db/entity/quack_card.dart';
-import 'package:maui/quack/comment_list.dart';
-import 'package:maui/quack/comment_text_field.dart';
-import 'package:maui/quack/activity_drawing_grid.dart';
-import 'package:maui/quack/header_app_bar.dart';
-import 'package:maui/quack/text_audio.dart';
-import 'package:maui/repos/card_progress_repo.dart';
-import 'package:maui/repos/collection_repo.dart';
-import 'package:maui/repos/tile_repo.dart';
-import 'package:maui/state/app_state_container.dart';
 
 class KnowledgeDetail extends StatelessWidget {
   final QuackCard card;
@@ -76,7 +62,7 @@ class DisplayStoryState extends State<DisplayStory> {
                     minHeight: media.padding.top,
                   ),
                 ),
-                AudioTextBold( card: widget.card)
+                AudioTextBold(card: widget.card)
 
                 //=======================================
                 // IconButton(
@@ -133,7 +119,7 @@ class DisplayStoryState extends State<DisplayStory> {
                     child: ListView(
                       padding: EdgeInsets.all(8.0),
                       children: <Widget>[
-                        AudioTextBold( card: widget.card)
+                        AudioTextBold(card: widget.card)
                         // widget.card.title == null
                         //     ? Container()
                         //     : Padding(

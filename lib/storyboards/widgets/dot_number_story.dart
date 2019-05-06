@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:maui/jamaica/widgets/dot_number.dart';
+import 'package:maui/widgets/dot_number.dart';
 import 'package:storyboard/storyboard.dart';
 
 class DotNumberStory extends FullScreenStory {

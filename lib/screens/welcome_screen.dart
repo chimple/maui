@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-import 'package:maui/screens/tab_home.dart';
 import 'package:nima/nima_actor.dart';
 
 class WelcomeScreen extends StatefulWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:maui/jamaica/games/fill_number_game.dart';
+import 'package:maui/games/fill_number_game.dart';
 import 'package:storyboard/storyboard.dart';
 
 class FillNumberGameStory extends FullScreenStory {

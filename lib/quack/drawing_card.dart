@@ -1,10 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_redurx/flutter_redurx.dart';
 import 'package:maui/components/drawing_wrapper.dart';
 import 'package:maui/db/entity/tile.dart';
-import 'package:maui/models/root_state.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:tahiti/activity_model.dart';
