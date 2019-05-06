@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:maui/jamaica/games/unit_game.dart';
+import 'package:maui/games/unit_game.dart';
 import 'package:storyboard/storyboard.dart';
 
 class UnitGameStory extends FullScreenStory {

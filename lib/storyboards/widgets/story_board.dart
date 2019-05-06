@@ -1,7 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:maui/jamaica/screens/story_screen.dart';
+import 'package:maui/screens/story_screen.dart';
 import 'package:maui/widgets/story/activity/text_highlighter.dart';
 import 'package:maui/widgets/story/show_dialog_mode.dart';
 import 'package:maui/widgets/story/story_page.dart';
