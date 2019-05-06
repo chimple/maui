@@ -180,7 +180,7 @@ class StoryPageState extends State<StoryPage> {
                               }
                             },
                             child: FlareActor(
-                              'assets/chimp_ik.flr',
+                              'assets/chimp_iktest.flr',
                               animation: 'talking',
                               fit: BoxFit.cover,
                               isPaused: !_isPlaying,
