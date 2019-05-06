@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:maui/jamaica/widgets/bento_box.dart';
-import 'package:maui/jamaica/widgets/chat_bot.dart';
+import 'package:maui/widgets/bento_box.dart';
+import 'package:maui/widgets/chat_bot.dart';
 import 'package:storyboard/storyboard.dart';
 
 class BentoBoxStory extends FullScreenStory {

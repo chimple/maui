@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:maui/jamaica/widgets/audio_widget.dart';
-import 'package:maui/jamaica/widgets/cute_button.dart';
+import 'package:maui/widgets/audio_widget.dart';
+import 'package:maui/widgets/cute_button.dart';
 import 'package:storyboard/storyboard.dart';
-import 'package:maui/jamaica/widgets/bento_box.dart';
+import 'package:maui/widgets/bento_box.dart';
 
 class CuteButtonStory extends FullScreenStory {
   @override

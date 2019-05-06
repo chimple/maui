@@ -6,7 +6,7 @@ import 'package:maui/models/num_multi_data.dart';
 import 'package:maui/models/quiz_session.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:maui/jamaica/widgets/game.dart';
+import 'package:maui/widgets/game.dart';
 import 'package:storyboard/storyboard.dart';
 
 class GameStory extends FullScreenStory {

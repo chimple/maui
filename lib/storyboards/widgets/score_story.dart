@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:maui/jamaica/widgets/score.dart';
+import 'package:maui/widgets/score.dart';
 import 'package:storyboard/storyboard.dart';
 
 class ScoreStory extends FullScreenStory {

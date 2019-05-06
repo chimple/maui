@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:maui/jamaica/widgets/game_list.dart';
+import 'package:maui/widgets/game_list.dart';
 import 'package:storyboard/storyboard.dart';
 
 class GameListStory extends FullScreenStory {

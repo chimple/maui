@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:maui/util/accessories_data.dart';
-import 'package:maui/jamaica/widgets/store.dart';
+import 'package:maui/widgets/store.dart';
 import 'package:storyboard/storyboard.dart';
 
 class StoreScreenStory extends FullScreenStory {

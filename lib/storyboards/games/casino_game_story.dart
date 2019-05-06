@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:maui/jamaica/games/casino_game.dart';
+import 'package:maui/games/casino_game.dart';
 import 'package:storyboard/storyboard.dart';
 
 class CasinoGameStory extends FullScreenStory {
