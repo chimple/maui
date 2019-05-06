@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:maui/jamaica/games/math_op_game.dart';
+import 'package:maui/games/math_op_game.dart';
 import 'package:storyboard/storyboard.dart';
 
 class MathOpGameStory extends FullScreenStory {

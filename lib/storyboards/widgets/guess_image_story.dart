@@ -1,8 +1,8 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:maui/jamaica/games/guess_image.dart';
-import 'package:maui/jamaica/widgets/dot_number.dart';
+import 'package:maui/games/guess_image.dart';
+import 'package:maui/widgets/dot_number.dart';
 import 'package:maui/models/image_label_data.dart';
 import 'package:storyboard/storyboard.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:maui/jamaica/games/finger_game.dart';
-import 'package:maui/jamaica/games/true_false_game.dart';
+import 'package:maui/games/finger_game.dart';
+import 'package:maui/games/true_false_game.dart';
 import 'package:storyboard/storyboard.dart';
 
 class TrueFalseGameStory extends FullScreenStory {

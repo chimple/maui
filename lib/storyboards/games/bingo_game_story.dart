@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:maui/jamaica/games/bingo_game.dart';
+import 'package:maui/games/bingo_game.dart';
 import 'package:storyboard/storyboard.dart';
 
 class BingoGameStory extends FullScreenStory {

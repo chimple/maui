@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:maui/jamaica/games/compare_number_game.dart';
+import 'package:maui/games/compare_number_game.dart';
 
 import 'package:storyboard/storyboard.dart';
 

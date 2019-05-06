@@ -1,6 +1,6 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
-import 'package:maui/jamaica/games/multiple_choice_game.dart';
+import 'package:maui/games/multiple_choice_game.dart';
 import 'package:storyboard/storyboard.dart';
 
 class MultipleChoiceGameStory extends FullScreenStory {

@@ -1,6 +1,6 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
-import 'package:maui/jamaica/games/mad_sentence_game.dart';
+import 'package:maui/games/mad_sentence_game.dart';
 import 'package:maui/models/sentence_data.dart';
 import 'package:storyboard/storyboard.dart';
 

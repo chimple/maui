@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:maui/jamaica/widgets/slide_up_route.dart';
+import 'package:maui/widgets/slide_up_route.dart';
 import 'package:storyboard/storyboard.dart';
 
 class SlideUpRouteStory extends FullScreenStory {
