@@ -455,6 +455,7 @@ class AppStateContainerState extends State<AppStateContainer> {
       } else if (obj is QuizSession) {
         //notify UI that quiz is there
         setState(() {
+          quizSession = obj;
           quizSessions[obj] = StatusEnum.create;
         });
       } else if (obj is QuizUpdate) {
