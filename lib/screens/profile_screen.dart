@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'dart:io';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/quack/user_collection.dart';
@@ -263,13 +264,12 @@ class ProfileScreenState extends State<ProfileScreen>
         overflow: Overflow.visible,
         children: <Widget>[
           Container(
-            color: Colors.blueAccent,
-            // child: SvgPicture.asset(
-            //   "assets/background_svg.svg",
-            //   fit: BoxFit.fill,
+            child: SvgPicture.asset(
+              "assets/background_image/profile_background.svg",
+              fit: BoxFit.fill,
 
-            //   // allowDrawingOutsideViewBox: true,
-            // ),
+              // allowDrawingOutsideViewBox: true,
+            ),
           ),
           Column(
             children: <Widget>[

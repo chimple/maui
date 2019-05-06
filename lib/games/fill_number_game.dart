@@ -131,9 +131,7 @@ class FillNumberGameState extends State<FillNumberGame> {
             _visibleflag[index] = true;
             if (_visibleflag[index] == true) {
               setState(() {
-                Offset netOffset = Offset(
-                    offset.dx + maxHeight / 2, offset.dy + maxHeight / 2);
-                _pointssend.add(netOffset);
+                _pointssend.add(offset);
               });
             }
 
@@ -197,9 +195,7 @@ class FillNumberGameState extends State<FillNumberGame> {
               _visibleflag[index] = true;
               if (_visibleflag[index] == true) {
                 setState(() {
-                  Offset netOffset = Offset(
-                      offset.dx + maxHeight / 2, offset.dy + maxHeight / 2);
-                  _pointssend.add(netOffset);
+                  _pointssend.add(offset);
                   // _pointssend.add(offset);
                 });
               }
@@ -452,6 +448,9 @@ class FillNumberGameState extends State<FillNumberGame> {
       }
       return new Stack(
         children: [
+          new Container(
+            child: _buildpoint(_pointssend, Colors.blue, xstart, ystart),
+          ),
           new Container(
             constraints: new BoxConstraints.expand(),
             height: media.size.height,
