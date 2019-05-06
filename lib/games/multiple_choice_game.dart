@@ -10,7 +10,9 @@ class _ChoiceDetail {
   Reaction reaction;
   String choice;
   bool appear;
-  _ChoiceDetail({this.reaction = Reaction.success, this.choice, this.appear});
+  int index = 0;
+  _ChoiceDetail(
+      {this.reaction = Reaction.success, this.choice, this.appear, this.index});
   @override
   String toString() =>
       '_ChoiceDetail(choice $choice, appear: $appear , reaction: $reaction)';
@@ -35,23 +37,26 @@ class _MultipleChoiceGameState extends State<MultipleChoiceGame> {
   var _dataLength = 0, _complete = 0, _score = 0, _max = 0;
   @override
   void initState() {
+    int i = 0;
     super.initState();
     choices.addAll(widget.answers?.asList());
     choices.addAll(widget.choices?.asList());
     choices.shuffle();
     choiceDetails = choices
-        .map((c) =>
-            _ChoiceDetail(choice: c, appear: false, reaction: Reaction.success))
+        .map((c) => _ChoiceDetail(
+            choice: c, appear: false, reaction: Reaction.success, index: i++))
         .toList();
     _complete = widget.answers.length;
     _dataLength = widget.choices.length;
     _max = widget.choices.length;
     _dataLength = (_dataLength / 2).ceil();
-    print('choiceDetails:: $choiceDetails');
+    print('choiceDetails:: $choiceDetails, ${widget.question}');
   }
 
   @override
   Widget build(BuildContext context) {
+    print('choiceDetails:: $choiceDetails, ${widget.question}');
+    print('build');
     return new Container(
       child: Column(
         children: <Widget>[
@@ -75,7 +80,7 @@ class _MultipleChoiceGameState extends State<MultipleChoiceGame> {
                 qChildren: <Widget>[],
                 children: choiceDetails.map((c) {
                   return CuteButton(
-                    key: UniqueKey(),
+                    key: Key('${c.choice}_${c.index}'),
                     child: Text(c.choice),
                     reaction: c.reaction,
                     onPressed: () {
@@ -99,6 +104,7 @@ class _MultipleChoiceGameState extends State<MultipleChoiceGame> {
                                   score: _score,
                                   gameOver: true,
                                   star: true);
+                              setState(() {});
                             }
                           }
                         });
