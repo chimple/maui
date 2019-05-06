@@ -129,7 +129,7 @@ class _GameState extends State<Game> {
                   color: Colors.black,
                   height: 0.0,
                 ),
-                Expanded(flex: 3, child: buildUI(size)),
+                Expanded(flex: 3, child: buildUI(size, context)),
                 gameTimer
                     ? GameTimer(
                         time: 30,
@@ -145,7 +145,7 @@ class _GameState extends State<Game> {
     );
   }
 
-  Widget buildUI(Size size) {
+  Widget buildUI(Size size, BuildContext context) {
     return Container(
       child: Row(
         children: <Widget>[
@@ -155,10 +155,13 @@ class _GameState extends State<Game> {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.all(1.0),
-                  child: Icon(
-                    Icons.close,
-                    size: size.width * 0.095,
-                    color: Colors.black,
+                  child: InkWell(
+                    onTap: () => showExitDialog(context),
+                    child: Icon(
+                      Icons.close,
+                      size: size.width * 0.08,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
               ],
@@ -215,6 +218,30 @@ class _GameState extends State<Game> {
         ],
       ),
     );
+  }
+
+  void showExitDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: new Text("Do you want to exit?"),
+            actions: <Widget>[
+              new FlatButton(
+                child: new Text("Yes"),
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/jam_games');
+                },
+              ),
+              new FlatButton(
+                child: new Text("No"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
   }
 
   Widget _buildGame(BuildContext context, index) {

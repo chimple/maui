@@ -224,7 +224,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         color: Colors.black12,
                                                         image: DecorationImage(
                                                           image: ExactAssetImage(
-                                                              "assets/home_screen_icons/profile_pic.png"),
+                                                              AppStateContainer
+                                                                      .of(context)
+                                                                  .state
+                                                                  .loggedInUser
+                                                                  .image),
                                                           fit: BoxFit.cover,
                                                         ))),
                                                 radius: media.orientation ==
