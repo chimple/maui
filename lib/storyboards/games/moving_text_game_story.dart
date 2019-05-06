@@ -18,8 +18,8 @@ class MovingTextGameStory extends FullScreenStory {
         Scaffold(
           body: SafeArea(
             child: MovingTextGame(
-              answers: BuiltList(['क', 'ख' 'ग', 'घ' 'ङ']),
-              choices: BuiltList<String>(['क', 'ख' 'ग', 'घ' 'ङ', 'च', 'छ']),
+              answers: BuiltList(['क', 'ख', 'ग', 'घ', 'ङ']),
+              choices: BuiltList<String>(['क', 'ख', 'ग', 'घ' ,'ङ', 'च', 'छ']),
               onGameUpdate: ({int score, int max, bool gameOver, bool star}) {},
             ),
           ),

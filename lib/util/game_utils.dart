@@ -35,6 +35,7 @@ import 'package:maui/repos/game_data_repo.dart';
 typedef void OnGameUpdate({int score, int max, bool gameOver, bool star});
 
 Widget buildGame({GameData gameData, OnGameUpdate onGameUpdate}) {
+  print('gameData: $gameData');
   switch (gameData.gameId) {
     case basicCountingGame:
       final gd = gameData as NumMultiData;

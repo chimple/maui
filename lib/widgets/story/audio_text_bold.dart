@@ -318,6 +318,7 @@ class _AudioTextBold extends State<AudioTextBold> {
   Widget build(BuildContext context) {
     if (text != null && widget.imagePath != null)
       return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Expanded(flex: 5, child: _buildImage()),
           Expanded(
