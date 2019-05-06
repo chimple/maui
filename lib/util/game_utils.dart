@@ -20,6 +20,8 @@ import 'package:maui/jamaica/games/recognize_number_game.dart';
 import 'package:maui/jamaica/games/rhyme_words_game.dart';
 import 'package:maui/jamaica/games/sequence_alphabet_game.dart';
 import 'package:maui/jamaica/games/sequence_the_number_game.dart';
+import 'package:maui/jamaica/games/spin_wheel_game.dart';
+import 'package:maui/jamaica/games/tracing_alphabet_game.dart';
 import 'package:maui/jamaica/games/true_false_game.dart';
 import 'package:maui/models/crossword_data.dart';
 import 'package:maui/models/game_data.dart';
@@ -28,12 +30,13 @@ import 'package:maui/models/math_op_data.dart';
 import 'package:maui/models/multi_data.dart';
 import 'package:maui/models/num_multi_data.dart';
 import 'package:maui/jamaica/games/multiple_choice_game.dart';
+import 'package:maui/repos/game_data_repo.dart';
 
 typedef void OnGameUpdate({int score, int max, bool gameOver, bool star});
 
 Widget buildGame({GameData gameData, OnGameUpdate onGameUpdate}) {
   switch (gameData.gameId) {
-    case 'BasicCountingGame':
+    case basicCountingGame:
       final gd = gameData as NumMultiData;
       return BasicCountingGame(
         answer: gd.answers[0],
@@ -41,14 +44,14 @@ Widget buildGame({GameData gameData, OnGameUpdate onGameUpdate}) {
         onGameUpdate: onGameUpdate,
       );
       break;
-    case 'BingoGame':
+    case bingoGame:
       final gd = gameData as MultiData;
       return BingoGame(
         choices: Map.fromIterables(gd.choices, gd.answers),
         onGameUpdate: onGameUpdate,
       );
       break;
-    case 'BoxMatchingGame':
+    case boxMatchingGame:
       final gd = gameData as MultiData;
       return BoxMatchingGame(
         choices: gd.choices,
@@ -56,7 +59,7 @@ Widget buildGame({GameData gameData, OnGameUpdate onGameUpdate}) {
         onGameUpdate: onGameUpdate,
       );
       break;
-    case 'CountingGame':
+    case countingGame:
       final gd = gameData as NumMultiData;
       return CountingGame(
         answer: gd.answers[0],
@@ -64,7 +67,7 @@ Widget buildGame({GameData gameData, OnGameUpdate onGameUpdate}) {
         onGameUpdate: onGameUpdate,
       );
       break;
-    case 'CrosswordGame':
+    case crosswordGame:
       final gd = gameData as CrosswordData;
       return CrosswordGame(
         data: gd.data,
@@ -72,7 +75,7 @@ Widget buildGame({GameData gameData, OnGameUpdate onGameUpdate}) {
         onGameUpdate: onGameUpdate,
       );
       break;
-    case 'DiceGame':
+    case diceGame:
       final gd = gameData as NumMultiData;
       return DiceGame(
         // question: gd.answers[0],
@@ -80,7 +83,7 @@ Widget buildGame({GameData gameData, OnGameUpdate onGameUpdate}) {
         choices: gd.choices,
         onGameUpdate: onGameUpdate,
       );
-    case 'FillInTheBlanksGame':
+    case fillInTheBlanksGame:
       final gd = gameData as MultiData;
       return FillInTheBlanksGame(
         question: gd.question,
@@ -88,7 +91,7 @@ Widget buildGame({GameData gameData, OnGameUpdate onGameUpdate}) {
         onGameUpdate: onGameUpdate,
       );
       break;
-    case 'FindWordGame':
+    case findWordGame:
       final gd = gameData as MultiData;
       return FindWordGame(
         image: gd.specials.first,
@@ -97,7 +100,7 @@ Widget buildGame({GameData gameData, OnGameUpdate onGameUpdate}) {
         onGameUpdate: onGameUpdate,
       );
       break;
-    case 'FingerGame':
+    case fingerGame:
       final gd = gameData as NumMultiData;
       return FingerGame(
         answer: gd.answers.first,
@@ -105,7 +108,7 @@ Widget buildGame({GameData gameData, OnGameUpdate onGameUpdate}) {
         onGameUpdate: onGameUpdate,
       );
       break;
-    case 'JumbledWordsGame':
+    case jumbledWordsGame:
       final gd = gameData as MultiData;
       return JumbledWordsGame(
         answer: gd.answers.first,
@@ -113,7 +116,7 @@ Widget buildGame({GameData gameData, OnGameUpdate onGameUpdate}) {
         onGameUpdate: onGameUpdate,
       );
       break;
-    case 'MatchTheShapeGame':
+    case matchTheShapeGame:
       final gd = gameData as MultiData;
       return MatchTheShapeGame(
         first: gd.choices,
@@ -121,7 +124,7 @@ Widget buildGame({GameData gameData, OnGameUpdate onGameUpdate}) {
         onGameUpdate: onGameUpdate,
       );
       break;
-    case 'MatchWithImageGame':
+    case matchWithImageGame:
       final gd = gameData as MultiData;
       return MatchWithImageGame(
         images: gd.specials,
@@ -130,7 +133,7 @@ Widget buildGame({GameData gameData, OnGameUpdate onGameUpdate}) {
         onGameUpdate: onGameUpdate,
       );
       break;
-    case 'MathOpGame':
+    case mathOpGame:
       final gd = gameData as MathOpData;
       return MathOpGame(
         first: gd.first,
@@ -140,7 +143,7 @@ Widget buildGame({GameData gameData, OnGameUpdate onGameUpdate}) {
         onGameUpdate: onGameUpdate,
       );
       break;
-    case 'MemoryGame':
+    case memoryGame:
       final gd = gameData as MultiData;
       return MemoryGame(
         first: gd.choices,
@@ -148,7 +151,7 @@ Widget buildGame({GameData gameData, OnGameUpdate onGameUpdate}) {
         onGameUpdate: onGameUpdate,
       );
       break;
-    case 'OrderBySizeGame':
+    case orderBySizeGame:
       final gd = gameData as NumMultiData;
       return OrderBySizeGame(
         answers: gd.answers,
@@ -156,7 +159,7 @@ Widget buildGame({GameData gameData, OnGameUpdate onGameUpdate}) {
         onGameUpdate: onGameUpdate,
       );
       break;
-    case 'RecognizeNumberGame':
+    case recognizeNumberGame:
       final gd = gameData as NumMultiData;
       return RecognizeNumberGame(
         answer: gd.answers.first,
@@ -164,7 +167,7 @@ Widget buildGame({GameData gameData, OnGameUpdate onGameUpdate}) {
         onGameUpdate: onGameUpdate,
       );
       break;
-    case 'RhymeWordsGame':
+    case rhymeWordsGame:
       final gd = gameData as MultiData;
       return RhymeWordsGame(
         questions: gd.choices,
@@ -172,14 +175,14 @@ Widget buildGame({GameData gameData, OnGameUpdate onGameUpdate}) {
         onGameUpdate: onGameUpdate,
       );
       break;
-    case 'SequenceAlphabetGame':
+    case sequenceAlphabetGame:
       final gd = gameData as MultiData;
       return SequenceAlphabetGame(
         answers: gd.answers,
         onGameUpdate: onGameUpdate,
       );
       break;
-    case 'SequenceTheNumberGame':
+    case sequenceTheNumberGame:
       final gd = gameData as NumMultiData;
       return SequenceTheNumberGame(
         sequence: gd.answers,
@@ -188,7 +191,22 @@ Widget buildGame({GameData gameData, OnGameUpdate onGameUpdate}) {
         onGameUpdate: onGameUpdate,
       );
       break;
-    case 'TrueFalseGame':
+    case spinWheelGame:
+      final gd = gameData as MultiData;
+      return SpinWheelGame(
+        data: Map.fromIterables(gd.choices, gd.answers),
+        onGameUpdate: onGameUpdate,
+        dataSize: gd.choices.length,
+      );
+      break;
+    case tracingAlphabetGame:
+      final gd = gameData as MultiData;
+      return TracingAlphabetGame(
+        alphabets: gd.answers,
+        onGameUpdate: onGameUpdate,
+      );
+      break;
+    case trueFalseGame:
       final gd = gameData as MultiData;
       return TrueFalseGame(
         question: gd.question,
@@ -197,16 +215,15 @@ Widget buildGame({GameData gameData, OnGameUpdate onGameUpdate}) {
         onGameUpdate: onGameUpdate,
       );
       break;
-    case 'GuessImage':
+    case guessImageGame:
       final gd = gameData as ImageLabelData;
       return GuessImage(
         onGameUpdate: onGameUpdate,
         imageItemDetails: gd.imageItemDetails,
         imageName: gd.imageName,
       );
-
       break;
-    case 'MultipleChoiceGame':
+    case multipleChoiceGame:
       final gd = gameData as MultiData;
       return MultipleChoiceGame(
         question: gd.question,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:maui/data/game_utils.dart';
+import 'package:maui/util/game_utils.dart';
 import 'dart:async';
 import 'package:tuple/tuple.dart';
 import 'package:maui/components/shaker.dart';

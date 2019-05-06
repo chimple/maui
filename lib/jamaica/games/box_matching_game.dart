@@ -1,6 +1,6 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
-import 'package:maui/data/game_utils.dart';
+import 'package:maui/util/game_utils.dart';
 import 'package:maui/jamaica/widgets/bento_box.dart';
 import 'package:maui/jamaica/widgets/cute_button.dart';
 
@@ -109,7 +109,8 @@ class _BoxMatchingGameState extends State<BoxMatchingGame> {
                           onAccept: (data) => setState(() {
                                 if (data[0] == a.choice) {
                                   int index = int.parse(data.substring(1));
-                                  print("${data.substring(1)}......${choiceDetails[index]}");
+                                  print(
+                                      "${data.substring(1)}......${choiceDetails[index]}");
                                   addToBox[a.index].add(a.choice);
                                   a.appear = true;
                                   choiceDetails[index].appear = false;
