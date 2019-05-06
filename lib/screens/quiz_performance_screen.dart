@@ -24,7 +24,16 @@ class _QuizPerformanceScreenState extends State<QuizPerformanceScreen> {
         appBar: new AppBar(
           title: new Text("Quiz Performance Screen"),
         ),
-        body: Center(child: Text('Quiz Performance Screen'))
+        body: Center(
+          child: Expanded(
+            child: Row(
+              children: <Widget>[
+                LinearProgressIndicator(),
+                LinearProgressIndicator(),
+              ],
+            ),
+          ),
+        )
       ),
     );
   }
