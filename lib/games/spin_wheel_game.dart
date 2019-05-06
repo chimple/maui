@@ -84,7 +84,9 @@ class _SpinWheelGameState extends State<SpinWheelGame>
       _dataSize,
       _countGameEnd = 0,
       _wmCount,
-      _activeIndex;
+      _activeIndex,
+      _max = 0,
+      _score = 0;
   @override
   void initState() {
     super.initState();
@@ -100,6 +102,7 @@ class _SpinWheelGameState extends State<SpinWheelGame>
     controller1.addStatusListener((status) {});
     controller1.forward();
     _dataSize = widget.dataSize;
+    _max = _dataSize * 2;
     _initBoard();
   }
 
@@ -358,6 +361,10 @@ class _SpinWheelGameState extends State<SpinWheelGame>
       });
       if (_gameEndFlag) {
         //  widget.onScore(-1);
+        _score--;
+        if (_score <= 0) _score = 0;
+        widget.onGameUpdate(
+            score: _score, max: _max, gameOver: false, star: false);
       }
     });
   }
@@ -386,14 +393,27 @@ class _SpinWheelGameState extends State<SpinWheelGame>
     });
     // print("slice no::$_index");
     if (_countGameEnd == _dataSize - 1) {
-      // new Future.delayed(Duration(seconds: 2), () {
+       // new Future.delayed(Duration(seconds: 2), () {
       //   widget.onEnd();
       // });
+      new Future.delayed(Duration(seconds: 1), () {
+        widget.onGameUpdate(
+            max: _max, score: _score, gameOver: true, star: true);
+      });
       _gameEndFlag = false;
     }
     _countGameEnd++;
     //print("game count $_countGameEnd");
-    // if (_countGameEnd != _dataSize - 1) widget.onScore(4);
+    if (_countGameEnd != _dataSize - 1) {
+       // if (_countGameEnd != _dataSize - 1) widget.onScore(4);
+      _score = _score + 2;
+      widget.onGameUpdate(
+        max: _max,
+        score: _score,
+        gameOver: false,
+        star: true,
+      );
+    }
   }
 
   @override

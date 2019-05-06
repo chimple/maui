@@ -53,10 +53,12 @@ class StoryPageState extends State<StoryPage> {
   Widget build(BuildContext context) {
     int index = 0;
     if (_isLoading) {
-      return new SizedBox(
-        width: 20.0,
-        height: 20.0,
-        child: new CircularProgressIndicator(),
+      return Center(
+        child: new SizedBox(
+          width: 20.0,
+          height: 20.0,
+          child: new CircularProgressIndicator(),
+        ),
       );
     }
     final widgets = <Widget>[];
