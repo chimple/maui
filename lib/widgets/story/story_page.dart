@@ -182,10 +182,9 @@ class StoryPageState extends State<StoryPage> {
                               }
                             },
                             child: FlareActor(
-                              'assets/chimp_iktest.flr',
+                              'assets/character/chimp_iktest_loop.flr',
                               animation: 'talking',
                               fit: BoxFit.cover,
-                              isPaused: !_isPlaying,
                               shouldClip: true,
                             ),
                             // child: !_isPlaying ? Icon(Icons.play_arrow) : Icon(Icons.pause)
