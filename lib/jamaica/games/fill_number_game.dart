@@ -94,15 +94,15 @@ class FillNumberGameState extends State<FillNumberGame> {
   }
 
   Widget _buildItem(
-      int index,
-      int text,
-      Status status,
-      ShakeCell tile,
-      Offset offset,
-      bool vflag,
-      double maxHeight,
-      double maxWidth,
-      List<Offset> listOffsets) {
+    int index,
+    int text,
+    Status status,
+    ShakeCell tile,
+    Offset offset,
+    bool vflag,
+    double maxHeight,
+    double maxWidth,
+  ) {
     print("..offsets are...$offset");
     return new MyButton(
       key: new ValueKey<int>(index),
@@ -412,39 +412,39 @@ class FillNumberGameState extends State<FillNumberGame> {
       maxWidth -= buttonPadding * 2;
       maxHeight -= buttonPadding * 2;
 
-      // double fullwidth = (_size * maxWidth) + (_size * (2 * buttonPadding));
-      // double removeallpaddingh = constraints.maxWidth - fullwidth;
-      // double startpointx = removeallpaddingh / 2;
-      // double removeallpaddingv = constraints.maxHeight - fullwidth;
-      // double startpointy = removeallpaddingv / 2;
-      // double yaxis = startpointy + (maxHeight) + (maxHeight / 2);
-      // double y0 = yaxis;
-      // double xaxis = startpointx + (maxWidth / 2);
-      // Offset startpoint = new Offset(xaxis, yaxis);
-      // List<Offset> offsets1 =
-      //     calculateOffsets(buttonPadding, startpoint, _size, maxWidth);
-      // yaxis = yaxis + maxWidth + buttonPadding;
-      // double y1 = yaxis;
-      // double ystart = y1 - y0;
-      // xaxis = xaxis;
-      // double xstart =
-      //     (xaxis + xaxis + (maxWidth / 1.4)) - (hPadding + buttonPadding);
-      // startpoint = new Offset(xaxis, yaxis);
-      // List<Offset> offsets2 =
-      //     calculateOffsets(buttonPadding, startpoint, _size, maxWidth);
-      // yaxis = yaxis + maxWidth + buttonPadding;
-      // xaxis = xaxis;
-      // startpoint = new Offset(xaxis, yaxis);
-      // List<Offset> offsets3 =
-      //     calculateOffsets(buttonPadding, startpoint, _size, maxWidth);
-      // yaxis = yaxis + maxWidth + buttonPadding;
-      // xaxis = xaxis;
-      // startpoint = new Offset(xaxis, yaxis);
-      // List<Offset> offsets4 =
-      //     calculateOffsets(buttonPadding, startpoint, _size, maxWidth);
+      double fullwidth = (_size * maxWidth) + (_size * (2 * buttonPadding));
+      double removeallpaddingh = constraints.maxWidth - fullwidth;
+      double startpointx = removeallpaddingh / 2;
+      double removeallpaddingv = constraints.maxHeight - fullwidth;
+      double startpointy = removeallpaddingv / 2;
+      double yaxis = startpointy + (maxHeight) + (maxHeight / 2);
+      double y0 = yaxis;
+      double xaxis = startpointx + (maxWidth / 2);
+      Offset startpoint = new Offset(xaxis, yaxis);
+      List<Offset> offsets1 =
+          calculateOffsets(buttonPadding, startpoint, _size, maxWidth);
+      yaxis = yaxis + maxWidth + buttonPadding;
+      double y1 = yaxis;
+      double ystart = y1 - y0;
+      xaxis = xaxis;
+      double xstart =
+          (xaxis + xaxis + (maxWidth / 1.4)) - (hPadding + buttonPadding);
+      startpoint = new Offset(xaxis, yaxis);
+      List<Offset> offsets2 =
+          calculateOffsets(buttonPadding, startpoint, _size, maxWidth);
+      yaxis = yaxis + maxWidth + buttonPadding;
+      xaxis = xaxis;
+      startpoint = new Offset(xaxis, yaxis);
+      List<Offset> offsets3 =
+          calculateOffsets(buttonPadding, startpoint, _size, maxWidth);
+      yaxis = yaxis + maxWidth + buttonPadding;
+      xaxis = xaxis;
+      startpoint = new Offset(xaxis, yaxis);
+      List<Offset> offsets4 =
+          calculateOffsets(buttonPadding, startpoint, _size, maxWidth);
 
-      // List<Offset> offsets = offsets1 + offsets2 + offsets3 + offsets4;
-      // var coloris = Theme.of(context).primaryColor;
+      List<Offset> offsets = offsets1 + offsets2 + offsets3 + offsets4;
+      var coloris = Theme.of(context).primaryColor;
       if (addClickValue == null) {
         setState(() {
           addClickValue = '';
@@ -514,39 +514,39 @@ class FillNumberGameState extends State<FillNumberGame> {
                                         color: Colors.white)),
                           ),
                         ))),
-                Container(
-                  height: constraints.maxHeight - 270.0,
-                  child: Stack(children: [
-                    //                  new Container(
-                    //   child: _buildpoint(_pointssend, Colors.blue, xstart, ystart),
-                    // ),
-                    _buildGrideView(context, _letters, _statuses, maxHeight,
-                        maxWidth, _visibleflag),
-                  ]),
-                ),
-                // Stack(children: [
-                //   new Padding(
-                //       padding: EdgeInsets.symmetric(
-                //           vertical: vPadding, horizontal: hPadding),
-                //       child: new ResponsiveGridView(
-                //         rows: _size,
-                //         cols: _size,
-                //         maxAspectRatio: 1.0,
-                //         children: _letters
-                //             .map((e) => new Padding(
-                //                 padding: EdgeInsets.all(buttonPadding),
-                //                 child: _buildItem(
-                //                     j,
-                //                     e,
-                //                     _statuses[j],
-                //                     shakeCells[j],
-                //                     offsets[j],
-                //                     _visibleflag[j++],
-                //                     maxHeight,
-                //                     maxWidth)))
-                //             .toList(growable: false),
-                //       )),
-                // ]),
+                // Container(
+                //   height: constraints.maxHeight - 270.0,
+                //   child: Stack(children: [
+                //     //                  new Container(
+                //     //   child: _buildpoint(_pointssend, Colors.blue, xstart, ystart),
+                //     // ),
+                //     _buildGrideView(context, _letters, _statuses, maxHeight,
+                //         maxWidth, _visibleflag),
+                //   ]),
+                // ),
+                Stack(children: [
+                  new Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: vPadding, horizontal: hPadding),
+                      child: new ResponsiveGridView(
+                        rows: _size,
+                        cols: _size,
+                        maxAspectRatio: 1.0,
+                        children: _letters
+                            .map((e) => new Padding(
+                                padding: EdgeInsets.all(buttonPadding),
+                                child: _buildItem(
+                                    j,
+                                    e,
+                                    _statuses[j],
+                                    shakeCells[j],
+                                    offsets[j],
+                                    _visibleflag[j++],
+                                    maxHeight,
+                                    maxWidth)))
+                            .toList(growable: false),
+                      )),
+                ]),
               ],
             ),
           ),
@@ -591,87 +591,87 @@ class FillNumberGameState extends State<FillNumberGame> {
     );
   }
 
-  Widget _buildGrideView(
-      BuildContext context,
-      List<int> letters,
-      List<Status> statuses,
-      double maxHeight,
-      double maxWidth,
-      List<bool> visibleflag) {
-    List<Widget> tiles = [];
-    MediaQueryData media = MediaQuery.of(context);
-    double width = media.size.width;
-    double height = media.size.height;
-    final hPadding = pow(width / 150.0, 2);
-    final vPadding = pow(height / 150.0, 2);
+  // Widget _buildGrideView(
+  //     BuildContext context,
+  //     List<int> letters,
+  //     List<Status> statuses,
+  //     double maxHeight,
+  //     double maxWidth,
+  //     List<bool> visibleflag) {
+  //   List<Widget> tiles = [];
+  //   MediaQueryData media = MediaQuery.of(context);
+  //   double width = media.size.width;
+  //   double height = media.size.height;
+  //   final hPadding = pow(width / 150.0, 2);
+  //   final vPadding = pow(height / 150.0, 2);
 
-    double maxWidth = (width - hPadding * 2) / _size;
-    double maxHeight = (height - vPadding * 2) / (_size + 2);
+  //   double maxWidth = (width - hPadding * 2) / _size;
+  //   double maxHeight = (height - vPadding * 2) / (_size + 2);
 
-    final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
+  //   final buttonPadding = sqrt(min(maxWidth, maxHeight) / 5);
 
-    print("button padding is......$buttonPadding");
-    // _height = 4 * maxHeight + (2 * vPadding) + (2 * buttonPadding);
-    maxWidth -= buttonPadding * 2;
-    maxHeight -= buttonPadding * 2;
+  //   print("button padding is......$buttonPadding");
+  //   // _height = 4 * maxHeight + (2 * vPadding) + (2 * buttonPadding);
+  //   maxWidth -= buttonPadding * 2;
+  //   maxHeight -= buttonPadding * 2;
 
-    double fullwidth = (_size * maxWidth) + (_size * (2 * buttonPadding));
-    double removeallpaddingh = width - fullwidth;
-    double startpointx = removeallpaddingh / 2;
-    double removeallpaddingv =
-        height - (_size * maxHeight) + (_size * (2 * buttonPadding));
-    double startpointy = removeallpaddingv / 2;
-    double yaxis = maxHeight / 2;
-    //  + (maxHeight) + (maxHeight / 2);
-    print("what is.. comming p .....y axis..$startpointy");
-    double y0 = yaxis;
-    double xaxis = startpointx;
-    // + (maxWidth / 2);
-    Offset startpoint = new Offset(xaxis, yaxis);
-    List<Offset> offsets1 =
-        calculateOffsets(buttonPadding, startpoint, _size, maxWidth);
-    yaxis = yaxis + maxWidth + buttonPadding;
-    double y1 = yaxis;
-    double ystart = y1 - y0;
-    xaxis = xaxis;
-    double xstart =
-        (xaxis + xaxis + (maxWidth / 1.4)) - (hPadding + buttonPadding);
-    startpoint = new Offset(xaxis, yaxis);
-    List<Offset> offsets2 =
-        calculateOffsets(buttonPadding, startpoint, _size, maxWidth);
-    yaxis = yaxis + maxWidth + buttonPadding;
-    xaxis = xaxis;
-    startpoint = new Offset(xaxis, yaxis);
-    List<Offset> offsets3 =
-        calculateOffsets(buttonPadding, startpoint, _size, maxWidth);
-    yaxis = yaxis + maxWidth + buttonPadding;
-    xaxis = xaxis;
-    startpoint = new Offset(xaxis, yaxis);
-    List<Offset> offsets4 =
-        calculateOffsets(buttonPadding, startpoint, _size, maxWidth);
+  //   double fullwidth = (_size * maxWidth) + (_size * (2 * buttonPadding));
+  //   double removeallpaddingh = width - fullwidth;
+  //   double startpointx = removeallpaddingh / 2;
+  //   double removeallpaddingv =
+  //       height - (_size * maxHeight) + (_size * (2 * buttonPadding));
+  //   double startpointy = removeallpaddingv / 2;
+  //   double yaxis = maxHeight / 2;
+  //   //  + (maxHeight) + (maxHeight / 2);
+  //   print("what is.. comming p .....y axis..$startpointy");
+  //   double y0 = yaxis;
+  //   double xaxis = startpointx;
+  //   // + (maxWidth / 2);
+  //   Offset startpoint = new Offset(xaxis, yaxis);
+  //   List<Offset> offsets1 =
+  //       calculateOffsets(buttonPadding, startpoint, _size, maxWidth);
+  //   yaxis = yaxis + maxWidth + buttonPadding;
+  //   double y1 = yaxis;
+  //   double ystart = y1 - y0;
+  //   xaxis = xaxis;
+  //   double xstart =
+  //       (xaxis + xaxis + (maxWidth / 1.4)) - (hPadding + buttonPadding);
+  //   startpoint = new Offset(xaxis, yaxis);
+  //   List<Offset> offsets2 =
+  //       calculateOffsets(buttonPadding, startpoint, _size, maxWidth);
+  //   yaxis = yaxis + maxWidth + buttonPadding;
+  //   xaxis = xaxis;
+  //   startpoint = new Offset(xaxis, yaxis);
+  //   List<Offset> offsets3 =
+  //       calculateOffsets(buttonPadding, startpoint, _size, maxWidth);
+  //   yaxis = yaxis + maxWidth + buttonPadding;
+  //   xaxis = xaxis;
+  //   startpoint = new Offset(xaxis, yaxis);
+  //   List<Offset> offsets4 =
+  //       calculateOffsets(buttonPadding, startpoint, _size, maxWidth);
 
-    List<Offset> listOffsets = offsets1 + offsets2 + offsets3 + offsets4;
+  //   List<Offset> listOffsets = offsets1 + offsets2 + offsets3 + offsets4;
 
-    for (int i = 0, j = listOffsets.length - 1; i < letters.length; j--, i++) {
-      tiles.add(Positioned(
-        left: listOffsets[j].dx,
-        top: listOffsets[j].dy,
-        child: _buildItem(i, letters[i], _statuses[i], shakeCells[i],
-            listOffsets[j], _visibleflag[i], maxHeight, maxWidth, listOffsets),
-      ));
-    }
+  //   for (int i = 0, j = listOffsets.length - 1; i < letters.length; j--, i++) {
+  //     tiles.add(Positioned(
+  //       left: listOffsets[j].dx,
+  //       top: listOffsets[j].dy,
+  //       child: _buildItem(i, letters[i], _statuses[i], shakeCells[i],
+  //           listOffsets[j], _visibleflag[i], maxHeight, maxWidth, listOffsets),
+  //     ));
+  //   }
 
-    return Stack(children: [
-      new Container(
-        height: media.size.height - 270.0,
-        child: _buildpoint(_pointssend, Colors.blue, xstart, ystart),
-      ),
-      new Padding(
-        padding: EdgeInsets.symmetric(horizontal: hPadding),
-        child: Stack(children: tiles),
-      )
-    ]);
-  }
+  //   return Stack(children: [
+  //     new Container(
+  //       height: media.size.height - 270.0,
+  //       child: _buildpoint(_pointssend, Colors.blue, xstart, ystart),
+  //     ),
+  //     new Padding(
+  //       padding: EdgeInsets.symmetric(horizontal: hPadding),
+  //       child: Stack(children: tiles),
+  //     )
+  //   ]);
+  // }
 }
 
 class MyApp extends StatefulWidget {
