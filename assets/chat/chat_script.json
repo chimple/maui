@@ -4,22 +4,22 @@
     "a": {
       "question": "What did you eat?",
       "choices": ["idli", "dosa", "nothing"],
-      "emotion": "hungry"
+      "emotion": "jumping"
     },
     "b": {
       "question": "What did you like with idli?",
       "choices": ["chutney", "sambar", "sugar"],
-      "emotion": "yummy"
+      "emotion": "joy"
     },
     "c": {
       "question": "How was the idli?",
       "choices": ["fluffy", "hard"],
-      "emotion": "curious"
+      "emotion": "waving"
     },
     "d": {
       "question": "What do you want to eat?",
       "choices": ["idli", "dosa", "nothing"],
-      "emotion": "hungry"
+      "emotion": "exercise"
     }
   },
   "choices": {
