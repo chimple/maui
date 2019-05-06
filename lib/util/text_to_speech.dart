@@ -37,7 +37,7 @@ class TextToSpeech extends StatefulWidget {
     this.playingStatus,
     this.textStyle = const TextStyle(fontSize: 25, color: Colors.black54),
     this.highlightColor = Colors.red,
-    this.setLanguage = 'EN-IN',
+    this.setLanguage = 'en-IN',
     @required this.fullText,
     this.setSpeechRate = .78,
   }) : super(key: keys.textToSpeech);
@@ -128,6 +128,8 @@ class TextToSpeechState extends State<TextToSpeech> {
     if (Platform.isAndroid) {
       flutterTts.setSpeechRate(widget.setSpeechRate);
       flutterTts.setLanguage(widget.setLanguage);
+      final l=await flutterTts.getLanguages;
+      print(l);
     }
     if (Platform.isAndroid) {
       flutterTts.ttsInitHandler(() {
