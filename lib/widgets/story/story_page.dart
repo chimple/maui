@@ -185,7 +185,7 @@ class StoryPageState extends State<StoryPage> {
                               'assets/character/chimp_iktest_loop.flr',
                               animation: 'talking',
                               fit: BoxFit.cover,
-                              shouldClip: true,
+                              isPaused: !_isPlaying,
                             ),
                             // child: !_isPlaying ? Icon(Icons.play_arrow) : Icon(Icons.pause)
                           )
