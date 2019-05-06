@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
-import 'package:maui/jamaica/state/game_utils.dart';
+import 'package:maui/data/game_utils.dart';
 import 'package:maui/jamaica/widgets/bento_box.dart';
 import 'package:maui/jamaica/widgets/cute_button.dart';
 import 'package:maui/jamaica/widgets/drop_box.dart';
@@ -45,7 +45,8 @@ class ClockGameState extends State<ClockGame> {
   bool hourAppear = false;
   bool minuteAppear = false;
   int complete;
-  int score = 0;
+  int _score = 0;
+  int _count = 0;
 
   @override
   void initState() {
@@ -77,23 +78,46 @@ class ClockGameState extends State<ClockGame> {
                     )
                   : DropBox(
                       key: Key((i++).toString()),
-                      onWillAccept: (data) => data == widget.hour.toString(),
+                      onWillAccept: (data) => true,
                       onAccept: (data) => setState(() {
                             print('This is dropping $data ,');
                             if (data == widget.hour.toString()) {
-                              score++;
+                              _score += 2;
+                              print(' $_score');
                               print("this is my data ${data.length}");
-                              print("this is my score in match $score");
+                              print("this is my _score in match $_score");
                               hourAppear = true;
                               choiceDetails
                                   .firstWhere((c) => c.choice == widget.hour)
                                   .appear = false;
                               if (--complete == 0) {
-                                // widget.onGameUpdate(score);
+                                // widget.onGameUpdate(_score);
+                                widget.onGameUpdate(
+                                    score: _score,
+                                    max: 4,
+                                    gameOver: true,
+                                    star: true);
                                 print('Game is over');
                               }
-                            } else
-                              score--;
+                            } else {
+                              _score--;
+                              _count++;
+                              print(' $_score');
+                              if (_count >= 2) {
+                                widget.onGameUpdate(
+                                    score: _score,
+                                    max: 4,
+                                    gameOver: true,
+                                    star: false);
+                                print('Game lose');
+                              } else {
+                                widget.onGameUpdate(
+                                    score: _score,
+                                    max: 4,
+                                    gameOver: false,
+                                    star: false);
+                              }
+                            }
                           }),
                     ),
               Center(
@@ -107,23 +131,44 @@ class ClockGameState extends State<ClockGame> {
                     )
                   : DropBox(
                       key: Key((i++).toString()),
-                      onWillAccept: (data) => data == widget.minute.toString(),
+                      onWillAccept: (data) => true,
                       onAccept: (data) => setState(() {
                             print('This is dropping $data ,');
                             if (data == widget.minute.toString()) {
-                              score++;
+                              _score += 2;
+                              print(' $_score');
                               print("this is my data ${data.length}");
-                              print("this is my score in match $score");
+                              print("this is my _score in match $_score");
                               minuteAppear = true;
                               choiceDetails
                                   .firstWhere((c) => c.choice == widget.minute)
                                   .appear = false;
                               if (--complete == 0) {
-                                // widget.onGameUpdate(score);
+                                // widget.onGameUpdate(_score);
+                                widget.onGameUpdate(
+                                    score: _score,
+                                    max: 4,
+                                    gameOver: true,
+                                    star: true);
                                 print('Game is over');
                               }
-                            } else
-                              score--;
+                            } else {
+                              _score--;
+                              _count++;
+                              print(' $_score');
+                              if (_count >= 2) {
+                                widget.onGameUpdate(
+                                    score: _score,
+                                    max: 4,
+                                    gameOver: true,
+                                    star: false);
+                              } else
+                                widget.onGameUpdate(
+                                    score: _score,
+                                    max: 4,
+                                    gameOver: false,
+                                    star: false);
+                            }
                           }),
                     ),
             ],

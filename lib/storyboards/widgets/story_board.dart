@@ -2,9 +2,9 @@ import 'package:built_collection/built_collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:maui/jamaica/screens/story_screen.dart';
-import 'package:maui/jamaica/widgets/story/activity/text_highlighter.dart';
-import 'package:maui/jamaica/widgets/story/show_dialog_mode.dart';
-import 'package:maui/jamaica/widgets/story/story_page.dart';
+import 'package:maui/widgets/story/activity/text_highlighter.dart';
+import 'package:maui/widgets/story/show_dialog_mode.dart';
+import 'package:maui/widgets/story/story_page.dart';
 import 'package:storyboard/storyboard.dart';
 
 class StoryBoard extends FullScreenStory {

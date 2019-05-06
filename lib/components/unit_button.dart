@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:maui/db/entity/unit.dart';
-import 'package:maui/games/single_game.dart';
+import 'package:maui/old/games/single_game.dart';
 import 'package:maui/repos/unit_repo.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';

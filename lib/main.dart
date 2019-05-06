@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redurx/flutter_redurx.dart';
-import 'package:maui/actions/fetch_initial_data.dart';
 import 'package:maui/app.dart';
-import 'package:maui/jamaica/state/state_container.dart';
 import 'package:maui/middlewares/collections_middleware.dart';
 import 'package:maui/models/root_state.dart';
 import 'package:maui/repos/card_extra_repo.dart';
@@ -14,9 +12,9 @@ import 'package:maui/repos/like_repo.dart';
 import 'package:maui/repos/tile_repo.dart';
 import 'package:maui/repos/user_repo.dart';
 import 'package:maui/state/app_state_container.dart';
+import 'package:permission/permission.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
-import 'package:permission/permission.dart';
 
 void main() async {
   await Permission.requestPermissions([PermissionName.Storage]);
@@ -40,7 +38,7 @@ void main() async {
   runApp(Provider(
     store: store,
     child: AppStateContainer(
-      child: StateContainer(child: MauiApp()),
+      child: MauiApp(),
     ),
   ));
 }

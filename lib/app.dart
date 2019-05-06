@@ -1,20 +1,19 @@
 import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:maui/games/head_to_head_game.dart';
-import 'package:maui/games/single_game.dart';
 import 'package:maui/jamaica/screens/home_screen.dart';
 import 'package:maui/jamaica/screens/map_screen.dart';
 import 'package:maui/jamaica/screens/profile_screen.dart';
 import 'package:maui/jamaica/screens/store_screen.dart';
 import 'package:maui/jamaica/screens/story_screen.dart';
 import 'package:maui/jamaica/widgets/game_list.dart';
-import 'package:maui/quack/bento.dart';
+import 'package:maui/old/games/head_to_head_game.dart';
+import 'package:maui/old/games/single_game.dart';
 import 'package:maui/quack/card_detail.dart';
 import 'package:maui/quack/main_collection.dart';
 import 'package:maui/quack/story_page.dart';
 import 'package:maui/screens/chat_bot_screen.dart';
-import 'package:maui/screens/chat_screen.dart';
 import 'package:maui/screens/friend_list_view.dart';
 import 'package:maui/screens/game_category_list_screen.dart';
 import 'package:maui/screens/game_list_view.dart';
@@ -23,10 +22,10 @@ import 'package:maui/screens/progress_screen.dart';
 import 'package:maui/screens/quiz_performance_screen.dart';
 import 'package:maui/screens/quiz_waiting_screen.dart';
 import 'package:maui/screens/switch_screen.dart';
-import 'package:maui/screens/tab_home.dart';
-import 'package:maui/state/app_state_container.dart';
-import 'components/camera.dart';
 import 'package:maui/screens/welcome_screen.dart';
+import 'package:maui/state/app_state_container.dart';
+
+import 'components/camera.dart';
 import 'loca.dart';
 
 final RouteObserver<PageRoute> routeObserver = new RouteObserver<PageRoute>();
@@ -57,7 +56,6 @@ class MauiApp extends StatelessWidget {
         '/quizPerformanceScreen': (BuildContext context) =>
             new QuizPerformanceScreen(),
         '/quizWaitingScreen': (BuildContext context) => new QuizWaitingScreen(),
-        '/tab': (BuildContext context) => new Bento(),
         '/chatbot': (BuildContext context) => new ChatBotScreen(),
         '/camera': (BuildContext context) => CameraScreen(false),
         '/stories': (BuildContext context) => StoryPage(),

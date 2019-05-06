@@ -1,6 +1,6 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
-import 'package:maui/jamaica/state/game_utils.dart';
+import 'package:maui/data/game_utils.dart';
 import 'package:maui/jamaica/widgets/bento_box.dart';
 import 'package:maui/jamaica/widgets/cute_button.dart';
 
@@ -32,7 +32,7 @@ class _MultipleChoiceGameState extends State<MultipleChoiceGame> {
   List<_ChoiceDetail> choiceDetails;
   // List<_ChoiceDetail> answerDetails;
   List<String> choices = [];
-  var _dataLength = 0, _complete = 0, _score = 0,_count=0;
+  var _dataLength = 0, _complete = 0, _score = 0, _max = 0;
   @override
   void initState() {
     super.initState();
@@ -45,7 +45,9 @@ class _MultipleChoiceGameState extends State<MultipleChoiceGame> {
         .toList();
     _complete = widget.answers.length;
     _dataLength = widget.choices.length;
+    _max = widget.choices.length;
     _dataLength = (_dataLength / 2).ceil();
+    print('choiceDetails:: $choiceDetails');
   }
 
   @override
@@ -78,20 +80,22 @@ class _MultipleChoiceGameState extends State<MultipleChoiceGame> {
                     reaction: c.reaction,
                     onPressed: () {
                       if (widget.answers.contains(c.choice)) {
-                         _score=_score+2;
+                        _score = _score + 2;
                         print('correct');
                         choiceDetails[choices.indexOf(c.choice)] =
                             _ChoiceDetail(
                                 appear: true,
                                 choice: c.choice,
                                 reaction: Reaction.success);
+                        
+                       int count = 0;
                         choiceDetails.forEach((c) {
                           if (c.appear) {
-                            _count++;
+                            count++;
                             print('game over');
-                            if (_count == _complete) {
+                            if (count == _complete) {
                               widget.onGameUpdate(
-                                  max: choices.length,
+                                  max: _max * 2,
                                   score: _score,
                                   gameOver: true,
                                   star: true);
@@ -99,7 +103,7 @@ class _MultipleChoiceGameState extends State<MultipleChoiceGame> {
                           }
                         });
                         widget.onGameUpdate(
-                            max: choices.length,
+                            max: _max * 2,
                             score: _score,
                             gameOver: false,
                             star: true);
@@ -111,7 +115,7 @@ class _MultipleChoiceGameState extends State<MultipleChoiceGame> {
                           _score = 0;
                         }
                         widget.onGameUpdate(
-                            max: choices.length,
+                            max: _max * 2,
                             score: _score,
                             gameOver: false,
                             star: false);

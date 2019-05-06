@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:maui/jamaica/state/game_utils.dart';
+import 'package:maui/data/game_utils.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/components/Shaker.dart';
 
@@ -321,7 +321,7 @@ class ConnectDotGameState extends State<ConnectDotGame> {
             }
             if (flag == 1) {
               wrongAttempt = wrongAttempt + 1;
-              if (wrongAttempt < 2) {
+              if (wrongAttempt <= 2) {
                 setState(() {
                   widget.onGameUpdate(
                       score: -1, max: maxScore, gameOver: false, star: false);

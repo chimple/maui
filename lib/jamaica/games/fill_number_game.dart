@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:maui/jamaica/state/game_utils.dart';
+import 'package:maui/data/game_utils.dart';
 import 'package:maui/components/responsive_grid_view.dart';
 import 'package:maui/components/Shaker.dart';
 
@@ -339,7 +339,7 @@ class FillNumberGameState extends State<FillNumberGame> {
             subListset.removeRange(0, subListset.length);
           } else {
             wrongAttempt = wrongAttempt + 1;
-            if (wrongAttempt < 2) {
+            if (wrongAttempt <= 2) {
               setState(() {
                 widget.onGameUpdate(
                     score: score - 1,
