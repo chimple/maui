@@ -42,10 +42,14 @@ class _CompareNumberGameState extends State<CompareNumberGame>
   AnimationController _animationController;
   List<String> dragOperator = [">", "=", "<"];
   var questionList = [];
+  int maxScore;
+  int score = 0;
+  int wrongAttempt = 0;
   @override
   void initState() {
     super.initState();
     int i = 0;
+    maxScore = 2;
     choiceDetails = dragOperator
         .map((c) => _ChoiceDetail(number: c, index: i++))
         .toList(growable: false);
@@ -159,24 +163,55 @@ class _CompareNumberGameState extends State<CompareNumberGame>
                         : Container(),
                   ),
               onWillAccept: (data) {
-                print(data);
-
-                return data == widget.answer;
+                return true;
               },
               onAccept: (data) {
-                WidgetsBinding.instance.addPostFrameCallback(
-                    (_) => setState(() => answerDetails.type = _Type.answer));
-                setState(() {
-                  choiceDetails.forEach((c) {
-                    if (c.number == data) {
-                      c.type = _Type.question;
-                      _animationController.forward();
-                    }
+                if (data == widget.answer) {
+                  score = score + 2;
+                  WidgetsBinding.instance.addPostFrameCallback(
+                      (_) => setState(() => answerDetails.type = _Type.answer));
+                  setState(() {
+                    choiceDetails.forEach((c) {
+                      if (c.number == data) {
+                        c.type = _Type.question;
+                        _animationController.forward();
+                      }
+                    });
                   });
-                });
 
-                widget.onGameUpdate(
-                    score: 1, max: 1, gameOver: true, star: true);
+                  new Future.delayed(const Duration(seconds: 1), () {
+                    setState(() {
+                      widget.onGameUpdate(
+                          score: score - wrongAttempt,
+                          max: maxScore,
+                          gameOver: true,
+                          star: true);
+                    });
+                  });
+                } else {
+                  wrongAttempt = wrongAttempt + 1;
+                  if (wrongAttempt <= 2) {
+                    new Future.delayed(const Duration(milliseconds: 200), () {
+                      setState(() {
+                        widget.onGameUpdate(
+                            score: score - wrongAttempt,
+                            max: maxScore,
+                            gameOver: false,
+                            star: false);
+                      });
+                    });
+                  } else {
+                    new Future.delayed(const Duration(milliseconds: 500), () {
+                      setState(() {
+                        widget.onGameUpdate(
+                            score: score - wrongAttempt,
+                            max: maxScore,
+                            gameOver: true,
+                            star: false);
+                      });
+                    });
+                  }
+                }
               },
             ),
           ),
