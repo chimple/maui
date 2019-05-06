@@ -1,19 +1,22 @@
+import 'dart:async';
 import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_circular_chart/flutter_circular_chart.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fluttery/gestures.dart';
+import 'package:maui/util/game_utils.dart';
+
 import '../widgets/spins.dart';
-import 'package:maui/loca.dart';
-import 'package:flutter_circular_chart/flutter_circular_chart.dart';
-import 'package:maui/jamaica/widgets/cute_button.dart';
-import 'dart:async';
 
 class SpinWheelGame extends StatefulWidget {
   final Map<String, String> data;
+  final OnGameUpdate onGameUpdate;
   final int dataSize;
 
-  SpinWheelGame({key, this.data, this.dataSize}) : super(key: key);
+  SpinWheelGame({key, this.data, this.dataSize, this.onGameUpdate})
+      : super(key: key);
   @override
   _SpinWheelGameState createState() => new _SpinWheelGameState();
 }

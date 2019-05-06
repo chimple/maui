@@ -16,7 +16,7 @@ import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
-import 'package:maui/data/dot_map.dart';
+import 'package:maui/util/dot_map.dart';
 
 class UserRepo {
   static final UserDao userDao = new UserDao();
