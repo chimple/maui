@@ -63,13 +63,17 @@ class _GuessImageState extends State<GuessImage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Expanded(
-            flex: 8,
+          AspectRatio(
+            aspectRatio: 1.0,
             child: Stack(
               children: <Widget>[
-                Image(
-                  image: assestImage,
-                  fit: BoxFit.contain,
+                SizedBox(
+                  height: double.infinity,
+                  width: double.infinity,
+                  child: Image(
+                    image: assestImage,
+                    fit: BoxFit.scaleDown,
+                  ),
                 ),
                 flag == 1
                     ? displayText(centerX, centerY, dragText)
@@ -77,15 +81,7 @@ class _GuessImageState extends State<GuessImage> {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'Drag and drop the text to their relevant image',
-              style: TextStyle(fontSize: 23),
-            ),
-          ),
           Expanded(
-            flex: 3,
             child: BentoBox(
               dragConfig: DragConfig.draggableBounceBack,
               calculateLayout: BentoBox.calculateVerticalLayout,
