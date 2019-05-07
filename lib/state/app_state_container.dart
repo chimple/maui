@@ -58,6 +58,14 @@ final Map<String, String> themeBackgrounds = {
   'school': 'assets/background_flare/school.flr',
 };
 
+final Map<String, Color> themeColors = {
+  'cafe': Color(0xFF48AECC),
+  'grocery': Color(0xFFEDC23B),
+  'hospital': Color(0xFFFF7676),
+  'house': Color(0xFF30C9E2),
+  'school': Color(0xFFFF7D8F),
+};
+
 class AppStateContainer extends StatefulWidget {
   final AppState state;
   final Widget child;

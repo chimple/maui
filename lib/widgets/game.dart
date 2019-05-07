@@ -68,7 +68,7 @@ class _GameState extends State<Game> {
   Widget build(BuildContext context) {
     _navigator = Navigator(
       onGenerateRoute: (settings) => SlideUpRoute(
-            widgetBuilder: (context) => _buildGame(context, gameIndex),
+            widgetBuilder: (context) => _buildGame(context, 0),
           ),
     );
 
@@ -210,7 +210,7 @@ class _GameState extends State<Game> {
     );
   }
 
-  Widget _buildGame(BuildContext context, index) {
+  Widget _buildGame(BuildContext context, int index) {
     print("lets check the values ..is  $index");
     print('lets check the tim end $timeEnd');
 
@@ -247,17 +247,17 @@ class _GameState extends State<Game> {
               Navigator.push(
                   context,
                   SlideUpRoute(
-                      widgetBuilder: (context) =>
-                          ++index < widget.quizSession.gameData.length
-                              ? widget.quizSession.sessionId != 'game'
-                                  ? IntermediateQuizScore(
-                                      onTap: () => Navigator.push(
-                                          context,
-                                          SlideUpRoute(
-                                              widgetBuilder: (context) =>
-                                                  _buildGame(context, index))))
-                                  : _buildGame(context, index)
-                              : GameScore(scores: _score)));
+                      widgetBuilder: (context) => index + 1 <
+                              widget.quizSession.gameData.length
+                          ? widget.quizSession.sessionId != 'game'
+                              ? IntermediateQuizScore(
+                                  onTap: () => Navigator.push(
+                                      context,
+                                      SlideUpRoute(
+                                          widgetBuilder: (context) =>
+                                              _buildGame(context, index + 1))))
+                              : _buildGame(context, index + 1)
+                          : GameScore(scores: _score)));
             }
           });
         });
