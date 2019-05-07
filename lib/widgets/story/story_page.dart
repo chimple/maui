@@ -53,10 +53,12 @@ class StoryPageState extends State<StoryPage> {
   Widget build(BuildContext context) {
     int index = 0;
     if (_isLoading) {
-      return new SizedBox(
-        width: 20.0,
-        height: 20.0,
-        child: new CircularProgressIndicator(),
+      return Center(
+        child: new SizedBox(
+          width: 20.0,
+          height: 20.0,
+          child: new CircularProgressIndicator(),
+        ),
       );
     }
     final widgets = <Widget>[];
@@ -180,11 +182,10 @@ class StoryPageState extends State<StoryPage> {
                               }
                             },
                             child: FlareActor(
-                              'assets/chimp_ik.flr',
+                              'assets/character/chimp_iktest_loop.flr',
                               animation: 'talking',
                               fit: BoxFit.cover,
                               isPaused: !_isPlaying,
-                              shouldClip: true,
                             ),
                             // child: !_isPlaying ? Icon(Icons.play_arrow) : Icon(Icons.pause)
                           )
