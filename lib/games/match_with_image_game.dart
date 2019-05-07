@@ -34,8 +34,8 @@ class MatchWithImageGame extends StatefulWidget {
 class _MatchWithImageGameState extends State<MatchWithImageGame> {
   List<_ChoiceDetail> answerDetails;
   List<_ChoiceDetail> choiceDetails;
-  var score = 0, wrongAttempts = 2;
-  int complete = 0;
+  var score = 0;
+  int complete;
 
   @override
   void initState() {
@@ -81,8 +81,9 @@ class _MatchWithImageGameState extends State<MatchWithImageGame> {
                     // onWillAccept: (data) => data == a.choice,
                     onAccept: (data) => setState(() {
                           if (data == a.choice) {
-                            score += 2;
-                            if (wrongAttempts < 2) wrongAttempts++;
+                            score++;
+                            print("this is my data ${data.length}");
+                            print("this is my score in match $score");
                             a.appear = true;
                             choiceDetails
                                 .firstWhere((c) => c.choice == a.choice)
@@ -90,18 +91,11 @@ class _MatchWithImageGameState extends State<MatchWithImageGame> {
                             if (--complete == 0)
                               widget.onGameUpdate(
                                   score: score,
-                                  max: choiceDetails.length * 2,
+                                  max: score,
                                   gameOver: true,
                                   star: true);
-                          } else {
+                          } else
                             score--;
-                            if (--wrongAttempts == 0)
-                              widget.onGameUpdate(
-                                  score: score,
-                                  max: choiceDetails.length * 2,
-                                  gameOver: true,
-                                  star: false);
-                          }
                         }),
                   ))),
       dragConfig: DragConfig.draggableBounceBack,
