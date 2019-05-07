@@ -68,7 +68,7 @@ class _GameState extends State<Game> {
   Widget build(BuildContext context) {
     _navigator = Navigator(
       onGenerateRoute: (settings) => SlideUpRoute(
-            widgetBuilder: (context) => _buildGame(context, gameIndex),
+            widgetBuilder: (context) => _buildGame(context, 0),
           ),
     );
 
@@ -80,8 +80,8 @@ class _GameState extends State<Game> {
       backgroundColor: Colors.purple,
       body: SafeArea(
         child: WillPopScope(
-          onWillPop: ()=>showExitDialog(context),
-                  child: Stack(
+          onWillPop: () => showExitDialog(context),
+          child: Stack(
             children: <Widget>[
               ThemeBackground(),
               Column(
@@ -216,7 +216,7 @@ class _GameState extends State<Game> {
     );
   }
 
-   showExitDialog(BuildContext context) {
+  showExitDialog(BuildContext context) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -227,7 +227,8 @@ class _GameState extends State<Game> {
                 child: new Text("Yes"),
                 onPressed: () {
                   // Navigator.of(context).pop(context);
-                  Navigator.of(context).popUntil(ModalRoute.withName('/jam_games'));
+                  Navigator.of(context)
+                      .popUntil(ModalRoute.withName('/jam_games'));
                 },
               ),
               new FlatButton(
@@ -278,17 +279,17 @@ class _GameState extends State<Game> {
               Navigator.push(
                   context,
                   SlideUpRoute(
-                      widgetBuilder: (context) =>
-                          ++index < widget.quizSession.gameData.length
-                              ? widget.quizSession.sessionId != 'game'
-                                  ? IntermediateQuizScore(
-                                      onTap: () => Navigator.push(
-                                          context,
-                                          SlideUpRoute(
-                                              widgetBuilder: (context) =>
-                                                  _buildGame(context, index))))
-                                  : _buildGame(context, index)
-                              : GameScore(scores: _score)));
+                      widgetBuilder: (context) => index + 1 <
+                              widget.quizSession.gameData.length
+                          ? widget.quizSession.sessionId != 'game'
+                              ? IntermediateQuizScore(
+                                  onTap: () => Navigator.push(
+                                      context,
+                                      SlideUpRoute(
+                                          widgetBuilder: (context) =>
+                                              _buildGame(context, index + 1))))
+                              : _buildGame(context, index + 1)
+                          : GameScore(scores: _score)));
             }
           });
         });

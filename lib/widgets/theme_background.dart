@@ -8,12 +8,10 @@ class ThemeBackground extends StatelessWidget {
     return Container(
       color: Colors.white,
       child: FlareActor(
-          themeBackgrounds[
-                  AppStateContainer.of(context).userProfile.currentTheme] ??
-              'assets/background_flare/cafe.flr',
-          alignment: Alignment.center,
+          themeBackgrounds['school'] ?? 'assets/background_flare/cafe.flr',
+          alignment: Alignment.bottomCenter,
           fit: BoxFit.cover,
-          animation: AppStateContainer.of(context).userProfile.currentTheme),
+          animation: 'school'),
     );
   }
 }

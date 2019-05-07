@@ -1,5 +1,6 @@
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
+import 'package:maui/state/app_state_container.dart';
 
 typedef void ChatCallback(String text);
 
@@ -13,11 +14,23 @@ class ChatBot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeColor =
+        themeColors[AppStateContainer.of(context).userProfile.currentTheme];
     return Column(
       children: <Widget>[
-        Text(
-          text,
-          style: Theme.of(context).textTheme.headline,
+        Container(
+          decoration: BoxDecoration(
+              color: themeColor, borderRadius: BorderRadius.circular(24.0)),
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Text(
+              text,
+              style: Theme.of(context)
+                  .textTheme
+                  .headline
+                  .merge(TextStyle(color: Colors.white)),
+            ),
+          ),
         ),
         Expanded(
           child: Padding(
@@ -28,10 +41,25 @@ class ChatBot extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: choices
-                    .map((c) => RaisedButton(
-                          child: Text(c),
-                          onPressed: () => chatCallback(c),
-                        ))
+                    .map(
+                      (c) => Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: RaisedButton(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(24.0),
+                              ),
+                              color: Colors.white,
+                              child: Text(
+                                c,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline
+                                    .merge(TextStyle(color: themeColor)),
+                              ),
+                              onPressed: () => chatCallback(c),
+                            ),
+                          ),
+                    )
                     .toList(growable: false),
               ),
             ),
