@@ -25,7 +25,6 @@ class _QuizPerformanceScreenState extends State<QuizPerformanceScreen> {
   void didChangeDependencies() {
     print("QUIZ PERFORMANCE SCREEN DEPENDENCIES CHANGED.......................................................................................");
     _performances = AppStateContainer.of(context).quizPerformances;
-    print("PERFORMANCE: $_performances.......................................................................................");
     _quizStudentsIds = AppStateContainer.of(context).quizStudents.toList();
     _quizStudentsIds.forEach((String userID) {
       queryUser(userID);
@@ -76,27 +75,50 @@ class _QuizPerformanceScreenState extends State<QuizPerformanceScreen> {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       elevation: 3,
+      color: Colors.transparent,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Container(
               child: Expanded(flex: 1, child: buildCardLeftSection(index))),
-          Container(child: Expanded(flex: 4, child: buildCardRightSection()))
+          Container(child: Expanded(flex: 4, child: buildCardRightSection(index)))
         ],
       ),
     );
   }
 
-  Column buildCardRightSection() {
+  Column buildCardRightSection(int index) {
+
+    print('Building Right Section.................................................................................');
     return Column(
       children: <Widget>[
         Text('Game Name', style: TextStyle(fontSize: 20)),
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: LinearProgressIndicator(),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: progressIndicator(index)
+          ),
         )
       ],
     );
+  }
+
+  List<Widget> progressIndicator(int index){
+
+    List<Widget> _myProgressIndicator = [];
+
+    _performances.forEach((studentID, performance){
+      if(studentID == _quizStudents[index].id){
+        performance.subScores.forEach((subScore){
+          _myProgressIndicator.add(new SubScoreProgress(isComplete: subScore.complete));
+          _myProgressIndicator.add(new Container(width: 3));
+        });
+      }
+    });
+
+    return _myProgressIndicator;
   }
 
   Column buildCardLeftSection(int index) {
@@ -138,16 +160,13 @@ class _QuizPerformanceScreenState extends State<QuizPerformanceScreen> {
   }
 
   String getScore(int index) {
-    print('GETTING SCORE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
     String score = 0.toString();
     _performances
         .forEach((studentID, performance) {
       if (studentID == _quizStudents[index].id) {
         score = performance.score.toString();
-        print('NumGAmes: ${performance.numGames}................................................................................');
       }
     });
-    print('SCORE: $score......................................................................................');
     return score;
   }
 }
@@ -155,7 +174,7 @@ class _QuizPerformanceScreenState extends State<QuizPerformanceScreen> {
 class SubScoreProgress extends StatelessWidget {
   final bool isComplete;
 
-  SubScoreProgress(this.isComplete);
+  SubScoreProgress({this.isComplete});
 
   @override
   Widget build(BuildContext context) {
@@ -166,8 +185,8 @@ class SubScoreProgress extends StatelessWidget {
           height: 20,
           child: LinearProgressIndicator(
               value: 1.0,
-              valueColor: AlwaysStoppedAnimation(
-                  isComplete ? Colors.green : Colors.red))),
+              valueColor: isComplete != null ? AlwaysStoppedAnimation(
+                  isComplete ? Colors.green : Colors.red) : null)),
     ));
   }
 }
