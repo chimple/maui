@@ -332,7 +332,7 @@ class _BentoBoxState extends State<BentoBox> {
         c.moveImmediately = true;
       }
     });
-    widget.onDragEnd(d);
+    if (widget.onDragEnd != null) widget.onDragEnd(d);
   }
 
   Widget buildChild(Size size, BentoChildDetail childDetail, bool fixed) {

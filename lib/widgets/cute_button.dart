@@ -116,7 +116,11 @@ class CuteButtonWrapperState extends State<CuteButtonWrapper> {
                     ? null
                     : Container(),
             feedback: buildButton(context, widget.gridFeedback),
-            onDragStarted: () => widget.child.onDragStarted(),
+            onDragStarted: () {
+              if (widget.child.onDragStarted != null) {
+                widget.child.onDragStarted();
+              }
+            },
             data: (widget.key as ValueKey<String>).value,
             onDragEnd: (d) {
               widget.onDragEnd(d);
