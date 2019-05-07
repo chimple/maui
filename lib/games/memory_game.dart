@@ -39,7 +39,7 @@ class MemoryGame extends StatefulWidget {
 class _MemoryGameState extends State<MemoryGame> {
   List<_ChoiceDetail> choiceDetails;
   _ChoiceDetail openedChoice;
-
+  int _score = 0, _max = 0, _count = 0, _complete = 0;
   @override
   void initState() {
     super.initState();
@@ -51,6 +51,10 @@ class _MemoryGameState extends State<MemoryGame> {
     choiceDetails.addAll(widget.second
         .map((c) => _ChoiceDetail(choice: c, list: 2, index: i++)));
     choiceDetails.shuffle();
+    _max = choiceDetails.length * 2;
+    _complete = widget.first.length;
+    print(_max);
+    print(_complete);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       setState(() {
         choiceDetails.forEach((c) => c.status = _Status.closed);
@@ -92,6 +96,23 @@ class _MemoryGameState extends State<MemoryGame> {
                                       openedChoice = null;
                                     }),
                               );
+                              _score += 2;
+                              widget.onGameUpdate(
+                                  max: _max,
+                                  score: _score,
+                                  gameOver: false,
+                                  star: true);
+                              _count++;
+                              print(_count);
+                              if (_complete == _count) {
+                                print('game over');
+                                widget.onGameUpdate(
+                                    max: _max,
+                                    score: _score,
+                                    gameOver: true,
+                                    star: true);
+                                _count++;
+                              }
                             } else {
                               Future.delayed(
                                 Duration(milliseconds: 1000),
@@ -101,6 +122,12 @@ class _MemoryGameState extends State<MemoryGame> {
                                       openedChoice = null;
                                     }),
                               );
+                              _score -= (_score != 0 ? 1 : 0);
+                              widget.onGameUpdate(
+                                  max: _max,
+                                  score: _score,
+                                  gameOver: false,
+                                  star: true);
                             }
                             c.status = _Status.opened;
                           }
@@ -108,9 +135,24 @@ class _MemoryGameState extends State<MemoryGame> {
                       }),
                   child: AnimatedFlip(
                     back: Container(
+                      decoration: BoxDecoration(
                       color: Colors.amber,
+                        border: Border.all(
+                          color: Colors.red,
+                          width: 2.0,
+                        ),
+                        borderRadius: BorderRadius.circular(10)
+                      ),
                     ),
-                    front: CuteButton(
+                    front: Container(
+                      decoration: BoxDecoration(
+                      color: Colors.white,
+                        border: Border.all(
+                          color: Colors.red,
+                          width: 2.0,
+                        ),
+                        borderRadius: BorderRadius.circular(10)
+                      ),
                       child: Center(child: Text(c.choice)),
                     ),
                     direction: FlipDirection.HORIZONTAL,

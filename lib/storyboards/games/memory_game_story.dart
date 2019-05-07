@@ -12,6 +12,7 @@ class MemoryGameStory extends FullScreenStory {
             child: MemoryGame(
               first: BuiltList<String>(['1', '2', '3', '4']),
               second: BuiltList<String>(['1', '2', '3', '4']),
+               onGameUpdate: ({int score, int max, bool gameOver, bool star}) {},
             ),
           ),
         ),
