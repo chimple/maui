@@ -12,6 +12,7 @@ import 'package:maui/widgets/score.dart';
 import 'package:maui/widgets/slide_up_route.dart';
 import 'package:maui/widgets/stars.dart';
 import 'package:maui/state/app_state_container.dart';
+import 'package:maui/widgets/theme_background.dart';
 
 class Game extends StatefulWidget {
   final QuizSession quizSession;
@@ -67,7 +68,7 @@ class _GameState extends State<Game> {
   Widget build(BuildContext context) {
     _navigator = Navigator(
       onGenerateRoute: (settings) => SlideUpRoute(
-            widgetBuilder: (context) => _buildGame(context, gameIndex),
+            widgetBuilder: (context) => _buildGame(context, 0),
           ),
     );
 
@@ -78,74 +79,69 @@ class _GameState extends State<Game> {
     return Scaffold(
       backgroundColor: Colors.purple,
       body: SafeArea(
-        child: Stack(
-          children: <Widget>[
-            Container(
-              // height: 1000,
-              // width: 1000,
-              color: Colors.white,
-              child: FlareActor("assets/hud/bg.flr",
-                  alignment: Alignment.center,
-                  fit: BoxFit.cover,
-                  animation: "bg"),
-            ),
-            Column(
-              verticalDirection: VerticalDirection.up,
-              children: <Widget>[
-                Expanded(
-                  flex: 37,
-                  child: _navigator,
-                ),
-                Row(
-                  children: <Widget>[
-                    Container(
-                      height: size.width * 0.17,
-                      width: size.width * 0.17,
-                      child: Hero(
-                        tag: 'chimp',
-                        child: FlareActor("assets/hud/chimp_1.flr",
-                            alignment: Alignment.center,
-                            fit: BoxFit.cover,
-                            animation: "happy"),
+        child: WillPopScope(
+          onWillPop: () => showExitDialog(context),
+          child: Stack(
+            children: <Widget>[
+              ThemeBackground(),
+              Column(
+                verticalDirection: VerticalDirection.up,
+                children: <Widget>[
+                  Expanded(
+                    flex: 37,
+                    child: _navigator,
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Container(
+                        height: size.width * 0.17,
+                        width: size.width * 0.17,
+                        child: Hero(
+                          tag: 'chimp',
+                          child: FlareActor("assets/character/chimp_ik.flr",
+                              alignment: Alignment.center,
+                              fit: BoxFit.cover,
+                              animation: "happy"),
+                        ),
                       ),
-                    ),
-                    Flexible(
-                      flex: 2,
-                      child: Container(),
-                    ),
-                    Flexible(
-                        flex: 50,
-                        child: Text(
-                          'In this game you have to click on the alphabets in sequence order.',
-                          style: Theme.of(context).textTheme.headline,
-                        ))
-                  ],
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Container(),
-                ),
-                Divider(
-                  color: Colors.black,
-                  height: 0.0,
-                ),
-                Expanded(flex: 3, child: buildUI(size)),
-                gameTimer
-                    ? GameTimer(
-                        time: 30,
-                        onGameUpdate: widget.onGameUpdate,
-                        timeCallback: timeCallback,
-                        timeEndCallback: timeEndCallback)
-                    : Container()
-              ],
-            ),
-          ],
+                      Flexible(
+                        flex: 2,
+                        child: Container(),
+                      ),
+                      Flexible(
+                          flex: 50,
+                          child: Text(
+                            'In this game you have to click on the alphabets in sequence order.',
+                            style: Theme.of(context).textTheme.headline,
+                          ))
+                    ],
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Container(),
+                  ),
+                  Divider(
+                    color: Colors.black,
+                    height: 0.0,
+                  ),
+                  Expanded(flex: 3, child: buildUI(size, context)),
+                  gameTimer
+                      ? GameTimer(
+                          time: 30,
+                          onGameUpdate: widget.onGameUpdate,
+                          timeCallback: timeCallback,
+                          timeEndCallback: timeEndCallback)
+                      : Container()
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget buildUI(Size size) {
+  Widget buildUI(Size size, BuildContext context) {
     return Container(
       child: Row(
         children: <Widget>[
@@ -155,10 +151,13 @@ class _GameState extends State<Game> {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.all(1.0),
-                  child: Icon(
-                    Icons.close,
-                    size: size.width * 0.095,
-                    color: Colors.black,
+                  child: InkWell(
+                    onTap: () => showExitDialog(context),
+                    child: Icon(
+                      Icons.close,
+                      size: size.width * 0.08,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
               ],
@@ -217,6 +216,32 @@ class _GameState extends State<Game> {
     );
   }
 
+  showExitDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: new Text("Do you want to exit?"),
+            actions: <Widget>[
+              new FlatButton(
+                child: new Text("Yes"),
+                onPressed: () {
+                  // Navigator.of(context).pop(context);
+                  Navigator.of(context)
+                      .popUntil(ModalRoute.withName('/jam_games'));
+                },
+              ),
+              new FlatButton(
+                child: new Text("No"),
+                onPressed: () {
+                  Navigator.of(context).pop(null);
+                },
+              ),
+            ],
+          );
+        });
+  }
+
   Widget _buildGame(BuildContext context, index) {
     print("lets check the values ..is  $index");
     print('lets check the tim end $timeEnd');
@@ -248,22 +273,23 @@ class _GameState extends State<Game> {
                 ..title = widget.quizSession.title
                 ..numGames = widget.quizSession.gameData.length
                 ..score = _score
+                ..subScores.addAll(_subScores)
                 ..startTime = DateTime.now().toUtc()
                 ..endTime = DateTime.now().toUtc()));
               Navigator.push(
                   context,
                   SlideUpRoute(
-                      widgetBuilder: (context) =>
-                          ++index < widget.quizSession.gameData.length
-                              ? widget.quizSession.sessionId != 'game'
-                                  ? IntermediateQuizScore(
-                                      onTap: () => Navigator.push(
-                                          context,
-                                          SlideUpRoute(
-                                              widgetBuilder: (context) =>
-                                                  _buildGame(context, index))))
-                                  : _buildGame(context, index)
-                              : GameScore(scores: _score)));
+                      widgetBuilder: (context) => index + 1 <
+                              widget.quizSession.gameData.length
+                          ? widget.quizSession.sessionId != 'game'
+                              ? IntermediateQuizScore(
+                                  onTap: () => Navigator.push(
+                                      context,
+                                      SlideUpRoute(
+                                          widgetBuilder: (context) =>
+                                              _buildGame(context, index + 1))))
+                              : _buildGame(context, index + 1)
+                          : GameScore(scores: _score)));
             }
           });
         });
