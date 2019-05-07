@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flare_flutter/flare_actor.dart';
+import 'package:maui/state/app_state_container.dart';
 import 'package:maui/widgets/bento_box.dart';
 
 typedef Reaction OnPressed();
@@ -151,9 +152,10 @@ class CuteButtonWrapperState extends State<CuteButtonWrapper> {
                   });
               },
               elevation: 8.0,
-              color: Colors.blue,
-              disabledColor: Colors.blue,
-              textColor: Colors.white,
+              color: Colors.white,
+              disabledColor: Colors.grey,
+              textColor: themeColors[
+                  AppStateContainer.of(context).userProfile.currentTheme],
               disabledTextColor: Colors.white,
               shape: new RoundedRectangleBorder(
                   borderRadius:
