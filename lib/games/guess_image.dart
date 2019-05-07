@@ -29,6 +29,8 @@ class _GuessImageState extends State<GuessImage> {
   double deviceHeight;
   double deviceWidth;
   double dx;
+  int score = 0;
+  int max = 0;
   double dy;
   List<Widget> displayTextList = [];
   @override
@@ -38,7 +40,7 @@ class _GuessImageState extends State<GuessImage> {
       label.add(f.itemName);
     }).toList();
     label.sort((a, b) => a.length.compareTo(b.length));
-
+    max = label.length * 2;
     assestImage = AssetImage(widget.imageName);
     WidgetsBinding.instance.addPostFrameCallback((a) => _getImageInfo());
   }
@@ -157,7 +159,18 @@ class _GuessImageState extends State<GuessImage> {
             flag = 1;
             setState(() {
               label.remove(c.itemName);
+              score += 2;
+              widget.onGameUpdate(
+                  score: score, max: max, gameOver: false, star: true);
+              if (label.isEmpty) {
+                widget.onGameUpdate(
+                    score: score, max: max, gameOver: true, star: true);
+              }
             });
+          } else {
+            score -= 1;
+            widget.onGameUpdate(
+                score: score, max: max, gameOver: false, star: false);
           }
         }
       });

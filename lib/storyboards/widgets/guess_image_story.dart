@@ -14,6 +14,8 @@ class GuessImageStory extends FullScreenStory {
             child: Container(
               color: Colors.white,
               child: GuessImage(
+                onGameUpdate: (
+                    {int score, int max, bool gameOver, bool star}) {},
                 imageName: "assets/temp/hospital.jpg",
                 imageItemDetails: BuiltList<ImageItemDetail>(
                   [
