@@ -40,6 +40,8 @@ class _MatchTheShapeGameState extends State<MatchTheShapeGame> {
   List<_ChoiceDetail> choiceDetails;
   var score = 0;
   int complete;
+  int count = 0;
+  int maxScore;
 
   @override
   void initState() {
@@ -50,6 +52,7 @@ class _MatchTheShapeGameState extends State<MatchTheShapeGame> {
     complete = choiceDetails.length;
     choiceDetails.addAll(
         widget.second.map((c) => _ChoiceDetail(choice: c, type: 'second')));
+    maxScore = widget.first.length * 2;
   }
 
   @override
@@ -70,13 +73,13 @@ class _MatchTheShapeGameState extends State<MatchTheShapeGame> {
                         ),
                     onAccept: (data) => setState(() {
                           if (data.split('_').first == c.choice) {
-                            score++;
+                            score += 2;
                             print("this is my data ${data.length}");
                             print("this is my score in match $score");
                             if (--complete == 0)
                               widget.onGameUpdate(
                                   score: score,
-                                  max: score,
+                                  max: maxScore,
                                   gameOver: true,
                                   star: true);
 
@@ -95,8 +98,24 @@ class _MatchTheShapeGameState extends State<MatchTheShapeGame> {
                                   () => setState(
                                       () => choice.escape = _Escape.escaped));
                             });
-                          } else
+                          } else {
                             score--;
+                            count++;
+                            if (count > (widget.first.length ~/ 2)) {
+                              // game lose
+                              widget.onGameUpdate(
+                                  score: score,
+                                  max: maxScore,
+                                  gameOver: true,
+                                  star: false);
+                            } else {
+                              widget.onGameUpdate(
+                                  score: score,
+                                  max: maxScore,
+                                  gameOver: false,
+                                  star: false);
+                            }
+                          }
                         }),
                   ),
                 )
