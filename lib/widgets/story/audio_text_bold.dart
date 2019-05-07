@@ -313,47 +313,54 @@ class _AudioTextBold extends State<AudioTextBold> {
     widget.onComplete();
   }
 
+  final textStyle =
+      TextStyle(fontSize: 25, color: Colors.black, fontWeight: FontWeight.w400);
   TtsState ttsState = TtsState.PAUSE;
   @override
   Widget build(BuildContext context) {
     if (text != null && widget.imagePath != null)
       return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Expanded(flex: 5, child: _buildImage()),
           Expanded(
               flex: 4,
-              child: TextToSpeech(
-                playingStatus: (s) {
-                  setState(() {
-                    ttsState = s;
-                  });
-                  widget.playingStatus(s);
-                },
-                onComplete: () => widget.onComplete(),
-                fullText: widget.fullText,
-                keys: widget.keys,
-                onLongPress: (ttsState == TtsState.PAUSE)
-                    ? (s) async {
-                        await showDialog(
-                          context: context,
-                          builder: (context) {
-                            return FractionallySizedBox(
-                                heightFactor:
-                                    MediaQuery.of(context).orientation ==
-                                            Orientation.portrait
-                                        ? 0.5
-                                        : 0.8,
-                                widthFactor:
-                                    MediaQuery.of(context).orientation ==
-                                            Orientation.portrait
-                                        ? 0.8
-                                        : 0.4,
-                                child: textDescriptionDialog(
-                                    context, s, 'textDesciption'));
-                          },
-                        );
-                      }
-                    : null,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 15),
+                child: TextToSpeech(
+                  textStyle: textStyle,
+                  playingStatus: (s) {
+                    setState(() {
+                      ttsState = s;
+                    });
+                    widget.playingStatus(s);
+                  },
+                  onComplete: () => widget.onComplete(),
+                  fullText: widget.fullText,
+                  keys: widget.keys,
+                  onLongPress: (ttsState == TtsState.PAUSE)
+                      ? (s) async {
+                          await showDialog(
+                            context: context,
+                            builder: (context) {
+                              return FractionallySizedBox(
+                                  heightFactor:
+                                      MediaQuery.of(context).orientation ==
+                                              Orientation.portrait
+                                          ? 0.5
+                                          : 0.8,
+                                  widthFactor:
+                                      MediaQuery.of(context).orientation ==
+                                              Orientation.portrait
+                                          ? 0.8
+                                          : 0.4,
+                                  child: textDescriptionDialog(
+                                      context, s, 'textDesciption'));
+                            },
+                          );
+                        }
+                      : null,
+                ),
               ))
         ],
       );
@@ -369,8 +376,9 @@ class _AudioTextBold extends State<AudioTextBold> {
           Expanded(
               flex: 9,
               child: Padding(
-                padding: const EdgeInsets.only(top: 15),
+                padding: const EdgeInsets.only(left: 15),
                 child: TextToSpeech(
+                  textStyle: textStyle,
                   playingStatus: (status) => widget.playingStatus(status),
                   onComplete: () => widget.onComplete(),
                   fullText: widget.fullText,
