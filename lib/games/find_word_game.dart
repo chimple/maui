@@ -30,7 +30,8 @@ class FindWordGame extends StatefulWidget {
 class _FindWordGameState extends State<FindWordGame> {
   List<_ChoiceDetail> choiceDetails;
   List<String> word = [];
-  int score = 0;
+  int score = 0, tries = 0;
+  final int wrongAttempts = 2;
 
   @override
   void initState() {
@@ -63,22 +64,27 @@ class _FindWordGameState extends State<FindWordGame> {
                       reaction: c.reaction,
                       child: Center(child: Text(c.letter)),
                       onPressed: () {
-                        widget.onGameUpdate(
-                            score: 1, max: 1, gameOver: true, star: true);
                         if (c.letter == widget.answer[word.length]) {
                           setState(() {
-                            score++;
+                            score += 2;
                             c.reaction = Reaction.success;
+                            tries = 0;
                             word.add(c.letter);
                             if (word.length == widget.answer.length)
                               widget.onGameUpdate(
                                   score: score,
-                                  max: score,
+                                  max: widget.answer.length * 2,
                                   gameOver: true,
                                   star: true);
                           });
                         } else {
-                          if (score > 0) score--;
+                          score--;
+                          if (++tries == wrongAttempts)
+                            widget.onGameUpdate(
+                                score: score,
+                                max: widget.answer.length * 2,
+                                gameOver: true,
+                                star: false);
                           c.reaction = Reaction.failure;
                         }
                       },

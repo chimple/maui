@@ -36,7 +36,8 @@ class _FillInTheBlanksGameState extends State<FillInTheBlanksGame> {
   List<String> dragBoxData = [];
   List<String> questionWords = [];
   List<int> index = [];
-  int complete = 0, score = 0, wrongAttempts = 2, total = 0;
+  int complete = 0, score = 0, tries = 0, total = 0;
+  final int wrongAttempts = 2;
 
   @override
   void initState() {
@@ -96,7 +97,7 @@ class _FillInTheBlanksGameState extends State<FillInTheBlanksGame> {
                                   if (data.substring(1) == f.choice)
                                     setState(() {
                                       score += 2;
-                                      if (wrongAttempts < 2) wrongAttempts++;
+                                      tries = 0;
                                       if (--complete == 0)
                                         widget.onGameUpdate(
                                             score: score,
@@ -108,7 +109,7 @@ class _FillInTheBlanksGameState extends State<FillInTheBlanksGame> {
                                     });
                                   else {
                                     score--;
-                                    if (--wrongAttempts == 0)
+                                    if (++tries == wrongAttempts)
                                       widget.onGameUpdate(
                                           score: score,
                                           max: total * 2,

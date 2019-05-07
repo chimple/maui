@@ -49,8 +49,8 @@ class _CrosswordGameState extends State<CrosswordGame> {
 
   int rows;
   int cols;
-  int complete, score = 0;
-  int wrongAttempts = 2;
+  int complete, score = 0, tries = 0;
+  final int wrongAttempts = 2;
 
   @override
   void initState() {
@@ -156,7 +156,7 @@ class _CrosswordGameState extends State<CrosswordGame> {
                                   if (choiceDetails[int.parse(data)].choice ==
                                       f.choice) {
                                     score += 2;
-                                    if (wrongAttempts < 2) wrongAttempts++;
+                                    tries = 0;
                                     if (--complete == 0)
                                       widget.onGameUpdate(
                                           score: score,
@@ -168,7 +168,7 @@ class _CrosswordGameState extends State<CrosswordGame> {
                                         false;
                                   } else {
                                     score--;
-                                    if (--wrongAttempts == 0)
+                                    if (++tries == wrongAttempts)
                                       widget.onGameUpdate(
                                           score: score,
                                           max: letterIndex.length * 2,

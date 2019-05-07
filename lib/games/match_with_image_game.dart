@@ -34,8 +34,9 @@ class MatchWithImageGame extends StatefulWidget {
 class _MatchWithImageGameState extends State<MatchWithImageGame> {
   List<_ChoiceDetail> answerDetails;
   List<_ChoiceDetail> choiceDetails;
-  var score = 0, wrongAttempts = 2;
+  var score = 0, tries = 0;
   int complete = 0;
+  final int wrongAttempts = 2;
 
   @override
   void initState() {
@@ -82,7 +83,7 @@ class _MatchWithImageGameState extends State<MatchWithImageGame> {
                     onAccept: (data) => setState(() {
                           if (data == a.choice) {
                             score += 2;
-                            if (wrongAttempts < 2) wrongAttempts++;
+                            tries = 0;
                             a.appear = true;
                             choiceDetails
                                 .firstWhere((c) => c.choice == a.choice)
@@ -95,7 +96,7 @@ class _MatchWithImageGameState extends State<MatchWithImageGame> {
                                   star: true);
                           } else {
                             score--;
-                            if (--wrongAttempts == 0)
+                            if (++tries == wrongAttempts)
                               widget.onGameUpdate(
                                   score: score,
                                   max: choiceDetails.length * 2,
