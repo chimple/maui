@@ -80,7 +80,7 @@ class _SequenceTheNumberGameState extends State<SequenceTheNumberGame> {
                     score++;
                     c.reaction = Reaction.success;
                     Future.delayed(
-                        const Duration(milliseconds: 1000),
+                        const Duration(milliseconds: 500),
                         () => setState(() {
                               solved = true;
                               widget.onGameUpdate(
