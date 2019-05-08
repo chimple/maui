@@ -13,6 +13,7 @@ class SequenceTheNumberGameStory extends FullScreenStory {
               sequence: BuiltList<int>([1, 2, 3, 4]),
               choices: BuiltList<int>([3, 5, 6]),
               blankPosition: 2,
+              onGameUpdate: ({int score, int max, bool gameOver, bool star}) {},
             ),
           ),
         )

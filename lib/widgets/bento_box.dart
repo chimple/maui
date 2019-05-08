@@ -33,11 +33,13 @@ class BentoBox extends StatefulWidget {
   final Axis axis;
   final DragConfig dragConfig;
   final bool grid;
+  final OnDragEnd onDragEnd;
 
   const BentoBox(
       {Key key,
       this.cols,
       this.rows,
+      this.onDragEnd,
       this.children,
       this.calculateLayout = calculateVerticalLayout,
       this.axis,
@@ -330,6 +332,7 @@ class _BentoBoxState extends State<BentoBox> {
         c.moveImmediately = true;
       }
     });
+    if (widget.onDragEnd != null) widget.onDragEnd(d);
   }
 
   Widget buildChild(Size size, BentoChildDetail childDetail, bool fixed) {
