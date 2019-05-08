@@ -258,40 +258,37 @@ class _NumberBalanceGameState extends State<NumberBalanceGame> {
       children: <Widget>[
         Flexible(
           flex: 1,
-          child: Container(
-            color: Colors.brown,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                AnimatedContainer(
-                  duration: Duration(seconds: 1),
-                  alignment: _leftAlignment,
-                  curve: Curves.decelerate,
-                  child: _equationLayout(
-                      _leftOperand1,
-                      widget.leftExpression.item2,
-                      _leftOperand2,
-                      Equation.lefthandside),
-                ),
-                Text(
-                  "=",
-                  style: TextStyle(
-                      color: _correct ? Colors.green : Colors.grey,
-                      fontSize: 100.0,
-                      fontWeight: FontWeight.bold),
-                ),
-                AnimatedContainer(
-                  duration: Duration(seconds: 1),
-                  alignment: _rightAlignment,
-                  curve: Curves.decelerate,
-                  child: _equationLayout(
-                      _rightOperand1,
-                      widget.rightExpression.item2,
-                      _rightOperand2,
-                      Equation.righthandside),
-                ),
-              ],
-            ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              AnimatedContainer(
+                duration: Duration(seconds: 1),
+                alignment: _leftAlignment,
+                curve: Curves.decelerate,
+                child: _equationLayout(
+                    _leftOperand1,
+                    widget.leftExpression.item2,
+                    _leftOperand2,
+                    Equation.lefthandside),
+              ),
+              Text(
+                "=",
+                style: TextStyle(
+                    color: _correct ? Colors.green : Colors.grey,
+                    fontSize: 100.0,
+                    fontWeight: FontWeight.bold),
+              ),
+              AnimatedContainer(
+                duration: Duration(seconds: 1),
+                alignment: _rightAlignment,
+                curve: Curves.decelerate,
+                child: _equationLayout(
+                    _rightOperand1,
+                    widget.rightExpression.item2,
+                    _rightOperand2,
+                    Equation.righthandside),
+              ),
+            ],
           ),
         ),
         Flexible(
