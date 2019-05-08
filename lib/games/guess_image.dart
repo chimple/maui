@@ -61,27 +61,31 @@ class _GuessImageState extends State<GuessImage> {
         : MediaQuery.of(context).size.height * .065;
     return Container(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          AspectRatio(
-            aspectRatio: 1.0,
-            child: Stack(
-              children: <Widget>[
-                SizedBox(
-                  height: double.infinity,
-                  width: double.infinity,
-                  child: Image(
-                    image: assestImage,
-                    fit: BoxFit.scaleDown,
+          Expanded(
+            flex: 8,
+            child: AspectRatio(
+              aspectRatio: 1.0,
+              child: Stack(
+                children: <Widget>[
+                  SizedBox(
+                    height: double.infinity,
+                    width: double.infinity,
+                    child: Image(
+                      image: assestImage,
+                      fit: BoxFit.fill,
+                    ),
                   ),
-                ),
-                flag == 1
-                    ? displayText(centerX, centerY, dragText)
-                    : Container()
-              ],
+                  flag == 1
+                      ? displayText(centerX, centerY, dragText)
+                      : Container()
+                ],
+              ),
             ),
           ),
           Expanded(
+            flex: 2,
             child: BentoBox(
               dragConfig: DragConfig.draggableBounceBack,
               calculateLayout: BentoBox.calculateVerticalLayout,
@@ -119,8 +123,10 @@ class _GuessImageState extends State<GuessImage> {
                 );
               }).toList(),
               onDragEnd: (d) {
-                dx = (d.offset.dx / deviceWidth) * _imageInfo.image.height;
+                print('details in DragEnd is ${d.offset}');
+                dx = (d.offset.dx / deviceWidth) * _imageInfo.image.width;
                 dy = ((d.offset.dy) / deviceWidth) * _imageInfo.image.height;
+                print('image dx and dy  is $dx and $dy ');
                 dragEnd(dx, dy);
               },
             ),
