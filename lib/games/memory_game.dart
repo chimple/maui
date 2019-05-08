@@ -136,23 +136,21 @@ class _MemoryGameState extends State<MemoryGame> {
                   child: AnimatedFlip(
                     back: Container(
                       decoration: BoxDecoration(
-                      color: Colors.amber,
-                        border: Border.all(
-                          color: Colors.red,
-                          width: 2.0,
-                        ),
-                        borderRadius: BorderRadius.circular(10)
-                      ),
+                          color: Colors.amber,
+                          border: Border.all(
+                            color: Colors.red,
+                            width: 2.0,
+                          ),
+                          borderRadius: BorderRadius.circular(10)),
                     ),
                     front: Container(
                       decoration: BoxDecoration(
-                      color: Colors.white,
-                        border: Border.all(
-                          color: Colors.red,
-                          width: 2.0,
-                        ),
-                        borderRadius: BorderRadius.circular(10)
-                      ),
+                          color: Colors.white,
+                          border: Border.all(
+                            color: Colors.red,
+                            width: 2.0,
+                          ),
+                          borderRadius: BorderRadius.circular(10)),
                       child: Center(child: Text(c.choice)),
                     ),
                     direction: FlipDirection.HORIZONTAL,
