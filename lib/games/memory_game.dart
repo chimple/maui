@@ -91,7 +91,15 @@ class _MemoryGameState extends State<MemoryGame> {
                                           openedChoice.status =
                                               _Status.escaping;
                                           c.status = _Status.escaping;
+                                        }),
+                                  );
+                                  Future.delayed(
+                                    Duration(milliseconds: 2000),
+                                    () => setState(() {
                                           _clickedCount = 1;
+                                          openedChoice.status = _Status.escaped;
+                                          c.status = _Status.escaped;
+                                          openedChoice = null;
                                           if (_complete == _count) {
                                             print('game over');
                                             widget.onGameUpdate(
@@ -101,14 +109,6 @@ class _MemoryGameState extends State<MemoryGame> {
                                                 star: true);
                                             _count++;
                                           }
-                                        }),
-                                  );
-                                  Future.delayed(
-                                    Duration(milliseconds: 2000),
-                                    () => setState(() {
-                                          openedChoice.status = _Status.escaped;
-                                          c.status = _Status.escaped;
-                                          openedChoice = null;
                                         }),
                                   );
                                   _score += 2;
