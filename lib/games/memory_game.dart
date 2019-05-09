@@ -146,19 +146,11 @@ class _MemoryGameState extends State<MemoryGame> {
                     back: Container(
                       decoration: BoxDecoration(
                           color: Colors.amber,
-                          border: Border.all(
-                            color: Colors.red,
-                            width: 2.0,
-                          ),
                           borderRadius: BorderRadius.circular(10)),
                     ),
                     front: Container(
                       decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(
-                            color: Colors.red,
-                            width: 2.0,
-                          ),
+                          color: Colors.blue,
                           borderRadius: BorderRadius.circular(10)),
                       child: Center(child: Text(c.choice)),
                     ),
