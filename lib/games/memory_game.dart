@@ -40,6 +40,7 @@ class _MemoryGameState extends State<MemoryGame> {
   List<_ChoiceDetail> choiceDetails;
   _ChoiceDetail openedChoice;
   int _score = 0, _max = 0, _count = 0, _complete = 0;
+  int _clickedCount = 1;
   @override
   void initState() {
     super.initState();
@@ -71,68 +72,75 @@ class _MemoryGameState extends State<MemoryGame> {
           .map((c) => (c.status == _Status.closed || c.status == _Status.opened)
               ? GestureDetector(
                   key: Key('${c.list}_${c.index}'),
-                  onTap: () => setState(() {
-                        if (c.status == _Status.opened) {
-                          c.status = _Status.closed;
-                          openedChoice = null;
-                        } else {
-                          if (openedChoice == null) {
-                            openedChoice = c;
-                            c.status = _Status.opened;
-                          } else {
-                            if (openedChoice.index == c.index) {
-                              Future.delayed(
-                                Duration(milliseconds: 1000),
-                                () => setState(() {
-                                      openedChoice.status = _Status.escaping;
-                                      c.status = _Status.escaping;
-                                    }),
-                              );
-                              Future.delayed(
-                                Duration(milliseconds: 2000),
-                                () => setState(() {
-                                      openedChoice.status = _Status.escaped;
-                                      c.status = _Status.escaped;
-                                      openedChoice = null;
-                                    }),
-                              );
-                              _score += 2;
-                              widget.onGameUpdate(
-                                  max: _max,
-                                  score: _score,
-                                  gameOver: false,
-                                  star: true);
-                              _count++;
-                              print(_count);
-                              if (_complete == _count) {
-                                print('game over');
-                                widget.onGameUpdate(
-                                    max: _max,
-                                    score: _score,
-                                    gameOver: true,
-                                    star: true);
-                                _count++;
-                              }
+                  onTap: _clickedCount <= 2
+                      ? () => setState(() {
+                            if (c.status == _Status.opened) {
+                              c.status = _Status.closed;
+                              openedChoice = null;
                             } else {
-                              Future.delayed(
-                                Duration(milliseconds: 1000),
-                                () => setState(() {
-                                      openedChoice.status = _Status.closed;
-                                      c.status = _Status.closed;
-                                      openedChoice = null;
-                                    }),
-                              );
-                              _score -= (_score != 0 ? 1 : 0);
-                              widget.onGameUpdate(
-                                  max: _max,
-                                  score: _score,
-                                  gameOver: false,
-                                  star: true);
+                              if (openedChoice == null) {
+                                openedChoice = c;
+                                c.status = _Status.opened;
+                                _clickedCount++;
+                              } else {
+                                if (openedChoice.index == c.index) {
+                                  Future.delayed(
+                                    Duration(milliseconds: 1000),
+                                    () => setState(() {
+                                          openedChoice.status =
+                                              _Status.escaping;
+                                          c.status = _Status.escaping;
+                                          _clickedCount = 1;
+                                          if (_complete == _count) {
+                                            print('game over');
+                                            widget.onGameUpdate(
+                                                max: _max,
+                                                score: _score,
+                                                gameOver: true,
+                                                star: true);
+                                            _count++;
+                                          }
+                                        }),
+                                  );
+                                  Future.delayed(
+                                    Duration(milliseconds: 2000),
+                                    () => setState(() {
+                                          openedChoice.status = _Status.escaped;
+                                          c.status = _Status.escaped;
+                                          openedChoice = null;
+                                        }),
+                                  );
+                                  _score += 2;
+                                  widget.onGameUpdate(
+                                      max: _max,
+                                      score: _score,
+                                      gameOver: false,
+                                      star: true);
+                                  _count++;
+                                  print(_count);
+                                } else {
+                                  Future.delayed(
+                                    Duration(milliseconds: 1000),
+                                    () => setState(() {
+                                          openedChoice.status = _Status.closed;
+                                          c.status = _Status.closed;
+                                          openedChoice = null;
+                                          _clickedCount = 1;
+                                        }),
+                                  );
+                                  _score -= (_score != 0 ? 1 : 0);
+                                  widget.onGameUpdate(
+                                      max: _max,
+                                      score: _score,
+                                      gameOver: false,
+                                      star: true);
+                                }
+                                _clickedCount++;
+                                c.status = _Status.opened;
+                              }
                             }
-                            c.status = _Status.opened;
-                          }
-                        }
-                      }),
+                          })
+                      : () {},
                   child: AnimatedFlip(
                     back: Container(
                       decoration: BoxDecoration(
