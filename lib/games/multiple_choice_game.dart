@@ -35,12 +35,17 @@ class _MultipleChoiceGameState extends State<MultipleChoiceGame> {
   // List<_ChoiceDetail> answerDetails;
   List<String> choices = [];
   var _dataLength = 0, _complete = 0, _score = 0, _max = 0;
+  int flag = 0;
   @override
   void initState() {
     int i = 0;
     super.initState();
-    choices.addAll(widget.answers?.asList());
-    choices.addAll(widget.choices?.asList());
+    // choices.addAll(widget.answers?.asList());
+    // choices.addAll(widget.choices?.asList());
+    Set<String> ch = new Set<String>();
+    ch.addAll(widget.answers?.asList());
+    ch.addAll(widget.choices?.asList());
+    choices.addAll(ch);
     choices.shuffle();
     choiceDetails = choices
         .map((c) => _ChoiceDetail(
@@ -50,13 +55,11 @@ class _MultipleChoiceGameState extends State<MultipleChoiceGame> {
     _dataLength = widget.choices.length;
     _max = widget.choices.length;
     _dataLength = (_dataLength / 2).ceil();
-    print('choiceDetails:: $choiceDetails, ${widget.question}');
+    print('choiceDetails:: $choiceDetails, length $_dataLength');
   }
 
   @override
   Widget build(BuildContext context) {
-    print('choiceDetails:: $choiceDetails, ${widget.question}');
-    print('build');
     return new Container(
       child: Column(
         children: <Widget>[
@@ -74,7 +77,7 @@ class _MultipleChoiceGameState extends State<MultipleChoiceGame> {
               child: BentoBox(
                 calculateLayout: BentoBox.calculateVerticalLayout,
                 axis: Axis.vertical,
-                cols: _dataLength,
+                cols: _dataLength != 1 ? _dataLength : 2,
                 rows: _dataLength,
                 dragConfig: DragConfig.fixed,
                 qChildren: <Widget>[],
