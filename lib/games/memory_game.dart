@@ -72,11 +72,13 @@ class _MemoryGameState extends State<MemoryGame> {
           .map((c) => (c.status == _Status.closed || c.status == _Status.opened)
               ? GestureDetector(
                   key: Key('${c.list}_${c.index}'),
-                  onTap: _clickedCount <= 2
+                  onTap: (_clickedCount <= 2 && c.status != _Status.escaping)
                       ? () => setState(() {
                             if (c.status == _Status.opened) {
                               c.status = _Status.closed;
                               openedChoice = null;
+                              if(_clickedCount==2)
+                              _clickedCount=1;
                             } else {
                               if (openedChoice == null) {
                                 openedChoice = c;
