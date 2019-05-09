@@ -77,12 +77,11 @@ class _MemoryGameState extends State<MemoryGame> {
                             if (c.status == _Status.opened) {
                               c.status = _Status.closed;
                               openedChoice = null;
-                              if(_clickedCount==2)
-                              _clickedCount=1;
                             } else {
                               if (openedChoice == null) {
                                 openedChoice = c;
                                 c.status = _Status.opened;
+                                if (_clickedCount == 2) _clickedCount = 1;
                                 _clickedCount++;
                               } else {
                                 if (openedChoice.index == c.index) {
