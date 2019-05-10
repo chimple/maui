@@ -7,6 +7,7 @@ import 'package:maui/widgets/bento_box.dart';
 
 typedef Reaction OnPressed();
 typedef void OnDragEnd(DraggableDetails d);
+typedef void OnDragStarted();
 
 enum Reaction { enter, success, failure }
 
@@ -22,11 +23,13 @@ class CuteButton extends StatelessWidget {
   final OnPressed onPressed;
   final Reaction reaction;
   final CuteButtonType cuteButtonType;
+  final OnDragStarted onDragStarted;
   const CuteButton(
       {Key key,
       this.onPressed,
       this.reaction,
       this.child,
+      this.onDragStarted,
       this.cuteButtonType = CuteButtonType.cuteButton})
       : super(key: key);
 
@@ -114,6 +117,11 @@ class CuteButtonWrapperState extends State<CuteButtonWrapper> {
                     ? null
                     : Container(),
             feedback: buildButton(context, widget.gridFeedback),
+            onDragStarted: () {
+              if (widget.child.onDragStarted != null) {
+                widget.child.onDragStarted();
+              }
+            },
             data: (widget.key as ValueKey<String>).value,
             onDragEnd: (d) {
               widget.onDragEnd(d);
