@@ -23,7 +23,6 @@ class _QuizPerformanceScreenState extends State<QuizPerformanceScreen> {
 
   @override
   void didChangeDependencies() {
-    print("QUIZ PERFORMANCE SCREEN DEPENDENCIES CHANGED.......................................................................................");
     _performances = AppStateContainer.of(context).quizPerformances;
     _quizStudentsIds = AppStateContainer.of(context).quizStudents.toList();
     _quizStudentsIds.forEach((String userID) {
@@ -89,7 +88,6 @@ class _QuizPerformanceScreenState extends State<QuizPerformanceScreen> {
 
   Column buildCardRightSection(int index) {
 
-    print('Building Right Section.................................................................................');
     return Column(
       children: <Widget>[
         Text('Game Name', style: TextStyle(fontSize: 20)),
