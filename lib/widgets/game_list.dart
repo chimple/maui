@@ -28,24 +28,74 @@ class GameListState extends State<GameList>
   bool isLoading = true;
   List<List<Lesson>> data;
   BuiltMap<String, int> userData;
+  Map<String, String> themes;
   ScrollController _scrollController;
   double width;
+  List<List<Map<String, List<Lesson>>>> _finalList;
 
   @override
   void initState() {
     super.initState();
-    initFn();
+    _initFn();
     _tabController = TabController(vsync: this, length: 2);
     _tabController.addListener(_tabListener);
     _scrollController = ScrollController();
   }
 
-  initFn() async {
+  _initFn() async {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       data = [];
+      _finalList = [];
       userData = AppStateContainer.of(context).userProfile.lessons;
-      data.add(await LessonRepo().getLessonsByTopic(TopicType.math));
+      themes = themeBackgrounds;
       data.add(await LessonRepo().getLessonsByTopic(TopicType.reading));
+      data.add(await LessonRepo().getLessonsByTopic(TopicType.math));
+
+      data.forEach((list) {
+        List<Map<String, List<Lesson>>> temp = [];
+
+        int add = 0;
+        if (list.length > 4) {
+          int indexBack = 0;
+          int skipElement = 0;
+          int skipVarable = 0;
+          int skippingBack = 0;
+          for (int i = 0; i < list.length; i++) {
+            if (i % themes.length == 0) {
+              indexBack = 0;
+              skippingBack = skippingBack + 1;
+              if (skippingBack == 4) {
+                temp.add({
+                  themes.values.toList()[skipVarable]: list
+                      .skip(skipElement++ * (5 + add))
+                      .take(5 + add)
+                      .toList()
+                });
+                skippingBack = 0;
+                skipVarable = skipVarable + 1;
+              } else {
+                temp.add({
+                  themes.values.toList()[skipVarable]: list
+                      .skip(skipElement++ * (5 + add))
+                      .take(5 + add)
+                      .toList()
+                });
+              }
+
+              indexBack = indexBack + 1;
+            }
+          }
+
+          _finalList.add(temp);
+        } else {
+          int i = 0;
+          list.map((f) => temp.add({
+                themes.values.toList()[i]: [list[i++]]
+              }));
+          _finalList.add(temp);
+        }
+      });
+
       double scrollOffset =
           _calcCurrentLessonIndex(data[0]) * (width * .7) / 2.1;
       _scrollController = ScrollController(initialScrollOffset: scrollOffset);
@@ -119,32 +169,51 @@ class GameListState extends State<GameList>
     return !userData.containsKey(title);
   }
 
-  Widget tabBarView(data, MediaQueryData media, bool _isPortrait) {
-    final List<Lesson> temp = data;
+  Widget _tabBarView(data) {
+    final List<Map<String, List<Lesson>>> temp = data;
     String previousTitle = '';
     int i = 0;
-    return ListView(
-      shrinkWrap: true,
-      controller: _scrollController,
-      children: temp.map((t) {
-        i++;
-        Widget widget = FractionallySizedBox(
-            widthFactor: .7,
-            child: GameButton(
-              title: t.title,
-              progress: userData.containsKey(t.title) ? userData[t.title] : 0,
-              locked: _shouldLock(i, t.title, previousTitle),
-              onTap: _onTap,
-              flareCallback: _flareCallback,
-              animationFlag: t.title == gameToOpen,
-              buttonStatus: gameToOpen != ''
-                  ? _ButtonStatus.disabled
-                  : _ButtonStatus.active,
-            ));
-        previousTitle = t.title;
-        return widget;
-      }).toList(growable: false),
-    );
+    int j = 0;
+    return CustomScrollView(
+        shrinkWrap: true,
+        controller: _scrollController,
+        slivers: [
+          SliverList(
+            delegate: SliverChildListDelegate(temp
+                .map((f) => Stack(
+                      children: [
+                        Positioned.fill(
+                            child: FlareActor(f.keys.toList()[j],
+                                fit: BoxFit.fill)),
+                        Column(
+                          children: f.values.toList()[j].map((t) {
+                            i++;
+                            Widget widget = Center(
+                                child: FractionallySizedBox(
+                                    widthFactor: .7,
+                                    child: GameButton(
+                                      title: t.title,
+                                      progress: userData.containsKey(t.title)
+                                          ? userData[t.title]
+                                          : 0,
+                                      locked: _shouldLock(
+                                          i, t.title, previousTitle),
+                                      onTap: _onTap,
+                                      flareCallback: _flareCallback,
+                                      animationFlag: t.title == gameToOpen,
+                                      buttonStatus: gameToOpen != ''
+                                          ? _ButtonStatus.disabled
+                                          : _ButtonStatus.active,
+                                    )));
+                            previousTitle = t.title;
+                            return widget;
+                          }).toList(growable: false),
+                        )
+                      ],
+                    ))
+                .toList()),
+          ),
+        ]);
   }
 
   @override
@@ -152,8 +221,6 @@ class GameListState extends State<GameList>
     MediaQueryData media = MediaQuery.of(context);
     final double height = media.size.height;
     width = media.size.width;
-    final _isPortrait = width < height;
-
     if (isLoading)
       return Center(
         child: SizedBox(
@@ -167,49 +234,47 @@ class GameListState extends State<GameList>
       appBar: AppBar(
         title: Text('Games'),
       ),
-      body: Stack(alignment: Alignment.center, children: [
-        Column(
-          children: <Widget>[
-            Expanded(
-              child: TabBarView(
-                  controller: _tabController,
-                  children: data
-                      .map((f) => tabBarView(f, media, _isPortrait))
-                      .toList()),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                  height: _isPortrait ? height * .1 : height * .18,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [Colors.orange[400], Colors.deepOrange],
-                    ),
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30),
-                        topRight: Radius.circular(30)),
+      body: Stack(alignment: Alignment.topCenter, children: [
+        ConstrainedBox(
+          constraints: BoxConstraints.tightFor(
+              height: height - (height > 700 ? 170 : 142)),
+          child: TabBarView(
+              controller: _tabController,
+              children: _finalList.map((f) => _tabBarView(f)).toList()),
+        ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: ClipRRect(
+            clipBehavior: Clip.antiAlias,
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+            child: Container(
+                height: height > 700 ? 100 : 70,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [Colors.orange[400], Colors.deepOrange],
                   ),
-                  child: TabBar(
-                    labelColor: Colors.white,
-                    indicatorColor: Colors.white,
-                    indicatorWeight: 4,
-                    tabs: [
-                      Tab(
-                        icon: Icon(Icons.menu),
-                        text: 'Reading',
-                      ),
-                      Tab(
-                        icon: Icon(Icons.access_time),
-                        text: 'Math',
-                      ),
-                    ],
-                    controller: _tabController,
-                  )),
-            ),
-          ],
-        )
+                ),
+                child: TabBar(
+                  labelColor: Colors.white,
+                  indicatorColor: Colors.white,
+                  indicatorWeight: 4,
+                  tabs: [
+                    Tab(
+                      icon: Icon(Icons.menu),
+                      text: 'Reading',
+                    ),
+                    Tab(
+                      icon: Icon(Icons.access_time),
+                      text: 'Math',
+                    ),
+                  ],
+                  controller: _tabController,
+                )),
+          ),
+        ),
       ]),
     );
   }
@@ -251,7 +316,7 @@ class GameButton extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 10.0),
           margin: EdgeInsets.all(media.size.width * .03),
           child: Opacity(
-            opacity: locked ? 0.6 : 1,
+            opacity: locked ? 0.5 : 1,
             child: Material(
               shadowColor: Colors.white70,
               color: Colors.transparent,
