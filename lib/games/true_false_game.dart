@@ -49,11 +49,11 @@ class _RhymeWordsGameState extends State<TrueFalseGame> {
       qRows: 2,
       qChildren: <Widget>[
         CuteButton(
-          key: Key(widget.question),
+          key: Key('q_${widget.question}'),
           child: Center(child: Text(widget.question)),
         ),
         CuteButton(
-          key: Key(widget.answer),
+          key: Key('a_${widget.answer}'),
           child: Center(child: Text(widget.answer)),
         )
       ],

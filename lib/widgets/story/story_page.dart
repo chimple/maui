@@ -10,6 +10,7 @@ import 'package:maui/widgets/story/audio_text_bold.dart';
 import 'package:maui/util/text_to_speech.dart';
 import 'package:maui/models/serializers.dart';
 import 'package:maui/models/story_config.dart';
+import 'package:flare_flutter/flare_actor.dart';
 
 class StoryPage extends StatefulWidget {
   final String storyId;
@@ -52,10 +53,12 @@ class StoryPageState extends State<StoryPage> {
   Widget build(BuildContext context) {
     int index = 0;
     if (_isLoading) {
-      return new SizedBox(
-        width: 20.0,
-        height: 20.0,
-        child: new CircularProgressIndicator(),
+      return Center(
+        child: new SizedBox(
+          width: 20.0,
+          height: 20.0,
+          child: new CircularProgressIndicator(),
+        ),
       );
     }
     final widgets = <Widget>[];
@@ -90,18 +93,21 @@ class StoryPageState extends State<StoryPage> {
       gameData: story.gameDatas,
     ));
     return new Scaffold(
-      floatingActionButton: _currentPageIndex != story.pages.length
-          ? FloatingActionButton(
-              backgroundColor: Colors.red,
-              onPressed: () {
-                if (!_isPlaying) {
-                  _keys[_currentPageIndex].speak();
-                } else {
-                  _keys[_currentPageIndex].pause();
-                }
-              },
-              child: !_isPlaying ? Icon(Icons.play_arrow) : Icon(Icons.pause))
-          : Container(),
+      //  floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      // floatingActionButton: _currentPageIndex != story.pages.length
+      //     ? InkWell(
+      //         onTap: () {
+      //           if (!_isPlaying) {
+      //             _keys[_currentPageIndex].speak();
+      //           } else {
+      //             _keys[_currentPageIndex].pause();
+      //           }
+      //         },
+      //         child: Container(
+      //           child: FlareActor('assets/chimp_ik.flr',animation: 'talking',)),
+      //         // child: !_isPlaying ? Icon(Icons.play_arrow) : Icon(Icons.pause)
+      //         )
+      //     : Container(),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -145,6 +151,7 @@ class StoryPageState extends State<StoryPage> {
           ),
           Expanded(
             child: Stack(
+              alignment: Alignment.bottomRight,
               children: <Widget>[
                 Scrollable(viewportBuilder: (c, k) {
                   return PageView(
@@ -162,6 +169,28 @@ class StoryPageState extends State<StoryPage> {
                     children: widgets,
                   );
                 }),
+                SizedBox(
+                  height: 130,
+                  width: 90,
+                  child: _currentPageIndex != story.pages.length
+                        ? GestureDetector(
+                            onTap: () {
+                              if (!_isPlaying) {
+                                _keys[_currentPageIndex].speak();
+                              } else {
+                                _keys[_currentPageIndex].pause();
+                              }
+                            },
+                            child: FlareActor(
+                              'assets/character/chimp_iktest_loop.flr',
+                              animation: 'talking',
+                              fit: BoxFit.cover,
+                              isPaused: !_isPlaying,
+                            ),
+                            // child: !_isPlaying ? Icon(Icons.play_arrow) : Icon(Icons.pause)
+                          )
+                        : Container(),
+                ),
               ],
             ),
           )

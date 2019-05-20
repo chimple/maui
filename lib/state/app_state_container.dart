@@ -50,6 +50,22 @@ enum ChatMode { teach, conversation, quiz }
 
 final floresSeparator = '}|~{';
 
+final Map<String, String> themeBackgrounds = {
+  'cafe': 'assets/background_flare/cafe.flr',
+  'grocery': 'assets/background_flare/grocery.flr',
+  'hospital': 'assets/background_flare/hospital.flr',
+  'house': 'assets/background_flare/house.flr',
+  'school': 'assets/background_flare/school.flr',
+};
+
+final Map<String, Color> themeColors = {
+  'cafe': Color(0xFF48AECC),
+  'grocery': Color(0xFFEDC23B),
+  'hospital': Color(0xFFFF7676),
+  'house': Color(0xFF30C9E2),
+  'school': Color(0xFFFF7D8F),
+};
+
 class AppStateContainer extends StatefulWidget {
   final AppState state;
   final Widget child;
@@ -196,7 +212,7 @@ class AppStateContainerState extends State<AppStateContainer> {
     }
     final up = UserProfile((b) => b
       ..name = state.loggedInUser.name
-      ..currentTheme = 'Gym');
+      ..currentTheme = 'cafe');
     updateUserProfile(up);
   }
 
@@ -455,6 +471,7 @@ class AppStateContainerState extends State<AppStateContainer> {
       } else if (obj is QuizSession) {
         //notify UI that quiz is there
         setState(() {
+          quizSession = obj;
           quizSessions[obj] = StatusEnum.create;
         });
       } else if (obj is QuizUpdate) {
@@ -502,14 +519,14 @@ class AppStateContainerState extends State<AppStateContainer> {
     }
   }
 
-  Future<void> startQuizSession(QuizSession quizSession) async {
+  Future<void> startQuizSession(QuizSession qs) async {
     if (state.loggedInUser.userType == UserType.teacher &&
-        quizSession != null) {
+        qs != null) {
       QuizUpdate quizUpdate = QuizUpdate((q) => q
-        ..sessionId = quizSession.sessionId
+        ..sessionId = qs.sessionId
         ..status = StatusEnum.start);
       setState(() {
-        quizSessions[quizSession] = StatusEnum.start;
+        quizSessions[qs] = StatusEnum.start;
       });
       final standardSerializers =
           (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();

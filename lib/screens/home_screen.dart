@@ -15,6 +15,7 @@ import 'package:maui/models/quiz_update.dart';
 import 'package:maui/models/serializers.dart';
 import 'package:maui/screens/quiz_waiting_screen.dart';
 import 'package:maui/state/app_state_container.dart';
+import 'package:maui/widgets/theme_background.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -27,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _quizJoined = false;
   Navigator _navigator;
   ChatScript _chatScript;
-  String _emotion = 'idle';
+  String _emotion = 'flag';
   Random _random = Random();
 
   @override
@@ -127,139 +128,134 @@ class _HomeScreenState extends State<HomeScreen> {
         key: _scaffoldKey,
         backgroundColor: Colors.cyan,
         body: SafeArea(
-          child: Column(
-            verticalDirection: VerticalDirection.up,
+          child: Stack(
             children: <Widget>[
-              Expanded(
-                child: _navigator,
-              ),
-              Flexible(
-                child: Hero(
-                  tag: 'chimp',
-                  child: FlareActor(
-                    "assets/character/chimp_ik.flr",
-                    alignment: Alignment.center,
-                    fit: BoxFit.contain,
-                    animation: _emotion,
-                    callback: (String name) =>
-                        setState(() => _emotion = 'idle'),
-                  ),
-                ),
-              ),
-              Row(
+              ThemeBackground(),
+              Column(
+                verticalDirection: VerticalDirection.up,
                 children: <Widget>[
+                  Expanded(
+                    child: _navigator,
+                  ),
                   Flexible(
-                      flex: 1,
-                      child: Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Column(
-                          children: <Widget>[
-                            Padding(
-                                padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                child: Stack(
-                                  children: <Widget>[
-                                    Container(
-                                      height: media.orientation ==
-                                              Orientation.portrait
-                                          ? size.width * 0.104
-                                          : size.width * 0.062,
-                                      width: media.orientation ==
-                                              Orientation.portrait
-                                          ? size.width * 0.285
-                                          : size.width * 0.170,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Colors.white,
-                                            width: media.orientation ==
-                                                    Orientation.portrait
-                                                ? size.width * 0.0064
-                                                : size.width * 0.005),
-                                        borderRadius:
-                                            BorderRadius.circular(50.0),
-                                        color: Colors.black12,
-                                      ),
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
+                    child: Hero(
+                      tag: 'chimp',
+                      child: FlareActor(
+                        "assets/character/chimp_ik.flr",
+                        alignment: Alignment.center,
+                        fit: BoxFit.contain,
+                        animation: _emotion,
+                        callback: (String name) =>
+                            setState(() => _emotion = 'silent'),
+                      ),
+                    ),
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Flexible(
+                          flex: 1,
+                          child: Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Column(
+                              children: <Widget>[
+                                Padding(
+                                    padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                    child: Stack(
                                       children: <Widget>[
-                                        Column(
+                                        Container(
+                                          height: media.orientation ==
+                                                  Orientation.portrait
+                                              ? size.width * 0.104
+                                              : size.width * 0.062,
+                                          width: media.orientation ==
+                                                  Orientation.portrait
+                                              ? size.width * 0.285
+                                              : size.width * 0.170,
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: Colors.white,
+                                                width: media.orientation ==
+                                                        Orientation.portrait
+                                                    ? size.width * 0.0064
+                                                    : size.width * 0.005),
+                                            borderRadius:
+                                                BorderRadius.circular(50.0),
+                                            color: Colors.black12,
+                                          ),
+                                        ),
+                                        Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.start,
                                           children: <Widget>[
-                                            InkWell(
-                                              onTap: () {
-                                                // Navigator.of(context)
-                                                //     .pushNamed(
-                                                //         '/jam_profile');
-                                                Navigator.of(context).push(
-                                                    MaterialPageRoute(
-                                                        builder: (BuildContext
-                                                                context) =>
-                                                            ProfileScreen()));
-                                              },
-                                              child: CircleAvatar(
-                                                child: new Container(
-                                                    height: media.orientation ==
-                                                            Orientation.portrait
-                                                        ? size.width * 0.204
-                                                        : size.width * 0.12,
-                                                    width: media.orientation ==
-                                                            Orientation.portrait
-                                                        ? size.width * 0.204
-                                                        : size.width * 0.12,
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                            color: Colors.white,
-                                                            width: media.orientation ==
-                                                                    Orientation
-                                                                        .portrait
-                                                                ? size.width *
-                                                                    0.0064
-                                                                : size.width *
-                                                                    0.005),
-                                                        borderRadius:
-                                                            BorderRadius.circular(
-                                                                150.0), // shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.elliptical(170, 200))),
-                                                        color: Colors.black12,
-                                                        image: DecorationImage(
-                                                          image: ExactAssetImage(
-                                                              "assets/home_screen_icons/profile_pic.png"),
-                                                          fit: BoxFit.cover,
-                                                        ))),
-                                                radius: media.orientation ==
-                                                        Orientation.portrait
-                                                    ? size.width * 0.051
-                                                    : size.width * 0.03,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Column(
-                                          children: <Widget>[
-                                            Text(
-                                              '$userName',
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: media.orientation ==
-                                                        Orientation.portrait
-                                                    ? size.width * 0.034
-                                                    : size.width * 0.02,
-                                              ),
-                                            ),
-                                            Row(
+                                            Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
                                               children: <Widget>[
-                                                Icon(
-                                                  Icons.star,
-                                                  color: Colors.red,
-                                                  size: media.orientation ==
-                                                          Orientation.portrait
-                                                      ? size.width * 0.045
-                                                      : size.width * 0.0283,
+                                                InkWell(
+                                                  onTap: () {
+                                                    // Navigator.of(context)
+                                                    //     .pushNamed(
+                                                    //         '/jam_profile');
+                                                    Navigator.of(context).push(
+                                                        MaterialPageRoute(
+                                                            builder: (BuildContext
+                                                                    context) =>
+                                                                ProfileScreen()));
+                                                  },
+                                                  child: CircleAvatar(
+                                                    child: new Container(
+                                                        height: media.orientation ==
+                                                                Orientation
+                                                                    .portrait
+                                                            ? size.width * 0.204
+                                                            : size.width * 0.12,
+                                                        width: media.orientation ==
+                                                                Orientation
+                                                                    .portrait
+                                                            ? size.width * 0.204
+                                                            : size.width * 0.12,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                                border: Border.all(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    width: media.orientation == Orientation.portrait
+                                                                        ? size.width *
+                                                                            0.0064
+                                                                        : size.width *
+                                                                            0.005),
+                                                                borderRadius:
+                                                                    BorderRadius.circular(
+                                                                        150.0), // shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.elliptical(170, 200))),
+                                                                color: Colors
+                                                                    .black12,
+                                                                image: DecorationImage(
+                                                                  image: ExactAssetImage(AppStateContainer.of(
+                                                                          context)
+                                                                      .state
+                                                                      .loggedInUser
+                                                                      .image),
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                ))),
+                                                    radius: media.orientation ==
+                                                            Orientation.portrait
+                                                        ? size.width * 0.051
+                                                        : size.width * 0.03,
+                                                  ),
                                                 ),
-                                                Text(
-                                                  '1000',
-                                                  style: TextStyle(
+                                              ],
+                                            ),
+                                            Column(
+                                              children: <Widget>[
+                                                Container(
+                                                  width: media.orientation ==
+                                                          Orientation.portrait
+                                                      ? size.width * 0.185
+                                                      : size.width * 0.1,
+                                                  child: Text(
+                                                    '$userName',
+                                                    style: TextStyle(
                                                       color: Colors.white,
                                                       fontSize:
                                                           media.orientation ==
@@ -268,128 +264,159 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               ? size.width *
                                                                   0.034
                                                               : size.width *
-                                                                  0.02),
+                                                                  0.02,
+                                                    ),
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
                                                 ),
+                                                Row(
+                                                  children: <Widget>[
+                                                    Icon(
+                                                      Icons.star,
+                                                      color: Colors.red,
+                                                      size: media.orientation ==
+                                                              Orientation
+                                                                  .portrait
+                                                          ? size.width * 0.045
+                                                          : size.width * 0.0283,
+                                                    ),
+                                                    Text(
+                                                      '1000',
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: media
+                                                                      .orientation ==
+                                                                  Orientation
+                                                                      .portrait
+                                                              ? size.width *
+                                                                  0.034
+                                                              : size.width *
+                                                                  0.02),
+                                                    ),
+                                                  ],
+                                                )
                                               ],
                                             )
                                           ],
                                         )
                                       ],
-                                    )
-                                  ],
-                                )),
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(
-                                  0,
-                                  0,
-                                  media.orientation == Orientation.portrait
-                                      ? size.width * 0.2
-                                      : size.width * 0.32,
-                                  0),
-                              child: Text('Profile',
+                                    )),
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                      0,
+                                      0,
+                                      media.orientation == Orientation.portrait
+                                          ? size.width * 0.2
+                                          : size.width * 0.32,
+                                      0),
+                                  child: Text('Profile',
+                                      style: TextStyle(
+                                          fontSize: media.orientation ==
+                                                  Orientation.portrait
+                                              ? size.width * 0.025
+                                              : size.width * 0.015)),
+                                ),
+                              ],
+                            ),
+                          )),
+                      Flexible(
+                        flex: 1,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            Column(
+                              children: <Widget>[
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.of(context)
+                                        .pushNamed('/jam_games');
+                                  },
+                                  child: Container(
+                                      height: media.orientation ==
+                                              Orientation.portrait
+                                          ? size.width * 0.1
+                                          : size.width * 0.06,
+                                      width: media.orientation ==
+                                              Orientation.portrait
+                                          ? size.width * 0.1
+                                          : size.width * 0.06,
+                                      child: SvgPicture.asset(
+                                          'assets/home_screen_icons/games.svg')),
+                                ),
+                                Text('Games',
+                                    style: TextStyle(
+                                        fontSize: media.orientation ==
+                                                Orientation.portrait
+                                            ? size.width * 0.025
+                                            : size.width * 0.015))
+                              ],
+                            ),
+                            SizedBox(
+                              width: 10.0,
+                            ),
+                            Column(
+                              children: <Widget>[
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.of(context).pushNamed('/stories');
+                                  },
+                                  child: Container(
+                                      height: media.orientation ==
+                                              Orientation.portrait
+                                          ? size.width * 0.1
+                                          : size.width * 0.06,
+                                      width: media.orientation ==
+                                              Orientation.portrait
+                                          ? size.width * 0.1
+                                          : size.width * 0.06,
+                                      child: SvgPicture.asset(
+                                          'assets/home_screen_icons/story.svg')),
+                                ),
+                                Text(
+                                  'Stories',
                                   style: TextStyle(
                                       fontSize: media.orientation ==
                                               Orientation.portrait
                                           ? size.width * 0.025
-                                          : size.width * 0.015)),
-                            ),
-                          ],
-                        ),
-                      )),
-                  Flexible(
-                    flex: 1,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                        Column(
-                          children: <Widget>[
-                            InkWell(
-                              onTap: () {
-                                Navigator.of(context).pushNamed('/jam_games');
-                              },
-                              child: Container(
-                                  height:
-                                      media.orientation == Orientation.portrait
-                                          ? size.width * 0.1
-                                          : size.width * 0.06,
-                                  width:
-                                      media.orientation == Orientation.portrait
-                                          ? size.width * 0.1
-                                          : size.width * 0.06,
-                                  child: SvgPicture.asset(
-                                      'assets/home_screen_icons/games.svg')),
-                            ),
-                            Text('Games',
-                                style: TextStyle(
-                                    fontSize: media.orientation ==
-                                            Orientation.portrait
-                                        ? size.width * 0.025
-                                        : size.width * 0.015))
-                          ],
-                        ),
-                        SizedBox(
-                          width: 10.0,
-                        ),
-                        Column(
-                          children: <Widget>[
-                            InkWell(
-                              onTap: () {
-                                Navigator.of(context).pushNamed('/stories');
-                              },
-                              child: Container(
-                                  height:
-                                      media.orientation == Orientation.portrait
-                                          ? size.width * 0.1
-                                          : size.width * 0.06,
-                                  width:
-                                      media.orientation == Orientation.portrait
-                                          ? size.width * 0.1
-                                          : size.width * 0.06,
-                                  child: SvgPicture.asset(
-                                      'assets/home_screen_icons/story.svg')),
-                            ),
-                            Text(
-                              'Stories',
-                              style: TextStyle(
-                                  fontSize:
-                                      media.orientation == Orientation.portrait
-                                          ? size.width * 0.025
                                           : size.width * 0.015),
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          width: 10.0,
-                        ),
-                        Column(
-                          children: <Widget>[
-                            InkWell(
-                              onTap: () {
-                                Navigator.of(context).pushNamed('/friends');
-                              },
-                              child: Container(
-                                  height:
-                                      media.orientation == Orientation.portrait
-                                          ? size.width * 0.1
-                                          : size.width * 0.06,
-                                  width:
-                                      media.orientation == Orientation.portrait
-                                          ? size.width * 0.1
-                                          : size.width * 0.06,
-                                  child: SvgPicture.asset(
-                                      'assets/home_screen_icons/map.svg')),
+                                )
+                              ],
                             ),
-                            Text('Chat',
-                                style: TextStyle(
-                                    fontSize: media.orientation ==
-                                            Orientation.portrait
-                                        ? size.width * 0.025
-                                        : size.width * 0.015))
+                            SizedBox(
+                              width: 10.0,
+                            ),
+                            Column(
+                              children: <Widget>[
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.of(context).pushNamed('/friends');
+                                  },
+                                  child: Container(
+                                      height: media.orientation ==
+                                              Orientation.portrait
+                                          ? size.width * 0.1
+                                          : size.width * 0.06,
+                                      width: media.orientation ==
+                                              Orientation.portrait
+                                          ? size.width * 0.1
+                                          : size.width * 0.06,
+                                      child: SvgPicture.asset(
+                                          'assets/home_screen_icons/map.svg')),
+                                ),
+                                Text('Chat',
+                                    style: TextStyle(
+                                        fontSize: media.orientation ==
+                                                Orientation.portrait
+                                            ? size.width * 0.025
+                                            : size.width * 0.015))
+                              ],
+                            ),
                           ],
                         ),
-                      ],
-                    ),
-                  )
+                      )
+                    ],
+                  ),
                 ],
               ),
             ],
@@ -407,7 +434,7 @@ class _HomeScreenState extends State<HomeScreen> {
           .toList(growable: false),
       chatCallback: (String choice) {
         setState(() {
-          _emotion = 'happy';
+          _emotion = question.emotion;
         });
         Future.delayed(const Duration(milliseconds: 1000), () {
           Navigator.of(context).push(SlideUpRoute(

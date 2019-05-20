@@ -37,13 +37,12 @@ class OrderBySizeGame extends StatefulWidget {
 class _OrderBySizeGameState extends State<OrderBySizeGame> {
   List<_ChoiceDetail> choiceDetails;
   List<_ChoiceDetail> answerDetails;
-  var score = 0;
-  int complete;
+  int complete = 0, tries = 0, score = 0;
+  final int wrongAttempts = 2;
 
   @override
   void initState() {
     super.initState();
-    int i = 0;
     choiceDetails = widget.choices
         .map((c) => _ChoiceDetail(number: c))
         .toList(growable: false);
@@ -86,12 +85,13 @@ class _OrderBySizeGameState extends State<OrderBySizeGame> {
                   onAccept: (data) {
                     setState(() {
                       if (data == a.number.toString()) {
-                        score++;
+                        score += 2;
+                        tries = 0;
                         print("this my score$score");
                         if (--complete == 0)
                           widget.onGameUpdate(
                               score: score,
-                              max: score,
+                              max: answerDetails.length * 2,
                               gameOver: true,
                               star: true);
                         WidgetsBinding.instance
@@ -102,9 +102,15 @@ class _OrderBySizeGameState extends State<OrderBySizeGame> {
                                           ? Reaction.success
                                           : Reaction.enter);
                                 }));
+                      } else {
+                        score--;
+                        if (++tries == wrongAttempts)
+                          widget.onGameUpdate(
+                              score: score,
+                              max: answerDetails.length * 2,
+                              gameOver: true,
+                              star: false);
                       }
-                      //  else
-                      //   score--;
                     });
                   })
               : CuteButton(

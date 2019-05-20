@@ -14,6 +14,8 @@ class GuessImageStory extends FullScreenStory {
             child: Container(
               color: Colors.white,
               child: GuessImage(
+                onGameUpdate: (
+                    {int score, int max, bool gameOver, bool star}) {},
                 imageName: "assets/temp/hospital.jpg",
                 imageItemDetails: BuiltList<ImageItemDetail>(
                   [
@@ -64,6 +66,98 @@ class GuessImageStory extends FullScreenStory {
               ),
             ),
           ),
-        )
+        ),
+        Scaffold(
+          body: SafeArea(
+            child: Container(
+              color: Colors.white,
+              child: GuessImage(
+                onGameUpdate: (
+                    {int score, int max, bool gameOver, bool star}) {},
+                imageName: "assets/topic/asb/26425.png",
+                imageItemDetails: BuiltList<ImageItemDetail>(
+                  [
+                    ImageItemDetail((s) => s
+                      ..itemName = 'Bird'
+                      ..x = 62
+                      ..y = 65
+                      ..height = 110
+                      ..width = 57),
+                    ImageItemDetail((s) => s
+                      ..itemName = 'Hen'
+                      ..x = 129
+                      ..y = 304
+                      ..height = 188
+                      ..width = 144),
+                    ImageItemDetail((s) => s
+                      ..itemName = 'Girl'
+                      ..x = 320
+                      ..y = 129
+                      ..height = 245
+                      ..width = 207),
+                    ImageItemDetail((s) => s
+                      ..itemName = 'House'
+                      ..x = 135
+                      ..y = 187
+                      ..height = 83
+                      ..width = 141),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+    Scaffold(
+      body: SafeArea(
+        child: Container(
+          color: Colors.white,
+          child: GuessImage(
+            onGameUpdate: (
+                {int score, int max, bool gameOver, bool star}) {},
+            imageName: "assets/topic/asb/13837.png",
+            imageItemDetails: BuiltList<ImageItemDetail>(
+              [
+                ImageItemDetail((s) => s
+                  ..itemName = 'Bag'
+                  ..x = 67
+                  ..y = 119
+                  ..height = 137
+                  ..width = 73),
+                ImageItemDetail((s) => s
+                  ..itemName = 'Slippers'
+                  ..x = 22
+                  ..y = 404
+                  ..height = 47
+                  ..width = 76),
+                ImageItemDetail((s) => s
+                  ..itemName = 'Box'
+                  ..x = 364
+                  ..y = 374
+                  ..height = 162
+                  ..width = 156),
+                ImageItemDetail((s) => s
+                  ..itemName = 'Girl'
+                  ..x = 152
+                  ..y = 211
+                  ..height = 256
+                  ..width = 137),
+                ImageItemDetail((s) => s
+                  ..itemName = 'window'
+                  ..x = 328
+                  ..y = 99
+                  ..height = 163
+                  ..width = 165),
+                ImageItemDetail((s) => s
+                  ..itemName = 'lamp'
+                  ..x = 222
+                  ..y = 467
+                  ..height = 61
+                  ..width = 47),
+              ],
+            ),
+          ),
+        ),
+      ),
+    ),
       ];
 }

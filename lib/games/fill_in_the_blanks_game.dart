@@ -36,7 +36,8 @@ class _FillInTheBlanksGameState extends State<FillInTheBlanksGame> {
   List<String> dragBoxData = [];
   List<String> questionWords = [];
   List<int> index = [];
-  int complete = 0, score = 0;
+  int complete = 0, score = 0, tries = 0, total = 0;
+  final int wrongAttempts = 2;
 
   @override
   void initState() {
@@ -45,6 +46,7 @@ class _FillInTheBlanksGameState extends State<FillInTheBlanksGame> {
     int i = 1;
     while (questionWords.contains('$i' + '_')) {
       complete++;
+      total++;
       index.add(questionWords.indexOf('$i' + '_'));
       i++;
     }
@@ -89,20 +91,31 @@ class _FillInTheBlanksGameState extends State<FillInTheBlanksGame> {
                                   ' _________ ',
                                   textScaleFactor: width < 460 ? 1.8 : 2.5,
                                 ),
-                                onWillAccept: (data) =>
-                                    data.substring(1) == f.choice,
+                                // onWillAccept: (data) =>
+                                //     data.substring(1) == f.choice,
                                 onAccept: (data) {
-                                  setState(() {
-                                    score++;
-                                    if (--complete == 0)
+                                  if (data.substring(1) == f.choice)
+                                    setState(() {
+                                      score += 2;
+                                      tries = 0;
+                                      if (--complete == 0)
+                                        widget.onGameUpdate(
+                                            score: score,
+                                            max: total * 2,
+                                            gameOver: true,
+                                            star: true);
+                                      f.reaction = Reaction.success;
+                                      f.appear = true;
+                                    });
+                                  else {
+                                    score--;
+                                    if (++tries == wrongAttempts)
                                       widget.onGameUpdate(
                                           score: score,
-                                          max: score,
+                                          max: total * 2,
                                           gameOver: true,
-                                          star: true);
-                                    f.reaction = Reaction.success;
-                                    f.appear = true;
-                                  });
+                                          star: false);
+                                  }
                                 }))
                         .toList(growable: false),
                   ),

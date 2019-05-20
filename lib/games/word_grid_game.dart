@@ -30,10 +30,12 @@ class WordGridGameState extends State<WordGridGame> {
   bool stopDrag = false;
   int code;
   int lastClick;
-  int tries = 0;
   List<Offset> _pointsSend = <Offset>[];
   List<ShakeCell> _shakeCells = [];
   bool _isLoading = true;
+
+  int tries = 0, score = 0;
+  final int wrongAttempts = 2;
 
   @override
   void initState() {
@@ -261,16 +263,19 @@ class WordGridGameState extends State<WordGridGame> {
                     .toList(growable: false);
                 _visibleFlag =
                     finalLetter.map((a) => false).toList(growable: false);
+                score--;
+                if (-wrongAttempts == -score)
+                  widget.onGameUpdate(
+                      score: 0, max: 2, gameOver: true, star: false);
               });
             });
           } else
-            //   widget.onScore((40 ~/ totalgame) - tries);
-            // widget.onProgress(1.0);
             new Future.delayed(const Duration(milliseconds: 350), () {
               setState(() {
+                score += 2;
                 print(' finally over');
                 widget.onGameUpdate(
-                    score: 2, max: 2, gameOver: true, star: true);
+                    score: score, max: 2, gameOver: true, star: true);
               });
             });
         });

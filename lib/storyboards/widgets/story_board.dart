@@ -13,7 +13,7 @@ class StoryBoard extends FullScreenStory {
         Scaffold(
           body: SafeArea(
             child: StoryPage(
-              storyId: '24752',
+              storyId: '24750',
             ),
           ),
         ),
