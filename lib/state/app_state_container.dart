@@ -471,6 +471,7 @@ class AppStateContainerState extends State<AppStateContainer> {
       } else if (obj is QuizSession) {
         //notify UI that quiz is there
         setState(() {
+          quizSession = obj;
           quizSessions[obj] = StatusEnum.create;
         });
       } else if (obj is QuizUpdate) {
@@ -518,14 +519,14 @@ class AppStateContainerState extends State<AppStateContainer> {
     }
   }
 
-  Future<void> startQuizSession(QuizSession quizSession) async {
+  Future<void> startQuizSession(QuizSession qs) async {
     if (state.loggedInUser.userType == UserType.teacher &&
-        quizSession != null) {
+        qs != null) {
       QuizUpdate quizUpdate = QuizUpdate((q) => q
-        ..sessionId = quizSession.sessionId
+        ..sessionId = qs.sessionId
         ..status = StatusEnum.start);
       setState(() {
-        quizSessions[quizSession] = StatusEnum.start;
+        quizSessions[qs] = StatusEnum.start;
       });
       final standardSerializers =
           (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();

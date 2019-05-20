@@ -3,6 +3,7 @@ import 'package:maui/models/multi_data.dart';
 import 'package:maui/models/quiz_session.dart';
 import 'package:maui/repos/game_data_repo.dart';
 import 'package:maui/repos/lesson_repo.dart';
+import 'package:maui/screens/quiz_performance_screen.dart';
 import 'package:maui/screens/quiz_waiting_screen.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/models/performance.dart';
@@ -19,7 +20,7 @@ class ProgressScreen extends StatefulWidget {
 }
 
 class _ProgressScreenState extends State<ProgressScreen> {
-  Map<String, Performance> _performance;
+  Map<String, Performance> _performances;
   List<User> _students = [];
   List<String> _onlineStudents = [];
   String _latestUserID;
@@ -52,6 +53,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
 
   @override
   void didChangeDependencies() async {
+    _performances = AppStateContainer.of(context).performances;
     if (AppStateContainer.of(context).classStudents.isNotEmpty) {
       _latestUserID = AppStateContainer.of(context).classStudents.last;
       if (_latestUserID != null) {
@@ -147,19 +149,23 @@ class _ProgressScreenState extends State<ProgressScreen> {
         children: <Widget>[
           Container(
               child: Expanded(flex: 1, child: buildCardLeftSection(index))),
-          Container(child: Expanded(flex: 4, child: buildCardRightSection()))
+          Container(child: Expanded(flex: 4, child: buildCardRightSection(index)))
         ],
       ),
     );
   }
 
-  Column buildCardRightSection() {
+  Column buildCardRightSection(int index) {
     return Column(
       children: <Widget>[
         Text('Game Name', style: TextStyle(fontSize: 20)),
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: LinearProgressIndicator(),
+          child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: progressIndicator(index)
+          ),
         )
       ],
     );
@@ -200,7 +206,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
                 child: Icon(Icons.star, color: Colors.yellow)), //Star Icon
             Expanded(
               flex: 3,
-              child: Text('200000',
+              child: Text(getScore(index),
                   style: TextStyle(fontSize: 20), overflow: TextOverflow.fade),
             ) //Score
           ],
@@ -209,5 +215,32 @@ class _ProgressScreenState extends State<ProgressScreen> {
             style: TextStyle(fontSize: 20), overflow: TextOverflow.fade)
       ],
     );
+  }
+
+  String getScore(int index) {
+    String score = 0.toString();
+    _performances
+        .forEach((studentID, performance) {
+      if (studentID == _students[index].id) {
+        score = performance.score.toString();
+      }
+    });
+    return score;
+  }
+
+  List<Widget> progressIndicator(int index){
+
+    List<Widget> _myProgressIndicator = [];
+
+    _performances.forEach((studentID, performance){
+      if(studentID == _students[index].id){
+        performance.subScores.forEach((subScore){
+          _myProgressIndicator.add(new SubScoreProgress(isComplete: subScore.complete));
+          _myProgressIndicator.add(new Container(width: 3));
+        });
+      }
+    });
+
+    return _myProgressIndicator;
   }
 }
