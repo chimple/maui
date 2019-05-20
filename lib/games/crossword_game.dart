@@ -7,7 +7,6 @@ import 'package:maui/widgets/bento_box.dart';
 import 'package:maui/widgets/cute_button.dart';
 import 'package:maui/widgets/drop_box.dart';
 import 'package:maui/models/crossword_data.dart';
-import 'package:tuple/tuple.dart';
 
 class _ChoiceDetail {
   String choice;
@@ -50,7 +49,8 @@ class _CrosswordGameState extends State<CrosswordGame> {
 
   int rows;
   int cols;
-  int complete, score = 0;
+  int complete, score = 0, tries = 0;
+  final int wrongAttempts = 2;
 
   @override
   void initState() {
@@ -149,19 +149,32 @@ class _CrosswordGameState extends State<CrosswordGame> {
                         : Container(),
                     !f.appear
                         ? DropBox(
-                            onWillAccept: (data) =>
-                                choiceDetails[int.parse(data)].choice ==
-                                f.choice,
+                            // onWillAccept: (data) =>
+                            //     choiceDetails[int.parse(data)].choice ==
+                            //     f.choice,
                             onAccept: (data) => setState(() {
-                                  score++;
-                                  if (--complete == 0)
-                                    widget.onGameUpdate(
-                                        score: score,
-                                        max: score,
-                                        gameOver: true,
-                                        star: true);
-                                  f.appear = true;
-                                  choiceDetails[int.parse(data)].appear = false;
+                                  if (choiceDetails[int.parse(data)].choice ==
+                                      f.choice) {
+                                    score += 2;
+                                    tries = 0;
+                                    if (--complete == 0)
+                                      widget.onGameUpdate(
+                                          score: score,
+                                          max: letterIndex.length * 2,
+                                          gameOver: true,
+                                          star: true);
+                                    f.appear = true;
+                                    choiceDetails[int.parse(data)].appear =
+                                        false;
+                                  } else {
+                                    score--;
+                                    if (++tries == wrongAttempts)
+                                      widget.onGameUpdate(
+                                          score: score,
+                                          max: letterIndex.length * 2,
+                                          gameOver: true,
+                                          star: false);
+                                  }
                                 }),
                           )
                         : f.image != ''

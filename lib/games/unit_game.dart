@@ -47,6 +47,8 @@ class _UnitGameState extends State<UnitGame> {
   String statusKind = '';
   Timer timer;
   List<String> noDragItems = [];
+  int tries = 0;
+  final int wrongAttempts = 2;
 
   @override
   void initState() {
@@ -341,15 +343,17 @@ class _UnitGameState extends State<UnitGame> {
                         if (!e.success) isComplete = false;
                       });
                       print('submit btn $isComplete');
+
                       if (isComplete) {
-                        score += 5;
+                        score += 2;
                         widget.onGameUpdate(
-                            score: score,
-                            max: score,
-                            gameOver: true,
-                            star: true);
-                      } else
+                            score: score, max: 2, gameOver: true, star: true);
+                      } else {
                         score--;
+                        if (++tries == wrongAttempts)
+                          widget.onGameUpdate(
+                              score: 0, max: 2, gameOver: true, star: false);
+                      }
                     }),
               )),
         ),
