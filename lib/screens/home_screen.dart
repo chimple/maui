@@ -248,15 +248,26 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                             Column(
                                               children: <Widget>[
-                                                Text(
-                                                  '$userName',
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: media
-                                                                .orientation ==
-                                                            Orientation.portrait
-                                                        ? size.width * 0.034
-                                                        : size.width * 0.02,
+                                                Container(
+                                                  width: media.orientation ==
+                                                          Orientation.portrait
+                                                      ? size.width * 0.185
+                                                      : size.width * 0.1,
+                                                  child: Text(
+                                                    '$userName',
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize:
+                                                          media.orientation ==
+                                                                  Orientation
+                                                                      .portrait
+                                                              ? size.width *
+                                                                  0.034
+                                                              : size.width *
+                                                                  0.02,
+                                                    ),
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
                                                   ),
                                                 ),
                                                 Row(

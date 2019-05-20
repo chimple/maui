@@ -121,6 +121,7 @@ flutter:
     - assets/topic/
     - assets/topic/asb/
     - assets/temp/hospital.jpg
+    - assets/loading_screen/
     
 
   # An image asset can refer to one or more resolution-specific "variants", see

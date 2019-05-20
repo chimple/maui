@@ -11,6 +11,7 @@ import 'package:maui/components/user_item.dart';
 import 'package:maui/db/entity/user.dart';
 import 'package:maui/loca.dart';
 import 'package:maui/repos/user_repo.dart';
+import 'package:maui/screens/login_loading_screen.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:nima/nima_actor.dart';
 import 'package:path_provider/path_provider.dart';
@@ -325,7 +326,7 @@ class _LoginScreenState extends State<LoginScreen>
     MediaQueryData media = MediaQuery.of(context);
     var size = media.size;
     var user = AppStateContainer.of(context).state.loggedInUser;
-    return Scaffold(
+    return !disabled ? Scaffold(
         appBar: _isLoading
             ? null
             : new AppBar(
@@ -365,7 +366,9 @@ class _LoginScreenState extends State<LoginScreen>
               ),
             )
           ],
-        ));
+        )
+        ) :Container(color: Colors.white,
+        child: LoginLoadingScreen());
   }
 
   _onTyping(String name) {
