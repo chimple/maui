@@ -126,13 +126,15 @@ class _MatchingState extends State<Matching> {
       // print('true from left side');
       if (_questionData.indexOf(_question[_index1]) ==
           _answerData.indexOf(_answer[_index2 - _answer.length])) {
-        print('${_answerData.indexOf(_answer[_index2 - _answer.length])}');
+        // print('${_answerData.indexOf(_answer[_index2 - _answer.length])}');
         setState(() {
           _joinedLinedOffset.addAll(
               {_dottedCircleOffset[_index1]: _dottedCircleOffset[_index2]});
           _joinedLineStatus[_index1] = 1;
           _joinedLineStatus[_index2] = 1;
         });
+
+        _complete++;
       }
     } else if (_index1 >= _question.length && _index2 < _question.length) {
       // print('true from right side');
@@ -145,17 +147,18 @@ class _MatchingState extends State<Matching> {
           _joinedLineStatus[_index2] = 1;
         });
       }
+
+      _complete++;
     } else {
       setState(() {
         _connectStatus = true;
       });
     }
-    _complete++;
-    _score+=2;
-    widget.onGameUpdate(max:_max,score:_score,gameOver:false,star:true);
-    if(_complete==_count){
+    _score += 2;
+    widget.onGameUpdate(max: _max, score: _score, gameOver: false, star: true);
+    if (_complete == _count) {
       print('game over');
-      widget.onGameUpdate(max:_max,score:_score,gameOver:true,star:true);
+      widget.onGameUpdate(max: _max, score: _score, gameOver: true, star: true);
     }
   }
 
@@ -318,7 +321,7 @@ class CommonButton extends StatelessWidget {
           border: Border.all(width: 2.0, color: Colors.white54),
           boxShadow: [
             BoxShadow(
-                blurRadius: 2.0, color: Colors.white54, offset: Offset(1, 4))
+                blurRadius: 0.0, color: Colors.white54, offset: Offset(1, 4))
           ],
           color: Colors.red,
           borderRadius: BorderRadius.all(Radius.circular(20))),
