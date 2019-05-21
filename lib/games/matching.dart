@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:maui/util/game_utils.dart';
 import 'package:maui/widgets/cute_button.dart';
@@ -15,12 +16,16 @@ class _ChoiceDetail {
   });
   @override
   String toString() =>
-      '_ChoiceDetail(question: $question, appear: $appear , reaction: $reaction)';
+      '_ChoiceDetail(question: $question, appear: $appear , answrs: $answer reaction: $reaction)';
 }
 
 class Matching extends StatefulWidget {
   final OnGameUpdate onGameUpdate;
-  Matching({Key key, this.title, this.onGameUpdate}) : super(key: key);
+  final BuiltList<String> questions;
+  final BuiltList<String> answers;
+  Matching(
+      {Key key, this.title, this.onGameUpdate, this.questions, this.answers})
+      : super(key: key);
 
   final String title;
 
@@ -29,7 +34,7 @@ class Matching extends StatefulWidget {
 }
 
 class _MatchingState extends State<Matching> {
-  Map<String, String> _data = {'1': 'one', '3': '3', 'two': '2', '223': '223'};
+  Map<String, String> _data = {'1': '1', '3': '3', '2': '2', '223': '223'};
   List<Offset> _dottedCircleOffset = [];
   Map<Offset, Offset> _joinedLinedOffset = {};
   List<String> _questionData = [],
@@ -38,13 +43,7 @@ class _MatchingState extends State<Matching> {
       _answer = [];
   Offset _startOffset, _updateOffset, _offset;
   List<int> _joinedLineStatus = [];
-  int flag = 0,
-      _index1,
-      _index2,
-      _count = 0,
-      _complete = 0,
-      _score = 0,
-      _max = 0;
+  int _index1, _index2, _count = 0, _complete = 0, _score = 0, _max = 0;
   bool _isUnderCircle = false, _connectStatus = false;
   @override
   void initState() {
@@ -109,7 +108,6 @@ class _MatchingState extends State<Matching> {
           });
         }
       }
-
       setState(() {
         _startOffset = null;
         _updateOffset = null;
