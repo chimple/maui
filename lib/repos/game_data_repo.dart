@@ -90,65 +90,76 @@ enum GameType {
 
 Map<ConceptType, List<GameType>> conceptGames = {
   ConceptType.upperCaseLetter: [
-    GameType.BingoGame,
-    GameType.BoxMatchingGame,
-    GameType.MemoryGame,
+//    GameType.BingoGame,
+//    GameType.BoxMatchingGame,
+//    GameType.MemoryGame,
     GameType.MultipleChoiceGame,
-    GameType.SpinWheelGame,
+//    GameType.SpinWheelGame,
     GameType.TracingAlphabetGame,
-    GameType.TrueFalseGame,
-    GameType.JumbledWordsGame
+    GameType.MatchTheShapeGame,
+//    GameType.TrueFalseGame,
+//    GameType.JumbledWordsGame
   ],
   ConceptType.upperCaseToLowerCase: [
-    GameType.BingoGame,
-    GameType.BoxMatchingGame,
-    GameType.MemoryGame,
-    GameType.SpinWheelGame,
+//    GameType.BingoGame,
+//    GameType.BoxMatchingGame,
+//    GameType.MemoryGame,
+//    GameType.SpinWheelGame,
+    GameType.MultipleChoiceGame,
     GameType.TracingAlphabetGame,
-    GameType.TrueFalseGame,
-    GameType.JumbledWordsGame
+    GameType.MatchTheShapeGame,
+//    GameType.TrueFalseGame,
+//    GameType.JumbledWordsGame
   ],
   ConceptType.lowerCaseLetterToWord: [
-    GameType.BingoGame,
-    GameType.MemoryGame,
+//    GameType.BingoGame,
+//    GameType.MemoryGame,
     GameType.TracingAlphabetGame,
-    GameType.TrueFalseGame,
-    GameType.FindWordGame,
-    GameType.JumbledWordsGame,
-    GameType.MatchWithImageGame,
-    GameType.SequenceAlphabetGame,
-    GameType.TapWrongGame,
+    GameType.MatchTheShapeGame,
+    GameType.MultipleChoiceGame,
+//    GameType.TrueFalseGame,
+//    GameType.FindWordGame,
+//    GameType.JumbledWordsGame,
+//    GameType.MatchWithImageGame,
+//    GameType.SequenceAlphabetGame,
+//    GameType.TapWrongGame,
   ],
   ConceptType.syllableToWord: [
-    GameType.BingoGame,
-    GameType.MemoryGame,
+//    GameType.BingoGame,
+//    GameType.MemoryGame,
     GameType.TracingAlphabetGame,
-    GameType.TrueFalseGame,
-    GameType.FindWordGame,
-    GameType.JumbledWordsGame,
-    GameType.MatchWithImageGame,
-    GameType.SequenceAlphabetGame,
-    GameType.TapWrongGame,
+    GameType.MatchTheShapeGame,
+    GameType.MultipleChoiceGame,
+//    GameType.TrueFalseGame,
+//    GameType.FindWordGame,
+//    GameType.JumbledWordsGame,
+//    GameType.MatchWithImageGame,
+//    GameType.SequenceAlphabetGame,
+//    GameType.TapWrongGame,
   ],
   ConceptType.upperCaseLetterToWord: [
-    GameType.BingoGame,
-    GameType.MemoryGame,
+//    GameType.BingoGame,
+//    GameType.MemoryGame,
     GameType.TracingAlphabetGame,
-    GameType.TrueFalseGame,
-    GameType.FindWordGame,
-    GameType.JumbledWordsGame,
-    GameType.MatchWithImageGame,
-    GameType.SequenceAlphabetGame,
-    GameType.TapWrongGame,
+    GameType.MatchTheShapeGame,
+    GameType.MultipleChoiceGame,
+//    GameType.TrueFalseGame,
+//    GameType.FindWordGame,
+//    GameType.JumbledWordsGame,
+//    GameType.MatchWithImageGame,
+//    GameType.SequenceAlphabetGame,
+//    GameType.TapWrongGame,
   ],
   ConceptType.lowerCaseLetter: [
-    GameType.BingoGame,
-    GameType.BoxMatchingGame,
-    GameType.MemoryGame,
-    GameType.SpinWheelGame,
+//    GameType.BingoGame,
+//    GameType.BoxMatchingGame,
+//    GameType.MemoryGame,
+//    GameType.SpinWheelGame,
     GameType.TracingAlphabetGame,
-    GameType.TrueFalseGame,
-    GameType.JumbledWordsGame
+    GameType.MatchTheShapeGame,
+    GameType.MultipleChoiceGame,
+//    GameType.TrueFalseGame,
+//    GameType.JumbledWordsGame
   ],
   ConceptType.singleDigitAdditionWithoutCarryover: [],
   ConceptType.singleDigitAdditionWithCarryover: [],
@@ -248,6 +259,17 @@ Future<GameData> fetchLessonGameData({GameType gameType, Lesson lesson}) async {
     case GameType.MadSentenceGame:
       break;
     case GameType.MatchTheShapeGame:
+      final data = await fetchPairData(lesson.id, 4);
+      final List<String> answers = [];
+      final List<String> choices = [];
+      data.forEach((k, v) {
+        answers.add(k);
+        choices.add(v);
+      });
+      return MultiData((b) => b
+        ..gameId = matchTheShapeGame
+        ..answers.addAll(answers)
+        ..choices.addAll(choices));
       break;
     case GameType.MatchWithImageGame:
       break;

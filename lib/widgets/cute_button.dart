@@ -154,8 +154,9 @@ class CuteButtonWrapperState extends State<CuteButtonWrapper> {
               elevation: 8.0,
               color: Colors.white,
               disabledColor: Colors.grey,
-              textColor: themeColors[
-                  AppStateContainer.of(context).userProfile.currentTheme],
+//              textColor: themeColors[
+//                  AppStateContainer.of(context).userProfile.currentTheme],
+              textColor: Colors.black,
               disabledTextColor: Colors.white,
               shape: new RoundedRectangleBorder(
                   borderRadius:

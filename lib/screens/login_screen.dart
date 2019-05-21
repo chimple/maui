@@ -304,6 +304,7 @@ class _LoginScreenState extends State<LoginScreen>
             return GestureDetector(
                 onTap: () async {
                   print("Login As Student..!!");
+                  print(existingUsers[index]);
                   await AppStateContainer.of(context)
                       .setLoggedInUser(existingUsers[index]);
                   if (existingUsers[index].userType == UserType.student) {
@@ -326,49 +327,49 @@ class _LoginScreenState extends State<LoginScreen>
     MediaQueryData media = MediaQuery.of(context);
     var size = media.size;
     var user = AppStateContainer.of(context).state.loggedInUser;
-    return !disabled ? Scaffold(
-        appBar: _isLoading
-            ? null
-            : new AppBar(
-                backgroundColor: new Color(0xff4C5C9E),
-                title: new Text(Loca.of(context).enterYourDetails),
-              ),
-        body: new Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            new Expanded(
-              flex: 6,
-              child: new Column(
-                children: <Widget>[
-                  new Text(
-                    "LoginAs",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20.0,
-                      color: Colors.black,
-                    ),
+    return !disabled
+        ? Scaffold(
+            appBar: _isLoading
+                ? null
+                : new AppBar(
+                    backgroundColor: new Color(0xff4C5C9E),
+                    title: new Text(Loca.of(context).enterYourDetails),
                   ),
-                  new Expanded(
-                    flex: 1,
-                    child: existingUsers != null
-                        ? renderExistingUsers(existingUsers)
-                        : new Container(),
+            body: new Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                new Expanded(
+                  flex: 6,
+                  child: new Column(
+                    children: <Widget>[
+                      new Text(
+                        "LoginAs",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.0,
+                          color: Colors.black,
+                        ),
+                      ),
+                      new Expanded(
+                        flex: 1,
+                        child: existingUsers != null
+                            ? renderExistingUsers(existingUsers)
+                            : new Container(),
+                      ),
+                      new Divider(
+                        height: 5.0,
+                        color: Colors.black,
+                      ),
+                      new Expanded(
+                        flex: 5,
+                        child: renderLoginInput(existingUsers, size),
+                      )
+                    ],
                   ),
-                  new Divider(
-                    height: 5.0,
-                    color: Colors.black,
-                  ),
-                  new Expanded(
-                    flex: 5,
-                    child: renderLoginInput(existingUsers, size),
-                  )
-                ],
-              ),
-            )
-          ],
-        )
-        ) :Container(color: Colors.white,
-        child: LoginLoadingScreen());
+                )
+              ],
+            ))
+        : Container(color: Colors.white, child: LoginLoadingScreen());
   }
 
   _onTyping(String name) {
@@ -439,10 +440,7 @@ Future<String> compressImage(String imagePath) async {
   final String filePath = '$dirPath/${timestamp()}.jpg';
   Img.Image image = Img.decodeImage(File(imagePath).readAsBytesSync());
 //  print("image original ht and wid: ${image.height} , ${image.width}");
-  var cp = Img.copyResize(
-    image,
-    64,
-  );
+  var cp = Img.copyResizeCropSquare(image, 128);
   var c = File(filePath)..writeAsBytesSync(Img.encodePng(cp));
 //  print("compressed image:: ${cp.height}, ${cp.width}");
   return c.path;
