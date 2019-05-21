@@ -189,71 +189,66 @@ class _MatchingState extends State<Matching> {
   @override
   Widget build(BuildContext context) {
     int index = 0;
-    return Scaffold(
-        backgroundColor: Color(0xff800000),
-        body: Center(
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                flex: 1,
-                child: LayoutBuilder(builder: (context, constraint) {
-                  return Container(
-                    key: Key('match_the_dotts'),
-                    decoration: BoxDecoration(
-                        color: Color(0xffA52A2A),
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(30),
-                            topLeft: Radius.circular(30))),
-                    child: CustomPaint(
-                      foregroundPainter: DrawLine(
-                          dottedOffset: _joinedLinedOffset,
-                          connectStatus: _connectStatus,
-                          startOffset: _startOffset,
-                          endOffset: _updateOffset),
-                      child: GestureDetector(
-                          behavior: HitTestBehavior.opaque,
-                          onScaleStart: (ScaleStartDetails s) {
-                            Offset start =
-                                (context.findRenderObject() as RenderBox)
-                                    .globalToLocal(s.focalPoint);
-                            _onStart(start);
-                          },
-                          onScaleUpdate: (ScaleUpdateDetails d) {
-                            Offset update =
-                                (context.findRenderObject() as RenderBox)
-                                    .globalToLocal(d.focalPoint);
-                            if (_isUnderCircle) _onUpdate(update);
-                          },
-                          onScaleEnd: _onEnd,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: _question.map((s) {
-                                  return _build(constraint, index++, s,
-                                      AlignmentDirectional.centerEnd);
-                                }).toList(growable: false),
-                              ),
-                              Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: _answer.map((a) {
-                                  return _build(constraint, index++, a,
-                                      AlignmentDirectional.centerStart);
-                                }).toList(growable: false),
-                              ),
-                            ],
-                          )),
-                    ),
-                  );
-                }),
-              )
-            ],
-          ),
-        ));
+    return Center(
+      child: Column(
+        children: <Widget>[
+          Expanded(
+            flex: 1,
+            child: LayoutBuilder(builder: (context, constraint) {
+              return Container(
+                key: Key('match_the_dotts'),
+                decoration: BoxDecoration(
+                    color: Color(0xffA52A2A),
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(30),
+                        topLeft: Radius.circular(30))),
+                child: CustomPaint(
+                  foregroundPainter: DrawLine(
+                      dottedOffset: _joinedLinedOffset,
+                      connectStatus: _connectStatus,
+                      startOffset: _startOffset,
+                      endOffset: _updateOffset),
+                  child: GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onScaleStart: (ScaleStartDetails s) {
+                        Offset start = (context.findRenderObject() as RenderBox)
+                            .globalToLocal(s.focalPoint);
+                        _onStart(start);
+                      },
+                      onScaleUpdate: (ScaleUpdateDetails d) {
+                        Offset update =
+                            (context.findRenderObject() as RenderBox)
+                                .globalToLocal(d.focalPoint);
+                        if (_isUnderCircle) _onUpdate(update);
+                      },
+                      onScaleEnd: _onEnd,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: _question.map((s) {
+                              return _build(constraint, index++, s,
+                                  AlignmentDirectional.centerEnd);
+                            }).toList(growable: false),
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: _answer.map((a) {
+                              return _build(constraint, index++, a,
+                                  AlignmentDirectional.centerStart);
+                            }).toList(growable: false),
+                          ),
+                        ],
+                      )),
+                ),
+              );
+            }),
+          )
+        ],
+      ),
+    );
   }
 }
 
