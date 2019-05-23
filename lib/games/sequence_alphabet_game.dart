@@ -1,11 +1,12 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
+import 'package:maui/models/display_item.dart';
 import 'package:maui/util/game_utils.dart';
 import 'package:maui/widgets/bento_box.dart';
 import 'package:maui/widgets/cute_button.dart';
 
 class _ChoiceDetail {
-  String choice;
+  DisplayItem choice;
   Reaction reaction;
   int index;
 
@@ -16,7 +17,7 @@ class _ChoiceDetail {
 }
 
 class SequenceAlphabetGame extends StatefulWidget {
-  final BuiltList<String> answers;
+  final BuiltList<DisplayItem> answers;
   final OnGameUpdate onGameUpdate;
 
   const SequenceAlphabetGame({Key key, this.answers, this.onGameUpdate})
@@ -31,7 +32,7 @@ class _SequenceAlphabetGameState extends State<SequenceAlphabetGame> {
   var score = 0;
   int complete;
   int count = 0;
-  List<String> _endList = [];
+  List<DisplayItem> _endList = [];
   int maxScore;
   int attempt = 0;
   @override
@@ -72,7 +73,7 @@ class _SequenceAlphabetGameState extends State<SequenceAlphabetGame> {
                 key: Key(c.index.toString()),
                 child: DragTarget<String>(
                   builder: (context, candidateData, rejectedData) =>
-                      Center(child: Text(c.choice)),
+                      Center(child: Text(c.choice.item)),
                   onWillAccept: (data) {
                     return true;
                   },

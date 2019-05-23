@@ -52,6 +52,7 @@ dependencies:
     path: ../tahiti
   flores:
     path: ../flores
+  auto_size_text: ^1.1.2
 dev_dependencies:
   test: 1.6.1
   flutter_test:

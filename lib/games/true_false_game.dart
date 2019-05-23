@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maui/models/display_item.dart';
 import 'package:maui/util/game_utils.dart';
 import 'package:maui/widgets/bento_box.dart';
 import 'package:maui/widgets/cute_button.dart';
@@ -16,8 +17,8 @@ class _ChoiceDetail {
 }
 
 class TrueFalseGame extends StatefulWidget {
-  final String question;
-  final String answer;
+  final DisplayItem question;
+  final DisplayItem answer;
   final bool right_or_wrong;
   final OnGameUpdate onGameUpdate;
 
@@ -50,11 +51,11 @@ class _RhymeWordsGameState extends State<TrueFalseGame> {
       qChildren: <Widget>[
         CuteButton(
           key: Key('q_${widget.question}'),
-          child: Center(child: Text(widget.question)),
+          displayItem: widget.question,
         ),
         CuteButton(
           key: Key('a_${widget.answer}'),
-          child: Center(child: Text(widget.answer)),
+          displayItem: widget.answer,
         )
       ],
       cols: 2,

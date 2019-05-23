@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:maui/models/display_item.dart';
 import 'package:maui/util/game_utils.dart';
 import 'package:maui/widgets/bento_box.dart';
 import 'package:maui/widgets/cute_button.dart';
 
 class _ChoiceDetail {
   int index;
-  String choice;
+  DisplayItem choice;
   Reaction reaction;
   _Type type;
   bool solved;
@@ -25,7 +26,7 @@ class _ChoiceDetail {
 enum _Type { choice, question }
 
 class BingoGame extends StatefulWidget {
-  final Map<String, String> choices;
+  final Map<DisplayItem, DisplayItem> choices;
   final OnGameUpdate onGameUpdate;
 
   const BingoGame({Key key, this.choices, this.onGameUpdate}) : super(key: key);
@@ -35,16 +36,16 @@ class BingoGame extends StatefulWidget {
 }
 
 class _BingoGameState extends State<BingoGame> {
-  List<String> choiceDetails = [];
-  List<String> questionDetails = [];
-  List<String> _shuffledLetters = [];
-  List<_ChoiceDetail> cDetails, qDetails;
+  List<DisplayItem> choiceDetails = [];
+  List<DisplayItem> questionDetails = [];
+  List<DisplayItem> _shuffledLetters = [];
+  List<_ChoiceDetail> cDetails;
   int count = 0;
-  var ques;
+  DisplayItem ques;
   var i = 0, j = 0;
   static int _maxSize = 2;
   var _referenceMatrix;
-  List _letters = [];
+  List<DisplayItem> _letters = [];
   bool _bingo = false;
   int score = 0;
   int attempt = 0;
@@ -80,11 +81,6 @@ class _BingoGameState extends State<BingoGame> {
     cDetails = _letters
         .map((c) => _ChoiceDetail(choice: c, type: _Type.choice, index: k++))
         .toList(growable: false);
-
-    qDetails = questionDetails
-        .map((e) => _ChoiceDetail(
-            choice: e, type: _Type.question, reaction: Reaction.success))
-        .toList(growable: false);
   }
 
   @override
@@ -108,7 +104,7 @@ class _BingoGameState extends State<BingoGame> {
           .map((c) => CuteButton(
                 key: Key(c.index.toString()),
                 reaction: c.reaction,
-                child: Center(child: Text(c.choice)),
+                displayItem: c.choice,
                 onPressed: () {
                   _checkTheanswer(c.index, c.choice);
                 },
@@ -117,7 +113,7 @@ class _BingoGameState extends State<BingoGame> {
     );
   }
 
-  _checkTheanswer(int index, String choice) {
+  _checkTheanswer(int index, DisplayItem choice) {
     var str1 = choiceDetails.indexOf(choice);
     var str2 = questionDetails.indexOf(ques);
 

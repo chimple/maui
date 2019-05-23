@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:maui/db/entity/unit.dart';
-import 'package:maui/old/games/single_game.dart';
 import 'package:maui/repos/unit_repo.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/state/app_state.dart';
@@ -11,6 +10,8 @@ import 'package:meta/meta.dart';
 import 'dart:math';
 
 import 'flash_card.dart';
+
+enum UnitMode { text, image, audio }
 
 class UnitButton extends StatefulWidget {
   final String text;

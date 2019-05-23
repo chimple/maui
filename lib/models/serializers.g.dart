@@ -15,6 +15,8 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(ClassSession.serializer)
       ..add(ClassStudents.serializer)
       ..add(CrosswordData.serializer)
+      ..add(DisplayItem.serializer)
+      ..add(DisplayTypeEnum.serializer)
       ..add(GameConfig.serializer)
       ..add(GameStatus.serializer)
       ..add(ImageData.serializer)
@@ -46,6 +48,12 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(String)]),
           () => new ListBuilder<String>())
       ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(DisplayItem)]),
+          () => new ListBuilder<DisplayItem>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(DisplayItem)]),
+          () => new ListBuilder<DisplayItem>())
+      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(GameData)]),
           () => new ListBuilder<GameData>())
       ..addBuilderFactory(
@@ -71,15 +79,6 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(StoryConfig)]),
           () => new ListBuilder<StoryConfig>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => new ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => new ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => new ListBuilder<String>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(String)]),
           () => new ListBuilder<String>())

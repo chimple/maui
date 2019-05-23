@@ -1,5 +1,6 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
+import 'package:maui/models/display_item.dart';
 import 'package:maui/util/game_utils.dart';
 import 'package:maui/widgets/bento_box.dart';
 import 'package:maui/widgets/cute_button.dart';
@@ -8,7 +9,7 @@ import 'package:maui/widgets/cute_button.dart';
 
 class _ChoiceDetail {
   Reaction reaction;
-  String choice;
+  DisplayItem choice;
   bool appear;
   int index = 0;
   _ChoiceDetail(
@@ -19,9 +20,9 @@ class _ChoiceDetail {
 }
 
 class MultipleChoiceGame extends StatefulWidget {
-  final String question;
-  final BuiltList<String> choices;
-  final BuiltList<String> answers;
+  final DisplayItem question;
+  final BuiltList<DisplayItem> choices;
+  final BuiltList<DisplayItem> answers;
   final OnGameUpdate onGameUpdate;
   MultipleChoiceGame(
       {Key key, this.answers, this.choices, this.question, this.onGameUpdate})
@@ -33,7 +34,7 @@ class MultipleChoiceGame extends StatefulWidget {
 class _MultipleChoiceGameState extends State<MultipleChoiceGame> {
   List<_ChoiceDetail> choiceDetails;
   // List<_ChoiceDetail> answerDetails;
-  List<String> choices = [];
+  List<DisplayItem> choices = [];
   var _dataLength = 0, _complete = 0, _score = 0, _max = 0;
   int flag = 0;
   @override
@@ -42,9 +43,9 @@ class _MultipleChoiceGameState extends State<MultipleChoiceGame> {
     super.initState();
     // choices.addAll(widget.answers?.asList());
     // choices.addAll(widget.choices?.asList());
-    Set<String> ch = new Set<String>();
-    ch.addAll(widget.answers?.asList());
-    ch.addAll(widget.choices?.asList());
+    Set<DisplayItem> ch = Set<DisplayItem>();
+    ch.addAll(widget.answers);
+    ch.addAll(widget.choices);
     choices.addAll(ch);
     choices.shuffle();
     choiceDetails = choices
@@ -60,82 +61,64 @@ class _MultipleChoiceGameState extends State<MultipleChoiceGame> {
 
   @override
   Widget build(BuildContext context) {
-    return new Container(
-      child: Column(
-        children: <Widget>[
-          Expanded(
-            flex: 3,
-            child: Center(
-              child: Text(
-                widget.question,
-                style: Theme.of(context).textTheme.display1,
-              ),
-            ),
-          ),
-          Expanded(
-              flex: 7,
-              child: BentoBox(
-                calculateLayout: BentoBox.calculateVerticalLayout,
-                axis: Axis.vertical,
-                cols: _dataLength != 1 ? _dataLength : 2,
-                rows: _dataLength,
-                dragConfig: DragConfig.fixed,
-                qChildren: <Widget>[],
-                children: choiceDetails.map((c) {
-                  return CuteButton(
-                    key: Key('${c.choice}_${c.index}'),
-                    child: Text(c.choice),
-                    reaction: c.reaction,
-                    onPressed: () {
-                      if (widget.answers.contains(c.choice)) {
-                        _score = _score + 2;
-                        print('correct');
-                        choiceDetails[choices.indexOf(c.choice)] =
-                            _ChoiceDetail(
-                                appear: true,
-                                choice: c.choice,
-                                reaction: Reaction.success);
+    return BentoBox(
+      calculateLayout: BentoBox.calculateVerticalLayout,
+      axis: Axis.vertical,
+      cols: _dataLength != 1 ? _dataLength : 2,
+      rows: _dataLength,
+      dragConfig: DragConfig.fixed,
+      qChildren: <Widget>[
+        CuteButton(
+          key: Key('question'),
+          displayItem: widget.question,
+          cuteButtonType: CuteButtonType.text,
+        )
+      ],
+      qRows: 1,
+      qCols: 1,
+      children: choiceDetails.map((c) {
+        return CuteButton(
+          key: Key('${c.choice}_${c.index}'),
+          displayItem: c.choice,
+          reaction: c.reaction,
+          onPressed: () {
+            if (widget.answers.contains(c.choice)) {
+              _score = _score + 2;
+              print('correct');
+              choiceDetails[choices.indexOf(c.choice)] = _ChoiceDetail(
+                  appear: true, choice: c.choice, reaction: Reaction.success);
 
-                        int count = 0;
-                        choiceDetails.forEach((c) {
-                          if (c.appear) {
-                            count++;
-                            print('game over');
-                            if (count == _complete) {
-                              widget.onGameUpdate(
-                                  max: _max * 2,
-                                  score: _score,
-                                  gameOver: true,
-                                  star: true);
-                              setState(() {});
-                            }
-                          }
-                        });
-                        widget.onGameUpdate(
-                            max: _max * 2,
-                            score: _score,
-                            gameOver: false,
-                            star: true);
-                        return Reaction.success;
-                      } else {
-                        print('wrong');
-                        _score--;
-                        if (_score <= 0) {
-                          _score = 0;
-                        }
-                        widget.onGameUpdate(
-                            max: _max * 2,
-                            score: _score,
-                            gameOver: false,
-                            star: false);
-                        return Reaction.failure;
-                      }
-                    },
-                  );
-                }).toList(),
-              ))
-        ],
-      ),
+              int count = 0;
+              choiceDetails.forEach((c) {
+                if (c.appear) {
+                  count++;
+                  print('game over');
+                  if (count == _complete) {
+                    widget.onGameUpdate(
+                        max: _max * 2,
+                        score: _score,
+                        gameOver: true,
+                        star: true);
+                    setState(() {});
+                  }
+                }
+              });
+              widget.onGameUpdate(
+                  max: _max * 2, score: _score, gameOver: false, star: true);
+              return Reaction.success;
+            } else {
+              print('wrong');
+              _score--;
+              if (_score <= 0) {
+                _score = 0;
+              }
+              widget.onGameUpdate(
+                  max: _max * 2, score: _score, gameOver: false, star: false);
+              return Reaction.failure;
+            }
+          },
+        );
+      }).toList(),
     );
   }
 

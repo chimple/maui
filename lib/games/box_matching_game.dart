@@ -1,11 +1,12 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
+import 'package:maui/models/display_item.dart';
 import 'package:maui/util/game_utils.dart';
 import 'package:maui/widgets/bento_box.dart';
 import 'package:maui/widgets/cute_button.dart';
 
 class _ChoiceDetail {
-  String choice;
+  DisplayItem choice;
   Reaction reaction;
   int index;
   bool appear;
@@ -17,8 +18,8 @@ class _ChoiceDetail {
 }
 
 class BoxMatchingGame extends StatefulWidget {
-  final BuiltList<String> choices;
-  final BuiltList<String> answers;
+  final BuiltList<DisplayItem> choices;
+  final BuiltList<DisplayItem> answers;
   final OnGameUpdate onGameUpdate;
 
   const BoxMatchingGame({
@@ -70,7 +71,7 @@ class _BoxMatchingGameState extends State<BoxMatchingGame> {
               children: answerDetails
                   .map(
                     (a) => CuteButton(
-                        key: Key(a.choice),
+                        key: Key(a.choice.item),
                         child: DragTarget<String>(
                           builder: (context, candidateData, rejectedData) =>
                               LayoutBuilder(builder: (BuildContext context,
@@ -99,8 +100,8 @@ class _BoxMatchingGameState extends State<BoxMatchingGame> {
                                                           constraints.maxWidth *
                                                               .5,
                                                       child: Center(
-                                                          child:
-                                                              Text(a.choice)),
+                                                          child: Text(
+                                                              a.choice.item)),
                                                     ))
                                                 .toList(growable: false))
                                         : Container());
@@ -111,7 +112,7 @@ class _BoxMatchingGameState extends State<BoxMatchingGame> {
                                   int index = int.parse(data.substring(1));
                                   print(
                                       "${data.substring(1)}......${choiceDetails[index]}");
-                                  addToBox[a.index].add(a.choice);
+                                  addToBox[a.index].add(a.choice.item);
                                   a.appear = true;
                                   choiceDetails[index].appear = false;
                                   score = score + 2;
@@ -147,9 +148,9 @@ class _BoxMatchingGameState extends State<BoxMatchingGame> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: widget.answers
                   .map((t) => Text(
-                        t,
+                        t.item,
                         style: TextStyle(fontSize: 46.0),
-                        key: Key(t),
+                        key: Key(t.item),
                       ))
                   .toList(growable: false),
             )),
@@ -163,13 +164,13 @@ class _BoxMatchingGameState extends State<BoxMatchingGame> {
             children: choiceDetails
                 .map((c) => c.appear
                     ? CuteButton(
-                        key: Key("${(c.choice + (k++).toString())}"),
+                        key: Key("${(c.choice.item + (k++).toString())}"),
                         child: LayoutBuilder(builder:
                             (BuildContext context, BoxConstraints constraints) {
                           return Container(
                             height: constraints.maxHeight * .6,
                             width: constraints.maxWidth * .8,
-                            child: Center(child: Text(c.choice)),
+                            child: Center(child: Text(c.choice.item)),
                           );
                         }),
                       )
