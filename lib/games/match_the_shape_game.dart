@@ -2,13 +2,14 @@ import 'dart:async';
 
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
+import 'package:maui/models/display_item.dart';
 import 'package:maui/util/game_utils.dart';
 import 'package:maui/widgets/animated_scale.dart';
 import 'package:maui/widgets/bento_box.dart';
 import 'package:maui/widgets/cute_button.dart';
 
 class _ChoiceDetail {
-  String choice;
+  DisplayItem choice;
   String type;
   Reaction reaction;
   _Escape escape;
@@ -25,8 +26,8 @@ class _ChoiceDetail {
 enum _Escape { no, escaping, escaped }
 
 class MatchTheShapeGame extends StatefulWidget {
-  final BuiltList<String> first;
-  final BuiltList<String> second;
+  final BuiltList<DisplayItem> first;
+  final BuiltList<DisplayItem> second;
   final OnGameUpdate onGameUpdate;
 
   const MatchTheShapeGame({Key key, this.first, this.second, this.onGameUpdate})
@@ -66,58 +67,54 @@ class _MatchTheShapeGameState extends State<MatchTheShapeGame> {
           .map((c) => c.escape == _Escape.no
               ? CuteButton(
                   onPressed: () => Reaction.success,
-                  key: Key('${c.choice}_${c.type}'),
-                  child: DragTarget<String>(
-                    builder: (context, candidateData, rejectedData) => Center(
-                          child: Text(c.choice),
-                        ),
-                    onAccept: (data) => setState(() {
-                          if (data.split('_').first == c.choice) {
-                            score += 2;
-                            print("this is my data ${data.length}");
-                            print("this is my score in match $score");
-                            if (--complete == 0)
-                              widget.onGameUpdate(
-                                  score: score,
-                                  max: maxScore,
-                                  gameOver: true,
-                                  star: true);
+                  key: Key('${c.choice.item}_${c.type}'),
+                  displayItem: c.choice,
+                  onAccept: (data) => setState(() {
+                        if (data.split('_').first == c.choice.item) {
+                          score += 2;
+                          print("this is my data ${data.length}");
+                          print("this is my score in match $score");
+                          if (--complete == 0)
+                            widget.onGameUpdate(
+                                score: score,
+                                max: maxScore,
+                                gameOver: true,
+                                star: true);
 
-                            choiceDetails
-                                .where((choice) => c.choice == choice.choice)
-                                .forEach((choice) {
-                              WidgetsBinding.instance
-                                  .addPostFrameCallback((_) => setState(() {
-                                        choice.escape = _Escape.escaping;
+                          choiceDetails
+                              .where((choice) => c.choice == choice.choice)
+                              .forEach((choice) {
+                            WidgetsBinding.instance
+                                .addPostFrameCallback((_) => setState(() {
+                                      choice.escape = _Escape.escaping;
 
-                                        print(
-                                            "this is my length in match ${data.length}");
-                                      }));
-                              Future.delayed(
-                                  Duration(milliseconds: 1000),
-                                  () => setState(
-                                      () => choice.escape = _Escape.escaped));
-                            });
+                                      print(
+                                          "this is my length in match ${data.length}");
+                                    }));
+                            Future.delayed(
+                                Duration(milliseconds: 1000),
+                                () => setState(
+                                    () => choice.escape = _Escape.escaped));
+                          });
+                        } else {
+                          score--;
+                          count++;
+                          if (count > (widget.first.length ~/ 2)) {
+                            // game lose
+                            widget.onGameUpdate(
+                                score: score,
+                                max: maxScore,
+                                gameOver: true,
+                                star: false);
                           } else {
-                            score--;
-                            count++;
-                            if (count > (widget.first.length ~/ 2)) {
-                              // game lose
-                              widget.onGameUpdate(
-                                  score: score,
-                                  max: maxScore,
-                                  gameOver: true,
-                                  star: false);
-                            } else {
-                              widget.onGameUpdate(
-                                  score: score,
-                                  max: maxScore,
-                                  gameOver: false,
-                                  star: false);
-                            }
+                            widget.onGameUpdate(
+                                score: score,
+                                max: maxScore,
+                                gameOver: false,
+                                star: false);
                           }
-                        }),
-                  ),
+                        }
+                      }),
                 )
               : Container())
           .toList(growable: false),
@@ -126,7 +123,7 @@ class _MatchTheShapeGameState extends State<MatchTheShapeGame> {
           .map((c) => CuteButton(
                 key: Key('${c.choice}_${c.type}'),
                 child: Center(
-                  child: Text(c.choice),
+                  child: Text(c.choice.item),
                 ),
                 onPressed: () => Reaction.success,
               ))

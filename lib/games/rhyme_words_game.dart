@@ -1,11 +1,12 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
+import 'package:maui/models/display_item.dart';
 import 'package:maui/util/game_utils.dart';
 import 'package:maui/widgets/bento_box.dart';
 import 'package:maui/widgets/cute_button.dart';
 
 class _ChoiceDetail {
-  String choice;
+  DisplayItem choice;
   Reaction reaction;
   int index;
 
@@ -16,8 +17,8 @@ class _ChoiceDetail {
 }
 
 class RhymeWordsGame extends StatefulWidget {
-  final BuiltList<String> questions;
-  final BuiltList<String> answers;
+  final BuiltList<DisplayItem> questions;
+  final BuiltList<DisplayItem> answers;
   final OnGameUpdate onGameUpdate;
 
   const RhymeWordsGame(
@@ -33,7 +34,7 @@ class _RhymeWordsGameState extends State<RhymeWordsGame> {
   var _score = 0;
   int complete = 0;
   int _count = 0;
-  List<String> _endList = [];
+  List<DisplayItem> _endList = [];
 
   @override
   void initState() {
@@ -56,8 +57,8 @@ class _RhymeWordsGameState extends State<RhymeWordsGame> {
       qRows: widget.questions.length,
       qChildren: widget.questions
           .map((q) => CuteButton(
-                key: Key(q),
-                child: Center(child: Text(q)),
+                key: Key(q.item),
+                displayItem: q,
               ) as Widget)
           .toList()
             ..addAll(widget.questions.map((q) => Image.asset(
@@ -68,10 +69,10 @@ class _RhymeWordsGameState extends State<RhymeWordsGame> {
       rows: choiceDetails.length,
       children: choiceDetails
           .map((c) => CuteButton(
-                key: Key(c.choice),
+                key: Key(c.choice.item),
                 child: DragTarget<String>(
                     builder: (context, candidateData, rejectedData) =>
-                        Center(child: Text(c.choice)),
+                        Center(child: Text(c.choice.item)),
                     onWillAccept: (data) {
                       int currentIndex = choiceDetails
                           .indexWhere((ch) => ch.choice == c.choice);

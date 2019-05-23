@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/widgets.dart';
 import 'package:maui/games/basic_counting_game.dart';
 import 'package:maui/games/bingo_game.dart';
@@ -87,7 +88,7 @@ Widget buildGame({GameData gameData, OnGameUpdate onGameUpdate}) {
     case fillInTheBlanksGame:
       final gd = gameData as MultiData;
       return FillInTheBlanksGame(
-        question: gd.question,
+        question: gd.question.item,
         choices: gd.choices,
         onGameUpdate: onGameUpdate,
       );
@@ -95,7 +96,7 @@ Widget buildGame({GameData gameData, OnGameUpdate onGameUpdate}) {
     case findWordGame:
       final gd = gameData as MultiData;
       return FindWordGame(
-        image: gd.specials.first,
+        image: gd.question.image,
         answer: gd.answers,
         choices: gd.choices,
         onGameUpdate: onGameUpdate,
@@ -128,7 +129,6 @@ Widget buildGame({GameData gameData, OnGameUpdate onGameUpdate}) {
     case matchWithImageGame:
       final gd = gameData as MultiData;
       return MatchWithImageGame(
-        images: gd.specials,
         answers: gd.answers,
         choices: gd.choices,
         onGameUpdate: onGameUpdate,
@@ -195,7 +195,8 @@ Widget buildGame({GameData gameData, OnGameUpdate onGameUpdate}) {
     case spinWheelGame:
       final gd = gameData as MultiData;
       return SpinWheelGame(
-        data: Map.fromIterables(gd.choices, gd.answers),
+        data: Map.fromIterables(
+            gd.choices.map((d) => d.item), gd.answers.map((d) => d.item)),
         onGameUpdate: onGameUpdate,
         dataSize: gd.choices.length,
       );
@@ -203,7 +204,7 @@ Widget buildGame({GameData gameData, OnGameUpdate onGameUpdate}) {
     case tracingAlphabetGame:
       final gd = gameData as MultiData;
       return TracingAlphabetGame(
-        alphabets: gd.answers,
+        alphabets: BuiltList<String>(gd.answers.map((d) => d.item)),
         onGameUpdate: onGameUpdate,
       );
       break;
@@ -212,7 +213,7 @@ Widget buildGame({GameData gameData, OnGameUpdate onGameUpdate}) {
       return TrueFalseGame(
         question: gd.question,
         answer: gd.choices.first,
-        right_or_wrong: gd.answers.first == 'True',
+        right_or_wrong: gd.answers.first.item == 'True',
         onGameUpdate: onGameUpdate,
       );
       break;
