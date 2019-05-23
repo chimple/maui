@@ -60,6 +60,7 @@ import 'package:maui/storyboards/widgets/score_story.dart';
 import 'package:maui/storyboards/widgets/slide_up_route_story.dart';
 import 'package:maui/storyboards/widgets/store_screen_story.dart';
 import 'package:maui/storyboards/widgets/story_board.dart';
+import 'package:maui/storyboards/widgets/texture_text_story.dart';
 import 'package:storyboard/storyboard.dart';
 
 import 'storyboards/widgets/guess_image_story.dart';
@@ -125,6 +126,7 @@ void main() {
     TablesGameStory(),
     TapHomeStory(),
     TapWrongGameStory(),
+    TextureTextStory(),
     ThemeMapStory(),
     TracingAlphabetStory(),
     TrueFalseGameStory(),
