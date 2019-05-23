@@ -1,23 +1,7 @@
-import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
-import 'package:flutter/material.dart';
-import 'package:maui/components/nima.dart';
-import 'package:maui/components/user_item.dart';
-import 'package:maui/old/games/single_game.dart';
-import 'package:badge/badge.dart';
-import 'package:maui/components/friend_item.dart';
-import 'package:maui/state/app_state_container.dart';
-import 'package:maui/old/games/single_game.dart';
-import 'package:maui/old/games/head_to_head_game.dart';
-import 'package:maui/db/entity/user.dart';
-import 'package:maui/repos/user_repo.dart';
-import 'package:maui/screens/select_opponent_screen.dart';
-import 'package:maui/repos/p2p.dart' as p2p;
-import 'package:maui/loca.dart';
-import 'package:maui/components/gameaudio.dart';
 // void main() => runApp(VideoApp());
 
 class VideoApp extends StatefulWidget {

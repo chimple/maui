@@ -1,5 +1,6 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
+import 'package:maui/models/display_item.dart';
 import 'package:maui/util/game_utils.dart';
 import 'package:maui/widgets/bento_box.dart';
 import 'package:maui/widgets/cute_button.dart';
@@ -20,7 +21,7 @@ class _QuestionDetail {
 
 class FillInTheBlanksGame extends StatefulWidget {
   final String question;
-  final BuiltList<String> choices;
+  final BuiltList<DisplayItem> choices;
   final OnGameUpdate onGameUpdate;
 
   const FillInTheBlanksGame(
@@ -33,7 +34,7 @@ class FillInTheBlanksGame extends StatefulWidget {
 
 class _FillInTheBlanksGameState extends State<FillInTheBlanksGame> {
   List<_QuestionDetail> questionDetails = [];
-  List<String> dragBoxData = [];
+  List<DisplayItem> dragBoxData = [];
   List<String> questionWords = [];
   List<int> index = [];
   int complete = 0, score = 0, tries = 0, total = 0;
@@ -127,8 +128,8 @@ class _FillInTheBlanksGameState extends State<FillInTheBlanksGame> {
             cols: dragBoxData.length,
             children: dragBoxData
                 .map((c) => CuteButton(
-                      key: Key((i++).toString() + c),
-                      child: Center(child: Text(c)),
+                      key: Key((i++).toString() + c.item),
+                      child: Center(child: Text(c.item)),
                     ))
                 .toList(growable: false),
             dragConfig: DragConfig.draggableBounceBack,

@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:maui/models/display_item.dart';
 import 'package:maui/models/game_data.dart';
 
 part 'multi_data.g.dart';
@@ -11,15 +12,12 @@ abstract class MultiData
   String get gameId;
 
   @nullable
-  String get question;
+  DisplayItem get question;
 
   @nullable
-  BuiltList<String> get specials;
+  BuiltList<DisplayItem> get choices;
 
-  @nullable
-  BuiltList<String> get choices;
-
-  BuiltList<String> get answers;
+  BuiltList<DisplayItem> get answers;
 
   MultiData._();
   factory MultiData([updates(MultiDataBuilder b)]) = _$MultiData;

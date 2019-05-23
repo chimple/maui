@@ -7,6 +7,8 @@ import 'package:built_value/standard_json_plugin.dart';
 import 'package:flutter/services.dart';
 import 'package:maui/db/entity/lesson.dart';
 import 'package:maui/db/entity/lesson_unit.dart';
+import 'package:maui/db/entity/unit.dart';
+import 'package:maui/models/display_item.dart';
 import 'package:maui/models/game_data.dart';
 import 'package:maui/models/multi_data.dart';
 import 'package:maui/models/serializers.dart';
@@ -90,65 +92,76 @@ enum GameType {
 
 Map<ConceptType, List<GameType>> conceptGames = {
   ConceptType.upperCaseLetter: [
-    GameType.BingoGame,
-    GameType.BoxMatchingGame,
-    GameType.MemoryGame,
+//    GameType.BingoGame,
+//    GameType.BoxMatchingGame,
+//    GameType.MemoryGame,
     GameType.MultipleChoiceGame,
-    GameType.SpinWheelGame,
+//    GameType.SpinWheelGame,
     GameType.TracingAlphabetGame,
-    GameType.TrueFalseGame,
-    GameType.JumbledWordsGame
+    GameType.MatchTheShapeGame,
+//    GameType.TrueFalseGame,
+//    GameType.JumbledWordsGame
   ],
   ConceptType.upperCaseToLowerCase: [
-    GameType.BingoGame,
-    GameType.BoxMatchingGame,
-    GameType.MemoryGame,
-    GameType.SpinWheelGame,
+//    GameType.BingoGame,
+//    GameType.BoxMatchingGame,
+//    GameType.MemoryGame,
+//    GameType.SpinWheelGame,
+    GameType.MultipleChoiceGame,
     GameType.TracingAlphabetGame,
-    GameType.TrueFalseGame,
-    GameType.JumbledWordsGame
+    GameType.MatchTheShapeGame,
+//    GameType.TrueFalseGame,
+//    GameType.JumbledWordsGame
   ],
   ConceptType.lowerCaseLetterToWord: [
-    GameType.BingoGame,
-    GameType.MemoryGame,
+//    GameType.BingoGame,
+//    GameType.MemoryGame,
     GameType.TracingAlphabetGame,
-    GameType.TrueFalseGame,
-    GameType.FindWordGame,
-    GameType.JumbledWordsGame,
-    GameType.MatchWithImageGame,
-    GameType.SequenceAlphabetGame,
-    GameType.TapWrongGame,
+    GameType.MatchTheShapeGame,
+    GameType.MultipleChoiceGame,
+//    GameType.TrueFalseGame,
+//    GameType.FindWordGame,
+//    GameType.JumbledWordsGame,
+//    GameType.MatchWithImageGame,
+//    GameType.SequenceAlphabetGame,
+//    GameType.TapWrongGame,
   ],
   ConceptType.syllableToWord: [
-    GameType.BingoGame,
-    GameType.MemoryGame,
+//    GameType.BingoGame,
+//    GameType.MemoryGame,
     GameType.TracingAlphabetGame,
-    GameType.TrueFalseGame,
-    GameType.FindWordGame,
-    GameType.JumbledWordsGame,
-    GameType.MatchWithImageGame,
-    GameType.SequenceAlphabetGame,
-    GameType.TapWrongGame,
+    GameType.MatchTheShapeGame,
+    GameType.MultipleChoiceGame,
+//    GameType.TrueFalseGame,
+//    GameType.FindWordGame,
+//    GameType.JumbledWordsGame,
+//    GameType.MatchWithImageGame,
+//    GameType.SequenceAlphabetGame,
+//    GameType.TapWrongGame,
   ],
   ConceptType.upperCaseLetterToWord: [
-    GameType.BingoGame,
-    GameType.MemoryGame,
+//    GameType.BingoGame,
+//    GameType.MemoryGame,
     GameType.TracingAlphabetGame,
-    GameType.TrueFalseGame,
-    GameType.FindWordGame,
-    GameType.JumbledWordsGame,
-    GameType.MatchWithImageGame,
-    GameType.SequenceAlphabetGame,
-    GameType.TapWrongGame,
+    GameType.MatchTheShapeGame,
+    GameType.MultipleChoiceGame,
+//    GameType.TrueFalseGame,
+//    GameType.FindWordGame,
+//    GameType.JumbledWordsGame,
+//    GameType.MatchWithImageGame,
+//    GameType.SequenceAlphabetGame,
+//    GameType.TapWrongGame,
   ],
   ConceptType.lowerCaseLetter: [
-    GameType.BingoGame,
-    GameType.BoxMatchingGame,
-    GameType.MemoryGame,
-    GameType.SpinWheelGame,
+//    GameType.BingoGame,
+//    GameType.BoxMatchingGame,
+//    GameType.MemoryGame,
+//    GameType.SpinWheelGame,
     GameType.TracingAlphabetGame,
-    GameType.TrueFalseGame,
-    GameType.JumbledWordsGame
+    GameType.MatchTheShapeGame,
+    GameType.MultipleChoiceGame,
+//    GameType.TrueFalseGame,
+//    GameType.JumbledWordsGame
   ],
   ConceptType.singleDigitAdditionWithoutCarryover: [],
   ConceptType.singleDigitAdditionWithCarryover: [],
@@ -189,17 +202,87 @@ Map<ConceptType, List<GameType>> conceptGames = {
   ConceptType.numbers0to99: [],
 };
 
-Future<GameData> fetchLessonGameData({GameType gameType, Lesson lesson}) async {
+Future<GameData> fetchLiteracyGameData(
+    {GameType gameType, Lesson lesson}) async {
+  DisplayTypeEnum subjectType;
+  DisplayTypeEnum objectType;
+
+  switch (lesson.conceptId ?? ConceptType.dummy) {
+    case ConceptType.dummy:
+      subjectType = DisplayTypeEnum.sentence;
+      objectType = DisplayTypeEnum.sentence;
+      break;
+    case ConceptType.upperCaseLetter:
+    case ConceptType.upperCaseToLowerCase:
+    case ConceptType.lowerCaseLetter:
+      subjectType = DisplayTypeEnum.letter;
+      objectType = DisplayTypeEnum.letter;
+      break;
+    case ConceptType.lowerCaseLetterToWord:
+    case ConceptType.upperCaseLetterToWord:
+      subjectType = DisplayTypeEnum.letter;
+      objectType = DisplayTypeEnum.word;
+      break;
+    case ConceptType.syllableToWord:
+      subjectType = DisplayTypeEnum.syllable;
+      objectType = DisplayTypeEnum.word;
+      break;
+    case ConceptType.singleDigitAdditionWithoutCarryover:
+    case ConceptType.singleDigitAdditionWithCarryover:
+    case ConceptType.doubleDigitAdditionWithoutCarryover:
+    case ConceptType.doubleDigitAdditionWithCarryover:
+    case ConceptType.tripleDigitAdditionWithoutCarryover:
+    case ConceptType.tripleDigitAdditionWithCarryover:
+    case ConceptType.singleDigitSubtractionWithoutBorrow:
+    case ConceptType.singleDigitSubtractionWithBorrow:
+    case ConceptType.doubleDigitSubtractionWithoutBorrow:
+    case ConceptType.doubleDigitSubtractionWithBorrow:
+    case ConceptType.tripleDigitSubtractionWithoutBorrow:
+    case ConceptType.tripleDigitSubtractionWithBorrow:
+    case ConceptType.singleDigitMultiplication:
+    case ConceptType.singleDigitWithDoubleDigitMultiplication:
+    case ConceptType.doubleDigitMultiplication:
+    case ConceptType.tables1:
+    case ConceptType.tables2:
+    case ConceptType.tables3:
+    case ConceptType.tables4:
+    case ConceptType.tables5:
+    case ConceptType.tables6:
+    case ConceptType.tables7:
+    case ConceptType.tables8:
+    case ConceptType.tables9:
+    case ConceptType.tables10:
+    case ConceptType.number1:
+    case ConceptType.number2:
+    case ConceptType.number3:
+    case ConceptType.number4:
+    case ConceptType.number5:
+    case ConceptType.number6:
+    case ConceptType.number7:
+    case ConceptType.number8:
+    case ConceptType.number9:
+    case ConceptType.number10:
+    case ConceptType.numbers0to9:
+    case ConceptType.numbers0to99:
+  }
   switch (gameType) {
     case GameType.BasicCountingGame:
       break;
     case GameType.BingoGame:
-      final data = await fetchPairData(lesson.id, 9);
-      final List<String> answers = [];
-      final List<String> choices = [];
+      final data = await _fetchPairData(lesson.id, 9);
+      final List<DisplayItem> answers = [];
+      final List<DisplayItem> choices = [];
       data.forEach((k, v) {
-        answers.add(k);
-        choices.add(v);
+        answers.add(DisplayItem((b) => b
+          ..item = k.name
+          ..displayType = subjectType
+          ..image = k.image
+          ..audio = k.sound));
+        choices.add(DisplayItem((b) => b
+          ..item = v.name
+          ..displayType = subjectType
+          ..image = v.image
+          ..audio = v.sound));
       });
       return MultiData((b) => b
         ..gameId = bingoGame
@@ -207,12 +290,20 @@ Future<GameData> fetchLessonGameData({GameType gameType, Lesson lesson}) async {
         ..choices.addAll(choices));
       break;
     case GameType.BoxMatchingGame:
-      final data = await fetchPairData(lesson.id, 4);
-      final List<String> answers = [];
-      final List<String> choices = [];
+      final data = await _fetchPairData(lesson.id, 4);
+      final List<DisplayItem> answers = [];
+      final List<DisplayItem> choices = [];
       data.forEach((k, v) {
-        answers.add(k);
-        choices.add(v);
+        answers.add(DisplayItem((b) => b
+          ..item = k.name
+          ..displayType = subjectType
+          ..image = k.image
+          ..audio = k.sound));
+        choices.add(DisplayItem((b) => b
+          ..item = v.name
+          ..displayType = subjectType
+          ..image = v.image
+          ..audio = v.sound));
       });
       return MultiData((b) => b
         ..gameId = boxMatchingGame
@@ -236,30 +327,69 @@ Future<GameData> fetchLessonGameData({GameType gameType, Lesson lesson}) async {
     case GameType.GuessImageGame:
       break;
     case GameType.JumbledWordsGame:
-      final data = await fetchMultipleChoiceData(lesson.id, 3);
+      final data = await _fetchMultipleChoiceData(lesson.id, 3);
       return MultiData((b) => b
         ..gameId = jumbledWordsGame
-        ..answers.add(data.item1)
+        ..answers.add(DisplayItem((b) => b
+          ..item = data.item1.name
+          ..displayType = subjectType
+          ..image = data.item1.image
+          ..audio = data.item1.sound))
         ..choices.update((b) => b
-          ..addAll(data.item3)
-          ..add(data.item2)
+          ..addAll(data.item3.map((u) => DisplayItem((b) => b
+            ..item = u.name
+            ..displayType = objectType
+            ..image = u.image
+            ..audio = u.sound)))
+          ..add(DisplayItem((b) => b
+            ..item = data.item2.name
+            ..displayType = objectType
+            ..image = data.item2.image
+            ..audio = data.item2.sound))
           ..shuffle()));
       break;
     case GameType.MadSentenceGame:
       break;
     case GameType.MatchTheShapeGame:
+      final data = await _fetchPairData(lesson.id, 4);
+      final List<DisplayItem> answers = [];
+      final List<DisplayItem> choices = [];
+      data.forEach((k, v) {
+        answers.add(DisplayItem((b) => b
+          ..item = k.name
+          ..displayType = subjectType
+          ..image = k.image
+          ..audio = k.sound));
+        choices.add(DisplayItem((b) => b
+          ..item = v.name
+          ..displayType = subjectType
+          ..image = v.image
+          ..audio = v.sound));
+      });
+      return MultiData((b) => b
+        ..gameId = matchTheShapeGame
+        ..answers.addAll(answers)
+        ..choices.addAll(choices));
       break;
     case GameType.MatchWithImageGame:
       break;
     case GameType.MathOpGame:
       break;
     case GameType.MemoryGame:
-      final data = await fetchPairData(lesson.id, 8);
-      final List<String> answers = [];
-      final List<String> choices = [];
+      final data = await _fetchPairData(lesson.id, 8);
+      final List<DisplayItem> answers = [];
+      final List<DisplayItem> choices = [];
       data.forEach((k, v) {
-        answers.add(k);
-        choices.add(v);
+        answers.add(DisplayItem((b) => b
+          ..item = k.name
+          ..displayType = subjectType
+          ..image = k.image
+          ..audio = k.sound));
+        choices.add(DisplayItem((b) => b
+          ..item = v.name
+          ..displayType = subjectType
+          ..image = v.image
+          ..audio = v.sound));
       });
       return MultiData((b) => b
         ..gameId = memoryGame
@@ -267,15 +397,32 @@ Future<GameData> fetchLessonGameData({GameType gameType, Lesson lesson}) async {
         ..choices.addAll(choices));
       break;
     case GameType.MultipleChoiceGame:
-      final data = await fetchMultipleChoiceData(lesson.id, 3);
+      final data = await _fetchMultipleChoiceData(lesson.id, 3);
       return MultiData((b) => b
         ..gameId = multipleChoiceGame
-        ..question = data.item1
-        ..answers.add(data.item1)
+        ..question.update(((b) => b
+          ..item = data.item1.name
+          ..displayType = subjectType
+          ..image = data.item1.image
+          ..audio = data.item1.sound))
+        ..answers.add(DisplayItem((b) => b
+          ..item = data.item1.name
+          ..displayType = subjectType
+          ..image = data.item1.image
+          ..audio = data.item1.sound))
         ..choices.update((b) => b
-          ..addAll(data.item3)
-          ..add(data.item2)
+          ..addAll(data.item3.map((u) => DisplayItem((b) => b
+            ..item = u.name
+            ..displayType = objectType
+            ..image = u.image
+            ..audio = u.sound)))
+          ..add(DisplayItem((b) => b
+            ..item = data.item2.name
+            ..displayType = objectType
+            ..image = data.item2.image
+            ..audio = data.item2.sound))
           ..shuffle()));
+
       break;
     case GameType.NumberBalanceGame:
       break;
@@ -296,12 +443,20 @@ Future<GameData> fetchLessonGameData({GameType gameType, Lesson lesson}) async {
     case GameType.SequenceTheNumberGame:
       break;
     case GameType.SpinWheelGame:
-      final data = await fetchPairData(lesson.id, 8);
-      final List<String> answers = [];
-      final List<String> choices = [];
+      final data = await _fetchPairData(lesson.id, 8);
+      final List<DisplayItem> answers = [];
+      final List<DisplayItem> choices = [];
       data.forEach((k, v) {
-        answers.add(k);
-        choices.add(v);
+        answers.add(DisplayItem((b) => b
+          ..item = k.name
+          ..displayType = subjectType
+          ..image = k.image
+          ..audio = k.sound));
+        choices.add(DisplayItem((b) => b
+          ..item = v.name
+          ..displayType = subjectType
+          ..image = v.image
+          ..audio = v.sound));
       });
       return MultiData((b) => b
         ..gameId = spinWheelGame
@@ -311,26 +466,40 @@ Future<GameData> fetchLessonGameData({GameType gameType, Lesson lesson}) async {
     case GameType.TapWrongGame:
       break;
     case GameType.TracingAlphabetGame:
-      final data = await fetchSequenceData(lesson.id, 4);
+      final data = await _fetchSequenceData(lesson.id, 4);
       return MultiData((b) => b
         ..gameId = tracingAlphabetGame
-        ..answers.addAll(data.item2));
+        ..answers.addAll(data.item2.map((u) => DisplayItem((b) => b
+          ..item = u.name
+          ..displayType = subjectType
+          ..image = u.image
+          ..audio = u.sound))));
       break;
     case GameType.TrueFalseGame:
-      final data = await fetchPairData(lesson.id, 2);
+      final data = await _fetchPairData(lesson.id, 2);
       final rand = Random();
       final tOrF = rand.nextBool();
-      final List<String> answers = [];
-      final List<String> choices = [];
+      final List<DisplayItem> answers = [];
+      final List<DisplayItem> choices = [];
       data.forEach((k, v) {
-        answers.add(k);
-        choices.add(v);
+        answers.add(DisplayItem((b) => b
+          ..item = k.name
+          ..displayType = subjectType
+          ..image = k.image
+          ..audio = k.sound));
+        choices.add(DisplayItem((b) => b
+          ..item = v.name
+          ..displayType = subjectType
+          ..image = v.image
+          ..audio = v.sound));
       });
       return MultiData((b) => b
         ..gameId = trueFalseGame
-        ..question = answers.first
+        ..question.replace(answers.first)
         ..choices.add(tOrF ? choices.first : choices.last)
-        ..answers.add(tOrF ? 'True' : 'False'));
+        ..answers.add(DisplayItem((b) => b
+          ..item = tOrF ? 'True' : 'False'
+          ..displayType = DisplayTypeEnum.letter)));
       break;
     case GameType.UnitGame:
       break;
@@ -360,7 +529,7 @@ Future<List<GameData>> fetchGameData(Lesson lesson, {int numData = 5}) async {
         List<GameType> gameTypes = conceptGames[lesson.conceptId];
         final rand = Random();
         for (int i = 0; i < numData; i++) {
-          returnData.add(await fetchLessonGameData(
+          returnData.add(await fetchLiteracyGameData(
               lesson: lesson,
               gameType: gameTypes[rand.nextInt(gameTypes.length)]));
         }
@@ -444,28 +613,28 @@ Future<List<GameData>> fetchGameData(Lesson lesson, {int numData = 5}) async {
   }
 }
 
-Future<List<String>> fetchSerialData(int lessonId) async {
+Future<List<String>> _fetchSerialData(int lessonId) async {
   var lessonUnits =
       await new LessonUnitRepo().getLessonUnitsByLessonId(lessonId);
   return lessonUnits.map((e) => e.subjectUnitId).toList(growable: false);
 }
 
-Future<Tuple2<String, List<String>>> fetchSequenceData(
+Future<Tuple2<Unit, List<Unit>>> _fetchSequenceData(
     int lessonId, int maxData) async {
-  var rand = new Random();
-  var lessonUnits =
-      await new LessonUnitRepo().getLessonUnitsByLessonId(lessonId);
-  var start = rand.nextInt(max(1, lessonUnits.length - maxData));
-  var sequence = lessonUnits
+  final rand = new Random();
+  final lessonUnits =
+      await LessonUnitRepo().getEagerLessonUnitsByLessonId(lessonId);
+  final start = rand.nextInt(max(1, lessonUnits.length - maxData));
+  final sequence = lessonUnits
       .skip(start)
       .take(maxData)
-      .map((e) => e.subjectUnitId)
+      .map((e) => e.subjectUnit)
       .toList(growable: false);
-  var answer = sequence[rand.nextInt(sequence.length)];
+  final answer = sequence[rand.nextInt(sequence.length)];
   return new Tuple2(answer, sequence);
 }
 
-Future<Tuple2<String, List<String>>> fetchSequenceDataForCategory(
+Future<Tuple2<String, List<String>>> _fetchSequenceDataForCategory(
     int categoryId, int maxData) async {
   var rand = new Random();
   var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
@@ -488,21 +657,19 @@ Future<Tuple2<String, List<String>>> fetchSequenceDataForCategory(
   return new Tuple2(answer, sequence);
 }
 
-Future<Map<String, String>> fetchPairData(int lessonId, int maxData) async {
-  var lessonUnits =
-      await new LessonUnitRepo().getLessonUnitsByLessonId(lessonId);
+Future<Map<Unit, Unit>> _fetchPairData(int lessonId, int maxData) async {
+  final lessonUnits =
+      await LessonUnitRepo().getEagerLessonUnitsByLessonId(lessonId);
   lessonUnits.shuffle();
   //TODO: get only unique objects and subjects
   //TODO: cut across areaId to get concept->word
-  return new Map<String, String>.fromIterable(
+  return Map<Unit, Unit>.fromIterable(
       lessonUnits.sublist(0, min(maxData, lessonUnits.length)),
-      key: (e) => e.subjectUnitId,
-      value: (e) => (e.objectUnitId != null && e.objectUnitId.isNotEmpty)
-          ? e.objectUnitId
-          : e.subjectUnitId);
+      key: (e) => e.subjectUnit,
+      value: (e) => e.objectUnit);
 }
 
-Future<Tuple3<String, String, bool>> fetchTrueOrFalse(int lessonId) async {
+Future<Tuple3<String, String, bool>> _fetchTrueOrFalse(int lessonId) async {
   Lesson lesson = await new LessonRepo().getLesson(lessonId);
   var lessonUnits =
       await new LessonUnitRepo().getLessonUnitsByLessonId(lessonId);
@@ -524,7 +691,7 @@ Future<Tuple3<String, String, bool>> fetchTrueOrFalse(int lessonId) async {
   return new Tuple3(question, answer, boolAnswer);
 }
 
-Future<List<List<String>>> fetchRollingData(
+Future<List<List<String>>> _fetchRollingData(
     int lessonId, int numChoices) async {
   var lessonUnits =
       await new LessonUnitRepo().getLessonUnitsByLessonId(lessonId);
@@ -550,7 +717,7 @@ Future<List<List<String>>> fetchRollingData(
   }).toList(growable: false));
 }
 
-Future<Tuple2<String, String>> fetchFillInTheBlanksData(int categoryId) async {
+Future<Tuple2<String, String>> _fetchFillInTheBlanksData(int categoryId) async {
   var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
   if (gameCategory.lessonId != null) {
     var lessonUnits = await new LessonUnitRepo()
@@ -561,7 +728,7 @@ Future<Tuple2<String, String>> fetchFillInTheBlanksData(int categoryId) async {
   return null;
 }
 
-Future<List<Tuple2<String, String>>> fetchWordWithBlanksData(
+Future<List<Tuple2<String, String>>> _fetchWordWithBlanksData(
     int lessonId) async {
   var lessonUnits =
       await new LessonUnitRepo().getLessonUnitsByLessonId(lessonId);
@@ -584,7 +751,7 @@ Future<List<Tuple2<String, String>>> fetchWordWithBlanksData(
   }).toList(growable: false));
 }
 
-Future<Tuple4<int, String, int, int>> fetchMathData(int categoryId) async {
+Future<Tuple4<int, String, int, int>> _fetchMathData(int categoryId) async {
   var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
   if (gameCategory.conceptId != null) {
     var category = await new ConceptRepo().getConcept(gameCategory.conceptId);
@@ -713,7 +880,7 @@ Future<Tuple4<int, String, int, int>> fetchMathData(int categoryId) async {
   return null;
 }
 
-Future<List<Tuple4<int, String, int, int>>> fetchTablesData(
+Future<List<Tuple4<int, String, int, int>>> _fetchTablesData(
     int categoryId) async {
   var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
   if (gameCategory.conceptId != null) {
@@ -727,7 +894,7 @@ Future<List<Tuple4<int, String, int, int>>> fetchTablesData(
   return null;
 }
 
-Future<List<List<int>>> fetchFillNumberData(int categoryId, int size) async {
+Future<List<List<int>>> _fetchFillNumberData(int categoryId, int size) async {
   var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
   if (gameCategory.conceptId != null) {
     var category = await new ConceptRepo().getConcept(gameCategory.conceptId);
@@ -747,7 +914,7 @@ Future<List<List<int>>> fetchFillNumberData(int categoryId, int size) async {
 
 enum Direction { across, down }
 Future<Tuple2<List<List<String>>, List<Tuple4<String, int, int, Direction>>>>
-    fetchCrosswordData(int categoryId) async {
+    _fetchCrosswordData(int categoryId) async {
   var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
   if (gameCategory.conceptId != null) {
     var category = await new ConceptRepo().getConcept(gameCategory.conceptId);
@@ -786,7 +953,7 @@ Future<Tuple2<List<List<String>>, List<Tuple4<String, int, int, Direction>>>>
   return null;
 }
 
-Future<Tuple2<List<String>, String>> fetchCirclewrdData(int categoryId) async {
+Future<Tuple2<List<String>, String>> _fetchCirclewrdData(int categoryId) async {
   var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
 
   if (gameCategory.conceptId != null) {
@@ -968,28 +1135,25 @@ Future<Tuple2<List<String>, String>> fetchCirclewrdData(int categoryId) async {
   }
 }
 
-Future<Tuple3<String, String, List<String>>> fetchMultipleChoiceData(
+Future<Tuple3<Unit, Unit, List<Unit>>> _fetchMultipleChoiceData(
     int lessonId, int maxChoices) async {
-  List<LessonUnit> lessonUnits;
-  lessonUnits = await new LessonUnitRepo().getLessonUnitsByLessonId(lessonId);
+  final lessonUnits =
+      await LessonUnitRepo().getEagerLessonUnitsByLessonId(lessonId);
   lessonUnits.shuffle();
-  String question;
-  String answer;
-  List<String> choices;
-  question = lessonUnits[0].subjectUnitId;
-  answer = (lessonUnits[0].objectUnitId?.length ?? 0) > 0
-      ? lessonUnits[0].objectUnitId
-      : lessonUnits[0].subjectUnitId;
+  Unit question;
+  Unit answer;
+  List<Unit> choices;
+  question = lessonUnits[0].subjectUnit;
+  answer = lessonUnits[0].objectUnit;
   choices = lessonUnits
-      .where((l) => l.subjectUnitId != question)
+      .where((l) => l.subjectUnit != question)
       .take(maxChoices)
-      .map((l) =>
-          (l.objectUnitId?.length ?? 0) > 0 ? l.objectUnitId : l.subjectUnitId)
+      .map((l) => l.objectUnit)
       .toList(growable: false);
   return new Tuple3(question, answer, choices);
 }
 
-Future<Tuple2<List<String>, List<String>>> fetchWordData(
+Future<Tuple2<List<String>, List<String>>> _fetchWordData(
     int lessonId, int maxLength, int otherLength) async {
   List<LessonUnit> lessonUnits =
       await new LessonUnitRepo().getLessonUnitsByLessonId(lessonId);
@@ -1024,7 +1188,7 @@ Future<Tuple2<List<String>, List<String>>> fetchWordData(
   return new Tuple2(wordLetters, otherLetters);
 }
 
-Future<Tuple2<List<String>, List<String>>> fetchConsecutiveData(
+Future<Tuple2<List<String>, List<String>>> _fetchConsecutiveData(
     int categoryId, int maxLength, int otherLength) async {
   var gameCategory = await new GameCategoryRepo().getGameCategory(categoryId);
   if (gameCategory.conceptId != null) {
@@ -1071,7 +1235,7 @@ Future<Tuple2<List<String>, List<String>>> fetchConsecutiveData(
   return null;
 }
 
-Future<Tuple2<List<String>, String>> fetchFirstWordData(int categoryId) async {
+Future<Tuple2<List<String>, String>> _fetchFirstWordData(int categoryId) async {
   var rand = new Random();
   var startNum = rand.nextInt(max(0, 3));
   switch (startNum) {
@@ -1089,7 +1253,7 @@ Future<Tuple2<List<String>, String>> fetchFirstWordData(int categoryId) async {
   return null;
 }
 
-Future<String> fetchData() async {
+Future<String> _fetchData() async {
   List<String> gameViews = [
     "Colors",
     "Flowers",
@@ -1107,7 +1271,7 @@ Future<String> fetchData() async {
   return await rootBundle.loadString("assets/$s.json");
 }
 
-Future<Map<String, Map<String, List<String>>>> fetchClueGame(
+Future<Map<String, Map<String, List<String>>>> _fetchClueGame(
     int categoryId) async {
   var completer = Completer<Map<String, Map<String, List<String>>>>();
   Map<String, List<String>> drink = {
@@ -1140,7 +1304,7 @@ Future<Map<String, Map<String, List<String>>>> fetchClueGame(
   return completer.future;
 }
 
-Future<Tuple2<String, List<String>>> fetchPictureSentenceData(
+Future<Tuple2<String, List<String>>> _fetchPictureSentenceData(
     int categoryId) async {
   var rand = new Random();
   var startNum = rand.nextInt(max(0, 8));
@@ -1181,7 +1345,7 @@ Future<Tuple2<String, List<String>>> fetchPictureSentenceData(
   return null;
 }
 
-Future<Tuple2<String, List<String>>> fetchDrawingData(int categoryId) async {
+Future<Tuple2<String, List<String>>> _fetchDrawingData(int categoryId) async {
   var rand = new Random();
   var startNum = rand.nextInt(max(0, 8));
   switch (startNum) {

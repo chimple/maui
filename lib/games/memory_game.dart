@@ -1,12 +1,13 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
+import 'package:maui/models/display_item.dart';
 import 'package:maui/util/game_utils.dart';
 import 'package:maui/widgets/bento_box.dart';
 import 'package:maui/widgets/cute_button.dart';
 import 'package:maui/widgets/flip_animator.dart';
 
 class _ChoiceDetail {
-  String choice;
+  DisplayItem choice;
   int list;
   int index;
   Reaction reaction;
@@ -25,8 +26,8 @@ class _ChoiceDetail {
 enum _Status { closed, opened, escaping, escaped }
 
 class MemoryGame extends StatefulWidget {
-  final BuiltList<String> first;
-  final BuiltList<String> second;
+  final BuiltList<DisplayItem> first;
+  final BuiltList<DisplayItem> second;
   final OnGameUpdate onGameUpdate;
 
   const MemoryGame({Key key, this.first, this.second, this.onGameUpdate})
@@ -148,11 +149,9 @@ class _MemoryGameState extends State<MemoryGame> {
                           color: Colors.amber,
                           borderRadius: BorderRadius.circular(10)),
                     ),
-                    front: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.blue,
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Center(child: Text(c.choice)),
+                    front: CuteButton(
+                      key: Key('c_${c.list}_${c.index}'),
+                      displayItem: c.choice,
                     ),
                     direction: FlipDirection.HORIZONTAL,
                     isOpen: c.status == _Status.opened,
@@ -164,7 +163,7 @@ class _MemoryGameState extends State<MemoryGame> {
           .where((c) => c.status == _Status.escaping)
           .map((c) => CuteButton(
                 key: Key('${c.list}_${c.index}'),
-                child: Center(child: Text(c.choice)),
+                displayItem: c.choice,
               ))
           .toList(growable: false),
     );
