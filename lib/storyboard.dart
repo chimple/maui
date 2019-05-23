@@ -22,6 +22,7 @@ import 'package:maui/storyboards/games/jumbled_words_game_story.dart';
 import 'package:maui/storyboards/games/mad_sentence_game_story.dart';
 import 'package:maui/storyboards/games/match_the_shape_game_story.dart';
 import 'package:maui/storyboards/games/match_with_image_game_story.dart';
+import 'package:maui/storyboards/games/matching_story.dart';
 import 'package:maui/storyboards/games/math_op_game_story.dart';
 import 'package:maui/storyboards/games/memory_game_story.dart';
 import 'package:maui/storyboards/games/moving_text_game_story.dart';
@@ -59,6 +60,7 @@ import 'package:maui/storyboards/widgets/score_story.dart';
 import 'package:maui/storyboards/widgets/slide_up_route_story.dart';
 import 'package:maui/storyboards/widgets/store_screen_story.dart';
 import 'package:maui/storyboards/widgets/story_board.dart';
+import 'package:maui/storyboards/widgets/texture_text_story.dart';
 import 'package:storyboard/storyboard.dart';
 
 import 'storyboards/widgets/guess_image_story.dart';
@@ -97,6 +99,7 @@ void main() {
     JumbledWordsGameStory(),
     MadSentenceGameStory(),
     MapRewardsScreenStory(),
+    MatchingStory(),
     MatchTheShapeGameStory(),
     MatchWithImageGameStory(),
     MathOpGameStory(),
@@ -123,6 +126,7 @@ void main() {
     TablesGameStory(),
     TapHomeStory(),
     TapWrongGameStory(),
+    TextureTextStory(),
     ThemeMapStory(),
     TracingAlphabetStory(),
     TrueFalseGameStory(),
