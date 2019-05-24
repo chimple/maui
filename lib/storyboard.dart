@@ -40,6 +40,7 @@ import 'package:maui/storyboards/games/spin_wheel_game_story.dart';
 import 'package:maui/storyboards/games/tables_game_story.dart';
 import 'package:maui/storyboards/games/tap_home_story.dart';
 import 'package:maui/storyboards/games/tap_wrong_game_story.dart';
+import 'package:maui/storyboards/games/tapping_game_story.dart';
 import 'package:maui/storyboards/games/tracing_alphabets_story.dart';
 import 'package:maui/storyboards/games/true_false_game_story.dart';
 import 'package:maui/storyboards/games/unit_game_story.dart';
@@ -123,6 +124,7 @@ void main() {
     TablesGameStory(),
     TapHomeStory(),
     TapWrongGameStory(),
+    TappingGameStory(),
     ThemeMapStory(),
     TracingAlphabetStory(),
     TrueFalseGameStory(),

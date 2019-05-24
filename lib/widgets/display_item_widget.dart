@@ -40,8 +40,16 @@ class DisplayItemWidget extends StatelessWidget {
       case DisplayTypeEnum.syllable:
         break;
       case DisplayTypeEnum.word:
+        return AutoSizeText(
+          displayItem.item,
+          style: TextStyle(fontSize: 200),
+        );
         break;
       case DisplayTypeEnum.sentence:
+        return AutoSizeText(
+          displayItem.item,
+          style: TextStyle(fontSize: 200),
+        );
         break;
     }
     return Container();
