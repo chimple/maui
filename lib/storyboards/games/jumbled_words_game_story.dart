@@ -62,12 +62,12 @@ class JumbledWordsGameStory extends FullScreenStory {
           body: SafeArea(
             child: JumbledWordsGame(
               answer: DisplayItem(
-                  (d) => d
-                    ..item = 'A'
-                    ..displayType = DisplayTypeEnum.letter,
-                ),
+                (d) => d
+                  ..item = 'A'
+                  ..displayType = DisplayTypeEnum.letter,
+              ),
               choices: BuiltList<DisplayItem>([
-                 DisplayItem(
+                DisplayItem(
                   (d) => d
                     ..item = 'A'
                     ..displayType = DisplayTypeEnum.letter,
@@ -88,7 +88,7 @@ class JumbledWordsGameStory extends FullScreenStory {
                     ..displayType = DisplayTypeEnum.letter,
                 ),
                 // 'A', 'B', 'C', 'D'
-                ]),
+              ]),
               onGameUpdate: ({int score, int max, bool gameOver, bool star}) {},
             ),
           ),
