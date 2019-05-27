@@ -17,28 +17,31 @@ class TappingGame extends StatefulWidget {
 
 class TappingGameState extends State<TappingGame> {
   List<Offset> intialOffsets = [];
-  List<Offset> destinationOffsets = [];
+  List<Offset> finalOffsets = [];
+  List<Offset> randomOffsets = [];
   List<Widget> widgets = [];
-  int countTheClick = 0;
-  bool withoutClick = false;
-  bool clickOnScreen = true;
+  int trackTheClick = 0;
+  bool initialCalculation = false;
+  bool clickOnScreenDelay = true;
   @override
   Widget build(BuildContext context) {
     MediaQueryData media = MediaQuery.of(context);
     var size = media.size;
     var childWidth = size.height / 8;
-    Random random = Random();
-    var childHeight = size.height / 4;
-    if (withoutClick == false) {
-      for (double i = 1; i <= 10; i++) {
-        destinationOffsets.add(Offset(
-            max(0, random.nextDouble() * size.width - childWidth),
-            max(0, random.nextDouble() * size.height - childHeight)));
+    if (initialCalculation == false) {
+      var rng = new Random();
+      for (int i = 1; i <= 30; i++) {
+        randomOffsets.add(Offset(
+            (i ~/ 6) * childWidth, ((5 - 4) / 2 + (i % 6)) * childWidth));
+      }
+      print("lengfht of the offset...${randomOffsets.length}");
+      for (int i = 1; i <= 10; i++) {
+        int min = 1, max = randomOffsets.length - 1;
+        int randomIndex = min + rng.nextInt(max - min);
+        print("object..... offsets.....randomIndex...$randomIndex");
+        finalOffsets.add(randomOffsets[randomIndex]);
+        randomOffsets.removeAt(randomIndex);
         intialOffsets.add(Offset((i % 2) * size.width, (i % 3) * size.height));
-// Offset(
-        //     (i ~/ 4) * childWidth, ((5 - 4) / 2 + (i % 4)) * childWidth)
-        // Offset(max(0, random.nextDouble() * size.width - childWidth),
-        //     max(0, random.nextDouble() * size.height - childHeight));
       }
       for (int i = 0; i < 10; i++) {
         widgets.add(AnimatedPositioned(
@@ -55,10 +58,10 @@ class TappingGameState extends State<TappingGame> {
 
     return GestureDetector(
       onTap: () {
-        if (countTheClick < widget.choice && clickOnScreen) {
-          withoutClick = true;
+        if (trackTheClick < widget.choice && clickOnScreenDelay) {
+          initialCalculation = true;
           setState(() {
-            clickOnScreen = false;
+            clickOnScreenDelay = false;
           });
           _buildMovingWidget();
         }
@@ -83,15 +86,15 @@ class TappingGameState extends State<TappingGame> {
   void _buildMovingWidget() {
     setState(() {
       setState(() {
-        intialOffsets.removeAt(countTheClick);
-        intialOffsets.insert(countTheClick, destinationOffsets[countTheClick]);
-        widgets.removeAt(countTheClick);
+        intialOffsets.removeAt(trackTheClick);
+        intialOffsets.insert(trackTheClick, finalOffsets[trackTheClick]);
+        widgets.removeAt(trackTheClick);
         widgets.insert(
-            countTheClick,
+            trackTheClick,
             AnimatedPositioned(
               duration: Duration(milliseconds: 1500),
-              left: intialOffsets[countTheClick].dx,
-              top: intialOffsets[countTheClick].dy,
+              left: intialOffsets[trackTheClick].dx,
+              top: intialOffsets[trackTheClick].dy,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: SizedBox(
@@ -100,21 +103,21 @@ class TappingGameState extends State<TappingGame> {
                   child: Card(
                       color: Colors.blue,
                       elevation: 10.0,
-                      child: Center(child: Text("${countTheClick + 1}..data"))),
+                      child: Center(child: Text("${trackTheClick + 1}..data"))),
                 ),
               ),
             ));
-        if (countTheClick == widget.choice) {
+        if (trackTheClick == widget.choice) {
           setState(() {
             widget.onGameUpdate(score: 2, max: 2, gameOver: true, star: true);
           });
         }
-        countTheClick = countTheClick + 1;
+        trackTheClick = trackTheClick + 1;
       });
     });
     new Future.delayed(const Duration(milliseconds: 1500), () {
       setState(() {
-        clickOnScreen = true;
+        clickOnScreenDelay = true;
       });
     });
   }
