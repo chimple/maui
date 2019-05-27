@@ -3,12 +3,13 @@ import 'dart:math';
 
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
+import 'package:maui/models/display_item.dart';
 import 'package:maui/util/game_utils.dart';
 import 'package:maui/widgets/bento_box.dart';
 import 'package:maui/widgets/cute_button.dart';
 
 class _ChoiceDetail {
-  String choice;
+  DisplayItem choice;
   Reaction reaction;
   _Type type;
   bool solved;
@@ -27,8 +28,8 @@ class _ChoiceDetail {
 enum _Type { choice, question }
 
 class JumbledWordsGame extends StatefulWidget {
-  final String answer;
-  final BuiltList<String> choices;
+  final DisplayItem answer;
+  final BuiltList<DisplayItem> choices;
   final OnGameUpdate onGameUpdate;
 
   const JumbledWordsGame(
@@ -59,11 +60,12 @@ class _JumbledWordsGameState extends State<JumbledWordsGame> {
       frontChildren = choiceDetails
           .where((c) => c.solved == true)
           .map((c) => CuteButton(
-                key: Key(c.choice),
-                child: Center(child: Text(c.choice)),
+                key: Key(c.choice.item),
+                displayItem: c.choice,
               ) as Widget)
           .toList();
-      frontChildren.add(Center(key: Key('answer'), child: Text(widget.answer)));
+      frontChildren
+          .add(Center(key: Key('answer'), child: Text(widget.answer.item)));
     }
 
     return BentoBox(
@@ -77,13 +79,13 @@ class _JumbledWordsGameState extends State<JumbledWordsGame> {
               DragTarget<String>(
                 key: Key('answer'),
                 builder: (context, candidateData, rejectedData) =>
-                    Center(child: Text(widget.answer)),
+                    Center(child: Text(widget.answer.item)),
                 onWillAccept: (data) => true,
                 onAccept: (data) {
                   WidgetsBinding.instance
                       .addPostFrameCallback((_) => setState(() {
                             choiceDetails
-                                .firstWhere((c) => c.choice == data)
+                                .firstWhere((c) => c.choice.item == data)
                                 .solved = true;
                             thisSolved = true;
                             score = score + 2;
@@ -107,8 +109,8 @@ class _JumbledWordsGameState extends State<JumbledWordsGame> {
           .map((c) => c.solved
               ? Container()
               : CuteButton(
-                  key: Key(c.choice),
-                  child: Center(child: Text(c.choice)),
+                  key: Key(c.choice.item),
+                  displayItem: c.choice,
                 ))
           .toList(growable: false),
       calculateLayout: calculateCustomizedLayout,

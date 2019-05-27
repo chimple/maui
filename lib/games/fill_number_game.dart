@@ -272,10 +272,10 @@ class FillNumberGameState extends State<FillNumberGame> {
               });
             }
             _letters.removeWhere((value) => value == null);
-            // for (var i = 0; i < countNullValue; i++) {
-            //   _letters.add(null);
-            //   // _letters.insert(0, null);
-            // }
+            for (var i = 0; i < countNullValue; i++) {
+              _letters.add(null);
+              // _letters.insert(0, null);
+            }
 
             subListset.removeRange(0, subListset.length);
 
@@ -308,7 +308,7 @@ class FillNumberGameState extends State<FillNumberGame> {
 //future delay not using here
             k = _letters[4];
             print("helllo this letters$k");
-            if (_letters[subListNumber] == null) {
+            if (_letters[4] == null) {
               setState(() {
                 k = 0;
                 displayAns = 0;

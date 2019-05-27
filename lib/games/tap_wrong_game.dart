@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:maui/util/game_utils.dart';
 import 'package:maui/widgets/bento_box.dart';
 import 'package:maui/widgets/cute_button.dart';
 
@@ -25,8 +26,10 @@ class TapWrongGame extends StatefulWidget {
   final String image;
   final List<String> answer;
   final List<String> wrongChoice;
+  final OnGameUpdate onGameUpdate;
 
-  const TapWrongGame({Key key, this.image, this.answer, this.wrongChoice})
+  const TapWrongGame(
+      {Key key, this.image, this.answer, this.wrongChoice, this.onGameUpdate})
       : super(key: key);
 
   @override
@@ -35,7 +38,8 @@ class TapWrongGame extends StatefulWidget {
 
 class _TapWrongGameState extends State<TapWrongGame> {
   List<_ChoiceDetail> choiceDetails;
-  int complete = 0;
+  int complete = 0, tries = 0, score = 0;
+  final int wrongAttempts = 2;
 
   @override
   void initState() {
@@ -71,10 +75,25 @@ class _TapWrongGameState extends State<TapWrongGame> {
                         choiceDetails.insert(0, temp);
                       } else
                         choiceDetails.add(temp);
-                      complete++;
+                      tries = 0;
+                      score += 2;
                       c.appear = false;
+                      if (++complete == widget.wrongChoice.length) {
+                        widget.onGameUpdate(
+                            score: score,
+                            max: widget.wrongChoice.length * 2,
+                            gameOver: true,
+                            star: true);
+                      }
                       return Reaction.success;
                     } else {
+                      score--;
+                      if (++tries == wrongAttempts)
+                        widget.onGameUpdate(
+                            score: score,
+                            max: widget.wrongChoice.length * 2,
+                            gameOver: true,
+                            star: false);
                       c.reaction = Reaction.failure;
                       return c.reaction;
                     }

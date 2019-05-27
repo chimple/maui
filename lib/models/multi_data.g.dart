@@ -24,27 +24,20 @@ class _$MultiDataSerializer implements StructuredSerializer<MultiData> {
       'answers',
       serializers.serialize(object.answers,
           specifiedType:
-              const FullType(BuiltList, const [const FullType(String)])),
+              const FullType(BuiltList, const [const FullType(DisplayItem)])),
     ];
     if (object.question != null) {
       result
         ..add('question')
         ..add(serializers.serialize(object.question,
-            specifiedType: const FullType(String)));
-    }
-    if (object.specials != null) {
-      result
-        ..add('specials')
-        ..add(serializers.serialize(object.specials,
-            specifiedType:
-                const FullType(BuiltList, const [const FullType(String)])));
+            specifiedType: const FullType(DisplayItem)));
     }
     if (object.choices != null) {
       result
         ..add('choices')
         ..add(serializers.serialize(object.choices,
-            specifiedType:
-                const FullType(BuiltList, const [const FullType(String)])));
+            specifiedType: const FullType(
+                BuiltList, const [const FullType(DisplayItem)])));
     }
 
     return result;
@@ -66,25 +59,19 @@ class _$MultiDataSerializer implements StructuredSerializer<MultiData> {
               specifiedType: const FullType(String)) as String;
           break;
         case 'question':
-          result.question = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'specials':
-          result.specials.replace(serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(BuiltList, const [const FullType(String)]))
-              as BuiltList);
+          result.question.replace(serializers.deserialize(value,
+              specifiedType: const FullType(DisplayItem)) as DisplayItem);
           break;
         case 'choices':
           result.choices.replace(serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(BuiltList, const [const FullType(String)]))
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(DisplayItem)]))
               as BuiltList);
           break;
         case 'answers':
           result.answers.replace(serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(BuiltList, const [const FullType(String)]))
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(DisplayItem)]))
               as BuiltList);
           break;
       }
@@ -98,19 +85,16 @@ class _$MultiData extends MultiData {
   @override
   final String gameId;
   @override
-  final String question;
+  final DisplayItem question;
   @override
-  final BuiltList<String> specials;
+  final BuiltList<DisplayItem> choices;
   @override
-  final BuiltList<String> choices;
-  @override
-  final BuiltList<String> answers;
+  final BuiltList<DisplayItem> answers;
 
   factory _$MultiData([void Function(MultiDataBuilder) updates]) =>
       (new MultiDataBuilder()..update(updates)).build();
 
-  _$MultiData._(
-      {this.gameId, this.question, this.specials, this.choices, this.answers})
+  _$MultiData._({this.gameId, this.question, this.choices, this.answers})
       : super._() {
     if (gameId == null) {
       throw new BuiltValueNullFieldError('MultiData', 'gameId');
@@ -133,7 +117,6 @@ class _$MultiData extends MultiData {
     return other is MultiData &&
         gameId == other.gameId &&
         question == other.question &&
-        specials == other.specials &&
         choices == other.choices &&
         answers == other.answers;
   }
@@ -141,10 +124,7 @@ class _$MultiData extends MultiData {
   @override
   int get hashCode {
     return $jf($jc(
-        $jc(
-            $jc($jc($jc(0, gameId.hashCode), question.hashCode),
-                specials.hashCode),
-            choices.hashCode),
+        $jc($jc($jc(0, gameId.hashCode), question.hashCode), choices.hashCode),
         answers.hashCode));
   }
 
@@ -153,7 +133,6 @@ class _$MultiData extends MultiData {
     return (newBuiltValueToStringHelper('MultiData')
           ..add('gameId', gameId)
           ..add('question', question)
-          ..add('specials', specials)
           ..add('choices', choices)
           ..add('answers', answers))
         .toString();
@@ -168,32 +147,27 @@ class MultiDataBuilder
   String get gameId => _$this._gameId;
   set gameId(String gameId) => _$this._gameId = gameId;
 
-  String _question;
-  String get question => _$this._question;
-  set question(String question) => _$this._question = question;
+  DisplayItemBuilder _question;
+  DisplayItemBuilder get question =>
+      _$this._question ??= new DisplayItemBuilder();
+  set question(DisplayItemBuilder question) => _$this._question = question;
 
-  ListBuilder<String> _specials;
-  ListBuilder<String> get specials =>
-      _$this._specials ??= new ListBuilder<String>();
-  set specials(ListBuilder<String> specials) => _$this._specials = specials;
+  ListBuilder<DisplayItem> _choices;
+  ListBuilder<DisplayItem> get choices =>
+      _$this._choices ??= new ListBuilder<DisplayItem>();
+  set choices(ListBuilder<DisplayItem> choices) => _$this._choices = choices;
 
-  ListBuilder<String> _choices;
-  ListBuilder<String> get choices =>
-      _$this._choices ??= new ListBuilder<String>();
-  set choices(ListBuilder<String> choices) => _$this._choices = choices;
-
-  ListBuilder<String> _answers;
-  ListBuilder<String> get answers =>
-      _$this._answers ??= new ListBuilder<String>();
-  set answers(ListBuilder<String> answers) => _$this._answers = answers;
+  ListBuilder<DisplayItem> _answers;
+  ListBuilder<DisplayItem> get answers =>
+      _$this._answers ??= new ListBuilder<DisplayItem>();
+  set answers(ListBuilder<DisplayItem> answers) => _$this._answers = answers;
 
   MultiDataBuilder();
 
   MultiDataBuilder get _$this {
     if (_$v != null) {
       _gameId = _$v.gameId;
-      _question = _$v.question;
-      _specials = _$v.specials?.toBuilder();
+      _question = _$v.question?.toBuilder();
       _choices = _$v.choices?.toBuilder();
       _answers = _$v.answers?.toBuilder();
       _$v = null;
@@ -221,15 +195,14 @@ class MultiDataBuilder
       _$result = _$v ??
           new _$MultiData._(
               gameId: gameId,
-              question: question,
-              specials: _specials?.build(),
+              question: _question?.build(),
               choices: _choices?.build(),
               answers: answers.build());
     } catch (_) {
       String _$failedField;
       try {
-        _$failedField = 'specials';
-        _specials?.build();
+        _$failedField = 'question';
+        _question?.build();
         _$failedField = 'choices';
         _choices?.build();
         _$failedField = 'answers';

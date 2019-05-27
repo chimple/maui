@@ -1,11 +1,12 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
+import 'package:maui/models/display_item.dart';
 import 'package:maui/util/game_utils.dart';
 import 'package:maui/widgets/bento_box.dart';
 import 'package:maui/widgets/cute_button.dart';
 
 class _ChoiceDetail {
-  String letter;
+  DisplayItem letter;
   Reaction reaction;
 
   _ChoiceDetail({this.letter, this.reaction = Reaction.success});
@@ -15,8 +16,8 @@ class _ChoiceDetail {
 
 class FindWordGame extends StatefulWidget {
   final String image;
-  final BuiltList<String> answer;
-  final BuiltList<String> choices;
+  final BuiltList<DisplayItem> answer;
+  final BuiltList<DisplayItem> choices;
   final OnGameUpdate onGameUpdate;
 
   const FindWordGame(
@@ -30,7 +31,8 @@ class FindWordGame extends StatefulWidget {
 class _FindWordGameState extends State<FindWordGame> {
   List<_ChoiceDetail> choiceDetails;
   List<String> word = [];
-  int score = 0;
+  int score = 0, tries = 0;
+  final int wrongAttempts = 2;
 
   @override
   void initState() {
@@ -59,26 +61,31 @@ class _FindWordGameState extends State<FindWordGame> {
             cols: choiceDetails.length ~/ 2,
             children: choiceDetails
                 .map((c) => CuteButton(
-                      key: Key(c.letter),
+                      key: Key(c.letter.item),
                       reaction: c.reaction,
-                      child: Center(child: Text(c.letter)),
+                      displayItem: c.letter,
                       onPressed: () {
-                        widget.onGameUpdate(
-                            score: 1, max: 1, gameOver: true, star: true);
                         if (c.letter == widget.answer[word.length]) {
                           setState(() {
-                            score++;
+                            score += 2;
                             c.reaction = Reaction.success;
-                            word.add(c.letter);
+                            tries = 0;
+                            word.add(c.letter.item);
                             if (word.length == widget.answer.length)
                               widget.onGameUpdate(
                                   score: score,
-                                  max: score,
+                                  max: widget.answer.length * 2,
                                   gameOver: true,
                                   star: true);
                           });
                         } else {
-                          if (score > 0) score--;
+                          score--;
+                          if (++tries == wrongAttempts)
+                            widget.onGameUpdate(
+                                score: score,
+                                max: widget.answer.length * 2,
+                                gameOver: true,
+                                star: false);
                           c.reaction = Reaction.failure;
                         }
                       },

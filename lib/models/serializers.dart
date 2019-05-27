@@ -9,6 +9,7 @@ import 'package:maui/models/class_join.dart';
 import 'package:maui/models/class_session.dart';
 import 'package:maui/models/class_students.dart';
 import 'package:maui/models/crossword_data.dart';
+import 'package:maui/models/display_item.dart';
 import 'package:maui/models/game_config.dart';
 import 'package:maui/models/game_data.dart';
 import 'package:maui/models/image_label_data.dart';
@@ -36,6 +37,7 @@ part 'serializers.g.dart';
   ClassJoin,
   ClassSession,
   ClassStudents,
+  DisplayItem,
   QuizJoin,
   QuizSession,
   QuizUpdate,

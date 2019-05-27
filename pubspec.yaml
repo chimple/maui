@@ -52,6 +52,7 @@ dependencies:
     path: ../tahiti
   flores:
     path: ../flores
+  auto_size_text: ^1.1.2
 dev_dependencies:
   test: 1.6.1
   flutter_test:
@@ -121,6 +122,7 @@ flutter:
     - assets/topic/
     - assets/topic/asb/
     - assets/temp/hospital.jpg
+    - assets/loading_screen/
     
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -11,6 +11,7 @@ class TapWrongGameStory extends FullScreenStory {
               image: 'assets/accessories/apple.png',
               wrongChoice: ['X', 'E'],
               answer: ['A', 'P', 'P', 'L', 'E'],
+              onGameUpdate: ({int score, int max, bool gameOver, bool star}) {},
             ),
           ),
         ),
@@ -20,6 +21,7 @@ class TapWrongGameStory extends FullScreenStory {
               image: 'assets/accessories/mic.png',
               wrongChoice: ['K'],
               answer: ['M', 'I', 'C'],
+              onGameUpdate: ({int score, int max, bool gameOver, bool star}) {},
             ),
           ),
         ),
@@ -29,6 +31,7 @@ class TapWrongGameStory extends FullScreenStory {
               image: 'assets/accessories/text.png',
               wrongChoice: ['O', 'O', 'O', 'O'],
               answer: ['T', 'E', 'X', 'T'],
+              onGameUpdate: ({int score, int max, bool gameOver, bool star}) {},
             ),
           ),
         )

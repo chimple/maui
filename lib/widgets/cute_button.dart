@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flare_flutter/flare_actor.dart';
+import 'package:maui/models/display_item.dart';
 import 'package:maui/state/app_state_container.dart';
 import 'package:maui/widgets/bento_box.dart';
+import 'package:maui/widgets/display_item_widget.dart';
 
 typedef Reaction OnPressed();
 typedef void OnDragEnd(DraggableDetails d);
@@ -20,18 +22,27 @@ enum CuteButtonType { cuteButton, text }
 
 class CuteButton extends StatelessWidget {
   final Widget child;
+  final DisplayItem displayItem;
   final OnPressed onPressed;
   final Reaction reaction;
   final CuteButtonType cuteButtonType;
   final OnDragStarted onDragStarted;
-  const CuteButton(
-      {Key key,
-      this.onPressed,
-      this.reaction,
-      this.child,
-      this.onDragStarted,
-      this.cuteButtonType = CuteButtonType.cuteButton})
-      : super(key: key);
+  final DragTargetWillAccept<String> onWillAccept;
+  final DragTargetAccept<String> onAccept;
+  final DragTargetLeave<String> onLeave;
+
+  const CuteButton({
+    Key key,
+    this.onPressed,
+    this.reaction,
+    this.child,
+    this.onDragStarted,
+    this.cuteButtonType = CuteButtonType.cuteButton,
+    this.displayItem,
+    this.onWillAccept,
+    this.onAccept,
+    this.onLeave,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -154,8 +165,9 @@ class CuteButtonWrapperState extends State<CuteButtonWrapper> {
               elevation: 8.0,
               color: Colors.white,
               disabledColor: Colors.grey,
-              textColor: themeColors[
-                  AppStateContainer.of(context).userProfile.currentTheme],
+//              textColor: themeColors[
+//                  AppStateContainer.of(context).userProfile.currentTheme],
+              textColor: Colors.black,
               disabledTextColor: Colors.white,
               shape: new RoundedRectangleBorder(
                   borderRadius:
@@ -163,7 +175,24 @@ class CuteButtonWrapperState extends State<CuteButtonWrapper> {
               child: Stack(
                 children: <Widget>[
                   buttonStatus != _ButtonStatus.up
-                      ? widget.child.child
+                      ? widget.child.displayItem != null
+                          ? widget.child.onAccept != null
+                              ? DragTarget<String>(
+                                  builder: (context, candidateData,
+                                          rejectedData) =>
+                                      DisplayItemWidget(
+                                        displayItem: widget.child.displayItem,
+                                        size: widget.size,
+                                      ),
+                                  onAccept: widget.child.onAccept,
+                                  onWillAccept: widget.child.onWillAccept,
+                                  onLeave: widget.child.onLeave,
+                                )
+                              : DisplayItemWidget(
+                                  displayItem: widget.child.displayItem,
+                                  size: widget.size,
+                                )
+                          : widget.child.child
                       : Container(),
                   AnimatedPositioned(
                     top: (buttonStatus == _ButtonStatus.up ||
@@ -195,7 +224,12 @@ class CuteButtonWrapperState extends State<CuteButtonWrapper> {
     else if (widget.child.cuteButtonType == CuteButtonType.text)
       return Center(
         child: Container(
-          child: widget.child.child,
+          child: widget.child.displayItem != null
+              ? DisplayItemWidget(
+                  displayItem: widget.child.displayItem,
+                  size: widget.size,
+                )
+              : widget.child.child,
         ),
       );
     else

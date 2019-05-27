@@ -48,6 +48,59 @@
   ],
   "gameDatas": [
     {
+      "$": "MultiData",
+      "gameId": "MultipleChoiceGame",
+      "question": "Whom did Abebech transport to earn money?",
+      "answers": [
+        "People"
+      ],
+      "choices": [
+        "Dog",
+        "Monkey",
+        "Donkey"
+      ]
+    },
+    {
+      "$": "MultiData",
+      "gameId": "MultipleChoiceGame",
+      "question": "What did Abebech's parents decide to buy?",
+      "answers": [
+        "Bajaj"
+      ],
+      "choices": [
+        "Truck",
+        "Bicycle",
+        "Train"
+      ]
+    },
+    {
+      "$": "MultiData",
+      "gameId": "MultipleChoiceGame",
+      "question": "Abebech's work made her ____________?",
+      "answers": [
+        "Happy"
+      ],
+      "choices": [
+        "Sad",
+        "Angry",
+        "Quiet"
+      ]
+    },
+    {
+      "$": "MultiData",
+      "gameId": "MultipleChoiceGame",
+      "question": "Where will you go in your Bajaj?",
+      "answers": [
+        "Home"
+      ],
+      "choices": [
+        "Home",
+        "Market",
+        "School",
+        "Friend's house"
+      ]
+    },
+    {
       "$": "ImageLabelData",
       "gameId": "GuessImageGame",
       "imageName": "assets/topic/asb/27150.png",

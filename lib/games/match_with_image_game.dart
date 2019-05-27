@@ -1,12 +1,13 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
+import 'package:maui/models/display_item.dart';
 import 'package:maui/util/game_utils.dart';
 import 'package:maui/widgets/bento_box.dart';
 import 'package:maui/widgets/cute_button.dart';
 import 'package:maui/widgets/drop_box.dart';
 
 class _ChoiceDetail {
-  String choice;
+  DisplayItem choice;
   Reaction reaction;
   bool appear;
 
@@ -18,13 +19,12 @@ class _ChoiceDetail {
 }
 
 class MatchWithImageGame extends StatefulWidget {
-  final BuiltList<String> images;
-  final BuiltList<String> answers;
-  final BuiltList<String> choices;
+  final BuiltList<DisplayItem> answers;
+  final BuiltList<DisplayItem> choices;
   final OnGameUpdate onGameUpdate;
 
   const MatchWithImageGame(
-      {Key key, this.images, this.answers, this.choices, this.onGameUpdate})
+      {Key key, this.answers, this.choices, this.onGameUpdate})
       : super(key: key);
 
   @override
@@ -34,8 +34,9 @@ class MatchWithImageGame extends StatefulWidget {
 class _MatchWithImageGameState extends State<MatchWithImageGame> {
   List<_ChoiceDetail> answerDetails;
   List<_ChoiceDetail> choiceDetails;
-  var score = 0;
-  int complete;
+  var score = 0, tries = 0;
+  int complete = 0;
+  final int wrongAttempts = 2;
 
   @override
   void initState() {
@@ -58,32 +59,31 @@ class _MatchWithImageGameState extends State<MatchWithImageGame> {
       children: choiceDetails
           .map((c) => c.appear
               ? CuteButton(
-                  key: Key(c.choice),
-                  child: Center(child: Text(c.choice)),
+                  key: Key(c.choice.item),
+                  displayItem: c.choice,
                 )
               : Container())
           .toList(growable: false),
       qRows: 2,
       qCols: answerDetails.length,
-      qChildren: widget.images
-          .map((img) => Image.asset(
-                img,
-                key: Key(img),
+      qChildren: widget.answers
+          .map((a) => CuteButton(
+                key: Key("q${a.item}"),
+                displayItem: a,
               ) as Widget)
           .toList()
             ..addAll(answerDetails.map((a) => a.appear
                 ? CuteButton(
                     key: Key((i++).toString()),
-                    child: Center(child: Text(a.choice)),
+                    child: Center(child: Text(a.choice.item)),
                   )
                 : DropBox(
                     key: Key((i++).toString()),
                     // onWillAccept: (data) => data == a.choice,
                     onAccept: (data) => setState(() {
                           if (data == a.choice) {
-                            score++;
-                            print("this is my data ${data.length}");
-                            print("this is my score in match $score");
+                            score += 2;
+                            tries = 0;
                             a.appear = true;
                             choiceDetails
                                 .firstWhere((c) => c.choice == a.choice)
@@ -91,11 +91,18 @@ class _MatchWithImageGameState extends State<MatchWithImageGame> {
                             if (--complete == 0)
                               widget.onGameUpdate(
                                   score: score,
-                                  max: score,
+                                  max: choiceDetails.length * 2,
                                   gameOver: true,
                                   star: true);
-                          } else
+                          } else {
                             score--;
+                            if (++tries == wrongAttempts)
+                              widget.onGameUpdate(
+                                  score: score,
+                                  max: choiceDetails.length * 2,
+                                  gameOver: true,
+                                  star: false);
+                          }
                         }),
                   ))),
       dragConfig: DragConfig.draggableBounceBack,
